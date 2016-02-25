@@ -8,20 +8,81 @@ class ContentTypeSpec: QuickSpec {
     describe("ContentType") {
       var contentType: ContentType!
       
-      describe("#value") {
-        it("returns a correct value for JSON type") {
+      context("when it's JSON type") {
+        beforeEach {
           contentType = .JSON
-          expect(contentType.value).to(equal("application/json"))
         }
         
-        it("returns a correct value for FormURLEncoded type") {
+        describe("#value") {
+          it("returns a correct string value") {
+            expect(contentType.value).to(equal("application/json"))
+          }
+        }
+        
+        describe("#hashValue") {
+          it("returns a hash value of corresponding string value") {
+            expect(contentType.hashValue).to(equal(contentType.value.hashValue))
+          }
+        }
+        
+        describe("#equal") {
+          it("compares for value equality") {
+            expect(contentType).to(equal(ContentType.JSON))
+            expect(contentType).toNot(equal(ContentType.FormURLEncoded))
+            expect(contentType).toNot(equal(ContentType.Custom("application/custom")))
+          }
+        }
+      }
+      
+      context("when it's FormURLEncoded type") {
+        beforeEach {
           contentType = .FormURLEncoded
-          expect(contentType.value).to(equal("application/x-www-form-urlencoded"))
         }
         
-        it("returns a correct value for Custom type") {
+        describe("#value") {
+          it("returns a correct string value") {
+            expect(contentType.value).to(equal("application/x-www-form-urlencoded"))
+          }
+        }
+        
+        describe("#hashValue") {
+          it("returns a hash value of corresponding string value") {
+            expect(contentType.hashValue).to(equal(contentType.value.hashValue))
+          }
+        }
+        
+        describe("#equal") {
+          it("compares for value equality") {
+            expect(contentType).toNot(equal(ContentType.JSON))
+            expect(contentType).to(equal(ContentType.FormURLEncoded))
+            expect(contentType).toNot(equal(ContentType.Custom("application/custom")))
+          }
+        }
+      }
+      
+      context("when it's Custom type") {
+        beforeEach {
           contentType = .Custom("application/custom")
-          expect(contentType.value).to(equal("application/custom"))
+        }
+        
+        describe("#value") {
+          it("returns a correct string value") {
+            expect(contentType.value).to(equal("application/custom"))
+          }
+        }
+        
+        describe("#hashValue") {
+          it("returns a hash value of corresponding string value") {
+            expect(contentType.hashValue).to(equal(contentType.value.hashValue))
+          }
+        }
+        
+        describe("#equal") {
+          it("compares for value equality") {
+            expect(contentType).toNot(equal(ContentType.JSON))
+            expect(contentType).toNot(equal(ContentType.FormURLEncoded))
+            expect(contentType).to(equal(ContentType.Custom("application/custom")))
+          }
         }
       }
     }
