@@ -1,6 +1,6 @@
 import Foundation
 
-struct JSONParameterEncoding: ParameterEncoding {
+struct JSONParameterEncoder: ParameterEncoding {
   
   func encode(parameters: [String: AnyObject]) throws -> NSData? {
     let data = try NSJSONSerialization.dataWithJSONObject(parameters,
