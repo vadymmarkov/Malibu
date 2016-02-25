@@ -18,3 +18,18 @@ public enum ContentType {
     return string
   }
 }
+
+// MARK: - Hashable
+
+extension ContentType: Hashable {
+  
+  public var hashValue: Int {
+    return value.hashValue
+  }
+}
+
+// MARK: - Equatable
+
+public func ==(lhs: ContentType, rhs: ContentType) -> Bool {
+  return lhs.value == rhs.value
+}
