@@ -15,8 +15,8 @@
 		D5C6297C1C3A879F007F7B7C /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C6297A1C3A879F007F7B7C /* Nimble.framework */; };
 		D5C629831C3A892A007F7B7C /* iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C629821C3A892A007F7B7C /* iOS.swift */; };
 		D5C629851C3A893F007F7B7C /* Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C629841C3A893F007F7B7C /* Mac.swift */; };
-		D5C629871C3A89A8007F7B7C /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C629861C3A89A8007F7B7C /* Shared.swift */; };
-		D5C629881C3A89A8007F7B7C /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C629861C3A89A8007F7B7C /* Shared.swift */; };
+		D5C629871C3A89A8007F7B7C /* Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C629861C3A89A8007F7B7C /* Method.swift */; };
+		D5C629881C3A89A8007F7B7C /* Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C629861C3A89A8007F7B7C /* Method.swift */; };
 		D5C6299B1C3A8BDA007F7B7C /* MacSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C629951C3A8BDA007F7B7C /* MacSpec.swift */; };
 		D5C6299C1C3A8BDA007F7B7C /* SharedSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C629971C3A8BDA007F7B7C /* SharedSpec.swift */; };
 		D5C6299D1C3A8C6B007F7B7C /* iOSSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C629931C3A8BDA007F7B7C /* iOSSpec.swift */; };
@@ -53,7 +53,7 @@
 		D5C6297A1C3A879F007F7B7C /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/Mac/Nimble.framework; sourceTree = "<group>"; };
 		D5C629821C3A892A007F7B7C /* iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iOS.swift; sourceTree = "<group>"; };
 		D5C629841C3A893F007F7B7C /* Mac.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mac.swift; sourceTree = "<group>"; };
-		D5C629861C3A89A8007F7B7C /* Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shared.swift; sourceTree = "<group>"; };
+		D5C629861C3A89A8007F7B7C /* Method.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Method.swift; sourceTree = "<group>"; };
 		D5C6298B1C3A8BBD007F7B7C /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
 		D5C6298C1C3A8BBD007F7B7C /* Info-Mac.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-Mac.plist"; sourceTree = "<group>"; };
 		D5C629901C3A8BDA007F7B7C /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
@@ -166,7 +166,7 @@
 		D5C6296E1C3A809D007F7B7C /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				D5C629861C3A89A8007F7B7C /* Shared.swift */,
+				D5C629861C3A89A8007F7B7C /* Method.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -417,7 +417,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5C629831C3A892A007F7B7C /* iOS.swift in Sources */,
-				D5C629871C3A89A8007F7B7C /* Shared.swift in Sources */,
+				D5C629871C3A89A8007F7B7C /* Method.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,7 +435,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5C629851C3A893F007F7B7C /* Mac.swift in Sources */,
-				D5C629881C3A89A8007F7B7C /* Shared.swift in Sources */,
+				D5C629881C3A89A8007F7B7C /* Method.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
