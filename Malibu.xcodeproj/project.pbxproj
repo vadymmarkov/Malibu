@@ -21,6 +21,8 @@
 		DAEE2BAB1C7F8A3C0000FB12 /* ContentTypeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE2BA11C7F8A1C0000FB12 /* ContentTypeSpec.swift */; };
 		DAEE2BAE1C7F8A870000FB12 /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE2BAD1C7F8A870000FB12 /* ParameterEncoding.swift */; };
 		DAEE2BAF1C7F8A870000FB12 /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE2BAD1C7F8A870000FB12 /* ParameterEncoding.swift */; };
+		DAEE2BB11C7F8BA00000FB12 /* JSONParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE2BB01C7F8BA00000FB12 /* JSONParameterEncoding.swift */; };
+		DAEE2BB21C7F8BA00000FB12 /* JSONParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE2BB01C7F8BA00000FB12 /* JSONParameterEncoding.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,7 @@
 		DAEE2BA41C7F8A240000FB12 /* ContentType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentType.swift; sourceTree = "<group>"; };
 		DAEE2BA51C7F8A240000FB12 /* Method.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Method.swift; sourceTree = "<group>"; };
 		DAEE2BAD1C7F8A870000FB12 /* ParameterEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterEncoding.swift; sourceTree = "<group>"; };
+		DAEE2BB01C7F8BA00000FB12 /* JSONParameterEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParameterEncoding.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				DAEE2BAD1C7F8A870000FB12 /* ParameterEncoding.swift */,
+				DAEE2BB01C7F8BA00000FB12 /* JSONParameterEncoding.swift */,
 			);
 			path = Encoding;
 			sourceTree = "<group>";
@@ -380,6 +384,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAEE2BB11C7F8BA00000FB12 /* JSONParameterEncoding.swift in Sources */,
 				DAEE2BAE1C7F8A870000FB12 /* ParameterEncoding.swift in Sources */,
 				DAEE2BA61C7F8A240000FB12 /* ContentType.swift in Sources */,
 				DAEE2BA81C7F8A240000FB12 /* Method.swift in Sources */,
@@ -398,6 +403,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAEE2BB21C7F8BA00000FB12 /* JSONParameterEncoding.swift in Sources */,
 				DAEE2BAF1C7F8A870000FB12 /* ParameterEncoding.swift in Sources */,
 				DAEE2BA71C7F8A240000FB12 /* ContentType.swift in Sources */,
 				DAEE2BA91C7F8A240000FB12 /* Method.swift in Sources */,
