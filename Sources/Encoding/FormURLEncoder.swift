@@ -2,19 +2,13 @@ import Foundation
 
 public struct FormURLEncoder: ParameterEncoding {
   
-  public enum Error: ErrorType {
-    case NotFormattableParameters
-  }
-  
   typealias Component = (String, String)
   
-  let escapingDelimiters = ":#[]@!$&'()*+,;="
+  let escapingCharacters = ":#[]@!$&'()*+,;="
   
   public func encode(parameters: [String: AnyObject]) throws -> NSData? {
-    return queryString(parameters).dataUsingEncoding(
-      NSUTF8StringEncoding,
-      allowLossyConversion: false
-    )
+    return queryString(parameters).dataUsingEncoding(NSUTF8StringEncoding,
+      allowLossyConversion: false)
   }
 }
 
@@ -26,22 +20,22 @@ extension FormURLEncoder {
     var components: [Component] = []
     
     parameters.forEach { key, value in
-      components += queryComponents(key, value: value)
+      components += queryComponents(key: key, value: value)
     }
     
     return components.map({ "\($0)=\($1)" }).joinWithSeparator("&")
   }
   
-  func queryComponents(key: String, value: AnyObject) -> [Component] {
+  func queryComponents(key key: String, value: AnyObject) -> [Component] {
     var components: [Component] = []
     
     if let dictionary = value as? [String: AnyObject] {
       dictionary.forEach { nestedKey, value in
-        components += queryComponents("\(key)[\(nestedKey)]", value: value)
+        components += queryComponents(key: "\(key)[\(nestedKey)]", value: value)
       }
     } else if let array = value as? [AnyObject] {
       array.forEach { value in
-        components += queryComponents("\(key)[]", value: value)
+        components += queryComponents(key: "\(key)[]", value: value)
       }
     } else {
       components.append((escape(key), escape("\(value)")))
@@ -52,7 +46,7 @@ extension FormURLEncoder {
   
   func escape(string: String) -> String {
     let allowedCharacters = NSCharacterSet.URLQueryAllowedCharacterSet().mutableCopy() as! NSMutableCharacterSet
-    allowedCharacters.removeCharactersInString(escapingDelimiters)
+    allowedCharacters.removeCharactersInString(escapingCharacters)
     
     var escapedString = ""
     
