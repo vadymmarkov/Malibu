@@ -2,10 +2,10 @@ import Foundation
 
 public enum SessionConfiguration {
   case Default, Ephemeral, Background, Custom(NSURLSessionConfiguration)
-  
-  var configuration: NSURLSessionConfiguration {
+
+  var value: NSURLSessionConfiguration {
     var value: NSURLSessionConfiguration
-    
+
     switch self {
     case .Default:
       value = NSURLSessionConfiguration.defaultSessionConfiguration()
@@ -17,7 +17,7 @@ public enum SessionConfiguration {
     case .Custom(let sessionConfiguration):
       value = sessionConfiguration
     }
-    
+
     return value
   }
 }

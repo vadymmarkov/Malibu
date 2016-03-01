@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D55ECF6F1C865AF00011DCC3 /* SessionConfigurationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55ECF6E1C865AF00011DCC3 /* SessionConfigurationSpec.swift */; };
+		D55ECF701C865AF00011DCC3 /* SessionConfigurationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55ECF6E1C865AF00011DCC3 /* SessionConfigurationSpec.swift */; };
 		D5B2E8AA1C3A780C00C0327D /* Malibu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5B2E89F1C3A780C00C0327D /* Malibu.framework */; };
 		D5C6294A1C3A7FAA007F7B7C /* Malibu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629401C3A7FAA007F7B7C /* Malibu.framework */; };
 		D5C629771C3A878E007F7B7C /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629751C3A878E007F7B7C /* Quick.framework */; };
@@ -60,6 +62,7 @@
 /* Begin PBXFileReference section */
 		D500FD111C3AABED00782D78 /* Playground-iOS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-iOS.playground"; sourceTree = "<group>"; };
 		D500FD121C3AAC8E00782D78 /* Playground-Mac.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-Mac.playground"; sourceTree = "<group>"; };
+		D55ECF6E1C865AF00011DCC3 /* SessionConfigurationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionConfigurationSpec.swift; sourceTree = "<group>"; };
 		D5B2E89F1C3A780C00C0327D /* Malibu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Malibu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5B2E8A91C3A780C00C0327D /* Malibu-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Malibu-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5C629401C3A7FAA007F7B7C /* Malibu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Malibu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -192,6 +195,7 @@
 				DAEE2BB31C7F8C500000FB12 /* Encoding */,
 				DAEE2BA11C7F8A1C0000FB12 /* ContentTypeSpec.swift */,
 				DAC92A101C7FCF9000F01940 /* MalibuSpec.swift */,
+				D55ECF6E1C865AF00011DCC3 /* SessionConfigurationSpec.swift */,
 			);
 			path = Specs;
 			sourceTree = "<group>";
@@ -456,6 +460,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAEE2BAA1C7F8A3B0000FB12 /* ContentTypeSpec.swift in Sources */,
+				D55ECF6F1C865AF00011DCC3 /* SessionConfigurationSpec.swift in Sources */,
 				DAEE2BB71C7F8C5D0000FB12 /* JSONParameterEncoderSpec.swift in Sources */,
 				DAC92A131C7FCF9400F01940 /* MalibuSpec.swift in Sources */,
 				DAC92A0E1C7FA5F500F01940 /* FormURLEncoderSpec.swift in Sources */,
@@ -482,6 +487,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAEE2BAB1C7F8A3C0000FB12 /* ContentTypeSpec.swift in Sources */,
+				D55ECF701C865AF00011DCC3 /* SessionConfigurationSpec.swift in Sources */,
 				DAEE2BB81C7F8C5E0000FB12 /* JSONParameterEncoderSpec.swift in Sources */,
 				DAC92A141C7FCF9500F01940 /* MalibuSpec.swift in Sources */,
 				DAC92A0F1C7FA5F600F01940 /* FormURLEncoderSpec.swift in Sources */,

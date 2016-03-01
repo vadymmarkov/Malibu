@@ -15,7 +15,7 @@ public class Networking {
   let sessionConfiguration: SessionConfiguration
 
   lazy var session: NSURLSession = {
-    return NSURLSession(configuration: self.sessionConfiguration.configuration)
+    return NSURLSession(configuration: self.sessionConfiguration.value)
   }()
 
   public init(sessionConfiguration: SessionConfiguration = .Default) {
