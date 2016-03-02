@@ -1,11 +1,6 @@
 import Foundation
 import When
 
-public enum Error: ErrorType {
-  case UnknownResponse
-  case NoDataInResponse
-}
-
 public class Networking {
 
   enum SessionTaskKind {

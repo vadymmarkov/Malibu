@@ -32,6 +32,8 @@
 		DAC92A2A1C83A38400F01940 /* When.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC92A291C83A38400F01940 /* When.framework */; };
 		DAC92A2C1C87A2D300F01940 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A2B1C87A2D300F01940 /* Response.swift */; };
 		DAC92A2D1C87A2D300F01940 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A2B1C87A2D300F01940 /* Response.swift */; };
+		DAC92A2F1C87A9AB00F01940 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A2E1C87A9AB00F01940 /* Error.swift */; };
+		DAC92A301C87A9AB00F01940 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A2E1C87A9AB00F01940 /* Error.swift */; };
 		DAEE2BA61C7F8A240000FB12 /* ContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE2BA41C7F8A240000FB12 /* ContentType.swift */; };
 		DAEE2BA71C7F8A240000FB12 /* ContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE2BA41C7F8A240000FB12 /* ContentType.swift */; };
 		DAEE2BA81C7F8A240000FB12 /* Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE2BA51C7F8A240000FB12 /* Method.swift */; };
@@ -88,6 +90,7 @@
 		DAC92A181C83765C00F01940 /* SessionConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionConfiguration.swift; sourceTree = "<group>"; };
 		DAC92A291C83A38400F01940 /* When.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = When.framework; path = Carthage/Build/iOS/When.framework; sourceTree = "<group>"; };
 		DAC92A2B1C87A2D300F01940 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		DAC92A2E1C87A9AB00F01940 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		DAEE2BA11C7F8A1C0000FB12 /* ContentTypeSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentTypeSpec.swift; sourceTree = "<group>"; };
 		DAEE2BA41C7F8A240000FB12 /* ContentType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentType.swift; sourceTree = "<group>"; };
 		DAEE2BA51C7F8A240000FB12 /* Method.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Method.swift; sourceTree = "<group>"; };
@@ -182,6 +185,7 @@
 				DAC92A151C83750700F01940 /* Networking.swift */,
 				DAC92A181C83765C00F01940 /* SessionConfiguration.swift */,
 				DAC92A2B1C87A2D300F01940 /* Response.swift */,
+				DAC92A2E1C87A9AB00F01940 /* Error.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -460,6 +464,7 @@
 				DAEE2BA61C7F8A240000FB12 /* ContentType.swift in Sources */,
 				DAC92A061C7F90B400F01940 /* Malibu.swift in Sources */,
 				DAEE2BA81C7F8A240000FB12 /* Method.swift in Sources */,
+				DAC92A2F1C87A9AB00F01940 /* Error.swift in Sources */,
 				DAC92A161C83750700F01940 /* Networking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -489,6 +494,7 @@
 				DAEE2BA71C7F8A240000FB12 /* ContentType.swift in Sources */,
 				DAC92A071C7F90B400F01940 /* Malibu.swift in Sources */,
 				DAEE2BA91C7F8A240000FB12 /* Method.swift in Sources */,
+				DAC92A301C87A9AB00F01940 /* Error.swift in Sources */,
 				DAC92A171C83750700F01940 /* Networking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

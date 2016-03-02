@@ -3,17 +3,39 @@ import When
 
 public class Response: Promise<NSData> {
   
-  public let request: NSURLRequest?
-  public let response: NSHTTPURLResponse?
+  let request: NSURLRequest?
+  let response: NSHTTPURLResponse?
   
-  public let data: NSData?
-  
-  
-  public init(request: NSURLRequest?, response: NSHTTPURLResponse?, data: NSData?) {
+  public init(request: NSURLRequest?, response: NSHTTPURLResponse?) {
     self.request = request
     self.response = response
-    self.data = data
     
     super.init()
+  }
+  
+  public func validate<S: SequenceType where S.Generator.Element == Int>(statusCode statusCodes: S) -> Response {
+    let validationResponse = Response(request: request, response: response)
+    
+    done({ data in
+      guard let response = self.response else {
+        let error =  Error.NoResponseReceived
+        validationResponse.reject(error)
+        return
+      }
+      
+      guard statusCodes.contains(response.statusCode) else {
+        let error =  Error.StatusCodeValidationFailed(response.statusCode)
+        validationResponse.reject(error)
+        return
+      }
+      
+      validationResponse.resolve(data)
+    })
+    
+    fail({ error in
+      validationResponse.reject(error)
+    })
+    
+    return validationResponse
   }
 }
