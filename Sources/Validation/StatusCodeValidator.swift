@@ -1,9 +1,12 @@
-//
-//  StatusCodeValidator.swift
-//  Malibu
-//
-//  Created by Vadym Markov on 03/03/16.
-//  Copyright © 2016 Hyper Interaktiv AS. All rights reserved.
-//
-
 import Foundation
+
+public struct StatusCodeValidator<T: SequenceType where T.Generator.Element == Int>: Validating {
+  
+  public var statusCodes: T
+  
+  public func validateResponse(response: NSHTTPURLResponse) throws {
+    guard statusCodes.contains(response.statusCode) else {
+      throw Error.UnacceptableStatusCode(response.statusCode)
+    }
+  }
+}
