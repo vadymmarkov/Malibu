@@ -7,20 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D55ECF6F1C865AF00011DCC3 /* SessionConfigurationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55ECF6E1C865AF00011DCC3 /* SessionConfigurationSpec.swift */; };
+		D55ECF701C865AF00011DCC3 /* SessionConfigurationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55ECF6E1C865AF00011DCC3 /* SessionConfigurationSpec.swift */; };
+		D5A8A0A41C866209000D60F6 /* NetworkingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8A0A11C866205000D60F6 /* NetworkingSpec.swift */; };
+		D5A8A0A51C866209000D60F6 /* NetworkingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8A0A11C866205000D60F6 /* NetworkingSpec.swift */; };
 		D5B2E8AA1C3A780C00C0327D /* Malibu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5B2E89F1C3A780C00C0327D /* Malibu.framework */; };
 		D5C6294A1C3A7FAA007F7B7C /* Malibu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629401C3A7FAA007F7B7C /* Malibu.framework */; };
 		D5C629771C3A878E007F7B7C /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629751C3A878E007F7B7C /* Quick.framework */; };
 		D5C629781C3A878E007F7B7C /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629761C3A878E007F7B7C /* Nimble.framework */; };
 		D5C6297B1C3A879F007F7B7C /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629791C3A879F007F7B7C /* Quick.framework */; };
 		D5C6297C1C3A879F007F7B7C /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C6297A1C3A879F007F7B7C /* Nimble.framework */; };
-		DAC92A061C7F90B400F01940 /* WaveRider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A051C7F90B400F01940 /* WaveRider.swift */; };
-		DAC92A071C7F90B400F01940 /* WaveRider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A051C7F90B400F01940 /* WaveRider.swift */; };
+		DAC92A061C7F90B400F01940 /* Malibu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A051C7F90B400F01940 /* Malibu.swift */; };
+		DAC92A071C7F90B400F01940 /* Malibu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A051C7F90B400F01940 /* Malibu.swift */; };
 		DAC92A091C7F961900F01940 /* FormURLEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A081C7F961900F01940 /* FormURLEncoder.swift */; };
 		DAC92A0A1C7F961900F01940 /* FormURLEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A081C7F961900F01940 /* FormURLEncoder.swift */; };
 		DAC92A0E1C7FA5F500F01940 /* FormURLEncoderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A0B1C7FA5E700F01940 /* FormURLEncoderSpec.swift */; };
 		DAC92A0F1C7FA5F600F01940 /* FormURLEncoderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A0B1C7FA5E700F01940 /* FormURLEncoderSpec.swift */; };
-		DAC92A131C7FCF9400F01940 /* WaveRiderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A101C7FCF9000F01940 /* WaveRiderSpec.swift */; };
-		DAC92A141C7FCF9500F01940 /* WaveRiderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A101C7FCF9000F01940 /* WaveRiderSpec.swift */; };
+		DAC92A131C7FCF9400F01940 /* MalibuSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A101C7FCF9000F01940 /* MalibuSpec.swift */; };
+		DAC92A141C7FCF9500F01940 /* MalibuSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A101C7FCF9000F01940 /* MalibuSpec.swift */; };
+		DAC92A161C83750700F01940 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A151C83750700F01940 /* Networking.swift */; };
+		DAC92A171C83750700F01940 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A151C83750700F01940 /* Networking.swift */; };
+		DAC92A191C83765C00F01940 /* SessionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A181C83765C00F01940 /* SessionConfiguration.swift */; };
+		DAC92A1A1C83765C00F01940 /* SessionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A181C83765C00F01940 /* SessionConfiguration.swift */; };
+		DAC92A2A1C83A38400F01940 /* When.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC92A291C83A38400F01940 /* When.framework */; };
 		DAEE2BA61C7F8A240000FB12 /* ContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE2BA41C7F8A240000FB12 /* ContentType.swift */; };
 		DAEE2BA71C7F8A240000FB12 /* ContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE2BA41C7F8A240000FB12 /* ContentType.swift */; };
 		DAEE2BA81C7F8A240000FB12 /* Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE2BA51C7F8A240000FB12 /* Method.swift */; };
@@ -55,6 +64,8 @@
 /* Begin PBXFileReference section */
 		D500FD111C3AABED00782D78 /* Playground-iOS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-iOS.playground"; sourceTree = "<group>"; };
 		D500FD121C3AAC8E00782D78 /* Playground-Mac.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-Mac.playground"; sourceTree = "<group>"; };
+		D55ECF6E1C865AF00011DCC3 /* SessionConfigurationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionConfigurationSpec.swift; sourceTree = "<group>"; };
+		D5A8A0A11C866205000D60F6 /* NetworkingSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkingSpec.swift; sourceTree = "<group>"; };
 		D5B2E89F1C3A780C00C0327D /* Malibu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Malibu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5B2E8A91C3A780C00C0327D /* Malibu-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Malibu-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5C629401C3A7FAA007F7B7C /* Malibu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Malibu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,10 +78,13 @@
 		D5C6298C1C3A8BBD007F7B7C /* Info-Mac.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-Mac.plist"; sourceTree = "<group>"; };
 		D5C629901C3A8BDA007F7B7C /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
 		D5C629911C3A8BDA007F7B7C /* Info-Mac.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-Mac.plist"; sourceTree = "<group>"; };
-		DAC92A051C7F90B400F01940 /* WaveRider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveRider.swift; sourceTree = "<group>"; };
+		DAC92A051C7F90B400F01940 /* Malibu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Malibu.swift; sourceTree = "<group>"; };
 		DAC92A081C7F961900F01940 /* FormURLEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormURLEncoder.swift; sourceTree = "<group>"; };
 		DAC92A0B1C7FA5E700F01940 /* FormURLEncoderSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormURLEncoderSpec.swift; sourceTree = "<group>"; };
-		DAC92A101C7FCF9000F01940 /* WaveRiderSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveRiderSpec.swift; sourceTree = "<group>"; };
+		DAC92A101C7FCF9000F01940 /* MalibuSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MalibuSpec.swift; sourceTree = "<group>"; };
+		DAC92A151C83750700F01940 /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
+		DAC92A181C83765C00F01940 /* SessionConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionConfiguration.swift; sourceTree = "<group>"; };
+		DAC92A291C83A38400F01940 /* When.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = When.framework; path = Carthage/Build/iOS/When.framework; sourceTree = "<group>"; };
 		DAEE2BA11C7F8A1C0000FB12 /* ContentTypeSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentTypeSpec.swift; sourceTree = "<group>"; };
 		DAEE2BA41C7F8A240000FB12 /* ContentType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentType.swift; sourceTree = "<group>"; };
 		DAEE2BA51C7F8A240000FB12 /* Method.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Method.swift; sourceTree = "<group>"; };
@@ -84,6 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAC92A2A1C83A38400F01940 /* When.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,6 +135,7 @@
 		D5B2E8951C3A780C00C0327D = {
 			isa = PBXGroup;
 			children = (
+				DAC92A291C83A38400F01940 /* When.framework */,
 				D500FD111C3AABED00782D78 /* Playground-iOS.playground */,
 				D500FD121C3AAC8E00782D78 /* Playground-Mac.playground */,
 				D5C629791C3A879F007F7B7C /* Quick.framework */,
@@ -159,7 +175,9 @@
 				DAEE2BAC1C7F8A770000FB12 /* Encoding */,
 				DAEE2BA41C7F8A240000FB12 /* ContentType.swift */,
 				DAEE2BA51C7F8A240000FB12 /* Method.swift */,
-				DAC92A051C7F90B400F01940 /* WaveRider.swift */,
+				DAC92A051C7F90B400F01940 /* Malibu.swift */,
+				DAC92A151C83750700F01940 /* Networking.swift */,
+				DAC92A181C83765C00F01940 /* SessionConfiguration.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -179,7 +197,9 @@
 			children = (
 				DAEE2BB31C7F8C500000FB12 /* Encoding */,
 				DAEE2BA11C7F8A1C0000FB12 /* ContentTypeSpec.swift */,
-				DAC92A101C7FCF9000F01940 /* WaveRiderSpec.swift */,
+				DAC92A101C7FCF9000F01940 /* MalibuSpec.swift */,
+				D55ECF6E1C865AF00011DCC3 /* SessionConfigurationSpec.swift */,
+				D5A8A0A11C866205000D60F6 /* NetworkingSpec.swift */,
 			);
 			path = Specs;
 			sourceTree = "<group>";
@@ -231,6 +251,7 @@
 				D5B2E89B1C3A780C00C0327D /* Frameworks */,
 				D5B2E89C1C3A780C00C0327D /* Headers */,
 				D5B2E89D1C3A780C00C0327D /* Resources */,
+				DAC92A281C83A35700F01940 /* Copy frameworks with Carthage */,
 			);
 			buildRules = (
 			);
@@ -405,6 +426,21 @@
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
+		DAC92A281C83A35700F01940 /* Copy frameworks with Carthage */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/When.framework",
+			);
+			name = "Copy frameworks with Carthage";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -413,11 +449,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAEE2BB11C7F8BA00000FB12 /* JSONParameterEncoder.swift in Sources */,
+				DAC92A191C83765C00F01940 /* SessionConfiguration.swift in Sources */,
 				DAEE2BAE1C7F8A870000FB12 /* ParameterEncoding.swift in Sources */,
 				DAC92A091C7F961900F01940 /* FormURLEncoder.swift in Sources */,
 				DAEE2BA61C7F8A240000FB12 /* ContentType.swift in Sources */,
-				DAC92A061C7F90B400F01940 /* WaveRider.swift in Sources */,
+				DAC92A061C7F90B400F01940 /* Malibu.swift in Sources */,
 				DAEE2BA81C7F8A240000FB12 /* Method.swift in Sources */,
+				DAC92A161C83750700F01940 /* Networking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,9 +463,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5A8A0A41C866209000D60F6 /* NetworkingSpec.swift in Sources */,
 				DAEE2BAA1C7F8A3B0000FB12 /* ContentTypeSpec.swift in Sources */,
+				D55ECF6F1C865AF00011DCC3 /* SessionConfigurationSpec.swift in Sources */,
 				DAEE2BB71C7F8C5D0000FB12 /* JSONParameterEncoderSpec.swift in Sources */,
-				DAC92A131C7FCF9400F01940 /* WaveRiderSpec.swift in Sources */,
+				DAC92A131C7FCF9400F01940 /* MalibuSpec.swift in Sources */,
 				DAC92A0E1C7FA5F500F01940 /* FormURLEncoderSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -437,11 +477,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAEE2BB21C7F8BA00000FB12 /* JSONParameterEncoder.swift in Sources */,
+				DAC92A1A1C83765C00F01940 /* SessionConfiguration.swift in Sources */,
 				DAEE2BAF1C7F8A870000FB12 /* ParameterEncoding.swift in Sources */,
 				DAC92A0A1C7F961900F01940 /* FormURLEncoder.swift in Sources */,
 				DAEE2BA71C7F8A240000FB12 /* ContentType.swift in Sources */,
-				DAC92A071C7F90B400F01940 /* WaveRider.swift in Sources */,
+				DAC92A071C7F90B400F01940 /* Malibu.swift in Sources */,
 				DAEE2BA91C7F8A240000FB12 /* Method.swift in Sources */,
+				DAC92A171C83750700F01940 /* Networking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -449,9 +491,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5A8A0A51C866209000D60F6 /* NetworkingSpec.swift in Sources */,
 				DAEE2BAB1C7F8A3C0000FB12 /* ContentTypeSpec.swift in Sources */,
+				D55ECF701C865AF00011DCC3 /* SessionConfigurationSpec.swift in Sources */,
 				DAEE2BB81C7F8C5E0000FB12 /* JSONParameterEncoderSpec.swift in Sources */,
-				DAC92A141C7FCF9500F01940 /* WaveRiderSpec.swift in Sources */,
+				DAC92A141C7FCF9500F01940 /* MalibuSpec.swift in Sources */,
 				DAC92A0F1C7FA5F600F01940 /* FormURLEncoderSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -569,6 +613,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Malibu/Info-iOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -588,6 +636,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Malibu/Info-iOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
