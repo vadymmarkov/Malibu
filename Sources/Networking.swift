@@ -17,18 +17,27 @@ public class Networking {
     self.sessionConfiguration = sessionConfiguration
   }
 
-  func request(method: Method, URL: NSURL, contentType: ContentType, parameters: [String: AnyObject]?) throws -> Promise<NSData> {
-    let promise = Promise<NSData>()
+  func request(method: Method, URL: NSURL, contentType: ContentType, parameters: [String: AnyObject]?) throws -> Response<NSData> {
+    let promise = Response<NSData>()
 
     let request = NSMutableURLRequest(URL: URL)
     request.HTTPMethod = method.rawValue
     request.addValue(contentType.value, forHTTPHeaderField: "Content-Type")
+    
+    promise.request = request
 
     if let encoder = parameterEncoders[contentType], let parameters = parameters {
       request.HTTPBody = try encoder.encode(parameters)
     }
 
     session.dataTaskWithRequest(request, completionHandler: { data, response, error in
+      guard let response = response as? NSHTTPURLResponse else {
+        promise.reject(Error.NoResponseReceived)
+        return
+      }
+      
+      promise.response = response
+      
       if let error = error {
         promise.reject(error)
         return

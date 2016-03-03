@@ -3,12 +3,12 @@ import When
 
 public class Response<T>: Promise<T> {
   
-  let request: NSURLRequest?
-  let response: NSHTTPURLResponse?
+  var request: NSURLRequest?
+  var response: NSHTTPURLResponse?
   
   // MARK: - Initialization
   
-  public init(request: NSURLRequest?, response: NSHTTPURLResponse?) {
+  public init(request: NSURLRequest? = nil, response: NSHTTPURLResponse? = nil) {
     self.request = request
     self.response = response
     
