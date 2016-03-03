@@ -9,8 +9,8 @@ public protocol Validating {
 
 extension Validating {
   
-  func validate(response: Response) -> Response {
-    let validationResponse = Response(request: response.request, response: response.response)
+  func validate<T>(response: Response<T>) -> Response<T> {
+    let validationResponse = Response<T>(request: response.request, response: response.response)
     let validate = validateResponse
     
     response.done({ data in
