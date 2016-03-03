@@ -1,10 +1,12 @@
 import Foundation
 import When
 
-public class Response: Promise<NSData> {
+public class Response<T>: Promise<T> {
   
   let request: NSURLRequest?
   let response: NSHTTPURLResponse?
+  
+  // MARK: - Initialization
   
   public init(request: NSURLRequest?, response: NSHTTPURLResponse?) {
     self.request = request
@@ -13,29 +15,29 @@ public class Response: Promise<NSData> {
     super.init()
   }
   
-  public func validate<S: SequenceType where S.Generator.Element == Int>(statusCode statusCodes: S) -> Response {
-    let validationResponse = Response(request: request, response: response)
+  public func validate(validator: Validating) -> Response {
+    return validator.validate(self)
+  }
+  
+  public func validate<T: SequenceType where T.Generator.Element == Int>(statusCodes statusCodes: T) -> Response {
+    return StatusCodeValidator(statusCodes: statusCodes).validate(self)
+  }
+  
+  public func validate<T : SequenceType where T.Generator.Element == String>(contentTypes contentTypes: T) -> Response {
+    return ContentTypeValidator(contentTypes: contentTypes).validate(self)
+  }
+  
+  public func validate() -> Response {
+    let statusCodes = 200..<300
     
-    done({ data in
-      guard let response = self.response else {
-        let error =  Error.NoResponseReceived
-        validationResponse.reject(error)
-        return
+    let contentTypes: [String] = {
+      guard let accept = request?.valueForHTTPHeaderField("Accept") else {
+        return ["*/*"]
       }
-      
-      guard statusCodes.contains(response.statusCode) else {
-        let error =  Error.StatusCodeValidationFailed(response.statusCode)
-        validationResponse.reject(error)
-        return
-      }
-      
-      validationResponse.resolve(data)
-    })
-    
-    fail({ error in
-      validationResponse.reject(error)
-    })
-    
-    return validationResponse
+
+      return accept.componentsSeparatedByString(",")
+    }()
+
+    return validate(statusCodes: statusCodes).validate(contentTypes: contentTypes)
   }
 }
