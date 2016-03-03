@@ -35,6 +35,8 @@
 		D5D389B21C88E0590039967A /* ContentTypeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D389A71C88E0440039967A /* ContentTypeSpec.swift */; };
 		D5D389B41C88E1080039967A /* ErrorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D389B31C88E1080039967A /* ErrorSpec.swift */; };
 		D5D389B51C88E1080039967A /* ErrorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D389B31C88E1080039967A /* ErrorSpec.swift */; };
+		D5D389B71C88E2C20039967A /* ResponseSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D389B61C88E2C20039967A /* ResponseSpec.swift */; };
+		D5D389B81C88E2C20039967A /* ResponseSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D389B61C88E2C20039967A /* ResponseSpec.swift */; };
 		DAC92A061C7F90B400F01940 /* Malibu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A051C7F90B400F01940 /* Malibu.swift */; };
 		DAC92A071C7F90B400F01940 /* Malibu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A051C7F90B400F01940 /* Malibu.swift */; };
 		DAC92A091C7F961900F01940 /* FormURLEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A081C7F961900F01940 /* FormURLEncoder.swift */; };
@@ -101,6 +103,7 @@
 		D5D389A71C88E0440039967A /* ContentTypeSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentTypeSpec.swift; sourceTree = "<group>"; };
 		D5D389AB1C88E0500039967A /* NetworkingSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkingSpec.swift; sourceTree = "<group>"; };
 		D5D389B31C88E1080039967A /* ErrorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorSpec.swift; sourceTree = "<group>"; };
+		D5D389B61C88E2C20039967A /* ResponseSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseSpec.swift; sourceTree = "<group>"; };
 		DAC92A051C7F90B400F01940 /* Malibu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Malibu.swift; sourceTree = "<group>"; };
 		DAC92A081C7F961900F01940 /* FormURLEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormURLEncoder.swift; sourceTree = "<group>"; };
 		DAC92A0B1C7FA5E700F01940 /* FormURLEncoderSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormURLEncoderSpec.swift; sourceTree = "<group>"; };
@@ -247,6 +250,7 @@
 			children = (
 				D5D389AB1C88E0500039967A /* NetworkingSpec.swift */,
 				D5D389B31C88E1080039967A /* ErrorSpec.swift */,
+				D5D389B61C88E2C20039967A /* ResponseSpec.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -544,6 +548,7 @@
 				D5D389AD1C88E0540039967A /* NetworkingSpec.swift in Sources */,
 				D5D389B01C88E0590039967A /* ContentTypeSpec.swift in Sources */,
 				DAC92A0E1C7FA5F500F01940 /* FormURLEncoderSpec.swift in Sources */,
+				D5D389B71C88E2C20039967A /* ResponseSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -579,6 +584,7 @@
 				D5D389AE1C88E0540039967A /* NetworkingSpec.swift in Sources */,
 				D5D389B21C88E0590039967A /* ContentTypeSpec.swift in Sources */,
 				DAC92A0F1C7FA5F600F01940 /* FormURLEncoderSpec.swift in Sources */,
+				D5D389B81C88E2C20039967A /* ResponseSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
