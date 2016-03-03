@@ -6,10 +6,10 @@ public enum Error: ErrorType {
   case UnacceptableStatusCode(Int)
   case UnacceptableContentType(String)
   case MissingContentType
-  
+
   var reason: String {
     var text: String
-    
+
     switch self {
     case .NoDataInResponse:
       text = "No data in response"
@@ -22,7 +22,22 @@ public enum Error: ErrorType {
     case .MissingContentType:
       text = "Response content type was missing"
     }
-    
+
     return NSLocalizedString(text, comment: "")
   }
+}
+
+// MARK: - Hashable
+
+extension Error: Hashable {
+
+  public var hashValue: Int {
+    return reason.hashValue
+  }
+}
+
+// MARK: - Equatable
+
+public func ==(lhs: Error, rhs: Error) -> Bool {
+  return lhs.reason == rhs.reason
 }

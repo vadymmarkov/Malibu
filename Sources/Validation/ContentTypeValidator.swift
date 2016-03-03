@@ -1,34 +1,33 @@
 import Foundation
 
 public struct ContentTypeValidator<T : SequenceType where T.Generator.Element == String>: Validating {
-  
+
   public var contentTypes: T
-  
+
   public func validateResponse(response: NSHTTPURLResponse) throws {
+
     if let responseContentType = response.MIMEType, responseMIMEType = MIMEType(contentType: responseContentType) {
-      contentTypes.forEach {
-        if MIMEType(contentType: $0)?.matches(responseMIMEType) == true {
+      for contentType in contentTypes {
+        if MIMEType(contentType: contentType)?.matches(responseMIMEType) == true {
           return
         }
       }
     } else {
-      contentTypes.forEach {
-        let expectedMIMEType = MIMEType(contentType: $0)
-        
+      for contentType in contentTypes {
+        let expectedMIMEType = MIMEType(contentType: contentType)
+
         if expectedMIMEType?.type == "*" && expectedMIMEType?.subtype == "*" {
           return
         }
       }
     }
-      
-    var error: ErrorType
-      
+
+    var error = Error.MissingContentType
+
     if let responseContentType = response.MIMEType {
       error = Error.UnacceptableContentType(responseContentType)
-    } else {
-      error = Error.MissingContentType
     }
-      
+
     throw error
   }
 }
