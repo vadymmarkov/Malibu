@@ -4,17 +4,72 @@ import Nimble
 
 class ResponseSpec: QuickSpec {
 
+  static let URL = NSURL(string: "http://hyper.no")!
+  static let HTTPResponse = NSHTTPURLResponse(URL: URL, statusCode: 200,
+    HTTPVersion: "HTTP/2.0", headerFields: nil)!
+  static let failedHTTPResponse = NSHTTPURLResponse(URL: URL, statusCode: 404,
+    HTTPVersion: "HTTP/2.0", headerFields: nil)!
+
   override func spec() {
     describe("Error") {
       var response: Response<String>!
       let URL = NSURL(string: "http://hyper.no")!
       var request: NSURLRequest!
-      var HTTPURLResponse: NSHTTPURLResponse!
+
+      // MARK: - Helpers
+
+      func testFailedResponse(validationResponse: Response<String>) {
+        let expectation = self.expectationWithDescription("Validation response failure")
+
+        validationResponse.fail({ error in
+          expect(error as! Error == Error.NoDataInResponse).to(beTrue())
+          expectation.fulfill()
+        })
+
+        response.reject(Error.NoDataInResponse)
+
+        self.waitForExpectationsWithTimeout(4.0, handler:nil)
+      }
+
+      func testFailedValidation(validationResponse: Response<String>, error: Error, HTTPResponse: NSHTTPURLResponse = ResponseSpec.HTTPResponse) {
+        let expectation = self.expectationWithDescription("Validation response failure")
+
+        response.response = HTTPResponse
+
+        validationResponse.fail({ validationError in
+          expect(validationError as! Error == error).to(beTrue())
+          expectation.fulfill()
+
+          print("obobo")
+          print(validationError)
+        })
+
+        response.resolve("Success!")
+
+        self.waitForExpectationsWithTimeout(4.0, handler:nil)
+      }
+
+      func testSucceededValidation(validationResponse: Response<String>, HTTPResponse: NSHTTPURLResponse = ResponseSpec.HTTPResponse) {
+        let expectation = self.expectationWithDescription("Validation response success")
+        let result = "Success!"
+
+        response.response = HTTPResponse
+
+        validationResponse.done({ result in
+          expect(result).to(equal(result))
+          expectation.fulfill()
+        })
+
+        response.resolve(result)
+
+        self.waitForExpectationsWithTimeout(4.0, handler:nil)
+      }
+
+      // MARK: - Specs
 
       beforeEach {
         response = Response()
         request = NSURLRequest(URL: NSURL(string: "http://hyper.no")!)
-        HTTPURLResponse = NSHTTPURLResponse(URL: URL, statusCode: 401, HTTPVersion: "HTTP/2.0", headerFields: nil)
       }
 
       describe("#init") {
@@ -26,10 +81,10 @@ class ResponseSpec: QuickSpec {
         }
 
         it("sets request and response parameters to instance vars") {
-          response = Response(request: request, response: HTTPURLResponse)
+          response = Response(request: request, response: ResponseSpec.HTTPResponse)
 
           expect(response.request).to(equal(request))
-          expect(response.response).to(equal(HTTPURLResponse))
+          expect(response.response).to(equal(ResponseSpec.HTTPResponse))
         }
       }
 
@@ -43,53 +98,20 @@ class ResponseSpec: QuickSpec {
 
         context("when response is rejected") {
           it("rejects validation response with an error") {
-            let expectation = self.expectationWithDescription("Validation response failure")
-
-            validationResponse.fail({ error in
-              expect(error as! Error == Error.NoDataInResponse).to(beTrue())
-              expectation.fulfill()
-            })
-
-            response.reject(Error.NoDataInResponse)
-
-            self.waitForExpectationsWithTimeout(2.0, handler:nil)
+            testFailedResponse(validationResponse)
           }
         }
 
         context("when response is resolved and validation fails") {
           it("rejects validation response with an error") {
-            let expectation = self.expectationWithDescription("Validation response failure")
-
-            response.response = NSHTTPURLResponse(URL: URL, statusCode: 401,
-              HTTPVersion: "HTTP/2.0", headerFields: nil)
-
-            validationResponse.fail({ error in
-              expect(error as! Error == Error.UnacceptableStatusCode(401)).to(beTrue())
-              expectation.fulfill()
-            })
-
-            response.resolve("Success!")
-
-            self.waitForExpectationsWithTimeout(2.0, handler:nil)
+            testFailedValidation(validationResponse, error: Error.UnacceptableStatusCode(404),
+              HTTPResponse: ResponseSpec.failedHTTPResponse)
           }
         }
 
         context("when response is resolved and validation succeeded") {
           it("resolves validation response with a result") {
-            let expectation = self.expectationWithDescription("Validation response success")
-            let result = "Success!"
-
-            response.response = NSHTTPURLResponse(URL: URL, statusCode: 200,
-              HTTPVersion: "HTTP/2.0", headerFields: nil)
-
-            validationResponse.done({ result in
-              expect(result).to(equal(result))
-              expectation.fulfill()
-            })
-
-            response.resolve(result)
-
-            self.waitForExpectationsWithTimeout(2.0, handler:nil)
+            testSucceededValidation(validationResponse)
           }
         }
       }
@@ -101,22 +123,22 @@ class ResponseSpec: QuickSpec {
           validationResponse = response.validate(statusCodes: [200])
         }
 
+        context("when response is rejected") {
+          it("rejects validation response with an error") {
+            testFailedResponse(validationResponse)
+          }
+        }
+
+        context("when response is resolved and validation fails") {
+          it("rejects validation response with an error") {
+            testFailedValidation(validationResponse, error: Error.UnacceptableStatusCode(404),
+              HTTPResponse: ResponseSpec.failedHTTPResponse)
+          }
+        }
+
         context("when response is resolved and validation succeeded") {
           it("resolves validation response with a result") {
-            let expectation = self.expectationWithDescription("Validation response success")
-            let result = "Success!"
-
-            response.response = NSHTTPURLResponse(URL: URL, statusCode: 200,
-              HTTPVersion: "HTTP/2.0", headerFields: nil)
-
-            validationResponse.done({ result in
-              expect(result).to(equal(result))
-              expectation.fulfill()
-            })
-
-            response.resolve(result)
-
-            self.waitForExpectationsWithTimeout(2.0, handler:nil)
+            testSucceededValidation(validationResponse)
           }
         }
       }
@@ -128,22 +150,92 @@ class ResponseSpec: QuickSpec {
           validationResponse = response.validate(contentTypes: ["application/json; charset=utf-8"])
         }
 
-        context("when response is resolved and validation succeeded") {
-          it("resolves validation response with a result") {
-            let expectation = self.expectationWithDescription("Validation response success")
-            let result = "Success!"
+        context("when response is rejected") {
+          it("rejects validation response with an error") {
+            testFailedResponse(validationResponse)
+          }
+        }
 
-            response.response = NSHTTPURLResponse(URL: URL, MIMEType: "application/json; charset=utf-8",
+        context("when response is resolved and validation fails") {
+          it("rejects validation response with an error") {
+            let HTTPResponse = NSHTTPURLResponse(URL: URL, MIMEType: "text/html; charset=utf-8",
               expectedContentLength: 100, textEncodingName: nil)
 
-            validationResponse.done({ result in
-              expect(result).to(equal(result))
-              expectation.fulfill()
-            })
+            testFailedValidation(validationResponse,
+              error: Error.UnacceptableContentType("text/html; charset=utf-8"),
+              HTTPResponse: HTTPResponse)
+          }
+        }
 
-            response.resolve(result)
+        context("when response is resolved and validation succeeded") {
+          it("resolves validation response with a result") {
+            let HTTPResponse = NSHTTPURLResponse(URL: URL, MIMEType: "application/json; charset=utf-8",
+              expectedContentLength: 100, textEncodingName: nil)
 
-            self.waitForExpectationsWithTimeout(2.0, handler:nil)
+            testSucceededValidation(validationResponse, HTTPResponse: HTTPResponse)
+          }
+        }
+      }
+
+      describe("#validate") {
+        var validationResponse: Response<String>!
+
+        context("with no accept header in the request") {
+          beforeEach {
+            validationResponse = response.validate()
+          }
+
+          context("when response is rejected") {
+            it("rejects validation response with an error") {
+              testFailedResponse(validationResponse)
+            }
+          }
+
+          context("when response is resolved and validation fails") {
+            it("rejects validation response with an error") {
+              testFailedValidation(validationResponse, error: Error.UnacceptableStatusCode(404),
+                HTTPResponse: ResponseSpec.failedHTTPResponse)
+            }
+          }
+
+          context("when response is resolved and validation succeeded") {
+            it("resolves validation response with a result") {
+              testSucceededValidation(validationResponse, HTTPResponse: ResponseSpec.HTTPResponse)
+            }
+          }
+        }
+
+        context("with accept header in the request") {
+          beforeEach {
+            let request = NSMutableURLRequest(URL: URL)
+            request.addValue("Accept", forHTTPHeaderField: "text/html; charset=utf-8")
+            response.request = request
+
+            validationResponse = response.validate()
+          }
+
+          context("when response is rejected") {
+            it("rejects validation response with an error") {
+              testFailedResponse(validationResponse)
+            }
+          }
+
+          context("when response is resolved and validation fails") {
+            it("rejects validation response with an error") {
+              testFailedValidation(validationResponse, error: Error.UnacceptableStatusCode(404),
+                HTTPResponse: ResponseSpec.failedHTTPResponse)
+            }
+          }
+
+          context("when response is resolved and validation succeeded") {
+            it("resolves validation response with a result") {
+              let HTTPResponse = NSHTTPURLResponse(URL: URL, statusCode: 200,
+                HTTPVersion: "HTTP/2.0", headerFields: nil)!
+
+              HTTPResponse.setValue("text/html; charset=utf-8", forKey: "MIMEType")
+
+              testSucceededValidation(validationResponse, HTTPResponse: HTTPResponse)
+            }
           }
         }
       }
