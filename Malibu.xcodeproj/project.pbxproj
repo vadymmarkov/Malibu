@@ -221,10 +221,10 @@
 		D5D3898E1C88DF900039967A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				D5D389961C88E0010039967A /* MIMEType.swift */,
-				D5D389971C88E0010039967A /* SessionConfiguration.swift */,
 				D5D389981C88E0010039967A /* ContentType.swift */,
 				D5D389991C88E0010039967A /* Method.swift */,
+				D5D389961C88E0010039967A /* MIMEType.swift */,
+				D5D389971C88E0010039967A /* SessionConfiguration.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -242,9 +242,9 @@
 		D5D389A51C88E01C0039967A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				D5D389A61C88E0440039967A /* SessionConfigurationSpec.swift */,
 				D5D389A71C88E0440039967A /* ContentTypeSpec.swift */,
 				D52F612F1C890C9A00262637 /* MimeTypeSpec.swift */,
+				D5D389A61C88E0440039967A /* SessionConfigurationSpec.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -252,8 +252,8 @@
 		D5D389AA1C88E0500039967A /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				D5D389AB1C88E0500039967A /* NetworkingSpec.swift */,
 				D5D389B31C88E1080039967A /* ErrorSpec.swift */,
+				D5D389AB1C88E0500039967A /* NetworkingSpec.swift */,
 				D5D389B61C88E2C20039967A /* ResponseSpec.swift */,
 			);
 			path = Networking;
