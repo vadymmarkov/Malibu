@@ -17,7 +17,7 @@ public class Networking {
     self.sessionConfiguration = sessionConfiguration
   }
 
-  func request(method: Method, URL: NSURL, contentType: ContentType = .JSON, parameters: [String: AnyObject]?) throws -> Response<NSData> {
+  func request(method: Method, URL: NSURL, contentType: ContentType = .JSON, parameters: [String: AnyObject] = [:]) throws -> Response<NSData> {
     let promise = Response<NSData>()
 
     let request = NSMutableURLRequest(URL: URL)
@@ -26,7 +26,7 @@ public class Networking {
 
     promise.request = request
 
-    if let encoder = parameterEncoders[contentType], let parameters = parameters {
+    if let encoder = parameterEncoders[contentType] {
       request.HTTPBody = try encoder.encode(parameters)
     }
 
