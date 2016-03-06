@@ -2,12 +2,13 @@
 import Quick
 import Nimble
 
-class StatusCodeValidatorSpec: QuickSpec {
+class ContentTypeValidatorSpec: QuickSpec {
 
   override func spec() {
-    describe("StatusCodeValidator") {
+    describe("ContentTypeValidator") {
       describe(".validateResponse") {
         let URL = NSURL(string: "http://hyper.no")!
+        let contentType = "application/json; charset=utf-8"
         var response: Response<String>!
         var validationResponse: Response<String>!
 
@@ -15,13 +16,14 @@ class StatusCodeValidatorSpec: QuickSpec {
           let request = NSURLRequest(URL: URL)
 
           response = Response(request: request)
-          validationResponse = StatusCodeValidator(statusCodes: [200]).validate(response)
+          validationResponse = ContentTypeValidator(
+            contentTypes: [contentType]).validate(response)
         }
 
         context("when response is rejected") {
           it("rejects validation response with an error") {
-            let HTTPResponse = NSHTTPURLResponse(URL: URL, statusCode: 200,
-              HTTPVersion: "HTTP/2.0", headerFields: nil)!
+            let HTTPResponse = NSHTTPURLResponse(URL: URL, MIMEType: contentType,
+              expectedContentLength: 10, textEncodingName: nil)
             let expectation = self.expectationWithDescription("Validation response failure")
 
             response.response = HTTPResponse
@@ -39,14 +41,15 @@ class StatusCodeValidatorSpec: QuickSpec {
 
         context("when response is resolved and validation fails") {
           it("rejects validation response with an error") {
-            let HTTPResponse = NSHTTPURLResponse(URL: URL, statusCode: 404,
-              HTTPVersion: "HTTP/2.0", headerFields: nil)!
+            let HTTPResponse = NSHTTPURLResponse(URL: URL, MIMEType: "text/html; charset=utf-8",
+              expectedContentLength: 100, textEncodingName: nil)
             let expectation = self.expectationWithDescription("Validation response failure")
 
             response.response = HTTPResponse
 
             validationResponse.fail({ validationError in
-              expect(validationError as! Error == Error.UnacceptableStatusCode(404)).to(beTrue())
+              expect(validationError as! Error ==
+                Error.UnacceptableContentType("text/html; charset=utf-8")).to(beTrue())
               expectation.fulfill()
             })
 
@@ -58,8 +61,8 @@ class StatusCodeValidatorSpec: QuickSpec {
 
         context("when response is resolved and validation succeeded") {
           it("resolves validation response with a result") {
-            let HTTPResponse = NSHTTPURLResponse(URL: URL, statusCode: 200,
-              HTTPVersion: "HTTP/2.0", headerFields: nil)!
+            let HTTPResponse = NSHTTPURLResponse(URL: URL, MIMEType: contentType,
+              expectedContentLength: 10, textEncodingName: nil)
             let expectation = self.expectationWithDescription("Validation response success")
             let result = "Success!"
 
