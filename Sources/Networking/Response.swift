@@ -15,6 +15,8 @@ public class Response<T>: Promise<T> {
     super.init()
   }
 
+  // MARK: - Validations
+
   public func validate(validator: Validating) -> Response {
     return validator.attachTo(self)
   }

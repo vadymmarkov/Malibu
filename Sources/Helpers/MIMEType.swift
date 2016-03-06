@@ -26,6 +26,8 @@ struct MIMEType {
     self.subtype = subtype
   }
 
+  // MARK: - Matches
+
   func matches(MIME: MIMEType) -> Bool {
     var result: Bool
 
