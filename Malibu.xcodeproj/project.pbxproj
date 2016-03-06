@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D52F61311C890C9F00262637 /* MimeTypeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52F612F1C890C9A00262637 /* MimeTypeSpec.swift */; };
+		D52F61321C890C9F00262637 /* MimeTypeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52F612F1C890C9A00262637 /* MimeTypeSpec.swift */; };
 		D5B2E8AA1C3A780C00C0327D /* Malibu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5B2E89F1C3A780C00C0327D /* Malibu.framework */; };
 		D5C6294A1C3A7FAA007F7B7C /* Malibu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629401C3A7FAA007F7B7C /* Malibu.framework */; };
 		D5C629771C3A878E007F7B7C /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629751C3A878E007F7B7C /* Quick.framework */; };
@@ -80,6 +82,7 @@
 /* Begin PBXFileReference section */
 		D500FD111C3AABED00782D78 /* Playground-iOS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-iOS.playground"; sourceTree = "<group>"; };
 		D500FD121C3AAC8E00782D78 /* Playground-Mac.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-Mac.playground"; sourceTree = "<group>"; };
+		D52F612F1C890C9A00262637 /* MimeTypeSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MimeTypeSpec.swift; sourceTree = "<group>"; };
 		D5B2E89F1C3A780C00C0327D /* Malibu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Malibu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5B2E8A91C3A780C00C0327D /* Malibu-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Malibu-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5C629401C3A7FAA007F7B7C /* Malibu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Malibu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -241,6 +244,7 @@
 			children = (
 				D5D389A61C88E0440039967A /* SessionConfigurationSpec.swift */,
 				D5D389A71C88E0440039967A /* ContentTypeSpec.swift */,
+				D52F612F1C890C9A00262637 /* MimeTypeSpec.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -548,6 +552,7 @@
 				D5D389AD1C88E0540039967A /* NetworkingSpec.swift in Sources */,
 				D5D389B01C88E0590039967A /* ContentTypeSpec.swift in Sources */,
 				DAC92A0E1C7FA5F500F01940 /* FormURLEncoderSpec.swift in Sources */,
+				D52F61311C890C9F00262637 /* MimeTypeSpec.swift in Sources */,
 				D5D389B71C88E2C20039967A /* ResponseSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -584,6 +589,7 @@
 				D5D389AE1C88E0540039967A /* NetworkingSpec.swift in Sources */,
 				D5D389B21C88E0590039967A /* ContentTypeSpec.swift in Sources */,
 				DAC92A0F1C7FA5F600F01940 /* FormURLEncoderSpec.swift in Sources */,
+				D52F61321C890C9F00262637 /* MimeTypeSpec.swift in Sources */,
 				D5D389B81C88E2C20039967A /* ResponseSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

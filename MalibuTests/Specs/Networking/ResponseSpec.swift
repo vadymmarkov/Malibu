@@ -208,7 +208,7 @@ class ResponseSpec: QuickSpec {
         context("with accept header in the request") {
           beforeEach {
             let request = NSMutableURLRequest(URL: URL)
-            request.addValue("Accept", forHTTPHeaderField: "text/html; charset=utf-8")
+            request.addValue("text/html; charset=utf-8", forHTTPHeaderField: "Accept")
             response.request = request
 
             validationResponse = response.validate()
@@ -231,7 +231,6 @@ class ResponseSpec: QuickSpec {
             it("resolves validation response with a result") {
               let HTTPResponse = NSHTTPURLResponse(URL: URL, statusCode: 200,
                 HTTPVersion: "HTTP/2.0", headerFields: nil)!
-
               HTTPResponse.setValue("text/html; charset=utf-8", forKey: "MIMEType")
 
               testSucceededValidation(validationResponse, HTTPResponse: HTTPResponse)
