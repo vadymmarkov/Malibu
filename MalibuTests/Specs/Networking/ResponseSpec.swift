@@ -39,9 +39,6 @@ class ResponseSpec: QuickSpec {
         validationResponse.fail({ validationError in
           expect(validationError as! Error == error).to(beTrue())
           expectation.fulfill()
-
-          print("obobo")
-          print(validationError)
         })
 
         response.resolve("Success!")

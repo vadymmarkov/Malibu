@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		D52F61311C890C9F00262637 /* MimeTypeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52F612F1C890C9A00262637 /* MimeTypeSpec.swift */; };
 		D52F61321C890C9F00262637 /* MimeTypeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52F612F1C890C9A00262637 /* MimeTypeSpec.swift */; };
+		D560A2E41C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D560A2E31C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift */; };
+		D560A2E51C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D560A2E31C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift */; };
 		D5B2E8AA1C3A780C00C0327D /* Malibu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5B2E89F1C3A780C00C0327D /* Malibu.framework */; };
 		D5C6294A1C3A7FAA007F7B7C /* Malibu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629401C3A7FAA007F7B7C /* Malibu.framework */; };
 		D5C629771C3A878E007F7B7C /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629751C3A878E007F7B7C /* Quick.framework */; };
@@ -83,6 +85,7 @@
 		D500FD111C3AABED00782D78 /* Playground-iOS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-iOS.playground"; sourceTree = "<group>"; };
 		D500FD121C3AAC8E00782D78 /* Playground-Mac.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-Mac.playground"; sourceTree = "<group>"; };
 		D52F612F1C890C9A00262637 /* MimeTypeSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MimeTypeSpec.swift; sourceTree = "<group>"; };
+		D560A2E31C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusCodeVadatorSpec.swift; sourceTree = "<group>"; };
 		D5B2E89F1C3A780C00C0327D /* Malibu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Malibu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5B2E8A91C3A780C00C0327D /* Malibu-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Malibu-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5C629401C3A7FAA007F7B7C /* Malibu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Malibu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -159,6 +162,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D560A2E21C8C663000D4B640 /* Validation */ = {
+			isa = PBXGroup;
+			children = (
+				D560A2E31C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift */,
+			);
+			path = Validation;
+			sourceTree = "<group>";
+		};
 		D5B2E8951C3A780C00C0327D = {
 			isa = PBXGroup;
 			children = (
@@ -199,10 +210,10 @@
 		D5C629691C3A809D007F7B7C /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				D5D3898F1C88DFE10039967A /* Networking */,
 				D5D3898E1C88DF900039967A /* Helpers */,
-				DAC92A341C87B8F300F01940 /* Validation */,
 				DAEE2BAC1C7F8A770000FB12 /* Encoding */,
+				DAC92A341C87B8F300F01940 /* Validation */,
+				D5D3898F1C88DFE10039967A /* Networking */,
 				DAC92A051C7F90B400F01940 /* Malibu.swift */,
 			);
 			path = Sources;
@@ -272,9 +283,10 @@
 		DAEE2BA01C7F8A1C0000FB12 /* Specs */ = {
 			isa = PBXGroup;
 			children = (
-				D5D389AA1C88E0500039967A /* Networking */,
 				D5D389A51C88E01C0039967A /* Helpers */,
 				DAEE2BB31C7F8C500000FB12 /* Encoding */,
+				D560A2E21C8C663000D4B640 /* Validation */,
+				D5D389AA1C88E0500039967A /* Networking */,
 				DAC92A101C7FCF9000F01940 /* MalibuSpec.swift */,
 			);
 			path = Specs;
@@ -554,6 +566,7 @@
 				DAC92A0E1C7FA5F500F01940 /* FormURLEncoderSpec.swift in Sources */,
 				D52F61311C890C9F00262637 /* MimeTypeSpec.swift in Sources */,
 				D5D389B71C88E2C20039967A /* ResponseSpec.swift in Sources */,
+				D560A2E41C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -591,6 +604,7 @@
 				DAC92A0F1C7FA5F600F01940 /* FormURLEncoderSpec.swift in Sources */,
 				D52F61321C890C9F00262637 /* MimeTypeSpec.swift in Sources */,
 				D5D389B81C88E2C20039967A /* ResponseSpec.swift in Sources */,
+				D560A2E51C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
