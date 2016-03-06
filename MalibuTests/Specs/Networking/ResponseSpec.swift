@@ -21,6 +21,8 @@ class ResponseSpec: QuickSpec {
       func testFailedResponse(validationResponse: Response<String>) {
         let expectation = self.expectationWithDescription("Validation response failure")
 
+        response.response = ResponseSpec.HTTPResponse
+
         validationResponse.fail({ error in
           expect(error as! Error == Error.NoDataInResponse).to(beTrue())
           expectation.fulfill()

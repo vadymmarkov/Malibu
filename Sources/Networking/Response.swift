@@ -16,7 +16,7 @@ public class Response<T>: Promise<T> {
   }
 
   public func validate(validator: Validating) -> Response {
-    return validator.validate(self)
+    return validator.attachTo(self)
   }
 
   public func validate<T: SequenceType where T.Generator.Element == Int>(statusCodes statusCodes: T) -> Response {

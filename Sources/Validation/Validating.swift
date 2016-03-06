@@ -4,27 +4,26 @@ import When
 public typealias Validation = (response: NSHTTPURLResponse) -> ErrorType?
 
 public protocol Validating {
-  func validateResponse(response: NSHTTPURLResponse) throws
+  func validate(response: NSHTTPURLResponse) throws
 }
 
 extension Validating {
 
-  func validate<T>(response: Response<T>) -> Response<T> {
+  func attachTo<T>(response: Response<T>) -> Response<T> {
     let validationResponse = Response<T>(request: response.request, response: response.response)
-    let validate = validateResponse
+    let validateResponse = validate
 
     response.done({ data in
-      guard let resolvedResponse = response.response else {
-        let error =  Error.NoResponseReceived
-        validationResponse.reject(error)
+      guard let HTTPResponse = response.response else {
+        validationResponse.reject(Error.NoResponseReceived)
         return
       }
 
       validationResponse.request = response.request
-      validationResponse.response = resolvedResponse
+      validationResponse.response = HTTPResponse
 
       do {
-        try validate(resolvedResponse)
+        try validateResponse(HTTPResponse)
       } catch {
         validationResponse.reject(error)
         return
@@ -34,6 +33,14 @@ extension Validating {
     })
 
     response.fail({ error in
+      guard let resolvedResponse = response.response else {
+        validationResponse.reject(Error.NoResponseReceived)
+        return
+      }
+
+      validationResponse.request = response.request
+      validationResponse.response = resolvedResponse
+
       validationResponse.reject(error)
     })
 
