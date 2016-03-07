@@ -6,6 +6,8 @@ public enum Error: ErrorType {
   case UnacceptableStatusCode(Int)
   case UnacceptableContentType(String)
   case MissingContentType
+  case NoJSONArrayInResponseData
+  case NoJSONDictionaryInResponseData
 
   var reason: String {
     var text: String
@@ -21,6 +23,10 @@ public enum Error: ErrorType {
       text = "Response content type \(contentType) was unacceptable"
     case .MissingContentType:
       text = "Response content type was missing"
+    case .NoJSONArrayInResponseData:
+      text = "No JSON array in response data"
+    case .NoJSONDictionaryInResponseData:
+      text = "No JSON dictionary in response data"
     }
 
     return NSLocalizedString(text, comment: "")

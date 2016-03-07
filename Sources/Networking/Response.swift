@@ -42,4 +42,27 @@ public class Response<T>: Promise<T> {
 
     return validate(statusCodes: statusCodes).validate(contentTypes: contentTypes)
   }
+
+  // MARK: - Serialization
+
+
+}
+
+extension Response where T: NSData {
+
+  public func toJSONArray() {
+    then({ data -> [[String: AnyObject]] in
+      guard let HTTPResponse = self.response else {
+        throw Error.NoResponseReceived
+      }
+
+      let serializer = JSONSerializer()
+
+      guard let result = try serializer.serialize(data, response: HTTPResponse) as? [[String : AnyObject]] else {
+        throw Error.NoJSONArrayInResponseData
+      }
+
+      return result
+    })
+  }
 }
