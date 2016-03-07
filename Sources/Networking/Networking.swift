@@ -17,14 +17,12 @@ public class Networking {
     self.sessionConfiguration = sessionConfiguration
   }
 
-  func request(method: Method, URL: NSURL, contentType: ContentType = .JSON, parameters: [String: AnyObject] = [:]) throws -> Response<NSData> {
-    let promise = Response<NSData>()
+  func request(method: Method, URL: NSURL, contentType: ContentType = .JSON, parameters: [String: AnyObject] = [:]) throws -> Promise<NetworkResult> {
+    let promise = Promise<NetworkResult>()
 
     let request = NSMutableURLRequest(URL: URL)
     request.HTTPMethod = method.rawValue
     request.addValue(contentType.value, forHTTPHeaderField: "Content-Type")
-
-    promise.request = request
 
     if let encoder = parameterEncoders[contentType] {
       request.HTTPBody = try encoder.encode(parameters)
@@ -36,8 +34,6 @@ public class Networking {
         return
       }
 
-      promise.response = response
-
       if let error = error {
         promise.reject(error)
         return
@@ -48,7 +44,8 @@ public class Networking {
         return
       }
 
-      promise.resolve(data)
+      let result = NetworkResult(data: data, request: request, response: response)
+      promise.resolve(result)
     }).resume()
 
     return promise
