@@ -3,15 +3,11 @@ import When
 
 public class Response<T>: Promise<T> {
 
-  var request: NSURLRequest?
-  var response: NSHTTPURLResponse?
+  var result: ResponseResult<T>?
 
   // MARK: - Initialization
 
-  public init(request: NSURLRequest? = nil, response: NSHTTPURLResponse? = nil) {
-    self.request = request
-    self.response = response
-
+  public init() {
     super.init()
   }
 
@@ -33,7 +29,7 @@ public class Response<T>: Promise<T> {
     let statusCodes = 200..<300
 
     let contentTypes: [String] = {
-      guard let accept = request?.valueForHTTPHeaderField("Accept") else {
+      guard let accept = result?.request.valueForHTTPHeaderField("Accept") else {
         return ["*/*"]
       }
 
@@ -42,17 +38,13 @@ public class Response<T>: Promise<T> {
 
     return validate(statusCodes: statusCodes).validate(contentTypes: contentTypes)
   }
-
-  // MARK: - Serialization
-
-
 }
 
 extension Response where T: NSData {
 
-  public func toJSONArray() {
-    then({ data -> [[String: AnyObject]] in
-      guard let HTTPResponse = self.response else {
+  public func toJSONArray() -> Promise<[[String: AnyObject]]> {
+    return then({ data -> [[String: AnyObject]] in
+      guard let HTTPResponse = self.result?.response else {
         throw Error.NoResponseReceived
       }
 

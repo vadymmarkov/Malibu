@@ -11,14 +11,15 @@ class ResponseSpec: QuickSpec {
     HTTPVersion: "HTTP/2.0", headerFields: nil)!
 
   override func spec() {
-    describe("Error") {
-      var response: Response<String>!
+    describe("Response") {
+      var response: Response<NSData>!
       let URL = NSURL(string: "http://hyper.no")!
       var request: NSURLRequest!
+      var data: NSData!
 
       // MARK: - Helpers
 
-      func testFailedResponse(validationResponse: Response<String>) {
+      func testFailedResponse(validationResponse: Response<NSData>) {
         let expectation = self.expectationWithDescription("Validation response failure")
 
         response.response = ResponseSpec.HTTPResponse
@@ -33,7 +34,7 @@ class ResponseSpec: QuickSpec {
         self.waitForExpectationsWithTimeout(4.0, handler:nil)
       }
 
-      func testFailedValidation(validationResponse: Response<String>, error: Error, HTTPResponse: NSHTTPURLResponse = ResponseSpec.HTTPResponse) {
+      func testFailedValidation(validationResponse: Response<NSData>, error: Error, HTTPResponse: NSHTTPURLResponse = ResponseSpec.HTTPResponse) {
         let expectation = self.expectationWithDescription("Validation response failure")
 
         response.response = HTTPResponse
@@ -43,14 +44,13 @@ class ResponseSpec: QuickSpec {
           expectation.fulfill()
         })
 
-        response.resolve("Success!")
+        response.resolve(data)
 
         self.waitForExpectationsWithTimeout(4.0, handler:nil)
       }
 
-      func testSucceededValidation(validationResponse: Response<String>, HTTPResponse: NSHTTPURLResponse = ResponseSpec.HTTPResponse) {
+      func testSucceededValidation(validationResponse: Response<NSData>, HTTPResponse: NSHTTPURLResponse = ResponseSpec.HTTPResponse) {
         let expectation = self.expectationWithDescription("Validation response success")
-        let result = "Success!"
 
         response.response = HTTPResponse
 
@@ -59,7 +59,7 @@ class ResponseSpec: QuickSpec {
           expectation.fulfill()
         })
 
-        response.resolve(result)
+        response.resolve(data)
 
         self.waitForExpectationsWithTimeout(4.0, handler:nil)
       }
@@ -69,6 +69,8 @@ class ResponseSpec: QuickSpec {
       beforeEach {
         response = Response()
         request = NSURLRequest(URL: NSURL(string: "http://hyper.no")!)
+        data = try! NSJSONSerialization.dataWithJSONObject([["name": "Taylor"]],
+          options: NSJSONWritingOptions())
       }
 
       describe("#init") {
@@ -89,7 +91,7 @@ class ResponseSpec: QuickSpec {
 
       describe("#validate:") {
         let validator = StatusCodeValidator(statusCodes: [200])
-        var validationResponse: Response<String>!
+        var validationResponse: Response<NSData>!
 
         beforeEach {
           validationResponse = response.validate(validator)
@@ -116,7 +118,7 @@ class ResponseSpec: QuickSpec {
       }
 
       describe("#validate:statusCodes") {
-        var validationResponse: Response<String>!
+        var validationResponse: Response<NSData>!
 
         beforeEach {
           validationResponse = response.validate(statusCodes: [200])
@@ -143,7 +145,7 @@ class ResponseSpec: QuickSpec {
       }
 
       describe("#validate:contentTypes") {
-        var validationResponse: Response<String>!
+        var validationResponse: Response<NSData>!
 
         beforeEach {
           validationResponse = response.validate(contentTypes: ["application/json; charset=utf-8"])
@@ -177,7 +179,7 @@ class ResponseSpec: QuickSpec {
       }
 
       describe("#validate") {
-        var validationResponse: Response<String>!
+        var validationResponse: Response<NSData>!
 
         context("with no accept header in the request") {
           beforeEach {
@@ -234,6 +236,14 @@ class ResponseSpec: QuickSpec {
 
               testSucceededValidation(validationResponse, HTTPResponse: HTTPResponse)
             }
+          }
+        }
+      }
+
+      describe("#toJSONArray") {
+        context("when response is rejected") {
+          it("rejects validation response with an error") {
+            testFailedResponse(validationResponse)
           }
         }
       }
