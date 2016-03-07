@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D503D38D1C8DA7730009BDAD /* Serializing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503D38C1C8DA7730009BDAD /* Serializing.swift */; };
+		D503D38E1C8DA7730009BDAD /* Serializing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503D38C1C8DA7730009BDAD /* Serializing.swift */; };
 		D52F61311C890C9F00262637 /* MimeTypeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52F612F1C890C9A00262637 /* MimeTypeSpec.swift */; };
 		D52F61321C890C9F00262637 /* MimeTypeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52F612F1C890C9A00262637 /* MimeTypeSpec.swift */; };
 		D560A2E41C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D560A2E31C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift */; };
@@ -88,6 +90,7 @@
 /* Begin PBXFileReference section */
 		D500FD111C3AABED00782D78 /* Playground-iOS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-iOS.playground"; sourceTree = "<group>"; };
 		D500FD121C3AAC8E00782D78 /* Playground-Mac.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-Mac.playground"; sourceTree = "<group>"; };
+		D503D38C1C8DA7730009BDAD /* Serializing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializing.swift; sourceTree = "<group>"; };
 		D52F612F1C890C9A00262637 /* MimeTypeSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MimeTypeSpec.swift; sourceTree = "<group>"; };
 		D560A2E31C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusCodeVadatorSpec.swift; sourceTree = "<group>"; };
 		D560A2E61C8C694100D4B640 /* ContentTypeValidatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentTypeValidatorSpec.swift; sourceTree = "<group>"; };
@@ -168,6 +171,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D503D38B1C8DA6CF0009BDAD /* Serialization */ = {
+			isa = PBXGroup;
+			children = (
+				D503D38C1C8DA7730009BDAD /* Serializing.swift */,
+			);
+			path = Serialization;
+			sourceTree = "<group>";
+		};
 		D560A2E21C8C663000D4B640 /* Validation */ = {
 			isa = PBXGroup;
 			children = (
@@ -221,6 +232,7 @@
 				D5D3898E1C88DF900039967A /* Helpers */,
 				DAEE2BAC1C7F8A770000FB12 /* Encoding */,
 				DAC92A341C87B8F300F01940 /* Validation */,
+				D503D38B1C8DA6CF0009BDAD /* Serialization */,
 				D5D3898F1C88DFE10039967A /* Networking */,
 				DAC92A051C7F90B400F01940 /* Malibu.swift */,
 			);
@@ -552,6 +564,7 @@
 				D5D389951C88DFF80039967A /* Response.swift in Sources */,
 				DAC92A361C87B92200F01940 /* Validating.swift in Sources */,
 				DAEE2BAE1C7F8A870000FB12 /* ParameterEncoding.swift in Sources */,
+				D503D38D1C8DA7730009BDAD /* Serializing.swift in Sources */,
 				DAC92A091C7F961900F01940 /* FormURLEncoder.swift in Sources */,
 				DAC92A061C7F90B400F01940 /* Malibu.swift in Sources */,
 				DAC92A391C87B95100F01940 /* StatusCodeValidator.swift in Sources */,
@@ -592,6 +605,7 @@
 				D5D389A01C88E0050039967A /* Response.swift in Sources */,
 				DAC92A371C87B92200F01940 /* Validating.swift in Sources */,
 				DAEE2BAF1C7F8A870000FB12 /* ParameterEncoding.swift in Sources */,
+				D503D38E1C8DA7730009BDAD /* Serializing.swift in Sources */,
 				DAC92A0A1C7F961900F01940 /* FormURLEncoder.swift in Sources */,
 				DAC92A071C7F90B400F01940 /* Malibu.swift in Sources */,
 				DAC92A3A1C87B95100F01940 /* StatusCodeValidator.swift in Sources */,
