@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		D503D38D1C8DA7730009BDAD /* Serializing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503D38C1C8DA7730009BDAD /* Serializing.swift */; };
 		D503D38E1C8DA7730009BDAD /* Serializing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503D38C1C8DA7730009BDAD /* Serializing.swift */; };
+		D503D3901C8DA95B0009BDAD /* JSONSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503D38F1C8DA95B0009BDAD /* JSONSerializer.swift */; };
+		D503D3911C8DA95B0009BDAD /* JSONSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503D38F1C8DA95B0009BDAD /* JSONSerializer.swift */; };
 		D52F61311C890C9F00262637 /* MimeTypeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52F612F1C890C9A00262637 /* MimeTypeSpec.swift */; };
 		D52F61321C890C9F00262637 /* MimeTypeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52F612F1C890C9A00262637 /* MimeTypeSpec.swift */; };
 		D560A2E41C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D560A2E31C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift */; };
@@ -91,6 +93,7 @@
 		D500FD111C3AABED00782D78 /* Playground-iOS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-iOS.playground"; sourceTree = "<group>"; };
 		D500FD121C3AAC8E00782D78 /* Playground-Mac.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-Mac.playground"; sourceTree = "<group>"; };
 		D503D38C1C8DA7730009BDAD /* Serializing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializing.swift; sourceTree = "<group>"; };
+		D503D38F1C8DA95B0009BDAD /* JSONSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONSerializer.swift; sourceTree = "<group>"; };
 		D52F612F1C890C9A00262637 /* MimeTypeSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MimeTypeSpec.swift; sourceTree = "<group>"; };
 		D560A2E31C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusCodeVadatorSpec.swift; sourceTree = "<group>"; };
 		D560A2E61C8C694100D4B640 /* ContentTypeValidatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentTypeValidatorSpec.swift; sourceTree = "<group>"; };
@@ -175,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				D503D38C1C8DA7730009BDAD /* Serializing.swift */,
+				D503D38F1C8DA95B0009BDAD /* JSONSerializer.swift */,
 			);
 			path = Serialization;
 			sourceTree = "<group>";
@@ -559,6 +563,7 @@
 				D5D389931C88DFF80039967A /* Error.swift in Sources */,
 				D5D3899B1C88E0010039967A /* SessionConfiguration.swift in Sources */,
 				DAC92A3C1C87C00C00F01940 /* ContentTypeValidator.swift in Sources */,
+				D503D3901C8DA95B0009BDAD /* JSONSerializer.swift in Sources */,
 				DAEE2BB11C7F8BA00000FB12 /* JSONParameterEncoder.swift in Sources */,
 				D5D389941C88DFF80039967A /* Networking.swift in Sources */,
 				D5D389951C88DFF80039967A /* Response.swift in Sources */,
@@ -600,6 +605,7 @@
 				D5D3899E1C88E0050039967A /* Error.swift in Sources */,
 				D5D389A21C88E0080039967A /* SessionConfiguration.swift in Sources */,
 				DAC92A3D1C87C00C00F01940 /* ContentTypeValidator.swift in Sources */,
+				D503D3911C8DA95B0009BDAD /* JSONSerializer.swift in Sources */,
 				DAEE2BB21C7F8BA00000FB12 /* JSONParameterEncoder.swift in Sources */,
 				D5D3899F1C88E0050039967A /* Networking.swift in Sources */,
 				D5D389A01C88E0050039967A /* Response.swift in Sources */,
