@@ -8,7 +8,7 @@ class SessionConfigurationSpec: QuickSpec {
     describe("SessionConfiguration") {
       var sessionConfiguration: SessionConfiguration!
 
-      context("when it's Default configuration") {
+      context("when it is Default configuration") {
         beforeEach {
           sessionConfiguration = .Default
         }
@@ -22,7 +22,7 @@ class SessionConfigurationSpec: QuickSpec {
         }
       }
 
-      context("when it's Background configuration") {
+      context("when it is Background configuration") {
         beforeEach {
           sessionConfiguration = .Background
         }
@@ -36,7 +36,7 @@ class SessionConfigurationSpec: QuickSpec {
         }
       }
 
-      context("when it's Custom configuration") {
+      context("when it is Custom configuration") {
         let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
 
         beforeEach {
