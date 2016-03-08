@@ -4,7 +4,7 @@ public struct StringSerializer: Serializing {
   
   var encoding: NSStringEncoding?
   
-  public init(encoding: NSStringEncoding) {
+  public init(encoding: NSStringEncoding? = nil) {
     self.encoding = encoding
   }
   

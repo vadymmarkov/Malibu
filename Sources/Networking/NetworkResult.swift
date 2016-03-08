@@ -60,10 +60,13 @@ public extension Promise where T: NetworkResult {
   
   public func toData() -> Promise<NSData> {
     return then({ result -> NSData in
-      let serializer = DataSerializer()
-      let data = try serializer.serialize(result.data, response: result.response)
-      
-      return data
+      return try DataSerializer().serialize(result.data, response: result.response)
+    })
+  }
+  
+  public func toString() -> Promise<String> {
+    return then({ result -> String in
+      return try StringSerializer().serialize(result.data, response: result.response)
     })
   }
   
