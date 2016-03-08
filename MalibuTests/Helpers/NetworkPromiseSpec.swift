@@ -10,6 +10,7 @@ protocol NetworkPromiseSpec {
 }
 
 extension NetworkPromiseSpec where Self: QuickSpec {
+
   func testFailedResponse<T>(promise: Promise<T>) {
     let expectation = self.expectationWithDescription("Validation response failure")
 
