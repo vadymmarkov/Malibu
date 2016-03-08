@@ -259,6 +259,44 @@ class NetworkResultSpec: QuickSpec {
           }
         }
       }
+      
+      describe("#toJSONDictionary") {
+        var promise: Promise<[String: AnyObject]>!
+        
+        beforeEach {
+          promise = networkPromise.toJSONDictionary()
+        }
+        
+        context("when response is rejected") {
+          it("rejects validation promise with an error") {
+            testFailedResponse(promise)
+          }
+        }
+        
+        context("when response is resolved and serialization fails") {
+          it("rejects serialization promise with an error") {
+            data = try! NSJSONSerialization.dataWithJSONObject([["name": "Taylor"]],
+              options: NSJSONWritingOptions())
+            
+            testFailedPromise(promise, error: Error.NoJSONArrayInResponseData,
+              response: failedResponse)
+          }
+        }
+        
+        context("when response is resolved and validation succeeded") {
+          it("resolves validation response with a result") {
+            let dictionary = ["name": "Taylor"]
+            data = try! NSJSONSerialization.dataWithJSONObject(dictionary,
+              options: NSJSONWritingOptions())
+            
+            testSucceededPromise(promise, response: response) { result in
+              if let stringDictionary = result as? [String: String] {
+                expect(stringDictionary).to(equal(dictionary))
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
