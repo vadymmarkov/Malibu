@@ -1,7 +1,7 @@
 import Foundation
 import When
 
-public class NetworkResult {
+public class NetworkResult: Equatable {
 
   public let data: NSData
   public let request: NSURLRequest
