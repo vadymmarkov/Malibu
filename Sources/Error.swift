@@ -9,10 +9,10 @@ public enum Error: ErrorType {
   case JSONArraySerializationFailed
   case JSONDictionarySerializationFailed
   case StringSerializationFailed(UInt)
-
+  
   var reason: String {
     var text: String
-
+    
     switch self {
     case .NoDataInResponse:
       text = "No data in response"
@@ -31,7 +31,7 @@ public enum Error: ErrorType {
     case .StringSerializationFailed(let encoding):
       text = "String could not be serialized with encoding: \(encoding)"
     }
-
+    
     return NSLocalizedString(text, comment: "")
   }
 }
@@ -39,7 +39,7 @@ public enum Error: ErrorType {
 // MARK: - Hashable
 
 extension Error: Hashable {
-
+  
   public var hashValue: Int {
     return reason.hashValue
   }
