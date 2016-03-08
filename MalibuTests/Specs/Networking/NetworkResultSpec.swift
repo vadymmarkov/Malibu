@@ -242,7 +242,7 @@ class NetworkResultSpec: QuickSpec {
             data = try! NSJSONSerialization.dataWithJSONObject(["name": "Taylor"],
               options: NSJSONWritingOptions())
             
-            testFailedPromise(promise, error: Error.NoJSONArrayInResponseData,
+            testFailedPromise(promise, error: Error.JSONArraySerializationFailed,
               response: failedResponse)
           }
         }
@@ -278,7 +278,7 @@ class NetworkResultSpec: QuickSpec {
             data = try! NSJSONSerialization.dataWithJSONObject([["name": "Taylor"]],
               options: NSJSONWritingOptions())
             
-            testFailedPromise(promise, error: Error.NoJSONArrayInResponseData,
+            testFailedPromise(promise, error: Error.JSONDictionarySerializationFailed,
               response: failedResponse)
           }
         }

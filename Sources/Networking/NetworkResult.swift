@@ -58,13 +58,22 @@ public extension Promise where T: NetworkResult {
   
   // MARK: - Serialization
   
+  public func toData() -> Promise<NSData> {
+    return then({ result -> NSData in
+      let serializer = DataSerializer()
+      let data = try serializer.serialize(result.data, response: result.response)
+      
+      return data
+    })
+  }
+  
   public func toJSONArray() -> Promise<[[String: AnyObject]]> {
     return then({ result -> [[String: AnyObject]] in
       let serializer = JSONSerializer()
       
       guard let data = try serializer.serialize(result.data,
         response: result.response) as? [[String : AnyObject]]
-        else { throw Error.NoJSONArrayInResponseData }
+        else { throw Error.JSONArraySerializationFailed }
       
       return data
     })
@@ -76,7 +85,7 @@ public extension Promise where T: NetworkResult {
       
       guard let data = try serializer.serialize(result.data,
         response: result.response) as? [String : AnyObject]
-        else { throw Error.NoJSONArrayInResponseData }
+        else { throw Error.JSONDictionarySerializationFailed }
       
       return data
     })
