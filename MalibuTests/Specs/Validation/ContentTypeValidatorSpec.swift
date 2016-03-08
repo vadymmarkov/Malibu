@@ -6,11 +6,11 @@ class ContentTypeValidatorSpec: QuickSpec {
 
   override func spec() {
     describe("ContentTypeValidator") {
-      describe(".validate") {
-        let URL = NSURL(string: "http://hyper.no")!
-        let contentType = "application/json; charset=utf-8"
-        var validator: ContentTypeValidator<[String]>!
+      let URL = NSURL(string: "http://hyper.no")!
+      let contentType = "application/json; charset=utf-8"
+      var validator: ContentTypeValidator<[String]>!
 
+      describe("#validate") {
         beforeEach {
           validator = ContentTypeValidator(contentTypes: [contentType])
         }

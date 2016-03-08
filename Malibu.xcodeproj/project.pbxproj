@@ -19,6 +19,8 @@
 		D503D3A61C8EC7550009BDAD /* NetworkPromiseSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503D3A41C8EC7550009BDAD /* NetworkPromiseSpec.swift */; };
 		D52F61311C890C9F00262637 /* MIMETypeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52F612F1C890C9A00262637 /* MIMETypeSpec.swift */; };
 		D52F61321C890C9F00262637 /* MIMETypeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52F612F1C890C9A00262637 /* MIMETypeSpec.swift */; };
+		D549C8561C8F661E00588A0C /* JSONSerializerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549C8551C8F661E00588A0C /* JSONSerializerSpec.swift */; };
+		D549C8571C8F661E00588A0C /* JSONSerializerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549C8551C8F661E00588A0C /* JSONSerializerSpec.swift */; };
 		D560A2E41C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D560A2E31C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift */; };
 		D560A2E51C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D560A2E31C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift */; };
 		D560A2E71C8C694100D4B640 /* ContentTypeValidatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D560A2E61C8C694100D4B640 /* ContentTypeValidatorSpec.swift */; };
@@ -109,6 +111,7 @@
 		D503D39B1C8EC5DE0009BDAD /* NetworkResultValidationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkResultValidationSpec.swift; sourceTree = "<group>"; };
 		D503D3A41C8EC7550009BDAD /* NetworkPromiseSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkPromiseSpec.swift; sourceTree = "<group>"; };
 		D52F612F1C890C9A00262637 /* MIMETypeSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MIMETypeSpec.swift; sourceTree = "<group>"; };
+		D549C8551C8F661E00588A0C /* JSONSerializerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONSerializerSpec.swift; sourceTree = "<group>"; };
 		D560A2E31C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusCodeVadatorSpec.swift; sourceTree = "<group>"; };
 		D560A2E61C8C694100D4B640 /* ContentTypeValidatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentTypeValidatorSpec.swift; sourceTree = "<group>"; };
 		D5B2E89F1C3A780C00C0327D /* Malibu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Malibu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -205,6 +208,14 @@
 				D503D3A41C8EC7550009BDAD /* NetworkPromiseSpec.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		D549C8541C8F65FE00588A0C /* Serialization */ = {
+			isa = PBXGroup;
+			children = (
+				D549C8551C8F661E00588A0C /* JSONSerializerSpec.swift */,
+			);
+			path = Serialization;
 			sourceTree = "<group>";
 		};
 		D560A2E21C8C663000D4B640 /* Validation */ = {
@@ -310,8 +321,8 @@
 			isa = PBXGroup;
 			children = (
 				DA5B4D0D1C8E5A07004E21ED /* NetworkResultSpec.swift */,
-				D503D3981C8EC5CF0009BDAD /* NetworkResultSerializationSpec.swift */,
 				D503D39B1C8EC5DE0009BDAD /* NetworkResultValidationSpec.swift */,
+				D503D3981C8EC5CF0009BDAD /* NetworkResultSerializationSpec.swift */,
 			);
 			path = Result;
 			sourceTree = "<group>";
@@ -342,6 +353,7 @@
 				D5D389A51C88E01C0039967A /* Helpers */,
 				DAEE2BB31C7F8C500000FB12 /* Encoding */,
 				D560A2E21C8C663000D4B640 /* Validation */,
+				D549C8541C8F65FE00588A0C /* Serialization */,
 				DA5B4D0C1C8E5A07004E21ED /* Result */,
 				DAC92A101C7FCF9000F01940 /* MalibuSpec.swift */,
 				DA5B4D0E1C8E5A07004E21ED /* NetworkingSpec.swift */,
@@ -625,6 +637,7 @@
 				D503D3A51C8EC7550009BDAD /* NetworkPromiseSpec.swift in Sources */,
 				DA5B4D151C8E5A2E004E21ED /* NetworkResultSpec.swift in Sources */,
 				DA5B4CFD1C8E5963004E21ED /* ErrorSpec.swift in Sources */,
+				D549C8561C8F661E00588A0C /* JSONSerializerSpec.swift in Sources */,
 				DAEE2BB71C7F8C5D0000FB12 /* JSONParameterEncoderSpec.swift in Sources */,
 				D5D389AF1C88E0590039967A /* SessionConfigurationSpec.swift in Sources */,
 				DAC92A131C7FCF9400F01940 /* MalibuSpec.swift in Sources */,
@@ -673,6 +686,7 @@
 				D503D3A61C8EC7550009BDAD /* NetworkPromiseSpec.swift in Sources */,
 				DA5B4D161C8E5A2E004E21ED /* NetworkResultSpec.swift in Sources */,
 				DA5B4CFE1C8E5963004E21ED /* ErrorSpec.swift in Sources */,
+				D549C8571C8F661E00588A0C /* JSONSerializerSpec.swift in Sources */,
 				DAEE2BB81C7F8C5E0000FB12 /* JSONParameterEncoderSpec.swift in Sources */,
 				D5D389B11C88E0590039967A /* SessionConfigurationSpec.swift in Sources */,
 				DAC92A141C7FCF9500F01940 /* MalibuSpec.swift in Sources */,

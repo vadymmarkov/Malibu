@@ -17,9 +17,9 @@ public extension Promise where T: NetworkResult {
     })
   }
 
-  public func toJSONArray() -> Promise<[[String: AnyObject]]> {
+  public func toJSONArray(options: NSJSONReadingOptions = .AllowFragments) -> Promise<[[String: AnyObject]]> {
     return then({ result -> [[String: AnyObject]] in
-      let serializer = JSONSerializer()
+      let serializer = JSONSerializer(options: options)
 
       let data = try serializer.serialize(result.data,
         response: result.response)
@@ -35,9 +35,9 @@ public extension Promise where T: NetworkResult {
     })
   }
 
-  public func toJSONDictionary() -> Promise<[String: AnyObject]> {
+  public func toJSONDictionary(options: NSJSONReadingOptions = .AllowFragments) -> Promise<[String: AnyObject]> {
     return then({ result -> [String: AnyObject] in
-      let serializer = JSONSerializer()
+      let serializer = JSONSerializer(options: options)
 
       let data = try serializer.serialize(result.data,
         response: result.response)

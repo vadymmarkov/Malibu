@@ -6,10 +6,10 @@ class StatusCodeValidatorSpec: QuickSpec {
 
   override func spec() {
     describe("StatusCodeValidator") {
-      describe(".validate") {
-        let URL = NSURL(string: "http://hyper.no")!
-        var validator: StatusCodeValidator<[Int]>!
+      let URL = NSURL(string: "http://hyper.no")!
+      var validator: StatusCodeValidator<[Int]>!
 
+      describe("#validate") {
         beforeEach {
           validator = StatusCodeValidator(statusCodes: [200])
         }
