@@ -300,8 +300,8 @@
 			isa = PBXGroup;
 			children = (
 				DA5B4D001C8E59A2004E21ED /* NetworkResult.swift */,
-				DA5B4D011C8E59A2004E21ED /* NetworkResultSerialization.swift */,
 				DA5B4D021C8E59A2004E21ED /* NetworkResultValidation.swift */,
+				DA5B4D011C8E59A2004E21ED /* NetworkResultSerialization.swift */,
 			);
 			path = Result;
 			sourceTree = "<group>";
