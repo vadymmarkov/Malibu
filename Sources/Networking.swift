@@ -59,4 +59,12 @@ public class Networking {
 
     return promise
   }
+
+  func saveEtag(key: String, response: NSHTTPURLResponse) {
+    guard let etag = response.allHeaderFields["ETag"] as? String else {
+      return
+    }
+
+    ETagStorage().add(etag, forKey: key)
+  }
 }

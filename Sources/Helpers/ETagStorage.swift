@@ -2,7 +2,7 @@ import UIKit
 import Foundation
 
 protocol ETagStoring {
-  func add(value: String, forKey key: String, save withSaving: Bool)
+  func add(value: String, forKey key: String)
   func get(key: String) -> String?
   func clear()
 }
@@ -26,12 +26,9 @@ class ETagStorage: ETagStoring {
 
   // MARK: - Public Methods
 
-  func add(value: String, forKey key: String, save withSaving: Bool = false) {
+  func add(value: String, forKey key: String) {
     dictionary[key] = value
-
-    if withSaving {
-      save()
-    }
+    save()
   }
 
   func get(key: String) -> String? {

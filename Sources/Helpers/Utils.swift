@@ -7,12 +7,8 @@ public struct Utils {
   public static let documentDirectory =  NSSearchPathForDirectoriesInDomains(.DocumentDirectory,
     .UserDomainMask, true).first!
 
-  public static var storageRootDirectory: String = {
-    let name = NSProcessInfo.processInfo().environment["XCInjectBundle"] != nil
-      ? "MalibuTests"
-      : "Malibu"
-
-    let directory = "\(documentDirectory)/\(name)"
+  public static var storageDirectory: String = {
+    let directory = "\(documentDirectory)/Malibu"
 
     do {
       try NSFileManager.defaultManager().createDirectoryAtPath(directory,
@@ -26,6 +22,6 @@ public struct Utils {
   }()
 
   public static func filePath(name: String) -> String {
-    return "\(Utils.storageRootDirectory)/\(name)"
+    return "\(Utils.storageDirectory)/\(name)"
   }
 }

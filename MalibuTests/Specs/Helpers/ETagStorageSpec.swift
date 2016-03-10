@@ -10,9 +10,7 @@ class ETagStorageSpec: QuickSpec {
       let value = "value", key = "key"
       var storage: ETagStorage!
 
-      let fileManager = {
-        return NSFileManager.defaultManager()
-      }()
+      let fileManager = NSFileManager.defaultManager()
 
       beforeEach {
         storage = ETagStorage()
@@ -25,24 +23,12 @@ class ETagStorageSpec: QuickSpec {
       }
 
       describe("#addValue:forKey:save") {
-        context("with saving") {
-          it("adds value to the dictionary") {
-            storage.add(value, forKey: key, save: true)
-            expect(storage.get(key)).to(equal(value))
+        it("adds value to the dictionary") {
+          storage.add(value, forKey: key)
+          expect(storage.get(key)).to(equal(value))
 
-            storage.reload()
-            expect(storage.get(key)).to(equal(value))
-          }
-        }
-
-        context("without saving") {
-          it("adds value to the dictionary") {
-            storage.add(value, forKey: key)
-            expect(storage.get(key)).to(equal(value))
-
-            storage.reload()
-            expect(storage.get(key)).to(beNil())
-          }
+          storage.reload()
+          expect(storage.get(key)).to(equal(value))
         }
       }
 
@@ -73,22 +59,11 @@ class ETagStorageSpec: QuickSpec {
       }
 
       describe("#reload") {
-        context("file exists") {
-          it("reloads values") {
-            storage.add(value, forKey: key, save: true)
-            storage.reload()
+        it("reloads values") {
+          storage.add(value, forKey: key)
+          storage.reload()
 
-            expect(storage.get(key)).to(equal(value))
-          }
-        }
-
-        context("file does not exist") {
-          it("resets dictionary") {
-            storage.add(value, forKey: key)
-            storage.reload()
-
-            expect(storage.get(key)).to(beNil())
-          }
+          expect(storage.get(key)).to(equal(value))
         }
       }
     }
