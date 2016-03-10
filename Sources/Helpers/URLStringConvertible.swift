@@ -5,12 +5,14 @@ public protocol URLStringConvertible {
 }
 
 extension String: URLStringConvertible {
+
   public var URLString: String {
     return self
   }
 }
 
 extension NSURL: URLStringConvertible {
+
   public var URLString: String {
     return absoluteString
   }

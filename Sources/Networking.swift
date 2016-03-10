@@ -7,33 +7,34 @@ public class Networking {
     case Data, Upload, Download
   }
 
+  var baseURLString: URLStringConvertible?
   let sessionConfiguration: SessionConfiguration
+  var preProcessRequest: (NSMutableURLRequest -> Void)?
 
   lazy var session: NSURLSession = {
     return NSURLSession(configuration: self.sessionConfiguration.value)
   }()
-  
-  var preProcessRequest: (NSMutableURLRequest -> Void)?
-  
+
   // MARK: - Initialization
 
-  public init(baseURLString: URLStringConvertible, sessionConfiguration: SessionConfiguration = .Default) {
+  public init(baseURLString: URLStringConvertible? = nil, sessionConfiguration: SessionConfiguration = .Default) {
+    self.baseURLString = baseURLString
     self.sessionConfiguration = sessionConfiguration
   }
-  
+
   // MARK: - Requests
-  
+
   func execute(method: Method, request: Requestable) -> Promise<NetworkResult> {
     let promise = Promise<NetworkResult>()
     let URLRequest: NSMutableURLRequest
-    
+
     do {
       URLRequest = try request.toURLRequest(method)
     } catch {
       promise.reject(error)
       return promise
     }
-    
+
     preProcessRequest?(URLRequest)
 
     session.dataTaskWithRequest(URLRequest, completionHandler: { data, response, error in
