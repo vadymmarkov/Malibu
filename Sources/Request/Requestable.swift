@@ -47,7 +47,9 @@ extension Requestable {
     }
 
     if withEtag {
-      // Add ETag
+      if let etag = ETagStorage().get(message.etagKey) {
+        request.addValue(etag, forHTTPHeaderField: "If-None-Match")
+      }
     }
 
     return request
