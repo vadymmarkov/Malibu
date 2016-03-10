@@ -67,6 +67,8 @@
 		DA5B4D141C8E5A26004E21ED /* NetworkingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5B4D0E1C8E5A07004E21ED /* NetworkingSpec.swift */; };
 		DA5B4D151C8E5A2E004E21ED /* NetworkResultSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5B4D0D1C8E5A07004E21ED /* NetworkResultSpec.swift */; };
 		DA5B4D161C8E5A2E004E21ED /* NetworkResultSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5B4D0D1C8E5A07004E21ED /* NetworkResultSpec.swift */; };
+		DA5B4D181C90EDBE004E21ED /* URLStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5B4D171C90EDBE004E21ED /* URLStringConvertible.swift */; };
+		DA5B4D191C90EDBE004E21ED /* URLStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5B4D171C90EDBE004E21ED /* URLStringConvertible.swift */; };
 		DAC92A061C7F90B400F01940 /* Malibu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A051C7F90B400F01940 /* Malibu.swift */; };
 		DAC92A071C7F90B400F01940 /* Malibu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A051C7F90B400F01940 /* Malibu.swift */; };
 		DAC92A091C7F961900F01940 /* FormURLEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A081C7F961900F01940 /* FormURLEncoder.swift */; };
@@ -149,6 +151,7 @@
 		DA5B4D031C8E59A2004E21ED /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		DA5B4D0D1C8E5A07004E21ED /* NetworkResultSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkResultSpec.swift; sourceTree = "<group>"; };
 		DA5B4D0E1C8E5A07004E21ED /* NetworkingSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkingSpec.swift; sourceTree = "<group>"; };
+		DA5B4D171C90EDBE004E21ED /* URLStringConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLStringConvertible.swift; sourceTree = "<group>"; };
 		DAC92A051C7F90B400F01940 /* Malibu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Malibu.swift; sourceTree = "<group>"; };
 		DAC92A081C7F961900F01940 /* FormURLEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormURLEncoder.swift; sourceTree = "<group>"; };
 		DAC92A0B1C7FA5E700F01940 /* FormURLEncoderSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormURLEncoderSpec.swift; sourceTree = "<group>"; };
@@ -305,6 +308,7 @@
 				D5D389991C88E0010039967A /* Method.swift */,
 				D5D389961C88E0010039967A /* MIMEType.swift */,
 				D5D389971C88E0010039967A /* SessionConfiguration.swift */,
+				DA5B4D171C90EDBE004E21ED /* URLStringConvertible.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -619,6 +623,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA5B4D181C90EDBE004E21ED /* URLStringConvertible.swift in Sources */,
 				D5D3899B1C88E0010039967A /* SessionConfiguration.swift in Sources */,
 				DA5B4CEC1C8E51A0004E21ED /* DataSerializer.swift in Sources */,
 				DAC92A3C1C87C00C00F01940 /* ContentTypeValidator.swift in Sources */,
@@ -671,6 +676,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA5B4D191C90EDBE004E21ED /* URLStringConvertible.swift in Sources */,
 				D5D389A21C88E0080039967A /* SessionConfiguration.swift in Sources */,
 				DA5B4CED1C8E51A0004E21ED /* DataSerializer.swift in Sources */,
 				DAC92A3D1C87C00C00F01940 /* ContentTypeValidator.swift in Sources */,
