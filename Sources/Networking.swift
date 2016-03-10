@@ -13,6 +13,8 @@ public class Networking {
     return NSURLSession(configuration: self.sessionConfiguration.value)
   }()
   
+  var preProcessRequest: (NSMutableURLRequest -> Void)?
+  
   // MARK: - Initialization
 
   public init(baseURLString: URLStringConvertible, sessionConfiguration: SessionConfiguration = .Default) {
@@ -31,6 +33,8 @@ public class Networking {
       promise.reject(error)
       return promise
     }
+    
+    preProcessRequest?(URLRequest)
 
     session.dataTaskWithRequest(URLRequest, completionHandler: { data, response, error in
       guard let response = response as? NSHTTPURLResponse else {
