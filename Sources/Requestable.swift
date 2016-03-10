@@ -49,7 +49,3 @@ extension Requestable {
     return request
   }
 }
-
-struct Requestd: Requestable {
-  var URL: URLStringConvertible = "fdfd"
-}
