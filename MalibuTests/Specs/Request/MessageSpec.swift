@@ -33,6 +33,21 @@ class MessageSpec: QuickSpec {
           expect(message.etagKey).to(equal(result))
         }
       }
+
+      describe("==") {
+        it("equals to idential message") {
+          expect(message).to(equal(Message(resource: resource)))
+        }
+
+        it("does not equal to different message") {
+          expect(message).toNot(equal(Message(resource: "http://google.com")))
+          expect(message).toNot(equal(Message(resource: resource, parameters: ["key": "value"])))
+          expect(message).toNot(equal(Message(resource: resource, headers: ["key": "value"])))
+          expect(message).toNot(equal(Message(resource: resource, contentType: .FormURLEncoded)))
+          expect(message).toNot(equal(Message(resource: resource, cachePolicy: .ReturnCacheDataElseLoad)))
+          expect(message).toNot(equal(Message(resource: resource, etagPolicy: .Enable)))
+        }
+      }
     }
   }
 }
