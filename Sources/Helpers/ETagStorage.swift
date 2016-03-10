@@ -9,7 +9,7 @@ protocol ETagStoring {
 
 class ETagStorage: ETagStoring {
 
-  static private(set) var path = Utils.storagePath("/ETags.dictionary")
+  static private(set) var path = Utils.filePath("ETags.dictionary")
 
   private var dictionary = [String: String]()
 
@@ -51,7 +51,7 @@ class ETagStorage: ETagStoring {
     do {
       try data.writeToFile(ETagStorage.path, options: .DataWritingAtomic)
     } catch {
-      print("Error in saving of \(ETagStorage.path) to the local storage")
+      NSLog("Malibu: Error in saving of \(ETagStorage.path) to the local storage")
     }
   }
 

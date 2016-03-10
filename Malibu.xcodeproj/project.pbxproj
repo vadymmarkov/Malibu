@@ -413,12 +413,12 @@
 		DAEE2BA01C7F8A1C0000FB12 /* Specs */ = {
 			isa = PBXGroup;
 			children = (
-				D5B965221C922BF90099D2F9 /* Response */,
 				D5D389A51C88E01C0039967A /* Helpers */,
 				DAEE2BB31C7F8C500000FB12 /* Encoding */,
 				D560A2E21C8C663000D4B640 /* Validation */,
 				D549C8541C8F65FE00588A0C /* Serialization */,
 				D5B964F71C9216EB0099D2F9 /* Request */,
+				D5B965221C922BF90099D2F9 /* Response */,
 				DAC92A101C7FCF9000F01940 /* MalibuSpec.swift */,
 				DA5B4D0E1C8E5A07004E21ED /* NetworkingSpec.swift */,
 				DA5B4CFA1C8E5953004E21ED /* ErrorSpec.swift */,

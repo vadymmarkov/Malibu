@@ -7,13 +7,25 @@ public struct Utils {
   public static let documentDirectory =  NSSearchPathForDirectoriesInDomains(.DocumentDirectory,
     .UserDomainMask, true).first!
 
-  public static func storagePath(path: String) -> String {
-    return Utils.storageRootDirectory + path
-  }
-
   public static var storageRootDirectory: String = {
-    return NSProcessInfo.processInfo().environment["XCInjectBundle"] != nil
+    let name = NSProcessInfo.processInfo().environment["XCInjectBundle"] != nil
       ? "MalibuTests"
       : "Malibu"
+
+    let directory = "\(documentDirectory)/\(name)"
+
+    do {
+      try NSFileManager.defaultManager().createDirectoryAtPath(directory,
+        withIntermediateDirectories: true,
+        attributes: nil)
+    } catch {
+      NSLog("Malibu: Error in creation of local storage directory at path: \(directory)")
+    }
+
+    return directory
   }()
+
+  public static func filePath(name: String) -> String {
+    return "\(Utils.storageRootDirectory)/\(name)"
+  }
 }
