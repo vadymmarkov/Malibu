@@ -1,6 +1,8 @@
 import Foundation
 
-var parameterEncoders: [ContentType: ParameterEncoding] = [
+public var parameterEncoders: [ContentType: ParameterEncoding] = [
   .JSON: JSONParameterEncoder(),
   .FormURLEncoded: FormURLEncoder()
 ]
+
+var methodsWithEtags: [Method] = [.GET, .PATCH, .PUT]

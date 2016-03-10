@@ -25,8 +25,6 @@
 		D549C85A1C8F6BB500588A0C /* DataSerializerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549C8581C8F6BB500588A0C /* DataSerializerSpec.swift */; };
 		D549C85C1C8F6C8800588A0C /* StringSerializerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549C85B1C8F6C8800588A0C /* StringSerializerSpec.swift */; };
 		D549C85D1C8F6C8800588A0C /* StringSerializerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549C85B1C8F6C8800588A0C /* StringSerializerSpec.swift */; };
-		D549C85F1C9015BF00588A0C /* Requestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549C85E1C9015BF00588A0C /* Requestable.swift */; };
-		D549C8601C9015BF00588A0C /* Requestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549C85E1C9015BF00588A0C /* Requestable.swift */; };
 		D560A2E41C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D560A2E31C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift */; };
 		D560A2E51C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D560A2E31C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift */; };
 		D560A2E71C8C694100D4B640 /* ContentTypeValidatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D560A2E61C8C694100D4B640 /* ContentTypeValidatorSpec.swift */; };
@@ -34,6 +32,16 @@
 		D5B2E8AA1C3A780C00C0327D /* Malibu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5B2E89F1C3A780C00C0327D /* Malibu.framework */; };
 		D5B964E81C9166230099D2F9 /* URLStringConvertibleSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964E71C9166230099D2F9 /* URLStringConvertibleSpec.swift */; };
 		D5B964E91C9166230099D2F9 /* URLStringConvertibleSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964E71C9166230099D2F9 /* URLStringConvertibleSpec.swift */; };
+		D5B964EE1C916CBF0099D2F9 /* TestRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964ED1C916CBF0099D2F9 /* TestRequest.swift */; };
+		D5B964EF1C916CBF0099D2F9 /* TestRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964ED1C916CBF0099D2F9 /* TestRequest.swift */; };
+		D5B964F21C9211AF0099D2F9 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964F11C9211AF0099D2F9 /* Message.swift */; };
+		D5B964F31C9211AF0099D2F9 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964F11C9211AF0099D2F9 /* Message.swift */; };
+		D5B964F51C92125E0099D2F9 /* Requestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964F41C92125E0099D2F9 /* Requestable.swift */; };
+		D5B964F61C92125E0099D2F9 /* Requestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964F41C92125E0099D2F9 /* Requestable.swift */; };
+		D5B964F91C9216FD0099D2F9 /* MessageSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964F81C9216FD0099D2F9 /* MessageSpec.swift */; };
+		D5B964FA1C9216FD0099D2F9 /* MessageSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964F81C9216FD0099D2F9 /* MessageSpec.swift */; };
+		D5B964FC1C9217140099D2F9 /* RequestableSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964FB1C9217140099D2F9 /* RequestableSpec.swift */; };
+		D5B964FD1C9217140099D2F9 /* RequestableSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964FB1C9217140099D2F9 /* RequestableSpec.swift */; };
 		D5C6294A1C3A7FAA007F7B7C /* Malibu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629401C3A7FAA007F7B7C /* Malibu.framework */; };
 		D5C629771C3A878E007F7B7C /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629751C3A878E007F7B7C /* Quick.framework */; };
 		D5C629781C3A878E007F7B7C /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629761C3A878E007F7B7C /* Nimble.framework */; };
@@ -124,12 +132,16 @@
 		D549C8551C8F661E00588A0C /* JSONSerializerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONSerializerSpec.swift; sourceTree = "<group>"; };
 		D549C8581C8F6BB500588A0C /* DataSerializerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSerializerSpec.swift; sourceTree = "<group>"; };
 		D549C85B1C8F6C8800588A0C /* StringSerializerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringSerializerSpec.swift; sourceTree = "<group>"; };
-		D549C85E1C9015BF00588A0C /* Requestable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Requestable.swift; sourceTree = "<group>"; };
 		D560A2E31C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusCodeVadatorSpec.swift; sourceTree = "<group>"; };
 		D560A2E61C8C694100D4B640 /* ContentTypeValidatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentTypeValidatorSpec.swift; sourceTree = "<group>"; };
 		D5B2E89F1C3A780C00C0327D /* Malibu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Malibu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5B2E8A91C3A780C00C0327D /* Malibu-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Malibu-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5B964E71C9166230099D2F9 /* URLStringConvertibleSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLStringConvertibleSpec.swift; sourceTree = "<group>"; };
+		D5B964ED1C916CBF0099D2F9 /* TestRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestRequest.swift; sourceTree = "<group>"; };
+		D5B964F11C9211AF0099D2F9 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		D5B964F41C92125E0099D2F9 /* Requestable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Requestable.swift; sourceTree = "<group>"; };
+		D5B964F81C9216FD0099D2F9 /* MessageSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageSpec.swift; sourceTree = "<group>"; };
+		D5B964FB1C9217140099D2F9 /* RequestableSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestableSpec.swift; sourceTree = "<group>"; };
 		D5C629401C3A7FAA007F7B7C /* Malibu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Malibu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5C629491C3A7FAA007F7B7C /* Malibu-Mac-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Malibu-Mac-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5C629751C3A878E007F7B7C /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
@@ -221,6 +233,7 @@
 			isa = PBXGroup;
 			children = (
 				D503D3A41C8EC7550009BDAD /* NetworkPromiseSpec.swift */,
+				D5B964ED1C916CBF0099D2F9 /* TestRequest.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -268,6 +281,24 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		D5B964F01C92119D0099D2F9 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				D5B964F11C9211AF0099D2F9 /* Message.swift */,
+				D5B964F41C92125E0099D2F9 /* Requestable.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		D5B964F71C9216EB0099D2F9 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				D5B964F81C9216FD0099D2F9 /* MessageSpec.swift */,
+				D5B964FB1C9217140099D2F9 /* RequestableSpec.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
 		D5C6295C1C3A800E007F7B7C /* Malibu */ = {
 			isa = PBXGroup;
 			children = (
@@ -284,9 +315,9 @@
 				DAEE2BAC1C7F8A770000FB12 /* Encoding */,
 				DAC92A341C87B8F300F01940 /* Validation */,
 				D503D38B1C8DA6CF0009BDAD /* Serialization */,
+				D5B964F01C92119D0099D2F9 /* Request */,
 				DA5B4CFF1C8E59A2004E21ED /* Result */,
 				DAC92A051C7F90B400F01940 /* Malibu.swift */,
-				D549C85E1C9015BF00588A0C /* Requestable.swift */,
 				DA5B4D031C8E59A2004E21ED /* Networking.swift */,
 				DA5B4CF71C8E5936004E21ED /* Error.swift */,
 			);
@@ -374,6 +405,7 @@
 				DAEE2BB31C7F8C500000FB12 /* Encoding */,
 				D560A2E21C8C663000D4B640 /* Validation */,
 				D549C8541C8F65FE00588A0C /* Serialization */,
+				D5B964F71C9216EB0099D2F9 /* Request */,
 				DA5B4D0C1C8E5A07004E21ED /* Result */,
 				DAC92A101C7FCF9000F01940 /* MalibuSpec.swift */,
 				DA5B4D0E1C8E5A07004E21ED /* NetworkingSpec.swift */,
@@ -636,6 +668,7 @@
 				DAC92A361C87B92200F01940 /* Validating.swift in Sources */,
 				DAEE2BAE1C7F8A870000FB12 /* ParameterEncoding.swift in Sources */,
 				D503D38D1C8DA7730009BDAD /* Serializing.swift in Sources */,
+				D5B964F51C92125E0099D2F9 /* Requestable.swift in Sources */,
 				DA5B4D061C8E59A2004E21ED /* NetworkResultSerialization.swift in Sources */,
 				DAC92A091C7F961900F01940 /* FormURLEncoder.swift in Sources */,
 				DAC92A061C7F90B400F01940 /* Malibu.swift in Sources */,
@@ -643,7 +676,7 @@
 				DAC92A391C87B95100F01940 /* StatusCodeValidator.swift in Sources */,
 				D5D3899A1C88E0010039967A /* MIMEType.swift in Sources */,
 				DA5B4CEF1C8E5553004E21ED /* StringSerializer.swift in Sources */,
-				D549C85F1C9015BF00588A0C /* Requestable.swift in Sources */,
+				D5B964F21C9211AF0099D2F9 /* Message.swift in Sources */,
 				D5D3899D1C88E0010039967A /* Method.swift in Sources */,
 				DA5B4D081C8E59A2004E21ED /* NetworkResultValidation.swift in Sources */,
 				DA5B4CF81C8E5936004E21ED /* Error.swift in Sources */,
@@ -661,10 +694,13 @@
 				D549C8591C8F6BB500588A0C /* DataSerializerSpec.swift in Sources */,
 				DA5B4CFD1C8E5963004E21ED /* ErrorSpec.swift in Sources */,
 				D549C8561C8F661E00588A0C /* JSONSerializerSpec.swift in Sources */,
+				D5B964F91C9216FD0099D2F9 /* MessageSpec.swift in Sources */,
 				DAEE2BB71C7F8C5D0000FB12 /* JSONParameterEncoderSpec.swift in Sources */,
 				D5D389AF1C88E0590039967A /* SessionConfigurationSpec.swift in Sources */,
 				DAC92A131C7FCF9400F01940 /* MalibuSpec.swift in Sources */,
+				D5B964EE1C916CBF0099D2F9 /* TestRequest.swift in Sources */,
 				DA5B4D131C8E5A26004E21ED /* NetworkingSpec.swift in Sources */,
+				D5B964FC1C9217140099D2F9 /* RequestableSpec.swift in Sources */,
 				D503D39F1C8EC5E70009BDAD /* NetworkResultValidationSpec.swift in Sources */,
 				D5D389B01C88E0590039967A /* ContentTypeSpec.swift in Sources */,
 				DAC92A0E1C7FA5F500F01940 /* FormURLEncoderSpec.swift in Sources */,
@@ -690,6 +726,7 @@
 				DAC92A371C87B92200F01940 /* Validating.swift in Sources */,
 				DAEE2BAF1C7F8A870000FB12 /* ParameterEncoding.swift in Sources */,
 				D503D38E1C8DA7730009BDAD /* Serializing.swift in Sources */,
+				D5B964F61C92125E0099D2F9 /* Requestable.swift in Sources */,
 				DA5B4D071C8E59A2004E21ED /* NetworkResultSerialization.swift in Sources */,
 				DAC92A0A1C7F961900F01940 /* FormURLEncoder.swift in Sources */,
 				DAC92A071C7F90B400F01940 /* Malibu.swift in Sources */,
@@ -697,7 +734,7 @@
 				DAC92A3A1C87B95100F01940 /* StatusCodeValidator.swift in Sources */,
 				D5D389A11C88E0080039967A /* MIMEType.swift in Sources */,
 				DA5B4CF01C8E5553004E21ED /* StringSerializer.swift in Sources */,
-				D549C8601C9015BF00588A0C /* Requestable.swift in Sources */,
+				D5B964F31C9211AF0099D2F9 /* Message.swift in Sources */,
 				D5D389A41C88E0080039967A /* Method.swift in Sources */,
 				DA5B4D091C8E59A2004E21ED /* NetworkResultValidation.swift in Sources */,
 				DA5B4CF91C8E5936004E21ED /* Error.swift in Sources */,
@@ -715,10 +752,13 @@
 				D549C85A1C8F6BB500588A0C /* DataSerializerSpec.swift in Sources */,
 				DA5B4CFE1C8E5963004E21ED /* ErrorSpec.swift in Sources */,
 				D549C8571C8F661E00588A0C /* JSONSerializerSpec.swift in Sources */,
+				D5B964FA1C9216FD0099D2F9 /* MessageSpec.swift in Sources */,
 				DAEE2BB81C7F8C5E0000FB12 /* JSONParameterEncoderSpec.swift in Sources */,
 				D5D389B11C88E0590039967A /* SessionConfigurationSpec.swift in Sources */,
 				DAC92A141C7FCF9500F01940 /* MalibuSpec.swift in Sources */,
+				D5B964EF1C916CBF0099D2F9 /* TestRequest.swift in Sources */,
 				DA5B4D141C8E5A26004E21ED /* NetworkingSpec.swift in Sources */,
+				D5B964FD1C9217140099D2F9 /* RequestableSpec.swift in Sources */,
 				D503D3A11C8EC5E70009BDAD /* NetworkResultValidationSpec.swift in Sources */,
 				D5D389B21C88E0590039967A /* ContentTypeSpec.swift in Sources */,
 				DAC92A0F1C7FA5F600F01940 /* FormURLEncoderSpec.swift in Sources */,
