@@ -1,11 +1,12 @@
 import Foundation
 
 public enum Error: ErrorType {
+  case InvalidRequestURL
+  case MissingContentType
   case NoDataInResponse
   case NoResponseReceived
   case UnacceptableStatusCode(Int)
   case UnacceptableContentType(String)
-  case MissingContentType
   case JSONArraySerializationFailed
   case JSONDictionarySerializationFailed
   case StringSerializationFailed(UInt)
@@ -14,6 +15,10 @@ public enum Error: ErrorType {
     var text: String
     
     switch self {
+    case .InvalidRequestURL:
+      text = "Invalid request URL"
+    case .MissingContentType:
+      text = "Response content type was missing"
     case .NoDataInResponse:
       text = "No data in response"
     case .NoResponseReceived:
@@ -22,8 +27,6 @@ public enum Error: ErrorType {
       text = "Response status code \(statusCode) was unacceptable"
     case .UnacceptableContentType(let contentType):
       text = "Response content type \(contentType) was unacceptable"
-    case .MissingContentType:
-      text = "Response content type was missing"
     case .JSONArraySerializationFailed:
       text = "No JSON array in response data"
     case .JSONDictionarySerializationFailed:

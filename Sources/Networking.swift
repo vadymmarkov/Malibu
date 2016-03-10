@@ -12,23 +12,27 @@ public class Networking {
   lazy var session: NSURLSession = {
     return NSURLSession(configuration: self.sessionConfiguration.value)
   }()
+  
+  // MARK: - Initialization
 
-  public init(sessionConfiguration: SessionConfiguration = .Default) {
+  public init(baseURLString: URLStringConvertible, sessionConfiguration: SessionConfiguration = .Default) {
     self.sessionConfiguration = sessionConfiguration
   }
-
-  func request(method: Method, URL: NSURL, contentType: ContentType = .JSON, parameters: [String: AnyObject] = [:]) throws -> Promise<NetworkResult> {
+  
+  // MARK: - Requests
+  
+  func execute(method: Method, request: Requestable) -> Promise<NetworkResult> {
     let promise = Promise<NetworkResult>()
-
-    let request = NSMutableURLRequest(URL: URL)
-    request.HTTPMethod = method.rawValue
-    request.addValue(contentType.value, forHTTPHeaderField: "Content-Type")
-
-    if let encoder = parameterEncoders[contentType] {
-      request.HTTPBody = try encoder.encode(parameters)
+    let URLRequest: NSMutableURLRequest
+    
+    do {
+      URLRequest = try request.toURLRequest(method)
+    } catch {
+      promise.reject(error)
+      return promise
     }
 
-    session.dataTaskWithRequest(request, completionHandler: { data, response, error in
+    session.dataTaskWithRequest(URLRequest, completionHandler: { data, response, error in
       guard let response = response as? NSHTTPURLResponse else {
         promise.reject(Error.NoResponseReceived)
         return
@@ -44,7 +48,7 @@ public class Networking {
         return
       }
 
-      let result = NetworkResult(data: data, request: request, response: response)
+      let result = NetworkResult(data: data, request: URLRequest, response: response)
       promise.resolve(result)
     }).resume()
 
