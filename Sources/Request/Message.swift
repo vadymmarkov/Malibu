@@ -4,8 +4,8 @@ public struct Message: Equatable {
 
   public enum ETagPolicy {
     case Default
-    case Enable
-    case Disable
+    case Enabled
+    case Disabled
   }
 
   public var resource: URLStringConvertible

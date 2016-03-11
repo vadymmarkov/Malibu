@@ -4,15 +4,22 @@ public protocol Requestable {
   var message: Message { get set }
 
   init()
-  init(parameters: [String : AnyObject])
+  init(parameters: [String : AnyObject], headers: [String : String])
   func toURLRequest(method: Method) throws -> NSMutableURLRequest
 }
 
 extension Requestable {
 
-  public init(parameters: [String : AnyObject]) {
+  public init(parameters: [String : AnyObject] = [:], headers: [String : String] = [:]) {
     self.init()
-    self.message.parameters = parameters
+
+    parameters.forEach { key, value in
+      self.message.parameters[key] = value
+    }
+
+    headers.forEach { key, value in
+      self.message.headers[key] = value
+    }
   }
 
   public func toURLRequest(method: Method) throws -> NSMutableURLRequest {
@@ -40,9 +47,9 @@ extension Requestable {
     switch message.etagPolicy {
     case .Default:
       withEtag = methodsWithEtags.contains(method)
-    case .Enable:
+    case .Enabled:
       withEtag = true
-    case .Disable:
+    case .Disabled:
       withEtag = false
     }
 

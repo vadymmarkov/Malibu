@@ -14,8 +14,16 @@ class MessageSpec: QuickSpec {
       }
 
       describe("#init") {
-        it("sets resource value") {
+        it("sets parameter values") {
+          message = Message(resource: resource, parameters: ["key": "value"], headers: ["key": "value"],
+            contentType: .FormURLEncoded, cachePolicy: .ReturnCacheDataElseLoad, etagPolicy: .Enabled)
+
           expect(message.resource.URLString).to(equal(resource.URLString))
+          expect(message.contentType).to(equal(ContentType.FormURLEncoded))
+          expect(message.cachePolicy).to(equal(NSURLRequestCachePolicy.ReturnCacheDataElseLoad))
+          expect(message.etagPolicy).to(equal(Message.ETagPolicy.Enabled))
+          expect(message.parameters.count).to(equal(1))
+          expect(message.headers).to(equal(["key": "value"]))
         }
 
         it("is sets default values") {
@@ -45,7 +53,7 @@ class MessageSpec: QuickSpec {
           expect(message).toNot(equal(Message(resource: resource, headers: ["key": "value"])))
           expect(message).toNot(equal(Message(resource: resource, contentType: .FormURLEncoded)))
           expect(message).toNot(equal(Message(resource: resource, cachePolicy: .ReturnCacheDataElseLoad)))
-          expect(message).toNot(equal(Message(resource: resource, etagPolicy: .Enable)))
+          expect(message).toNot(equal(Message(resource: resource, etagPolicy: .Enabled)))
         }
       }
     }
