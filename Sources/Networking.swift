@@ -75,27 +75,27 @@ public class Networking {
 
 extension Networking {
 
-  func get(request: Requestable) -> Promise<NetworkResult> {
+  func GET(request: Requestable) -> Promise<NetworkResult> {
     return execute(.GET, request: request)
   }
 
-  func post(request: Requestable) -> Promise<NetworkResult> {
+  func POST(request: Requestable) -> Promise<NetworkResult> {
     return execute(.POST, request: request)
   }
 
-  func put(request: Requestable) -> Promise<NetworkResult> {
+  func PUT(request: Requestable) -> Promise<NetworkResult> {
     return execute(.PUT, request: request)
   }
 
-  func patch(request: Requestable) -> Promise<NetworkResult> {
+  func PATCH(request: Requestable) -> Promise<NetworkResult> {
     return execute(.PATCH, request: request)
   }
 
-  func delete(request: Requestable) -> Promise<NetworkResult> {
+  func DELETE(request: Requestable) -> Promise<NetworkResult> {
     return execute(.DELETE, request: request)
   }
 
-  func head(request: Requestable) -> Promise<NetworkResult> {
+  func HEAD(request: Requestable) -> Promise<NetworkResult> {
     return execute(.HEAD, request: request)
   }
 }
