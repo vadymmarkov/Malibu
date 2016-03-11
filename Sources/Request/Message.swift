@@ -29,8 +29,8 @@ public struct Message: Equatable {
       self.etagPolicy = etagPolicy
   }
 
-  public var etagKey: String {
-    return resource.URLString + parameters.description
+  public func etagKey(prefix: String = "") -> String {
+    return "\(prefix)\(resource.URLString)\(parameters.description)"
   }
 }
 

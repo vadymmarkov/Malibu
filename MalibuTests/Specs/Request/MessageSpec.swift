@@ -38,7 +38,7 @@ class MessageSpec: QuickSpec {
       describe("#etagKey") {
         it("returns ETag key built from resource and parameters") {
           let result = message.resource.URLString + message.parameters.description
-          expect(message.etagKey).to(equal(result))
+          expect(message.etagKey()).to(equal(result))
         }
       }
 

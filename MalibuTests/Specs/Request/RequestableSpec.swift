@@ -50,17 +50,27 @@ class RequestableSpec: QuickSpec {
         }
 
         context("when there are no errors") {
-          it("does not throw an error and returns created NSMutableURLRequest") {
-            var URLRequest: NSURLRequest!
+          context("without base URL") {
+            it("does not throw an error and returns created NSMutableURLRequest") {
+              var URLRequest: NSURLRequest!
 
-            expect{ URLRequest = try request.toURLRequest(.GET) }.toNot(throwError())
-            expect(URLRequest.URL).to(equal(NSURL(string: request.message.resource.URLString)))
-            expect(URLRequest.HTTPMethod).to(equal(Method.GET.rawValue))
-            expect(URLRequest.cachePolicy).to(equal(request.message.cachePolicy))
-            expect(URLRequest.allHTTPHeaderFields?["Content-Type"]).to(equal(request.message.contentType.value))
-            expect(URLRequest.HTTPBody).to(equal(
-              try! parameterEncoders[request.message.contentType]?.encode(request.message.parameters)))
-            expect(URLRequest.allHTTPHeaderFields?["key"]).to(equal("value"))
+              expect{ URLRequest = try request.toURLRequest(.GET) }.toNot(throwError())
+              expect(URLRequest.URL).to(equal(NSURL(string: request.message.resource.URLString)))
+              expect(URLRequest.HTTPMethod).to(equal(Method.GET.rawValue))
+              expect(URLRequest.cachePolicy).to(equal(request.message.cachePolicy))
+              expect(URLRequest.allHTTPHeaderFields?["Content-Type"]).to(equal(request.message.contentType.value))
+              expect(URLRequest.HTTPBody).to(equal(
+                try! parameterEncoders[request.message.contentType]?.encode(request.message.parameters)))
+              expect(URLRequest.allHTTPHeaderFields?["key"]).to(equal("value"))
+            }
+          }
+
+          context("with base URL") {
+            it("does not throw an error and returns created NSMutableURLRequest") {
+              request.message.resource = "/about"
+
+              expect{ try request.toURLRequest(.GET, baseURLString: "http://hyper.no") }.toNot(throwError())
+            }
           }
 
           context("GET request") {
@@ -69,7 +79,7 @@ class RequestableSpec: QuickSpec {
                 let storage = ETagStorage()
                 let etag = "W/\"123456789"
 
-                storage.add(etag, forKey: request.message.etagKey)
+                storage.add(etag, forKey: request.message.etagKey())
 
                 let URLRequest = try! request.toURLRequest(.GET)
 
@@ -83,7 +93,7 @@ class RequestableSpec: QuickSpec {
                 let storage = ETagStorage()
                 let etag = "W/\"123456789"
 
-                storage.add(etag, forKey: request.message.etagKey)
+                storage.add(etag, forKey: request.message.etagKey())
 
                 let URLRequest = try! request.toURLRequest(.GET)
 
@@ -105,7 +115,7 @@ class RequestableSpec: QuickSpec {
                 let storage = ETagStorage()
                 let etag = "W/\"123456789"
 
-                storage.add(etag, forKey: request.message.etagKey)
+                storage.add(etag, forKey: request.message.etagKey())
 
                 let URLRequest = try! request.toURLRequest(.POST)
 
@@ -120,7 +130,7 @@ class RequestableSpec: QuickSpec {
                 let storage = ETagStorage()
                 let etag = "W/\"123456789"
 
-                storage.add(etag, forKey: request.message.etagKey)
+                storage.add(etag, forKey: request.message.etagKey())
 
                 let URLRequest = try! request.toURLRequest(.POST)
 

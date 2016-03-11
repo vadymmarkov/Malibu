@@ -29,7 +29,7 @@ public class Networking {
     let URLRequest: NSMutableURLRequest
 
     do {
-      URLRequest = try request.toURLRequest(method)
+      URLRequest = try request.toURLRequest(method, baseURLString: baseURLString)
     } catch {
       promise.reject(error)
       return promise

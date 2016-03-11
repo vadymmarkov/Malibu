@@ -5,7 +5,7 @@ public protocol Requestable {
 
   init()
   init(parameters: [String : AnyObject], headers: [String : String])
-  func toURLRequest(method: Method) throws -> NSMutableURLRequest
+  func toURLRequest(method: Method, baseURLString: URLStringConvertible?) throws -> NSMutableURLRequest
 }
 
 extension Requestable {
@@ -22,8 +22,11 @@ extension Requestable {
     }
   }
 
-  public func toURLRequest(method: Method) throws -> NSMutableURLRequest {
-    guard let URL = NSURL(string: message.resource.URLString) else {
+  public func toURLRequest(method: Method, baseURLString: URLStringConvertible? = nil) throws -> NSMutableURLRequest {
+    let prefix = baseURLString?.URLString ?? ""
+    let resourceString = "\(prefix)\(message.resource.URLString)"
+
+    guard let URL = NSURL(string: resourceString) else {
       throw Error.InvalidRequestURL
     }
 
@@ -54,7 +57,7 @@ extension Requestable {
     }
 
     if withEtag {
-      if let etag = ETagStorage().get(message.etagKey) {
+      if let etag = ETagStorage().get(message.etagKey(prefix)) {
         request.addValue(etag, forHTTPHeaderField: "If-None-Match")
       }
     }
