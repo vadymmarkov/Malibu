@@ -7,28 +7,37 @@ public class Networking {
     case Data, Upload, Download
   }
 
+  var baseURLString: URLStringConvertible?
   let sessionConfiguration: SessionConfiguration
+  var preProcessRequest: (NSMutableURLRequest -> Void)?
 
   lazy var session: NSURLSession = {
     return NSURLSession(configuration: self.sessionConfiguration.value)
   }()
 
-  public init(sessionConfiguration: SessionConfiguration = .Default) {
+  // MARK: - Initialization
+
+  public init(baseURLString: URLStringConvertible? = nil, sessionConfiguration: SessionConfiguration = .Default) {
+    self.baseURLString = baseURLString
     self.sessionConfiguration = sessionConfiguration
   }
 
-  func request(method: Method, URL: NSURL, contentType: ContentType = .JSON, parameters: [String: AnyObject] = [:]) throws -> Promise<NetworkResult> {
+  // MARK: - Requests
+
+  func execute(method: Method, request: Requestable) -> Promise<NetworkResult> {
     let promise = Promise<NetworkResult>()
+    let URLRequest: NSMutableURLRequest
 
-    let request = NSMutableURLRequest(URL: URL)
-    request.HTTPMethod = method.rawValue
-    request.addValue(contentType.value, forHTTPHeaderField: "Content-Type")
-
-    if let encoder = parameterEncoders[contentType] {
-      request.HTTPBody = try encoder.encode(parameters)
+    do {
+      URLRequest = try request.toURLRequest(method, baseURLString: baseURLString)
+    } catch {
+      promise.reject(error)
+      return promise
     }
 
-    session.dataTaskWithRequest(request, completionHandler: { data, response, error in
+    preProcessRequest?(URLRequest)
+
+    session.dataTaskWithRequest(URLRequest, completionHandler: { data, response, error in
       guard let response = response as? NSHTTPURLResponse else {
         promise.reject(Error.NoResponseReceived)
         return
@@ -44,10 +53,49 @@ public class Networking {
         return
       }
 
-      let result = NetworkResult(data: data, request: request, response: response)
+      let result = NetworkResult(data: data, request: URLRequest, response: response)
       promise.resolve(result)
     }).resume()
 
     return promise
+  }
+
+  // MARK: - Helpers
+
+  func saveEtag(key: String, response: NSHTTPURLResponse) {
+    guard let etag = response.allHeaderFields["ETag"] as? String else {
+      return
+    }
+
+    ETagStorage().add(etag, forKey: key)
+  }
+}
+
+// MARK: - Requests
+
+extension Networking {
+
+  func GET(request: Requestable) -> Promise<NetworkResult> {
+    return execute(.GET, request: request)
+  }
+
+  func POST(request: Requestable) -> Promise<NetworkResult> {
+    return execute(.POST, request: request)
+  }
+
+  func PUT(request: Requestable) -> Promise<NetworkResult> {
+    return execute(.PUT, request: request)
+  }
+
+  func PATCH(request: Requestable) -> Promise<NetworkResult> {
+    return execute(.PATCH, request: request)
+  }
+
+  func DELETE(request: Requestable) -> Promise<NetworkResult> {
+    return execute(.DELETE, request: request)
+  }
+
+  func HEAD(request: Requestable) -> Promise<NetworkResult> {
+    return execute(.HEAD, request: request)
   }
 }
