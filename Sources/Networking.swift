@@ -60,11 +60,42 @@ public class Networking {
     return promise
   }
 
+  // MARK: - Helpers
+
   func saveEtag(key: String, response: NSHTTPURLResponse) {
     guard let etag = response.allHeaderFields["ETag"] as? String else {
       return
     }
 
     ETagStorage().add(etag, forKey: key)
+  }
+}
+
+// MARK: - Requests
+
+extension Networking {
+
+  func get(request: Requestable) -> Promise<NetworkResult> {
+    return execute(.GET, request: request)
+  }
+
+  func post(request: Requestable) -> Promise<NetworkResult> {
+    return execute(.POST, request: request)
+  }
+
+  func put(request: Requestable) -> Promise<NetworkResult> {
+    return execute(.PUT, request: request)
+  }
+
+  func patch(request: Requestable) -> Promise<NetworkResult> {
+    return execute(.PATCH, request: request)
+  }
+
+  func delete(request: Requestable) -> Promise<NetworkResult> {
+    return execute(.DELETE, request: request)
+  }
+
+  func head(request: Requestable) -> Promise<NetworkResult> {
+    return execute(.HEAD, request: request)
   }
 }
