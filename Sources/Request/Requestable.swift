@@ -22,7 +22,7 @@ extension Requestable {
     }
   }
 
-  public func toURLRequest(method: Method, baseURLString: URLStringConvertible? = nil) throws -> NSMutableURLRequest {
+  public func toURLRequest(method: Method, baseURLString: URLStringConvertible? = nil, additionalHeaders: [String: String] = [:]) throws -> NSMutableURLRequest {
     let prefix = baseURLString?.URLString ?? ""
     let resourceString = "\(prefix)\(message.resource.URLString)"
 
@@ -40,9 +40,11 @@ extension Requestable {
     if let encoder = parameterEncoders[contentType] {
       request.HTTPBody = try encoder.encode(message.parameters)
     }
-
-    message.headers.forEach { key, value in
-      request.addValue(value, forHTTPHeaderField: key)
+    
+    [additionalHeaders, message.headers].forEach {
+      $0.forEach { key, value in
+        request.addValue(value, forHTTPHeaderField: key)
+      }
     }
 
     var withEtag: Bool
