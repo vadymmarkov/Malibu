@@ -4,6 +4,13 @@ struct Header {
   
   static let acceptEncoding: String = "gzip;q=1.0, compress;q=0.5"
   
+  static let defaultHeaders: [String: String] = {
+    return [
+      "Accept-Encoding": acceptEncoding,
+      "User-Agent": userAgent
+    ]
+  }()
+  
   static var acceptLanguage: String {
     return NSLocale.preferredLanguages().prefix(6).enumerate().map { index, languageCode in
       let quality = 1.0 - (Double(index) * 0.1)
@@ -30,14 +37,6 @@ struct Header {
     
     return string
   }()
-  
-  static var defaultHeaders: [String: String] {
-    return [
-      "Accept-Encoding": acceptEncoding,
-      "Accept-Language": acceptLanguage,
-      "User-Agent": userAgent
-    ]
-  }
   
   static func authentication(username: String, password: String) -> String? {
     let credentials = "\(username):\(password)"
