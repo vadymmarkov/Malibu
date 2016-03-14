@@ -38,7 +38,7 @@ extension Requestable {
     let request = NSMutableURLRequest(URL: URL)
     request.HTTPMethod = method.rawValue
     request.cachePolicy = message.cachePolicy
-    request.addValue(contentType.value, forHTTPHeaderField: "Content-Type")
+    request.setValue(contentType.value, forHTTPHeaderField: "Content-Type")
 
     if let encoder = parameterEncoders[contentType] {
       request.HTTPBody = try encoder.encode(message.parameters)
@@ -46,7 +46,7 @@ extension Requestable {
     
     [additionalHeaders, message.headers].forEach {
       $0.forEach { key, value in
-        request.addValue(value, forHTTPHeaderField: key)
+        request.setValue(value, forHTTPHeaderField: key)
       }
     }
 
@@ -63,7 +63,7 @@ extension Requestable {
 
     if withEtag {
       if let etag = ETagStorage().get(message.etagKey(prefix)) {
-        request.addValue(etag, forHTTPHeaderField: "If-None-Match")
+        request.setValue(etag, forHTTPHeaderField: "If-None-Match")
       }
     }
 
