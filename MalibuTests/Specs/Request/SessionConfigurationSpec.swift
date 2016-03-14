@@ -16,8 +16,15 @@ class SessionConfigurationSpec: QuickSpec {
         describe("#value") {
           it("returns a correct NSURLSessionConfiguration") {
             let value = sessionConfiguration.value
+            let expected = NSURLSessionConfiguration.defaultSessionConfiguration()
+            expected.HTTPAdditionalHeaders = Header.defaultHeaders
 
-            expect(value).to(equal(NSURLSessionConfiguration.defaultSessionConfiguration()))
+            expect(value).to(equal(expected))
+          }
+          
+          it("sets additional HTTP headers") {
+            let headers = sessionConfiguration.value.HTTPAdditionalHeaders as? [String: String]
+            expect(headers).to(equal(Header.defaultHeaders))
           }
         }
       }
@@ -32,6 +39,11 @@ class SessionConfigurationSpec: QuickSpec {
             let value = sessionConfiguration.value
 
             expect(value.identifier).to(equal("MalibuBackgroundConfiguration"))
+          }
+          
+          it("sets additional HTTP headers") {
+            let headers = sessionConfiguration.value.HTTPAdditionalHeaders as? [String: String]
+            expect(headers).to(equal(Header.defaultHeaders))
           }
         }
       }
@@ -50,6 +62,11 @@ class SessionConfigurationSpec: QuickSpec {
 
             expect(value).to(equal(configuration))
             expect(value.requestCachePolicy).to(equal(configuration.requestCachePolicy))
+          }
+          
+          it("sets additional HTTP headers") {
+            let headers = sessionConfiguration.value.HTTPAdditionalHeaders as? [String: String]
+            expect(headers).to(equal(Header.defaultHeaders))
           }
         }
       }
