@@ -5,7 +5,10 @@ public protocol Requestable {
 
   init()
   init(parameters: [String : AnyObject], headers: [String : String])
-  func toURLRequest(method: Method, baseURLString: URLStringConvertible?) throws -> NSMutableURLRequest
+  
+  func toURLRequest(method: Method,
+    baseURLString: URLStringConvertible?,
+    additionalHeaders: [String: String]) throws -> NSMutableURLRequest
 }
 
 extension Requestable {
