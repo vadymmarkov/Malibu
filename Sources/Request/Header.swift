@@ -4,13 +4,6 @@ struct Header {
   
   static let acceptEncoding: String = "gzip;q=1.0, compress;q=0.5"
   
-  static let defaultHeaders: [String: String] = {
-    return [
-      "Accept-Encoding": acceptEncoding,
-      "User-Agent": userAgent
-    ]
-  }()
-  
   static var acceptLanguage: String {
     return NSLocale.preferredLanguages().prefix(6).enumerate().map { index, languageCode in
       let quality = 1.0 - (Double(index) * 0.1)
@@ -26,7 +19,7 @@ struct Header {
       let bundle: AnyObject = info[kCFBundleIdentifierKey as String] ?? "Unknown"
       let version: AnyObject = info[kCFBundleVersionKey as String] ?? "Unknown"
       let os: AnyObject = NSProcessInfo.processInfo().operatingSystemVersionString ?? "Unknown"
-      var mutableUserAgent = NSMutableString(
+      let mutableUserAgent = NSMutableString(
         string: "\(executable)/\(bundle) (\(version); OS \(os))") as CFMutableString
       let transform = NSString(string: "Any-Latin; Latin-ASCII; [:^ASCII:] Remove") as CFString
       
@@ -38,7 +31,14 @@ struct Header {
     return string
   }()
   
-  static func authentication(username: String, password: String) -> String? {
+  static let defaultHeaders: [String: String] = {
+    return [
+      "Accept-Encoding": acceptEncoding,
+      "User-Agent": userAgent
+    ]
+  }()
+  
+  static func authentication(username username: String, password: String) -> String? {
     let credentials = "\(username):\(password)"
     
     guard let credentialsData = credentials.dataUsingEncoding(NSUTF8StringEncoding) else {

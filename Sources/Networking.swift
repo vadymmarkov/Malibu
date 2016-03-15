@@ -79,7 +79,7 @@ public class Networking {
   // MARK: - Authentication
 
   public func authenticate(username username: String, password: String) {
-    guard let header = Header.authentication(username, password: password) else {
+    guard let header = Header.authentication(username: username, password: password) else {
       return
     }
     
