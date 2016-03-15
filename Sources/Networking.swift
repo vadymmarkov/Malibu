@@ -6,14 +6,29 @@ public class Networking {
   enum SessionTaskKind {
     case Data, Upload, Download
   }
+  
+  public var additionalHeaders = [String: String]()
 
   var baseURLString: URLStringConvertible?
   let sessionConfiguration: SessionConfiguration
   var preProcessRequest: (NSMutableURLRequest -> Void)?
+  var customHeaders = [String: String]()
 
   lazy var session: NSURLSession = {
     return NSURLSession(configuration: self.sessionConfiguration.value)
   }()
+  
+  var requestHeaders: [String: String] {
+    var headers = customHeaders
+    
+    headers["Accept-Language"] = Header.acceptLanguage
+    
+    additionalHeaders.forEach { key, value in
+      headers[key] = value
+    }
+    
+    return headers
+  }
 
   // MARK: - Initialization
 
@@ -27,9 +42,10 @@ public class Networking {
   func execute(method: Method, request: Requestable) -> Promise<NetworkResult> {
     let promise = Promise<NetworkResult>()
     let URLRequest: NSMutableURLRequest
-
+    
     do {
-      URLRequest = try request.toURLRequest(method, baseURLString: baseURLString)
+      URLRequest = try request.toURLRequest(method,
+        baseURLString: baseURLString, additionalHeaders: requestHeaders)
     } catch {
       promise.reject(error)
       return promise
@@ -59,9 +75,27 @@ public class Networking {
 
     return promise
   }
+  
+  // MARK: - Authentication
 
+  public func authenticate(username username: String, password: String) {
+    guard let header = Header.authentication(username: username, password: password) else {
+      return
+    }
+    
+    customHeaders["Authorization"] = header
+  }
+  
+  func authenticate(authorizationHeader authorizationHeader: String) {
+    customHeaders["Authorization"] = authorizationHeader
+  }
+  
+  func authenticate(bearerToken bearerToken: String) {
+    customHeaders["Authorization"] = "Bearer \(bearerToken)"
+  }
+  
   // MARK: - Helpers
-
+  
   func saveEtag(key: String, response: NSHTTPURLResponse) {
     guard let etag = response.allHeaderFields["ETag"] as? String else {
       return
