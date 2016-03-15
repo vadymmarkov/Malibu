@@ -6,7 +6,7 @@ public class NetworkResult: Equatable {
   public let data: NSData
   public let request: NSURLRequest
   public let response: NSHTTPURLResponse
-  
+
   public init(data: NSData, request: NSURLRequest, response: NSHTTPURLResponse) {
     self.data = data
     self.request = request

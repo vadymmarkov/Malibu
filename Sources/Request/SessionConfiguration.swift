@@ -17,7 +17,7 @@ public enum SessionConfiguration {
     case .Custom(let sessionConfiguration):
       value = sessionConfiguration
     }
-    
+
     value.HTTPAdditionalHeaders = Header.defaultHeaders
 
     return value

@@ -74,15 +74,15 @@ class RequestableSpec: QuickSpec {
               expect(URLRequest.URL?.absoluteString).to(equal("http://hyper.no/about"))
             }
           }
-          
+
           context("with additional headers") {
             it("returns created NSMutableURLRequest with new header added") {
               var URLRequest: NSURLRequest!
               let headers = ["foo": "bar", "key": "bar"]
               request.message.resource = "/about"
-              
+
               expect { URLRequest = try request.toURLRequest(.GET, baseURLString: "http://hyper.no", additionalHeaders: headers) }.toNot(throwError())
-              
+
               expect(URLRequest.allHTTPHeaderFields?["foo"]).to(equal("bar"))
               expect(URLRequest.allHTTPHeaderFields?["key"]).to(equal("value"))
             }

@@ -2,10 +2,10 @@ public enum ContentType {
   case JSON
   case FormURLEncoded
   case Custom(String)
-  
+
   var value: String {
     let string: String
-    
+
     switch self {
     case .JSON:
       string = "application/json"
@@ -14,7 +14,7 @@ public enum ContentType {
     case .Custom(let value):
       string = value
     }
-    
+
     return string
   }
 }
@@ -22,7 +22,7 @@ public enum ContentType {
 // MARK: - Hashable
 
 extension ContentType: Hashable {
-  
+
   public var hashValue: Int {
     return value.hashValue
   }

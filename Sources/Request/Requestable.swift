@@ -5,7 +5,7 @@ public protocol Requestable {
 
   init()
   init(parameters: [String : AnyObject], headers: [String : String])
-  
+
   func toURLRequest(method: Method,
     baseURLString: URLStringConvertible?,
     additionalHeaders: [String: String]) throws -> NSMutableURLRequest
@@ -43,7 +43,7 @@ extension Requestable {
     if let encoder = parameterEncoders[contentType] {
       request.HTTPBody = try encoder.encode(message.parameters)
     }
-    
+
     [additionalHeaders, message.headers].forEach {
       $0.forEach { key, value in
         request.setValue(value, forHTTPHeaderField: key)
