@@ -1,4 +1,5 @@
 import Foundation
+import When
 
 // MARK: - Helpers
 
@@ -7,7 +8,7 @@ var networkings = [String: Networking]()
 
 // MARK: - Public
 
-public var networking = Networking()
+public var backfootSurfer = Networking()
 
 public var parameterEncoders: [ContentType: ParameterEncoding] = [
   .JSON: JSONParameterEncoder(),
@@ -19,7 +20,31 @@ public func register(name: String, networking: Networking) {
 }
 
 public func networkingNamed(name: String) -> Networking {
-  return networkings[name] ?? networking
+  return networkings[name] ?? backfootSurfer
 }
 
+// MARK: - Requests
 
+public func GET(request: Requestable) -> Promise<NetworkResult> {
+  return backfootSurfer.GET(request)
+}
+
+public func POST(request: Requestable) -> Promise<NetworkResult> {
+  return backfootSurfer.POST(request)
+}
+
+public func PUT(request: Requestable) -> Promise<NetworkResult> {
+  return backfootSurfer.PUT(request)
+}
+
+public func PATCH(request: Requestable) -> Promise<NetworkResult> {
+  return backfootSurfer.PATCH(request)
+}
+
+public func DELETE(request: Requestable) -> Promise<NetworkResult> {
+  return backfootSurfer.DELETE(request)
+}
+
+public func HEAD(request: Requestable) -> Promise<NetworkResult> {
+  return backfootSurfer.HEAD(request)
+}
