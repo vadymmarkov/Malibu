@@ -19,6 +19,10 @@ public func register(name: String, networking: Networking) {
   networkings[name] = networking
 }
 
+public func remove(name: String) -> Bool {
+  return networkings.removeValueForKey(name) != nil
+}
+
 public func networkingNamed(name: String) -> Networking {
   return networkings[name] ?? backfootSurfer
 }
