@@ -15,11 +15,13 @@ public var parameterEncoders: [ContentType: ParameterEncoding] = [
   .FormURLEncoded: FormURLEncoder()
 ]
 
+// MARK: - Networkings
+
 public func register(name: String, networking: Networking) {
   networkings[name] = networking
 }
 
-public func remove(name: String) -> Bool {
+public func unregister(name: String) -> Bool {
   return networkings.removeValueForKey(name) != nil
 }
 
