@@ -1,6 +1,10 @@
 import Foundation
 import When
 
+public enum Mode {
+  case Regular, Fake
+}
+
 // MARK: - Helpers
 
 var methodsWithEtags: [Method] = [.GET, .PATCH, .PUT]
@@ -8,6 +12,7 @@ var networkings = [String: Networking]()
 
 // MARK: - Public
 
+public var mode: Mode = .Regular
 public var backfootSurfer = Networking()
 
 public var parameterEncoders: [ContentType: ParameterEncoding] = [

@@ -20,6 +20,12 @@ class MalibuSpec: QuickSpec {
         }
       }
       
+      describe(".mode") {
+        it("is regular by default") {
+          expect(Malibu.mode).to(equal(Malibu.Mode.Regular))
+        }
+      }
+      
       describe(".parameterEncoders") {
         it("has default encoders for content types") {
           expect(Malibu.parameterEncoders.isEmpty).to(beFalse())
