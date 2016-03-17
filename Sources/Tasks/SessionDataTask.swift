@@ -1,9 +1,23 @@
-//
-//  SessionDataTask.swift
-//  Malibu
-//
-//  Created by Vadym Markov on 17/03/16.
-//  Copyright © 2016 Hyper Interaktiv AS. All rights reserved.
-//
-
 import Foundation
+import When
+
+class SessionDataTask: NetworkTaskRunning {
+  
+  var URLRequest: NSURLRequest
+  var promise: Promise<NetworkResult>
+  var session: NSURLSession
+  
+  // MARK: - Initialization
+  
+  init(session: NSURLSession, URLRequest: NSURLRequest, promise: Promise<NetworkResult>) {
+    self.session = session
+    self.URLRequest = URLRequest
+    self.promise = promise
+  }
+  
+  // MARK: - NetworkTaskRunning
+  
+  func run() {
+    session.dataTaskWithRequest(URLRequest, completionHandler: process).resume()
+  }
+}

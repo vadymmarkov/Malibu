@@ -37,7 +37,7 @@ public class Networking {
     self.sessionConfiguration = sessionConfiguration
   }
 
-  // MARK: - Requests
+  // MARK: - Networking
 
   func execute(method: Method, request: Requestable) -> Promise<NetworkResult> {
     let promise = Promise<NetworkResult>()
@@ -52,30 +52,21 @@ public class Networking {
     }
 
     preProcessRequest?(URLRequest)
-
-    session.dataTaskWithRequest(URLRequest, completionHandler: { data, response, error in
-      guard let response = response as? NSHTTPURLResponse else {
-        promise.reject(Error.NoResponseReceived)
-        return
-      }
-
-      if let error = error {
-        promise.reject(error)
-        return
-      }
-
-      guard let data = data else {
-        promise.reject(Error.NoDataInResponse)
-        return
-      }
-
-      let result = NetworkResult(data: data, request: URLRequest, response: response)
-      promise.resolve(result)
-    }).resume()
+    
+    let task: NetworkTaskRunning
+    
+    switch Malibu.mode {
+    case .Regular:
+      task = SessionDataTask(session: session, URLRequest: URLRequest, promise: promise)
+    case .Fake:
+      task = SessionDataTask(session: session, URLRequest: URLRequest, promise: promise)
+    }
+    
+    task.run()
 
     return promise
   }
-
+  
   // MARK: - Authentication
 
   public func authenticate(username username: String, password: String) {
