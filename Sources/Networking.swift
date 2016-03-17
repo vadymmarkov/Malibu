@@ -44,29 +44,29 @@ public class Networking {
     let URLRequest: NSMutableURLRequest
 
     do {
-      URLRequest = try request.toURLRequest(method,
-        baseURLString: baseURLString, additionalHeaders: requestHeaders)
+      URLRequest = try request.toURLRequest(method, baseURLString: baseURLString,
+        additionalHeaders: requestHeaders)
     } catch {
       promise.reject(error)
       return promise
     }
 
     preProcessRequest?(URLRequest)
-    
+
     let task: NetworkTaskRunning
-    
+
     switch Malibu.mode {
     case .Regular:
       task = SessionDataTask(session: session, URLRequest: URLRequest, promise: promise)
     case .Fake:
       task = SessionDataTask(session: session, URLRequest: URLRequest, promise: promise)
     }
-    
+
     task.run()
 
     return promise
   }
-  
+
   // MARK: - Authentication
 
   public func authenticate(username username: String, password: String) {
