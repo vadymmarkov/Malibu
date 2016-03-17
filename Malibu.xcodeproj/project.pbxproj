@@ -15,6 +15,8 @@
 		D503D3A61C8EC7550009BDAD /* NetworkPromiseSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503D3A41C8EC7550009BDAD /* NetworkPromiseSpec.swift */; };
 		D527ED891C9B6B0F0092AD6B /* NetworkTaskRunningSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D527ED881C9B6B0F0092AD6B /* NetworkTaskRunningSpec.swift */; };
 		D527ED8A1C9B6B0F0092AD6B /* NetworkTaskRunningSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D527ED881C9B6B0F0092AD6B /* NetworkTaskRunningSpec.swift */; };
+		D527ED8C1C9B72450092AD6B /* SessionDataTaskSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D527ED8B1C9B72450092AD6B /* SessionDataTaskSpec.swift */; };
+		D527ED8D1C9B72450092AD6B /* SessionDataTaskSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D527ED8B1C9B72450092AD6B /* SessionDataTaskSpec.swift */; };
 		D549C8561C8F661E00588A0C /* JSONSerializerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549C8551C8F661E00588A0C /* JSONSerializerSpec.swift */; };
 		D549C8571C8F661E00588A0C /* JSONSerializerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549C8551C8F661E00588A0C /* JSONSerializerSpec.swift */; };
 		D549C8591C8F6BB500588A0C /* DataSerializerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549C8581C8F6BB500588A0C /* DataSerializerSpec.swift */; };
@@ -149,6 +151,7 @@
 		D503D38F1C8DA95B0009BDAD /* JSONSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONSerializer.swift; sourceTree = "<group>"; };
 		D503D3A41C8EC7550009BDAD /* NetworkPromiseSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkPromiseSpec.swift; sourceTree = "<group>"; };
 		D527ED881C9B6B0F0092AD6B /* NetworkTaskRunningSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTaskRunningSpec.swift; sourceTree = "<group>"; };
+		D527ED8B1C9B72450092AD6B /* SessionDataTaskSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionDataTaskSpec.swift; sourceTree = "<group>"; };
 		D549C8551C8F661E00588A0C /* JSONSerializerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONSerializerSpec.swift; sourceTree = "<group>"; };
 		D549C8581C8F6BB500588A0C /* DataSerializerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSerializerSpec.swift; sourceTree = "<group>"; };
 		D549C85B1C8F6C8800588A0C /* StringSerializerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringSerializerSpec.swift; sourceTree = "<group>"; };
@@ -275,6 +278,7 @@
 			isa = PBXGroup;
 			children = (
 				D527ED881C9B6B0F0092AD6B /* NetworkTaskRunningSpec.swift */,
+				D527ED8B1C9B72450092AD6B /* SessionDataTaskSpec.swift */,
 			);
 			path = Tasks;
 			sourceTree = "<group>";
@@ -778,6 +782,7 @@
 				D5B9652C1C922C420099D2F9 /* NetworkResultSerializationSpec.swift in Sources */,
 				D5B964EE1C916CBF0099D2F9 /* Mocks.swift in Sources */,
 				DA5B4D131C8E5A26004E21ED /* NetworkingSpec.swift in Sources */,
+				D527ED8C1C9B72450092AD6B /* SessionDataTaskSpec.swift in Sources */,
 				D5B964FC1C9217140099D2F9 /* RequestableSpec.swift in Sources */,
 				DAA50FF41C9786BE00D01F78 /* HeaderSpec.swift in Sources */,
 				DAC92A0E1C7FA5F500F01940 /* FormURLEncoderSpec.swift in Sources */,
@@ -847,6 +852,7 @@
 				D5B9652D1C922C420099D2F9 /* NetworkResultSerializationSpec.swift in Sources */,
 				D5B964EF1C916CBF0099D2F9 /* Mocks.swift in Sources */,
 				DA5B4D141C8E5A26004E21ED /* NetworkingSpec.swift in Sources */,
+				D527ED8D1C9B72450092AD6B /* SessionDataTaskSpec.swift in Sources */,
 				D5B964FD1C9217140099D2F9 /* RequestableSpec.swift in Sources */,
 				DAA50FF51C9786BE00D01F78 /* HeaderSpec.swift in Sources */,
 				DAC92A0F1C7FA5F600F01940 /* FormURLEncoderSpec.swift in Sources */,
