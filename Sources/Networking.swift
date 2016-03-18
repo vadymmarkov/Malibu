@@ -99,8 +99,6 @@ public class Networking {
 
   // MARK: - Helpers
 
-
-
   func saveEtag(key: String, response: NSHTTPURLResponse) {
     guard let etag = response.allHeaderFields["ETag"] as? String else {
       return
