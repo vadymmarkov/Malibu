@@ -13,7 +13,7 @@ class MethodSpec: QuickSpec {
         request = TestRequest()
       }
 
-      describe("keyFor") {
+      describe("#keyFor") {
         it("bulds a key based on raw value and request URL") {
           expect(Method.GET.keyFor(request)).to(equal("GET http://hyper.no"))
           expect(Method.POST.keyFor(request)).to(equal("POST http://hyper.no"))

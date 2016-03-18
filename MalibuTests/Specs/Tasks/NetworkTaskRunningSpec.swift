@@ -13,7 +13,7 @@ class NetworkTaskRunningSpec: QuickSpec {
         task = TestNetworkTask()
       }
 
-      describe("process") {
+      describe("#process") {
         context("when response is nil") {
           it("rejects promise with an error") {
             let expectation = self.expectationWithDescription("No response failure")

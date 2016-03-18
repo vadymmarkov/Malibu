@@ -24,7 +24,7 @@ class MockDataSpec: QuickSpec {
         promise = Promise<NetworkResult>()
       }
 
-      describe("init") {
+      describe("#init") {
         beforeEach {
           mock = Mock(request: request, response: response, data: data, error: error)
           task = MockDataTask(mock: mock, URLRequest: URLRequest, promise: promise)
@@ -37,7 +37,7 @@ class MockDataSpec: QuickSpec {
         }
       }
 
-      describe("run") {
+      describe("#run") {
         context("when response is nil") {
           it("rejects promise with an error") {
             let expectation = self.expectationWithDescription("No response failure")

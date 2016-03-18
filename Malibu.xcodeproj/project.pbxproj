@@ -362,12 +362,12 @@
 			isa = PBXGroup;
 			children = (
 				D5B965321C922C500099D2F9 /* ContentTypeSpec.swift */,
+				D527ED981C9B84A20092AD6B /* MethodSpec.swift */,
 				DAA50FF31C9786BE00D01F78 /* HeaderSpec.swift */,
 				D5B965331C922C500099D2F9 /* SessionConfigurationSpec.swift */,
 				D5B965341C922C500099D2F9 /* URLStringConvertibleSpec.swift */,
 				D5B964F81C9216FD0099D2F9 /* MessageSpec.swift */,
 				D5B964FB1C9217140099D2F9 /* RequestableSpec.swift */,
-				D527ED981C9B84A20092AD6B /* MethodSpec.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";

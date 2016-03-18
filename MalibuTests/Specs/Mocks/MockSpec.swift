@@ -14,7 +14,7 @@ class MockSpec: QuickSpec {
       let data = "test".dataUsingEncoding(NSUTF32StringEncoding)
       let error = Error.NoDataInResponse
 
-      describe("init") {
+      describe("#init") {
         beforeEach {
           mock = Mock(request: request, response: response, data: data, error: error)
         }

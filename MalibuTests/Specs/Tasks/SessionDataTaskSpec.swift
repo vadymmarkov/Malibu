@@ -12,7 +12,7 @@ class SessionDataTaskSpec: QuickSpec {
       let URLRequest = try! TestRequest().toURLRequest(.GET)
       let promise = Promise<NetworkResult>()
 
-      describe("init") {
+      describe("#init") {
         beforeEach {
           task = SessionDataTask(session: session, URLRequest: URLRequest, promise: promise)
         }
