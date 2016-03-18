@@ -6,7 +6,7 @@ import When
 class MockSpec: QuickSpec {
 
   override func spec() {
-    describe("SessionDataTask") {
+    describe("Mock") {
       var mock: Mock!
       let request = TestRequest()
       let response = NSHTTPURLResponse(URL: NSURL(string: "http://hyper.no")!,

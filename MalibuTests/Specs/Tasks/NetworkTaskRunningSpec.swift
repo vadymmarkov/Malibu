@@ -60,7 +60,7 @@ class NetworkTaskRunningSpec: QuickSpec {
         }
 
         context("when validation succeeded") {
-          it("rresolves promise with a result") {
+          it("resolves promise with a result") {
             let expectation = self.expectationWithDescription("Validation succeeded")
 
             task.promise.done({ result in
