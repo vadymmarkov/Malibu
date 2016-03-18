@@ -34,6 +34,12 @@ public func networkingNamed(name: String) -> Networking {
   return networkings[name] ?? backfootSurfer
 }
 
+// MARK: - Mocks
+
+public func registerMock(mock: Mock, on method: Method) {
+  backfootSurfer.registerMock(mock, on: method)
+}
+
 // MARK: - Requests
 
 public func GET(request: Requestable) -> Promise<NetworkResult> {
