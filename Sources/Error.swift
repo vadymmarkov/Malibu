@@ -1,6 +1,7 @@
 import Foundation
 
 public enum Error: ErrorType {
+  case NoMockProvided
   case InvalidRequestURL
   case MissingContentType
   case NoDataInResponse
@@ -15,6 +16,8 @@ public enum Error: ErrorType {
     var text: String
 
     switch self {
+    case .NoMockProvided:
+      text = "No mock provided for the current request and method"
     case .InvalidRequestURL:
       text = "Invalid request URL"
     case .MissingContentType:

@@ -13,6 +13,7 @@ public class Networking {
   let sessionConfiguration: SessionConfiguration
   var preProcessRequest: (NSMutableURLRequest -> Void)?
   var customHeaders = [String: String]()
+  var mocks = [String: Mock]()
 
   lazy var session: NSURLSession = {
     return NSURLSession(configuration: self.sessionConfiguration.value)
@@ -59,7 +60,12 @@ public class Networking {
     case .Regular:
       task = SessionDataTask(session: session, URLRequest: URLRequest, promise: promise)
     case .Fake:
-      task = SessionDataTask(session: session, URLRequest: URLRequest, promise: promise)
+      guard let mock = mocks[method.keyFor(request)] else {
+        promise.reject(Error.NoMockProvided)
+        return promise
+      }
+
+      task = MockDataTask(mock: mock, URLRequest: URLRequest, promise: promise)
     }
 
     task.run()
@@ -77,15 +83,23 @@ public class Networking {
     customHeaders["Authorization"] = header
   }
 
-  func authenticate(authorizationHeader authorizationHeader: String) {
+  public func authenticate(authorizationHeader authorizationHeader: String) {
     customHeaders["Authorization"] = authorizationHeader
   }
 
-  func authenticate(bearerToken bearerToken: String) {
+  public func authenticate(bearerToken bearerToken: String) {
     customHeaders["Authorization"] = "Bearer \(bearerToken)"
   }
 
+  // MARK: - Mocks
+
+  func registerMock(mock: Mock, on method: Method) {
+    mocks[method.keyFor(mock.request)] = mock
+  }
+
   // MARK: - Helpers
+
+
 
   func saveEtag(key: String, response: NSHTTPURLResponse) {
     guard let etag = response.allHeaderFields["ETag"] as? String else {

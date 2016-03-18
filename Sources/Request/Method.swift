@@ -8,4 +8,8 @@ public enum Method: String {
   case OPTIONS
   case TRACE
   case CONNECT
+
+  func keyFor(request: Requestable) -> String {
+    return "\(rawValue) \(request.message.resource.URLString)"
+  }
 }
