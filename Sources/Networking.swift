@@ -13,6 +13,7 @@ public class Networking {
   let sessionConfiguration: SessionConfiguration
   var preProcessRequest: (NSMutableURLRequest -> Void)?
   var customHeaders = [String: String]()
+  var mocks = [String: Mock]()
 
   lazy var session: NSURLSession = {
     return NSURLSession(configuration: self.sessionConfiguration.value)
@@ -37,15 +38,15 @@ public class Networking {
     self.sessionConfiguration = sessionConfiguration
   }
 
-  // MARK: - Requests
+  // MARK: - Networking
 
   func execute(method: Method, request: Requestable) -> Promise<NetworkResult> {
     let promise = Promise<NetworkResult>()
     let URLRequest: NSMutableURLRequest
 
     do {
-      URLRequest = try request.toURLRequest(method,
-        baseURLString: baseURLString, additionalHeaders: requestHeaders)
+      URLRequest = try request.toURLRequest(method, baseURLString: baseURLString,
+        additionalHeaders: requestHeaders)
     } catch {
       promise.reject(error)
       return promise
@@ -53,25 +54,21 @@ public class Networking {
 
     preProcessRequest?(URLRequest)
 
-    session.dataTaskWithRequest(URLRequest, completionHandler: { data, response, error in
-      guard let response = response as? NSHTTPURLResponse else {
-        promise.reject(Error.NoResponseReceived)
-        return
+    let task: NetworkTaskRunning
+
+    switch Malibu.mode {
+    case .Regular:
+      task = SessionDataTask(session: session, URLRequest: URLRequest, promise: promise)
+    case .Fake:
+      guard let mock = mocks[method.keyFor(request)] else {
+        promise.reject(Error.NoMockProvided)
+        return promise
       }
 
-      if let error = error {
-        promise.reject(error)
-        return
-      }
+      task = MockDataTask(mock: mock, URLRequest: URLRequest, promise: promise)
+    }
 
-      guard let data = data else {
-        promise.reject(Error.NoDataInResponse)
-        return
-      }
-
-      let result = NetworkResult(data: data, request: URLRequest, response: response)
-      promise.resolve(result)
-    }).resume()
+    task.run()
 
     return promise
   }
@@ -86,12 +83,18 @@ public class Networking {
     customHeaders["Authorization"] = header
   }
 
-  func authenticate(authorizationHeader authorizationHeader: String) {
+  public func authenticate(authorizationHeader authorizationHeader: String) {
     customHeaders["Authorization"] = authorizationHeader
   }
 
-  func authenticate(bearerToken bearerToken: String) {
+  public func authenticate(bearerToken bearerToken: String) {
     customHeaders["Authorization"] = "Bearer \(bearerToken)"
+  }
+
+  // MARK: - Mocks
+
+  func registerMock(mock: Mock, on method: Method) {
+    mocks[method.keyFor(mock.request)] = mock
   }
 
   // MARK: - Helpers

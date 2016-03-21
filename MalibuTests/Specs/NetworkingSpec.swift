@@ -6,9 +6,13 @@ class NetworkingSpec: QuickSpec {
 
   override func spec() {
     describe("Networking") {
-      var networking = Networking()
+      var networking: Networking!
 
-      describe("init") {
+      beforeEach {
+        networking = Networking()
+      }
+
+      describe("#init") {
         it("sets default configuration to the session") {
           networking = Networking()
 
@@ -19,6 +23,17 @@ class NetworkingSpec: QuickSpec {
           networking = Networking(sessionConfiguration: .Background)
 
           expect(networking.session.configuration.identifier).to(equal("MalibuBackgroundConfiguration"))
+        }
+      }
+
+      describe("#registerMock:on") {
+        it("registers mock for the provided method") {
+          let request = TestRequest()
+          let mock = Mock(request: request, response: nil, data: nil, error: nil)
+
+          networking.registerMock(mock, on: .GET)
+
+          expect(networking.mocks["GET http://hyper.no"] === mock).to(beTrue())
         }
       }
     }
