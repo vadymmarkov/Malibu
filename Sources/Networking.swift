@@ -68,9 +68,14 @@ public class Networking {
       task = MockDataTask(mock: mock, URLRequest: URLRequest, promise: promise)
     }
 
+    let nextPromise = promise.then { result -> NetworkResult in
+      self.saveEtag(request.message, response: result.response)
+      return result
+    }
+
     task.run()
 
-    return promise
+    return nextPromise
   }
 
   // MARK: - Authentication
@@ -99,12 +104,14 @@ public class Networking {
 
   // MARK: - Helpers
 
-  func saveEtag(key: String, response: NSHTTPURLResponse) {
+  func saveEtag(message: Message, response: NSHTTPURLResponse) {
     guard let etag = response.allHeaderFields["ETag"] as? String else {
       return
     }
 
-    ETagStorage().add(etag, forKey: key)
+    let prefix = baseURLString?.URLString ?? ""
+
+    ETagStorage().add(etag, forKey: message.etagKey(prefix))
   }
 }
 
@@ -112,27 +119,27 @@ public class Networking {
 
 extension Networking {
 
-  func GET(request: Requestable) -> Promise<NetworkResult> {
+  public func GET(request: Requestable) -> Promise<NetworkResult> {
     return execute(.GET, request: request)
   }
 
-  func POST(request: Requestable) -> Promise<NetworkResult> {
+  public func POST(request: Requestable) -> Promise<NetworkResult> {
     return execute(.POST, request: request)
   }
 
-  func PUT(request: Requestable) -> Promise<NetworkResult> {
+  public func PUT(request: Requestable) -> Promise<NetworkResult> {
     return execute(.PUT, request: request)
   }
 
-  func PATCH(request: Requestable) -> Promise<NetworkResult> {
+  public func PATCH(request: Requestable) -> Promise<NetworkResult> {
     return execute(.PATCH, request: request)
   }
 
-  func DELETE(request: Requestable) -> Promise<NetworkResult> {
+  public func DELETE(request: Requestable) -> Promise<NetworkResult> {
     return execute(.DELETE, request: request)
   }
 
-  func HEAD(request: Requestable) -> Promise<NetworkResult> {
+  public func HEAD(request: Requestable) -> Promise<NetworkResult> {
     return execute(.HEAD, request: request)
   }
 }
