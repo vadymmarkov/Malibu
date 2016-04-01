@@ -2,7 +2,7 @@ import Foundation
 import When
 @testable import Malibu
 
-struct TestRequest: Requestable {
+struct TestRequest: ParameterizedRequestable {
   var message = Message(resource: "http://hyper.no")
 }
 

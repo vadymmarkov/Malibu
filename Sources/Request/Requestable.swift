@@ -3,27 +3,12 @@ import Foundation
 public protocol Requestable {
   var message: Message { get set }
 
-  init()
-  init(parameters: [String : AnyObject], headers: [String : String])
-
   func toURLRequest(method: Method,
     baseURLString: URLStringConvertible?,
     additionalHeaders: [String: String]) throws -> NSMutableURLRequest
 }
 
 extension Requestable {
-
-  public init(parameters: [String : AnyObject] = [:], headers: [String : String] = [:]) {
-    self.init()
-
-    parameters.forEach { key, value in
-      self.message.parameters[key] = value
-    }
-
-    headers.forEach { key, value in
-      self.message.headers[key] = value
-    }
-  }
 
   public func toURLRequest(method: Method, baseURLString: URLStringConvertible? = nil, additionalHeaders: [String: String] = [:]) throws -> NSMutableURLRequest {
     let prefix = baseURLString?.URLString ?? ""

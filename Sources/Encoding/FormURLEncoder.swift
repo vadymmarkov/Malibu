@@ -57,7 +57,7 @@ extension FormURLEncoder {
 
       while index != string.endIndex {
         let endIndex = index.advancedBy(50, limit: string.endIndex)
-        let range = Range(start: index, end: endIndex)
+        let range = Range(index...endIndex)
         let substring = string.substringWithRange(range)
 
         index = endIndex

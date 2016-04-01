@@ -1,7 +1,7 @@
 import Foundation
 
 public protocol Serializing {
-  typealias T
+  associatedtype T
 
   func serialize(data: NSData, response: NSHTTPURLResponse) throws -> T
 }

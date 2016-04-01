@@ -19,18 +19,6 @@ class RequestableSpec: QuickSpec {
         } catch {}
       }
 
-      describe("#init") {
-        it("sets parameters to the message") {
-          expect(request.message.parameters.count).to(equal(1))
-          expect(request.message.parameters["key"] as? String).to(equal("value"))
-        }
-
-        it("sets headers to the message") {
-          expect(request.message.headers.count).to(equal(1))
-          expect(request.message.headers["key"]).to(equal("value"))
-        }
-      }
-
       describe("#toURLRequest") {
         context("when request URL is invalid") {
           it("throws an error") {
