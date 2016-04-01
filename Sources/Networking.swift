@@ -117,29 +117,29 @@ public class Networking {
 
 // MARK: - Requests
 
-extension Networking {
+public extension Networking {
 
-  public func GET(request: Requestable) -> Promise<NetworkResult> {
+  func GET(request: Requestable) -> Promise<NetworkResult> {
     return execute(.GET, request: request)
   }
 
-  public func POST(request: Requestable) -> Promise<NetworkResult> {
+  func POST(request: Requestable) -> Promise<NetworkResult> {
     return execute(.POST, request: request)
   }
 
-  public func PUT(request: Requestable) -> Promise<NetworkResult> {
+  func PUT(request: Requestable) -> Promise<NetworkResult> {
     return execute(.PUT, request: request)
   }
 
-  public func PATCH(request: Requestable) -> Promise<NetworkResult> {
+  func PATCH(request: Requestable) -> Promise<NetworkResult> {
     return execute(.PATCH, request: request)
   }
 
-  public func DELETE(request: Requestable) -> Promise<NetworkResult> {
+  func DELETE(request: Requestable) -> Promise<NetworkResult> {
     return execute(.DELETE, request: request)
   }
 
-  public func HEAD(request: Requestable) -> Promise<NetworkResult> {
+  func HEAD(request: Requestable) -> Promise<NetworkResult> {
     return execute(.HEAD, request: request)
   }
 }
