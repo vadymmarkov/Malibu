@@ -11,13 +11,13 @@ protocol NetworkTaskRunning: class {
 extension NetworkTaskRunning {
 
   func process(data: NSData?, response: NSURLResponse?, error: ErrorType?) {
-    guard let response = response as? NSHTTPURLResponse else {
-      promise.reject(Error.NoResponseReceived)
-      return
-    }
-
     if let error = error {
       promise.reject(error)
+      return
+    }
+    
+    guard let response = response as? NSHTTPURLResponse else {
+      promise.reject(Error.NoResponseReceived)
       return
     }
 
