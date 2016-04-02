@@ -14,12 +14,6 @@ class MalibuSpec: QuickSpec {
         Malibu.register("surfer", networking: surferNetworking)
       }
 
-      describe(".methodsWithEtags") {
-        it("has GET, PATCH, PUT methods") {
-          expect(Malibu.methodsWithEtags).to(equal([.GET, .PATCH, .PUT]))
-        }
-      }
-
       describe(".mode") {
         it("is regular by default") {
           expect(Malibu.mode).to(equal(Malibu.Mode.Regular))
@@ -68,7 +62,7 @@ class MalibuSpec: QuickSpec {
 
       describe(".registerMock:on") {
         it("registers mock for the provided method on default networking") {
-          let request = TestRequest()
+          let request = GETRequest()
           let mock = Mock(request: request, response: nil, data: nil, error: nil)
 
           Malibu.registerMock(mock, on: .GET)

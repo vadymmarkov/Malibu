@@ -1,20 +1,23 @@
 import Foundation
 
-//var methodsWithEtags: [Method] = [.GET, .PATCH, .PUT]
-
 public protocol Requestable {
   var method: Method { get }
-  var message: Message { get }
+  var message: Message { get set }
   var contentType: ContentType { get }
   var etagPolicy: ETagPolicy { get }
+  var cachePolicy: NSURLRequestCachePolicy { get }
 
   func toURLRequest(baseURLString: URLStringConvertible?,
                     additionalHeaders: [String: String]) throws -> NSMutableURLRequest
 }
 
-extension Requestable {
+public extension Requestable {
 
-  public func toURLRequest(baseURLString: URLStringConvertible? = nil,
+  var cachePolicy: NSURLRequestCachePolicy {
+    return .UseProtocolCachePolicy
+  }
+
+  func toURLRequest(baseURLString: URLStringConvertible? = nil,
                            additionalHeaders: [String: String] = [:]) throws -> NSMutableURLRequest {
     let prefix = baseURLString?.URLString ?? ""
     let resourceString = "\(prefix)\(message.resource.URLString)"
@@ -25,7 +28,7 @@ extension Requestable {
 
     let request = NSMutableURLRequest(URL: URL)
     request.HTTPMethod = method.rawValue
-    request.cachePolicy = message.cachePolicy
+    request.cachePolicy = cachePolicy
 
     if let contentTypeHeader = contentType.header {
       request.setValue(contentTypeHeader, forHTTPHeaderField: "Content-Type")
@@ -42,11 +45,19 @@ extension Requestable {
     }
 
     if etagPolicy == .Enabled {
-      if let etag = ETagStorage().get(message.etagKey(prefix)) {
+      if let etag = ETagStorage().get(etagKey(prefix)) {
         request.setValue(etag, forHTTPHeaderField: "If-None-Match")
       }
     }
 
     return request
+  }
+
+  func etagKey(prefix: String = "") -> String {
+    return "\(method.rawValue)\(prefix)\(message.resource.URLString)\(message.parameters.description)"
+  }
+
+  var key: String {
+    return "\(method) \(message.resource.URLString)"
   }
 }

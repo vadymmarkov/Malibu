@@ -67,7 +67,7 @@ public class Networking: NSObject {
     case .Regular:
       task = SessionDataTask(session: session, URLRequest: URLRequest, promise: promise)
     case .Fake:
-      guard let mock = mocks[method.keyFor(request)] else {
+      guard let mock = mocks[request.key] else {
         promise.reject(Error.NoMockProvided)
         return promise
       }
@@ -76,7 +76,7 @@ public class Networking: NSObject {
     }
 
     let nextPromise = promise.then { result -> NetworkResult in
-      self.saveEtag(request.message, response: result.response)
+      self.saveEtag(request, response: result.response)
       return result
     }
 
@@ -106,19 +106,19 @@ public class Networking: NSObject {
   // MARK: - Mocks
 
   func registerMock(mock: Mock, on method: Method) {
-    mocks[method.keyFor(mock.request)] = mock
+    mocks[mock.request.key] = mock
   }
 
   // MARK: - Helpers
 
-  func saveEtag(message: Message, response: NSHTTPURLResponse) {
+  func saveEtag(request: Requestable, response: NSHTTPURLResponse) {
     guard let etag = response.allHeaderFields["ETag"] as? String else {
       return
     }
 
     let prefix = baseURLString?.URLString ?? ""
 
-    ETagStorage().add(etag, forKey: message.etagKey(prefix))
+    ETagStorage().add(etag, forKey: request.etagKey(prefix))
   }
 }
 
