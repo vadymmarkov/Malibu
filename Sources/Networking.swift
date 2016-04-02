@@ -48,7 +48,7 @@ public class Networking: NSObject {
 
   // MARK: - Networking
 
-  func execute(method: Method, request: Requestable) -> Promise<NetworkResult> {
+  func execute(request: Requestable) -> Promise<NetworkResult> {
     let promise = Promise<NetworkResult>()
     let URLRequest: NSMutableURLRequest
 
@@ -126,28 +126,28 @@ public class Networking: NSObject {
 
 public extension Networking {
 
-  func GET(request: Requestable) -> Promise<NetworkResult> {
-    return execute(.GET, request: request)
+  func GET(request: GETRequestable) -> Promise<NetworkResult> {
+    return execute(request)
   }
 
-  func POST(request: Requestable) -> Promise<NetworkResult> {
-    return execute(.POST, request: request)
+  func POST(request: POSTRequestable) -> Promise<NetworkResult> {
+    return execute(request)
   }
 
-  func PUT(request: Requestable) -> Promise<NetworkResult> {
-    return execute(.PUT, request: request)
+  func PUT(request: PUTRequestable) -> Promise<NetworkResult> {
+    return execute(request)
   }
 
-  func PATCH(request: Requestable) -> Promise<NetworkResult> {
-    return execute(.PATCH, request: request)
+  func PATCH(request: PATCHRequestable) -> Promise<NetworkResult> {
+    return execute(request)
   }
 
-  func DELETE(request: Requestable) -> Promise<NetworkResult> {
-    return execute(.DELETE, request: request)
+  func DELETE(request: DELETERequestable) -> Promise<NetworkResult> {
+    return execute(request)
   }
 
-  func HEAD(request: Requestable) -> Promise<NetworkResult> {
-    return execute(.HEAD, request: request)
+  func HEAD(request: HEADRequestable) -> Promise<NetworkResult> {
+    return execute(request)
   }
 }
 

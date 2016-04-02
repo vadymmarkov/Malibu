@@ -41,26 +41,26 @@ public func registerMock(mock: Mock, on method: Method) {
 
 // MARK: - Requests
 
-public func GET(request: Requestable) -> Promise<NetworkResult> {
+public func GET(request: GETRequestable) -> Promise<NetworkResult> {
   return backfootSurfer.GET(request)
 }
 
-public func POST(request: Requestable) -> Promise<NetworkResult> {
+public func POST(request: POSTRequestable) -> Promise<NetworkResult> {
   return backfootSurfer.POST(request)
 }
 
-public func PUT(request: Requestable) -> Promise<NetworkResult> {
+public func PUT(request: PUTRequestable) -> Promise<NetworkResult> {
   return backfootSurfer.PUT(request)
 }
 
-public func PATCH(request: Requestable) -> Promise<NetworkResult> {
+public func PATCH(request: PATCHRequestable) -> Promise<NetworkResult> {
   return backfootSurfer.PATCH(request)
 }
 
-public func DELETE(request: Requestable) -> Promise<NetworkResult> {
+public func DELETE(request: DELETERequestable) -> Promise<NetworkResult> {
   return backfootSurfer.DELETE(request)
 }
 
-public func HEAD(request: Requestable) -> Promise<NetworkResult> {
+public func HEAD(request: HEADRequestable) -> Promise<NetworkResult> {
   return backfootSurfer.HEAD(request)
 }
