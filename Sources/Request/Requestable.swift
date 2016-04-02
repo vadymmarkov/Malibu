@@ -80,7 +80,7 @@ public extension Requestable {
   }
 
   func etagKey(prefix: String = "") -> String {
-    return "\(method.rawValue)\(prefix)\(message.resource.URLString)\(message.parameters.description)"
+    return "\(method)\(prefix)\(message.resource.URLString)\(message.parameters.description)"
   }
 
   var key: String {

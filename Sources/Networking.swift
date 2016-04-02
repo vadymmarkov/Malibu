@@ -105,7 +105,7 @@ public class Networking: NSObject {
 
   // MARK: - Mocks
 
-  func registerMock(mock: Mock, on method: Method) {
+  func register(mock mock: Mock) {
     mocks[mock.request.key] = mock
   }
 

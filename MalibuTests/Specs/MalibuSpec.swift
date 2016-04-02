@@ -45,27 +45,27 @@ class MalibuSpec: QuickSpec {
         }
       }
 
-      describe(".networkingNamed") {
+      describe(".networking") {
         context("when there is a networking registered with this name") {
           it("returns registered networking") {
-            expect(networkingNamed("surfer") === surferNetworking).to(beTrue())
+            expect(networking("surfer") === surferNetworking).to(beTrue())
           }
         }
 
         context("when there is no networking registered with this name") {
           it("returns default networking") {
             Malibu.unregister("surfer")
-            expect(networkingNamed("surfer") === Malibu.backfootSurfer).to(beTrue())
+            expect(networking("surfer") === Malibu.backfootSurfer).to(beTrue())
           }
         }
       }
 
-      describe(".registerMock:on") {
+      describe(".register:mock") {
         it("registers mock for the provided method on default networking") {
           let request = GETRequest()
           let mock = Mock(request: request, response: nil, data: nil, error: nil)
 
-          Malibu.registerMock(mock, on: .GET)
+          Malibu.register(mock: mock)
 
           expect(Malibu.backfootSurfer.mocks["GET http://hyper.no"] === mock).to(beTrue())
         }

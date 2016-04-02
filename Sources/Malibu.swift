@@ -29,14 +29,14 @@ public func unregister(name: String) -> Bool {
   return networkings.removeValueForKey(name) != nil
 }
 
-public func networkingNamed(name: String) -> Networking {
+public func networking(name: String) -> Networking {
   return networkings[name] ?? backfootSurfer
 }
 
 // MARK: - Mocks
 
-public func registerMock(mock: Mock, on method: Method) {
-  backfootSurfer.registerMock(mock, on: method)
+public func register(mock mock: Mock) {
+  backfootSurfer.register(mock: mock)
 }
 
 // MARK: - Requests
