@@ -1,16 +1,21 @@
 import Foundation
 
-public protocol Requestable {
-  var message: Message { get set }
+//var methodsWithEtags: [Method] = [.GET, .PATCH, .PUT]
 
-  func toURLRequest(method: Method,
-    baseURLString: URLStringConvertible?,
-    additionalHeaders: [String: String]) throws -> NSMutableURLRequest
+public protocol Requestable {
+  var method: Method { get }
+  var message: Message { get }
+  var contentType: ContentType { get }
+  var etagPolicy: ETagPolicy { get }
+
+  func toURLRequest(baseURLString: URLStringConvertible?,
+                    additionalHeaders: [String: String]) throws -> NSMutableURLRequest
 }
 
 extension Requestable {
 
-  public func toURLRequest(method: Method, baseURLString: URLStringConvertible? = nil, additionalHeaders: [String: String] = [:]) throws -> NSMutableURLRequest {
+  public func toURLRequest(baseURLString: URLStringConvertible? = nil,
+                           additionalHeaders: [String: String] = [:]) throws -> NSMutableURLRequest {
     let prefix = baseURLString?.URLString ?? ""
     let resourceString = "\(prefix)\(message.resource.URLString)"
 
@@ -18,12 +23,13 @@ extension Requestable {
       throw Error.InvalidRequestURL
     }
 
-    let contentType = message.contentType
-
     let request = NSMutableURLRequest(URL: URL)
     request.HTTPMethod = method.rawValue
     request.cachePolicy = message.cachePolicy
-    request.setValue(contentType.value, forHTTPHeaderField: "Content-Type")
+
+    if let contentTypeHeader = contentType.header {
+      request.setValue(contentTypeHeader, forHTTPHeaderField: "Content-Type")
+    }
 
     if let encoder = parameterEncoders[contentType] {
       request.HTTPBody = try encoder.encode(message.parameters)
@@ -35,18 +41,7 @@ extension Requestable {
       }
     }
 
-    var withEtag: Bool
-
-    switch message.etagPolicy {
-    case .Default:
-      withEtag = methodsWithEtags.contains(method)
-    case .Enabled:
-      withEtag = true
-    case .Disabled:
-      withEtag = false
-    }
-
-    if withEtag {
+    if etagPolicy == .Enabled {
       if let etag = ETagStorage().get(message.etagKey(prefix)) {
         request.setValue(etag, forHTTPHeaderField: "If-None-Match")
       }

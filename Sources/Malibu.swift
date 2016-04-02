@@ -7,7 +7,6 @@ public enum Mode {
 
 // MARK: - Helpers
 
-var methodsWithEtags: [Method] = [.GET, .PATCH, .PUT]
 var networkings = [String: Networking]()
 
 // MARK: - Public

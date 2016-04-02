@@ -53,8 +53,7 @@ public class Networking: NSObject {
     let URLRequest: NSMutableURLRequest
 
     do {
-      URLRequest = try request.toURLRequest(method, baseURLString: baseURLString,
-                                            additionalHeaders: requestHeaders)
+      URLRequest = try request.toURLRequest(baseURLString, additionalHeaders: requestHeaders)
     } catch {
       promise.reject(error)
       return promise

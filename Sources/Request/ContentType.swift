@@ -1,12 +1,15 @@
 public enum ContentType {
-  case JSON
+  case Query
   case FormURLEncoded
+  case JSON
   case Custom(String)
 
-  var value: String {
-    let string: String
+  var header: String? {
+    let string: String?
 
     switch self {
+    case .Query:
+      string = nil
     case .JSON:
       string = "application/json"
     case .FormURLEncoded:
@@ -24,12 +27,13 @@ public enum ContentType {
 extension ContentType: Hashable {
 
   public var hashValue: Int {
-    return value.hashValue
+    let string = header ?? "query"
+    return string.hashValue
   }
 }
 
 // MARK: - Equatable
 
 public func ==(lhs: ContentType, rhs: ContentType) -> Bool {
-  return lhs.value == rhs.value
+  return lhs.hashValue == rhs.hashValue
 }
