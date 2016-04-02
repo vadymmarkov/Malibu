@@ -1,22 +1,27 @@
 import Foundation
 import When
 
-public class Networking {
+public class Networking: NSObject {
 
   enum SessionTaskKind {
     case Data, Upload, Download
   }
 
   public var additionalHeaders = [String: String]()
+  public var preProcessRequest: (NSMutableURLRequest -> Void)?
 
   var baseURLString: URLStringConvertible?
   let sessionConfiguration: SessionConfiguration
-  var preProcessRequest: (NSMutableURLRequest -> Void)?
   var customHeaders = [String: String]()
   var mocks = [String: Mock]()
 
+  weak var sessionDelegate: NSURLSessionDelegate?
+
   lazy var session: NSURLSession = {
-    return NSURLSession(configuration: self.sessionConfiguration.value)
+    return NSURLSession(
+      configuration: self.sessionConfiguration.value,
+      delegate: self.sessionDelegate ?? self,
+      delegateQueue: nil)
   }()
 
   var requestHeaders: [String: String] {
@@ -33,9 +38,12 @@ public class Networking {
 
   // MARK: - Initialization
 
-  public init(baseURLString: URLStringConvertible? = nil, sessionConfiguration: SessionConfiguration = .Default) {
+  public init(baseURLString: URLStringConvertible? = nil,
+              sessionConfiguration: SessionConfiguration = .Default,
+              sessionDelegate: NSURLSessionDelegate? = nil) {
     self.baseURLString = baseURLString
     self.sessionConfiguration = sessionConfiguration
+    self.sessionDelegate = sessionDelegate
   }
 
   // MARK: - Networking
@@ -46,7 +54,7 @@ public class Networking {
 
     do {
       URLRequest = try request.toURLRequest(method, baseURLString: baseURLString,
-        additionalHeaders: requestHeaders)
+                                            additionalHeaders: requestHeaders)
     } catch {
       promise.reject(error)
       return promise
@@ -141,5 +149,23 @@ public extension Networking {
 
   func HEAD(request: Requestable) -> Promise<NetworkResult> {
     return execute(.HEAD, request: request)
+  }
+}
+
+// MARK: - NSURLSessionDelegate
+
+extension Networking: NSURLSessionDelegate {
+
+  public func URLSession(session: NSURLSession, didReceiveChallenge challenge: NSURLAuthenticationChallenge, completionHandler: (NSURLSessionAuthChallengeDisposition, NSURLCredential?) -> Void) {
+    guard let baseURLString = baseURLString,
+      baseURL = NSURL(string: baseURLString.URLString),
+      serverTrust = challenge.protectionSpace.serverTrust
+      else { return }
+
+    if challenge.protectionSpace.host == baseURL.host {
+      completionHandler(
+        NSURLSessionAuthChallengeDisposition.UseCredential,
+        NSURLCredential(forTrust: serverTrust))
+    }
   }
 }

@@ -15,7 +15,7 @@ extension NetworkTaskRunning {
       promise.reject(error)
       return
     }
-    
+
     guard let response = response as? NSHTTPURLResponse else {
       promise.reject(Error.NoResponseReceived)
       return
