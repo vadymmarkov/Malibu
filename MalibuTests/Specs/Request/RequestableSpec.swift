@@ -19,6 +19,12 @@ class RequestableSpec: QuickSpec {
         } catch {}
       }
 
+      describe("#cachePolicy") {
+        it("has default value") {
+          expect(request.cachePolicy).to(equal(NSURLRequestCachePolicy.UseProtocolCachePolicy))
+        }
+      }
+
       describe("#toURLRequest") {
         context("when request URL is invalid") {
           it("throws an error") {

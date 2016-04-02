@@ -13,6 +13,8 @@ public protocol Requestable {
 
 public extension Requestable {
 
+  // MARK: - Default implementations
+
   var cachePolicy: NSURLRequestCachePolicy {
     return .UseProtocolCachePolicy
   }
@@ -21,12 +23,9 @@ public extension Requestable {
                            additionalHeaders: [String: String] = [:]) throws -> NSMutableURLRequest {
     let prefix = baseURLString?.URLString ?? ""
     let resourceString = "\(prefix)\(message.resource.URLString)"
-
-    guard let URL = NSURL(string: resourceString) else {
-      throw Error.InvalidRequestURL
-    }
-
+    let URL = try buildURL(resourceString)
     let request = NSMutableURLRequest(URL: URL)
+
     request.HTTPMethod = method.rawValue
     request.cachePolicy = cachePolicy
 
@@ -51,6 +50,30 @@ public extension Requestable {
     }
 
     return request
+  }
+
+  // MARK: - Helpers
+
+  func buildURL(string: String) throws -> NSURL {
+    guard let URL = NSURL(string: string) else {
+      throw Error.InvalidRequestURL
+    }
+
+    guard let URLComponents = NSURLComponents(URL: URL, resolvingAgainstBaseURL: false)
+      where contentType == .Query && !message.parameters.isEmpty else {
+        return URL
+    }
+
+    let percentEncodedQuery = (URLComponents.percentEncodedQuery.map { $0 + "&" } ?? "")
+      + QueryBuilder().buildQuery(message.parameters)
+
+    URLComponents.percentEncodedQuery = percentEncodedQuery
+
+    guard let queryURL = URLComponents.URL else {
+      throw Error.InvalidRequestURL
+    }
+
+    return queryURL
   }
 
   func etagKey(prefix: String = "") -> String {
