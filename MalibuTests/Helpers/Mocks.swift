@@ -2,6 +2,8 @@ import Foundation
 import When
 @testable import Malibu
 
+// MARK: - Requests
+
 struct GETRequest: GETRequestable {
   var message = Message(resource: "http://hyper.no")
 
@@ -19,6 +21,24 @@ struct POSTRequest: POSTRequestable {
     message.headers = headers
   }
 }
+
+struct PUTRequest: PUTRequestable {
+  var message = Message(resource: "http://hyper.no")
+}
+
+struct PATCHRequest: PATCHRequestable {
+  var message = Message(resource: "http://hyper.no")
+}
+
+struct DELETERequest: DELETERequestable {
+  var message = Message(resource: "http://hyper.no")
+}
+
+struct HEADRequest: HEADRequestable {
+  var message = Message(resource: "http://hyper.no")
+}
+
+// MARK: - Tasks
 
 class TestNetworkTask: NetworkTaskRunning {
   let URLRequest: NSURLRequest

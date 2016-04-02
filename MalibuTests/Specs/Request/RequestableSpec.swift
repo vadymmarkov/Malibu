@@ -191,7 +191,7 @@ class RequestableSpec: QuickSpec {
         }
 
         describe("#etagKey") {
-          it("returns ETag key built from resource and parameters") {
+          it("returns ETag key built from method, prefix, resource and parameters") {
             let result = "\(request.method)\(request.message.resource.URLString)\(request.message.parameters.description)"
             expect(request.etagKey()).to(equal(result))
           }

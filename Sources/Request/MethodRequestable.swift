@@ -68,7 +68,7 @@ public extension PATCHRequestable {
 public extension DELETERequestable {
 
   var method: Method {
-    return .PATCH
+    return .DELETE
   }
 
   var contentType: ContentType {
