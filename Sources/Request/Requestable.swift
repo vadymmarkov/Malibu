@@ -59,9 +59,12 @@ public extension Requestable {
       throw Error.InvalidRequestURL
     }
 
-    guard let URLComponents = NSURLComponents(URL: URL, resolvingAgainstBaseURL: false)
-      where contentType == .Query && !message.parameters.isEmpty else {
-        return URL
+    guard contentType == .Query && !message.parameters.isEmpty else {
+      return URL
+    }
+
+    guard let URLComponents = NSURLComponents(URL: URL, resolvingAgainstBaseURL: false) else {
+      return URL
     }
 
     let percentEncodedQuery = (URLComponents.percentEncodedQuery.map { $0 + "&" } ?? "")

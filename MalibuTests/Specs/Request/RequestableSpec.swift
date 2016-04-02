@@ -7,6 +7,7 @@ class RequestableSpec: QuickSpec {
   override func spec() {
     describe("Requestable") {
       var request: Requestable!
+      var URLRequest: NSURLRequest!
 
       beforeEach {
         request = POSTRequest(parameters: ["key": "value"], headers: ["key": "value"])
@@ -46,8 +47,6 @@ class RequestableSpec: QuickSpec {
         context("when there are no errors") {
           context("without base URL") {
             it("does not throw an error and returns created NSMutableURLRequest") {
-              var URLRequest: NSURLRequest!
-
               expect{ URLRequest = try request.toURLRequest() }.toNot(throwError())
               expect(URLRequest.URL).to(equal(NSURL(string: request.message.resource.URLString)))
               expect(URLRequest.HTTPMethod).to(equal(Method.POST.rawValue))
@@ -61,7 +60,6 @@ class RequestableSpec: QuickSpec {
 
           context("with base URL") {
             it("does not throw an error and returns created NSMutableURLRequest") {
-              var URLRequest: NSURLRequest!
               request.message.resource = "/about"
 
               expect { URLRequest = try request.toURLRequest("http://hyper.no") }.toNot(throwError())
@@ -71,7 +69,6 @@ class RequestableSpec: QuickSpec {
 
           context("with additional headers") {
             it("returns created NSMutableURLRequest with new header added") {
-              var URLRequest: NSURLRequest!
               let headers = ["foo": "bar", "key": "bar"]
               request.message.resource = "/about"
 
@@ -82,7 +79,7 @@ class RequestableSpec: QuickSpec {
             }
           }
 
-          context("with CachePolicy enabled") {
+          context("with ETagPolicy enabled") {
             beforeEach {
               request = GETRequest(parameters: ["key": "value"], headers: ["key": "value"])
             }
@@ -108,7 +105,7 @@ class RequestableSpec: QuickSpec {
             }
           }
 
-          context("with CachePolicy disabled") {
+          context("with ETagPolicy disabled") {
             context("when we have ETag stored") {
               it("does not add If-None-Match header") {
                 let storage = ETagStorage()
@@ -128,6 +125,67 @@ class RequestableSpec: QuickSpec {
                 let URLRequest = try! request.toURLRequest()
                 expect(URLRequest.allHTTPHeaderFields?["If-None-Match"]).to(beNil())
               }
+            }
+          }
+
+          context("with Query content type") {
+            beforeEach {
+              request = GETRequest(parameters: ["key": "value", "number": 1])
+            }
+
+            it("does not set Content-Type header") {
+              expect{ URLRequest = try request.toURLRequest() }.toNot(throwError())
+              expect(URLRequest.allHTTPHeaderFields?["Content-Type"]).to(beNil())
+            }
+
+            it("does not set Content-Type header") {
+              expect{ URLRequest = try request.toURLRequest() }.toNot(throwError())
+              expect(URLRequest.HTTPBody).to(beNil())
+            }
+          }
+        }
+
+        describe("#buildURL") {
+          context("when request URL is invalid") {
+            it("throws an error") {
+              expect{ try request.buildURL("not an URL") }.to(throwError(Error.InvalidRequestURL))
+            }
+          }
+
+          context("when content type is not Query") {
+            beforeEach {
+              request = POSTRequest(parameters: ["key": "value"])
+            }
+
+            it("returns URL") {
+              let URLString = "http://hyper.no"
+              let result = NSURL(string: URLString)
+              expect(try! request.buildURL(URLString)).to(equal(result))
+            }
+          }
+
+          context("when content type is Query but there are no parameters") {
+            beforeEach {
+              request = POSTRequest(parameters: [:])
+            }
+
+            it("returns URL") {
+              let URLString = "http://hyper.no"
+              let result = NSURL(string: URLString)
+
+              expect(try! request.buildURL(URLString)).to(equal(result))
+            }
+          }
+
+          context("when content type is Query and request has parameters") {
+            beforeEach {
+              request = GETRequest(parameters: ["key": "value", "number": 1])
+            }
+
+            it("returns URL") {
+              let URLString = "http://hyper.no"
+              let result = NSURL(string: "http://hyper.no?key=value&number=1")
+              expect(try! request.buildURL(URLString)).to(equal(result))
             }
           }
         }
