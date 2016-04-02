@@ -4,7 +4,7 @@ public struct FormURLEncoder: ParameterEncoding {
 
   public func encode(parameters: [String: AnyObject]) throws -> NSData? {
     return QueryBuilder()
-      .queryString(parameters)
+      .buildQuery(parameters)
       .dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
   }
 }

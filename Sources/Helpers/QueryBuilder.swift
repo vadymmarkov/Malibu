@@ -6,26 +6,26 @@ struct QueryBuilder {
 
   let escapingCharacters = ":#[]@!$&'()*+,;="
 
-  func queryString(parameters: [String: AnyObject]) -> String {
+  func buildQuery(parameters: [String: AnyObject]) -> String {
     var components: [Component] = []
 
     parameters.forEach { key, value in
-      components += queryComponents(key: key, value: value)
+      components += buildComponents(key: key, value: value)
     }
 
     return components.map({ "\($0)=\($1)" }).joinWithSeparator("&")
   }
 
-  func queryComponents(key key: String, value: AnyObject) -> [Component] {
+  func buildComponents(key key: String, value: AnyObject) -> [Component] {
     var components: [Component] = []
 
     if let dictionary = value as? [String: AnyObject] {
       dictionary.forEach { nestedKey, value in
-        components += queryComponents(key: "\(key)[\(nestedKey)]", value: value)
+        components += buildComponents(key: "\(key)[\(nestedKey)]", value: value)
       }
     } else if let array = value as? [AnyObject] {
       array.forEach { value in
-        components += queryComponents(key: "\(key)[]", value: value)
+        components += buildComponents(key: "\(key)[]", value: value)
       }
     } else {
       components.append((escape(key), escape("\(value)")))
