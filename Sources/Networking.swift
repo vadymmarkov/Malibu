@@ -66,6 +66,12 @@ public class Networking: NSObject {
     switch Malibu.mode {
     case .Regular:
       task = SessionDataTask(session: session, URLRequest: URLRequest, promise: promise)
+    case .Partial:
+      if let mock = mocks[request.key] {
+        task = MockDataTask(mock: mock, URLRequest: URLRequest, promise: promise)
+      } else {
+        task = SessionDataTask(session: session, URLRequest: URLRequest, promise: promise)
+      }
     case .Fake:
       guard let mock = mocks[request.key] else {
         promise.reject(Error.NoMockProvided)
