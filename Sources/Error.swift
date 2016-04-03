@@ -12,7 +12,7 @@ public enum Error: ErrorType {
   case JSONDictionarySerializationFailed
   case StringSerializationFailed(UInt)
 
-  var reason: String {
+  public var reason: String {
     var text: String
 
     switch self {
