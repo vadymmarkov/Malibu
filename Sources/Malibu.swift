@@ -2,7 +2,7 @@ import Foundation
 import When
 
 public enum Mode {
-  case Regular, Fake
+  case Regular, Partial, Fake
 }
 
 // MARK: - Helpers
