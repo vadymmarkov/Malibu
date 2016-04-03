@@ -8,7 +8,7 @@ before_install:
 - travis_wait 35 carthage update --platform iOS,Mac
 
 script:
-- xctool clean build -project Malibu.xcodeproj -scheme Malibu-iOS -sdk iphonesimulator
-- xctool test -project Malibu.xcodeproj -scheme Malibu-iOS -sdk iphonesimulator
-- xctool clean build -project Malibu.xcodeproj -scheme Malibu-Mac -sdk macosx
-- xctool test -project Malibu.xcodeproj -scheme Malibu-Mac -sdk macosx
+- xcodebuild clean build -project Malibu.xcodeproj -scheme Malibu-iOS -sdk iphonesimulator
+- xcodebuild test -project Malibu.xcodeproj -scheme Malibu-iOS -sdk iphonesimulator
+- xcodebuild clean build -project Malibu.xcodeproj -scheme Malibu-Mac -sdk macosx
+- xcodebuild test -project Malibu.xcodeproj -scheme Malibu-Mac -sdk macosx
