@@ -7,7 +7,7 @@ public extension Promise where T: NetworkResult {
 
   public func validate(validator: Validating) -> Promise<NetworkResult> {
     return then({ result -> NetworkResult in
-      try validator.validate(result.response)
+      try validator.validate(result)
       return result
     })
   }
@@ -30,7 +30,7 @@ public extension Promise where T: NetworkResult {
         contentTypes = ["*/*"]
       }
 
-      try ContentTypeValidator(contentTypes: contentTypes).validate(result.response)
+      try ContentTypeValidator(contentTypes: contentTypes).validate(result)
 
       return result
     })

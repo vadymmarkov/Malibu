@@ -4,8 +4,11 @@ public struct ContentTypeValidator<T : SequenceType where T.Generator.Element ==
 
   public var contentTypes: T
 
-  public func validate(response: NSHTTPURLResponse) throws {
-    if let responseContentType = response.MIMEType, responseMIMEType = MIMEType(contentType: responseContentType) {
+  public func validate(result: NetworkResult) throws {
+    let response = result.response
+
+    if let responseContentType = response.MIMEType,
+      responseMIMEType = MIMEType(contentType: responseContentType) {
       for contentType in contentTypes {
         if MIMEType(contentType: contentType)?.matches(responseMIMEType) == true {
           return
