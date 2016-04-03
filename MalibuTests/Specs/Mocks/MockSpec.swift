@@ -8,7 +8,7 @@ class MockSpec: QuickSpec {
   override func spec() {
     describe("Mock") {
       var mock: Mock!
-      let request = TestRequest()
+      let request = GETRequest()
       let response = NSHTTPURLResponse(URL: NSURL(string: "http://hyper.no")!,
         statusCode: 200, HTTPVersion: "HTTP/2.0", headerFields: nil)!
       let data = "test".dataUsingEncoding(NSUTF32StringEncoding)

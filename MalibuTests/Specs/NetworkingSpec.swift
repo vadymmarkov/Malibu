@@ -26,12 +26,12 @@ class NetworkingSpec: QuickSpec {
         }
       }
 
-      describe("#registerMock:on") {
+      describe("#register:mock") {
         it("registers mock for the provided method") {
-          let request = TestRequest()
+          let request = GETRequest()
           let mock = Mock(request: request, response: nil, data: nil, error: nil)
 
-          networking.registerMock(mock, on: .GET)
+          networking.register(mock: mock)
 
           expect(networking.mocks["GET http://hyper.no"] === mock).to(beTrue())
         }

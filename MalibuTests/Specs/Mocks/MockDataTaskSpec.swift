@@ -17,8 +17,8 @@ class MockDataSpec: QuickSpec {
       let error = Error.JSONArraySerializationFailed
 
       beforeEach {
-        request = TestRequest()
-        URLRequest = try! request.toURLRequest(.GET)
+        request = GETRequest()
+        URLRequest = try! request.toURLRequest()
         response = NSHTTPURLResponse(URL: NSURL(string: "http://hyper.no")!,
           statusCode: 200, HTTPVersion: "HTTP/2.0", headerFields: nil)!
         promise = Promise<NetworkResult>()
