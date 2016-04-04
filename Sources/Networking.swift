@@ -8,6 +8,7 @@ public class Networking: NSObject {
   }
 
   public var additionalHeaders = [String: String]()
+  public var beforeEach: (Requestable -> Requestable)?
   public var preProcessRequest: (NSMutableURLRequest -> Void)?
 
   var baseURLString: URLStringConvertible?
@@ -53,6 +54,7 @@ public class Networking: NSObject {
     let URLRequest: NSMutableURLRequest
 
     do {
+      let request = beforeEach?(request) ?? request
       URLRequest = try request.toURLRequest(baseURLString, additionalHeaders: requestHeaders)
     } catch {
       promise.reject(error)
@@ -67,13 +69,13 @@ public class Networking: NSObject {
     case .Regular:
       task = SessionDataTask(session: session, URLRequest: URLRequest, promise: promise)
     case .Partial:
-      if let mock = mocks[request.key] {
+      if let mock = prepareMock(request) {
         task = MockDataTask(mock: mock, URLRequest: URLRequest, promise: promise)
       } else {
         task = SessionDataTask(session: session, URLRequest: URLRequest, promise: promise)
       }
     case .Fake:
-      guard let mock = mocks[request.key] else {
+      guard let mock = prepareMock(request) else {
         promise.reject(Error.NoMockProvided)
         return promise
       }
@@ -113,6 +115,14 @@ public class Networking: NSObject {
 
   func register(mock mock: Mock) {
     mocks[mock.request.key] = mock
+  }
+
+  func prepareMock(request: Requestable) -> Mock? {
+    guard let mock = mocks[request.key] else { return nil }
+
+    mock.request = beforeEach?(mock.request) ?? mock.request
+
+    return mock
   }
 
   // MARK: - Helpers
