@@ -7,7 +7,7 @@ public class Networking: NSObject {
     case Data, Upload, Download
   }
 
-  public var additionalHeaders = [String: String]()
+  public var additionalHeaders: (() -> [String: String])?
   public var beforeEach: (Requestable -> Requestable)?
   public var preProcessRequest: (NSMutableURLRequest -> Void)?
 
@@ -30,7 +30,9 @@ public class Networking: NSObject {
 
     headers["Accept-Language"] = Header.acceptLanguage
 
-    additionalHeaders.forEach { key, value in
+    let extraHeaders = additionalHeaders?() ?? [:]
+
+    extraHeaders.forEach { key, value in
       headers[key] = value
     }
 
