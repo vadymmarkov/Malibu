@@ -1,14 +1,14 @@
 import Foundation
 import When
 
-protocol NetworkTaskRunning: class {
+protocol TaskRunning: class {
   var URLRequest: NSURLRequest { get }
-  var promise: Promise<NetworkResult> { get }
+  var promise: Promise<Wave> { get }
 
-  func run()
+  func run() -> Ride
 }
 
-extension NetworkTaskRunning {
+extension TaskRunning {
 
   func process(data: NSData?, response: NSURLResponse?, error: ErrorType?) {
     if let error = error {
@@ -26,7 +26,7 @@ extension NetworkTaskRunning {
       return
     }
 
-    let result = NetworkResult(data: data, request: URLRequest, response: response)
+    let result = Wave(data: data, request: URLRequest, response: response)
     promise.resolve(result)
   }
 }

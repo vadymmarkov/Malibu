@@ -12,7 +12,7 @@ class MockDataSpec: QuickSpec {
       var request: Requestable!
       var URLRequest: NSURLRequest!
       var response: NSHTTPURLResponse!
-      var promise: Promise<NetworkResult>!
+      var promise: Promise<Wave>!
       let data = "test".dataUsingEncoding(NSUTF32StringEncoding)
       let error = Error.JSONArraySerializationFailed
 
@@ -21,7 +21,7 @@ class MockDataSpec: QuickSpec {
         URLRequest = try! request.toURLRequest()
         response = NSHTTPURLResponse(URL: NSURL(string: "http://hyper.no")!,
           statusCode: 200, HTTPVersion: "HTTP/2.0", headerFields: nil)!
-        promise = Promise<NetworkResult>()
+        promise = Promise<Wave>()
       }
 
       describe("#init") {

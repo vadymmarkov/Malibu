@@ -3,14 +3,14 @@ import When
 import Quick
 import Nimble
 
-class NetworkResultValidationSpec: QuickSpec, NetworkPromiseSpec {
+class WaveValidationSpec: QuickSpec, NetworkPromiseSpec {
 
-  var networkPromise: Promise<NetworkResult>!
+  var networkPromise: Promise<Wave>!
   var request: NSURLRequest!
   var data: NSData!
 
   override func spec() {
-    describe("NetworkResultValidation") {
+    describe("WaveValidation") {
       let URL = NSURL(string: "http://hyper.no")!
       let response = NSHTTPURLResponse(URL: URL, statusCode: 200, HTTPVersion: "HTTP/2.0", headerFields: nil)!
       let failedResponse = NSHTTPURLResponse(URL: URL, statusCode: 404, HTTPVersion: "HTTP/2.0", headerFields: nil)!
@@ -18,7 +18,7 @@ class NetworkResultValidationSpec: QuickSpec, NetworkPromiseSpec {
       // MARK: - Specs
 
       beforeEach {
-        self.networkPromise = Promise<NetworkResult>()
+        self.networkPromise = Promise<Wave>()
         self.request = NSURLRequest(URL: NSURL(string: "http://hyper.no")!)
         self.data = try! NSJSONSerialization.dataWithJSONObject([["name": "Taylor"]],
           options: NSJSONWritingOptions())
@@ -26,7 +26,7 @@ class NetworkResultValidationSpec: QuickSpec, NetworkPromiseSpec {
 
       describe("#validate:validator") {
         let validator = StatusCodeValidator(statusCodes: [200])
-        var promise: Promise<NetworkResult>!
+        var promise: Promise<Wave>!
 
         beforeEach {
           promise = self.networkPromise.validate(validator)
@@ -53,7 +53,7 @@ class NetworkResultValidationSpec: QuickSpec, NetworkPromiseSpec {
       }
 
       describe("#validate:statusCodes") {
-        var promise: Promise<NetworkResult>!
+        var promise: Promise<Wave>!
 
         beforeEach {
           promise = self.networkPromise.validate(statusCodes: [200])
@@ -80,7 +80,7 @@ class NetworkResultValidationSpec: QuickSpec, NetworkPromiseSpec {
       }
 
       describe("#validate:contentTypes") {
-        var promise: Promise<NetworkResult>!
+        var promise: Promise<Wave>!
 
         beforeEach {
           promise = self.networkPromise.validate(contentTypes: ["application/json; charset=utf-8"])
@@ -113,7 +113,7 @@ class NetworkResultValidationSpec: QuickSpec, NetworkPromiseSpec {
       }
 
       describe("#validate") {
-        var promise: Promise<NetworkResult>!
+        var promise: Promise<Wave>!
 
         context("with no accept header in the request") {
           beforeEach {
@@ -141,7 +141,7 @@ class NetworkResultValidationSpec: QuickSpec, NetworkPromiseSpec {
         }
 
         context("with accept header in the request") {
-          var promise: Promise<NetworkResult>!
+          var promise: Promise<Wave>!
 
           beforeEach {
             let request = NSMutableURLRequest(URL: URL)

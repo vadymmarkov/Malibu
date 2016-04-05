@@ -3,10 +3,10 @@ import When
 import Quick
 import Nimble
 
-class NetworkResultSpec: QuickSpec {
+class WaveSpec: QuickSpec {
 
   override func spec() {
-    describe("NetworkResult") {
+    describe("Wave") {
       let URL = NSURL(string: "http://hyper.no")!
       let response = NSHTTPURLResponse(URL: URL, statusCode: 200, HTTPVersion: "HTTP/2.0", headerFields: nil)!
       var request: NSURLRequest!
@@ -20,7 +20,7 @@ class NetworkResultSpec: QuickSpec {
 
       describe("#init") {
         it("sets data, request and response parameters to instance vars") {
-          let result = NetworkResult(data: data, request: request, response: response)
+          let result = Wave(data: data, request: request, response: response)
 
           expect(result.data).to(equal(data))
           expect(result.request).to(equal(request))

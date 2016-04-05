@@ -51,8 +51,8 @@ public class Networking: NSObject {
 
   // MARK: - Networking
 
-  func execute(request: Requestable) -> Promise<NetworkResult> {
-    let promise = Promise<NetworkResult>()
+  func execute(request: Requestable) -> Ride {
+    let promise = Promise<Wave>()
     let URLRequest: NSMutableURLRequest
 
     do {
@@ -60,12 +60,12 @@ public class Networking: NSObject {
       URLRequest = try request.toURLRequest(baseURLString, additionalHeaders: requestHeaders)
     } catch {
       promise.reject(error)
-      return promise
+      return Ride(promise: promise)
     }
 
     preProcessRequest?(URLRequest)
 
-    let task: NetworkTaskRunning
+    let task: TaskRunning
 
     switch Malibu.mode {
     case .Regular:
@@ -79,20 +79,21 @@ public class Networking: NSObject {
     case .Fake:
       guard let mock = prepareMock(request) else {
         promise.reject(Error.NoMockProvided)
-        return promise
+        return Ride(promise: promise)
       }
 
       task = MockDataTask(mock: mock, URLRequest: URLRequest, promise: promise)
     }
 
-    let nextPromise = promise.then { result -> NetworkResult in
+    let nextPromise = promise.then { result -> Wave in
       self.saveEtag(request, response: result.response)
       return result
     }
 
-    task.run()
+    let ride = task.run()
+    ride.promise = nextPromise
 
-    return nextPromise
+    return ride
   }
 
   // MARK: - Authentication
@@ -144,27 +145,27 @@ public class Networking: NSObject {
 
 public extension Networking {
 
-  func GET(request: GETRequestable) -> Promise<NetworkResult> {
+  func GET(request: GETRequestable) -> Ride {
     return execute(request)
   }
 
-  func POST(request: POSTRequestable) -> Promise<NetworkResult> {
+  func POST(request: POSTRequestable) -> Ride {
     return execute(request)
   }
 
-  func PUT(request: PUTRequestable) -> Promise<NetworkResult> {
+  func PUT(request: PUTRequestable) -> Ride {
     return execute(request)
   }
 
-  func PATCH(request: PATCHRequestable) -> Promise<NetworkResult> {
+  func PATCH(request: PATCHRequestable) -> Ride {
     return execute(request)
   }
 
-  func DELETE(request: DELETERequestable) -> Promise<NetworkResult> {
+  func DELETE(request: DELETERequestable) -> Ride {
     return execute(request)
   }
 
-  func HEAD(request: HEADRequestable) -> Promise<NetworkResult> {
+  func HEAD(request: HEADRequestable) -> Ride {
     return execute(request)
   }
 }

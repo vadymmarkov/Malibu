@@ -10,7 +10,7 @@ class SessionDataTaskSpec: QuickSpec {
       var task: SessionDataTask!
       let session = NSURLSession()
       let URLRequest = try! GETRequest().toURLRequest()
-      let promise = Promise<NetworkResult>()
+      let promise = Promise<Wave>()
 
       describe("#init") {
         beforeEach {

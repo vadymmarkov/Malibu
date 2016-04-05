@@ -3,10 +3,10 @@ import Quick
 import Nimble
 import When
 
-class NetworkTaskRunningSpec: QuickSpec {
+class TaskRunningSpec: QuickSpec {
 
   override func spec() {
-    describe("NetworkTaskRunning") {
+    describe("TaskRunning") {
       var task: TestNetworkTask!
 
       beforeEach {

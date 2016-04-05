@@ -1,15 +1,15 @@
 import Foundation
 import When
 
-class SessionDataTask: NetworkTaskRunning {
+class SessionDataTask: TaskRunning {
 
   var session: NSURLSession
   var URLRequest: NSURLRequest
-  var promise: Promise<NetworkResult>
+  var promise: Promise<Wave>
 
   // MARK: - Initialization
 
-  init(session: NSURLSession, URLRequest: NSURLRequest, promise: Promise<NetworkResult>) {
+  init(session: NSURLSession, URLRequest: NSURLRequest, promise: Promise<Wave>) {
     self.session = session
     self.URLRequest = URLRequest
     self.promise = promise
@@ -17,7 +17,10 @@ class SessionDataTask: NetworkTaskRunning {
 
   // MARK: - NetworkTaskRunning
 
-  func run() {
-    session.dataTaskWithRequest(URLRequest, completionHandler: process).resume()
+  func run() -> Ride {
+    let task = session.dataTaskWithRequest(URLRequest, completionHandler: process)
+    task.resume()
+
+    return Ride(promise: promise, task: task)
   }
 }
