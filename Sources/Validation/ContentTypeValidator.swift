@@ -4,6 +4,14 @@ public struct ContentTypeValidator<T : SequenceType where T.Generator.Element ==
 
   public var contentTypes: T
 
+  // MARK: - Initialization
+
+  public init(contentTypes: T) {
+    self.contentTypes = contentTypes
+  }
+
+  // MARK: - Validation
+
   public func validate(result: NetworkResult) throws {
     let response = result.response
 
