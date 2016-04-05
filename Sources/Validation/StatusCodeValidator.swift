@@ -12,7 +12,7 @@ public struct StatusCodeValidator<T: SequenceType where T.Generator.Element == I
 
   // MARK: - Validation
 
-  public func validate(result: NetworkResult) throws {
+  public func validate(result: Wave) throws {
     guard statusCodes.contains(result.response.statusCode) else {
       throw Error.UnacceptableStatusCode(result.response.statusCode)
     }

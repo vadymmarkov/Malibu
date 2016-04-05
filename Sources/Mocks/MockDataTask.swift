@@ -5,11 +5,11 @@ class MockDataTask: TaskRunning {
 
   let mock: Mock
   let URLRequest: NSURLRequest
-  let promise: Promise<NetworkResult>
+  let promise: Promise<Wave>
 
   // MARK: - Initialization
 
-  init(mock: Mock, URLRequest: NSURLRequest, promise: Promise<NetworkResult>) {
+  init(mock: Mock, URLRequest: NSURLRequest, promise: Promise<Wave>) {
     self.mock = mock
     self.URLRequest = URLRequest
     self.promise = promise

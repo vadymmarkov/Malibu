@@ -12,7 +12,7 @@ public struct ContentTypeValidator<T : SequenceType where T.Generator.Element ==
 
   // MARK: - Validation
 
-  public func validate(result: NetworkResult) throws {
+  public func validate(result: Wave) throws {
     let response = result.response
 
     if let responseContentType = response.MIMEType,

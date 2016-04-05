@@ -3,10 +3,10 @@ import When
 
 public class Ride {
 
-  public var promise: Promise<NetworkResult>
+  public var promise: Promise<Wave>
   public var task: NSURLSessionTask?
 
-  public init(promise: Promise<NetworkResult>, task: NSURLSessionTask? = nil) {
+  public init(promise: Promise<Wave>, task: NSURLSessionTask? = nil) {
     self.promise = promise
     self.task = task
   }

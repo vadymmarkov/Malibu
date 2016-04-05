@@ -3,7 +3,7 @@ import When
 
 protocol TaskRunning: class {
   var URLRequest: NSURLRequest { get }
-  var promise: Promise<NetworkResult> { get }
+  var promise: Promise<Wave> { get }
 
   func run() -> Ride
 }
@@ -26,7 +26,7 @@ extension TaskRunning {
       return
     }
 
-    let result = NetworkResult(data: data, request: URLRequest, response: response)
+    let result = Wave(data: data, request: URLRequest, response: response)
     promise.resolve(result)
   }
 }

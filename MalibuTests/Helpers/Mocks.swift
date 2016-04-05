@@ -42,7 +42,7 @@ struct HEADRequest: HEADRequestable {
 
 class TestNetworkTask: TaskRunning {
   let URLRequest: NSURLRequest
-  let promise: Promise<NetworkResult>
+  let promise: Promise<Wave>
   let data = "test".dataUsingEncoding(NSUTF32StringEncoding)
   let response: NSHTTPURLResponse
 
@@ -50,7 +50,7 @@ class TestNetworkTask: TaskRunning {
 
   init() {
     URLRequest = try! GETRequest().toURLRequest()
-    promise = Promise<NetworkResult>()
+    promise = Promise<Wave>()
     response = NSHTTPURLResponse(URL: URLRequest.URL!, statusCode: 200, HTTPVersion: "HTTP/2.0", headerFields: nil)!
   }
 

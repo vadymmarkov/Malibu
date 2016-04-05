@@ -5,11 +5,11 @@ class SessionDataTask: TaskRunning {
 
   var session: NSURLSession
   var URLRequest: NSURLRequest
-  var promise: Promise<NetworkResult>
+  var promise: Promise<Wave>
 
   // MARK: - Initialization
 
-  init(session: NSURLSession, URLRequest: NSURLRequest, promise: Promise<NetworkResult>) {
+  init(session: NSURLSession, URLRequest: NSURLRequest, promise: Promise<Wave>) {
     self.session = session
     self.URLRequest = URLRequest
     self.promise = promise

@@ -52,7 +52,7 @@ public class Networking: NSObject {
   // MARK: - Networking
 
   func execute(request: Requestable) -> Ride {
-    let promise = Promise<NetworkResult>()
+    let promise = Promise<Wave>()
     let URLRequest: NSMutableURLRequest
 
     do {
@@ -85,7 +85,7 @@ public class Networking: NSObject {
       task = MockDataTask(mock: mock, URLRequest: URLRequest, promise: promise)
     }
 
-    let nextPromise = promise.then { result -> NetworkResult in
+    let nextPromise = promise.then { result -> Wave in
       self.saveEtag(request, response: result.response)
       return result
     }

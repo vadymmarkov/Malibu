@@ -1,7 +1,7 @@
 import Foundation
 import When
 
-public class NetworkResult: Equatable {
+public class Wave: Equatable {
 
   public let data: NSData
   public let request: NSURLRequest
@@ -16,7 +16,7 @@ public class NetworkResult: Equatable {
 
 // MARK: - Equatable
 
-public func ==(lhs: NetworkResult, rhs: NetworkResult) -> Bool {
+public func ==(lhs: Wave, rhs: Wave) -> Bool {
   return lhs.data == rhs.data
     && lhs.request == rhs.request
     && lhs.response == rhs.response

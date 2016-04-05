@@ -3,14 +3,14 @@ import When
 import Quick
 import Nimble
 
-class NetworkResultSerializationSpec: QuickSpec, NetworkPromiseSpec {
+class WaveSerializationSpec: QuickSpec, NetworkPromiseSpec {
 
-  var networkPromise: Promise<NetworkResult>!
+  var networkPromise: Promise<Wave>!
   var request: NSURLRequest!
   var data: NSData!
 
   override func spec() {
-    describe("NetworkResultSerialization") {
+    describe("WaveSerialization") {
 
       let URL = NSURL(string: "http://hyper.no")!
       let response = NSHTTPURLResponse(URL: URL, statusCode: 200, HTTPVersion: "HTTP/2.0", headerFields: nil)!
@@ -18,7 +18,7 @@ class NetworkResultSerializationSpec: QuickSpec, NetworkPromiseSpec {
       // MARK: - Specs
 
       beforeEach {
-        self.networkPromise = Promise<NetworkResult>()
+        self.networkPromise = Promise<Wave>()
         self.request = NSURLRequest(URL: NSURL(string: "http://hyper.no")!)
         self.data = try! NSJSONSerialization.dataWithJSONObject([["name": "Taylor"]],
           options: NSJSONWritingOptions())
