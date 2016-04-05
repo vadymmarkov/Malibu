@@ -40,7 +40,7 @@ struct HEADRequest: HEADRequestable {
 
 // MARK: - Tasks
 
-class TestNetworkTask: NetworkTaskRunning {
+class TestNetworkTask: TaskRunning {
   let URLRequest: NSURLRequest
   let promise: Promise<NetworkResult>
   let data = "test".dataUsingEncoding(NSUTF32StringEncoding)
@@ -56,7 +56,8 @@ class TestNetworkTask: NetworkTaskRunning {
 
   // MARK: - NetworkTaskRunning
 
-  func run() {
+  func run() -> Ride {
     process(data, response: response, error: nil)
+    return Ride(promise: promise)
   }
 }

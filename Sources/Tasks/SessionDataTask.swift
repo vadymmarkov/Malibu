@@ -1,7 +1,7 @@
 import Foundation
 import When
 
-class SessionDataTask: NetworkTaskRunning {
+class SessionDataTask: TaskRunning {
 
   var session: NSURLSession
   var URLRequest: NSURLRequest
@@ -17,7 +17,10 @@ class SessionDataTask: NetworkTaskRunning {
 
   // MARK: - NetworkTaskRunning
 
-  func run() {
-    session.dataTaskWithRequest(URLRequest, completionHandler: process).resume()
+  func run() -> Ride {
+    let task = session.dataTaskWithRequest(URLRequest, completionHandler: process)
+    task.resume()
+
+    return Ride(promise: promise, task: task)
   }
 }

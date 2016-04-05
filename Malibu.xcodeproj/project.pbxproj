@@ -13,8 +13,8 @@
 		D503D3911C8DA95B0009BDAD /* JSONSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503D38F1C8DA95B0009BDAD /* JSONSerializer.swift */; };
 		D503D3A51C8EC7550009BDAD /* NetworkPromiseSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503D3A41C8EC7550009BDAD /* NetworkPromiseSpec.swift */; };
 		D503D3A61C8EC7550009BDAD /* NetworkPromiseSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503D3A41C8EC7550009BDAD /* NetworkPromiseSpec.swift */; };
-		D527ED891C9B6B0F0092AD6B /* NetworkTaskRunningSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D527ED881C9B6B0F0092AD6B /* NetworkTaskRunningSpec.swift */; };
-		D527ED8A1C9B6B0F0092AD6B /* NetworkTaskRunningSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D527ED881C9B6B0F0092AD6B /* NetworkTaskRunningSpec.swift */; };
+		D527ED891C9B6B0F0092AD6B /* TaskRunningSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D527ED881C9B6B0F0092AD6B /* TaskRunningSpec.swift */; };
+		D527ED8A1C9B6B0F0092AD6B /* TaskRunningSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D527ED881C9B6B0F0092AD6B /* TaskRunningSpec.swift */; };
 		D527ED8C1C9B72450092AD6B /* SessionDataTaskSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D527ED8B1C9B72450092AD6B /* SessionDataTaskSpec.swift */; };
 		D527ED8D1C9B72450092AD6B /* SessionDataTaskSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D527ED8B1C9B72450092AD6B /* SessionDataTaskSpec.swift */; };
 		D527ED901C9B73D80092AD6B /* MockSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D527ED8F1C9B73D80092AD6B /* MockSpec.swift */; };
@@ -82,6 +82,8 @@
 		D5B9653A1C922C500099D2F9 /* URLStringConvertibleSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965341C922C500099D2F9 /* URLStringConvertibleSpec.swift */; };
 		D5B9653C1C92340C0099D2F9 /* UtilsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B9653B1C92340C0099D2F9 /* UtilsSpec.swift */; };
 		D5B9653D1C92340C0099D2F9 /* UtilsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B9653B1C92340C0099D2F9 /* UtilsSpec.swift */; };
+		D5C1D06F1CB3D49F00A076D6 /* Ride.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C1D06E1CB3D49F00A076D6 /* Ride.swift */; };
+		D5C1D0701CB3D49F00A076D6 /* Ride.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C1D06E1CB3D49F00A076D6 /* Ride.swift */; };
 		D5C6294A1C3A7FAA007F7B7C /* Malibu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629401C3A7FAA007F7B7C /* Malibu.framework */; };
 		D5C629771C3A878E007F7B7C /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629751C3A878E007F7B7C /* Quick.framework */; };
 		D5C629781C3A878E007F7B7C /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629761C3A878E007F7B7C /* Nimble.framework */; };
@@ -113,8 +115,8 @@
 		DAA50FF51C9786BE00D01F78 /* HeaderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA50FF31C9786BE00D01F78 /* HeaderSpec.swift */; };
 		DAA50FF81C9A1E8800D01F78 /* SessionDataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA50FF71C9A1E8800D01F78 /* SessionDataTask.swift */; };
 		DAA50FF91C9A1E8800D01F78 /* SessionDataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA50FF71C9A1E8800D01F78 /* SessionDataTask.swift */; };
-		DAA50FFB1C9A1EBB00D01F78 /* NetworkTaskRunning.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA50FFA1C9A1EBB00D01F78 /* NetworkTaskRunning.swift */; };
-		DAA50FFC1C9A1EBB00D01F78 /* NetworkTaskRunning.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA50FFA1C9A1EBB00D01F78 /* NetworkTaskRunning.swift */; };
+		DAA50FFB1C9A1EBB00D01F78 /* TaskRunning.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA50FFA1C9A1EBB00D01F78 /* TaskRunning.swift */; };
+		DAA50FFC1C9A1EBB00D01F78 /* TaskRunning.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA50FFA1C9A1EBB00D01F78 /* TaskRunning.swift */; };
 		DAA510021C9A2D3C00D01F78 /* Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA510011C9A2D3C00D01F78 /* Mock.swift */; };
 		DAA510031C9A2D3C00D01F78 /* Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA510011C9A2D3C00D01F78 /* Mock.swift */; };
 		DAA510051C9A2D5800D01F78 /* MockDataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA510041C9A2D5800D01F78 /* MockDataTask.swift */; };
@@ -166,7 +168,7 @@
 		D503D38C1C8DA7730009BDAD /* Serializing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializing.swift; sourceTree = "<group>"; };
 		D503D38F1C8DA95B0009BDAD /* JSONSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONSerializer.swift; sourceTree = "<group>"; };
 		D503D3A41C8EC7550009BDAD /* NetworkPromiseSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkPromiseSpec.swift; sourceTree = "<group>"; };
-		D527ED881C9B6B0F0092AD6B /* NetworkTaskRunningSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTaskRunningSpec.swift; sourceTree = "<group>"; };
+		D527ED881C9B6B0F0092AD6B /* TaskRunningSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskRunningSpec.swift; sourceTree = "<group>"; };
 		D527ED8B1C9B72450092AD6B /* SessionDataTaskSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionDataTaskSpec.swift; sourceTree = "<group>"; };
 		D527ED8F1C9B73D80092AD6B /* MockSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSpec.swift; sourceTree = "<group>"; };
 		D527ED921C9B77150092AD6B /* MockDataTaskSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockDataTaskSpec.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 		D5B965331C922C500099D2F9 /* SessionConfigurationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionConfigurationSpec.swift; sourceTree = "<group>"; };
 		D5B965341C922C500099D2F9 /* URLStringConvertibleSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLStringConvertibleSpec.swift; sourceTree = "<group>"; };
 		D5B9653B1C92340C0099D2F9 /* UtilsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilsSpec.swift; sourceTree = "<group>"; };
+		D5C1D06E1CB3D49F00A076D6 /* Ride.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ride.swift; sourceTree = "<group>"; };
 		D5C629401C3A7FAA007F7B7C /* Malibu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Malibu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5C629491C3A7FAA007F7B7C /* Malibu-Mac-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Malibu-Mac-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5C629751C3A878E007F7B7C /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
@@ -224,7 +227,7 @@
 		DAA50FF01C97738400D01F78 /* Header.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 		DAA50FF31C9786BE00D01F78 /* HeaderSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderSpec.swift; sourceTree = "<group>"; };
 		DAA50FF71C9A1E8800D01F78 /* SessionDataTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionDataTask.swift; sourceTree = "<group>"; };
-		DAA50FFA1C9A1EBB00D01F78 /* NetworkTaskRunning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTaskRunning.swift; sourceTree = "<group>"; };
+		DAA50FFA1C9A1EBB00D01F78 /* TaskRunning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskRunning.swift; sourceTree = "<group>"; };
 		DAA510011C9A2D3C00D01F78 /* Mock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mock.swift; sourceTree = "<group>"; };
 		DAA510041C9A2D5800D01F78 /* MockDataTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockDataTask.swift; sourceTree = "<group>"; };
 		DAC92A051C7F90B400F01940 /* Malibu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Malibu.swift; sourceTree = "<group>"; };
@@ -301,7 +304,7 @@
 		D527ED871C9B6AAD0092AD6B /* Tasks */ = {
 			isa = PBXGroup;
 			children = (
-				D527ED881C9B6B0F0092AD6B /* NetworkTaskRunningSpec.swift */,
+				D527ED881C9B6B0F0092AD6B /* TaskRunningSpec.swift */,
 				D527ED8B1C9B72450092AD6B /* SessionDataTaskSpec.swift */,
 			);
 			path = Tasks;
@@ -371,6 +374,7 @@
 				D5B964F41C92125E0099D2F9 /* Requestable.swift */,
 				D5EB7C621CB02323003A3BA9 /* MethodRequestable.swift */,
 				D5EB7C5F1CB01E73003A3BA9 /* ETagPolicy.swift */,
+				D5C1D06E1CB3D49F00A076D6 /* Ride.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -473,7 +477,7 @@
 		DAA50FF61C9A1D8800D01F78 /* Tasks */ = {
 			isa = PBXGroup;
 			children = (
-				DAA50FFA1C9A1EBB00D01F78 /* NetworkTaskRunning.swift */,
+				DAA50FFA1C9A1EBB00D01F78 /* TaskRunning.swift */,
 				DAA50FF71C9A1E8800D01F78 /* SessionDataTask.swift */,
 			);
 			path = Tasks;
@@ -782,7 +786,7 @@
 				DAC92A361C87B92200F01940 /* Validating.swift in Sources */,
 				DAEE2BAE1C7F8A870000FB12 /* ParameterEncoding.swift in Sources */,
 				D5B965131C922BCF0099D2F9 /* URLStringConvertible.swift in Sources */,
-				DAA50FFB1C9A1EBB00D01F78 /* NetworkTaskRunning.swift in Sources */,
+				DAA50FFB1C9A1EBB00D01F78 /* TaskRunning.swift in Sources */,
 				D5B9651C1C922BDC0099D2F9 /* NetworkResult.swift in Sources */,
 				D503D38D1C8DA7730009BDAD /* Serializing.swift in Sources */,
 				D5B964F51C92125E0099D2F9 /* Requestable.swift in Sources */,
@@ -803,6 +807,7 @@
 				D5EB7C601CB01E73003A3BA9 /* ETagPolicy.swift in Sources */,
 				DA5B4CF81C8E5936004E21ED /* Error.swift in Sources */,
 				D5B9650D1C922BCF0099D2F9 /* ContentType.swift in Sources */,
+				D5C1D06F1CB3D49F00A076D6 /* Ride.swift in Sources */,
 				D5B9651A1C922BDC0099D2F9 /* MIMEType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -838,7 +843,7 @@
 				D5EB7C6C1CB03AA0003A3BA9 /* QueryBuilderSpec.swift in Sources */,
 				D527ED931C9B77150092AD6B /* MockDataTaskSpec.swift in Sources */,
 				D5B9652E1C922C420099D2F9 /* NetworkResultSpec.swift in Sources */,
-				D527ED891C9B6B0F0092AD6B /* NetworkTaskRunningSpec.swift in Sources */,
+				D527ED891C9B6B0F0092AD6B /* TaskRunningSpec.swift in Sources */,
 				D549C85C1C8F6C8800588A0C /* StringSerializerSpec.swift in Sources */,
 				D527ED991C9B84A20092AD6B /* MethodSpec.swift in Sources */,
 				D5B965301C922C420099D2F9 /* NetworkResultValidationSpec.swift in Sources */,
@@ -860,7 +865,7 @@
 				DAC92A371C87B92200F01940 /* Validating.swift in Sources */,
 				DAEE2BAF1C7F8A870000FB12 /* ParameterEncoding.swift in Sources */,
 				D5B965141C922BCF0099D2F9 /* URLStringConvertible.swift in Sources */,
-				DAA50FFC1C9A1EBB00D01F78 /* NetworkTaskRunning.swift in Sources */,
+				DAA50FFC1C9A1EBB00D01F78 /* TaskRunning.swift in Sources */,
 				D5B9651D1C922BDC0099D2F9 /* NetworkResult.swift in Sources */,
 				D503D38E1C8DA7730009BDAD /* Serializing.swift in Sources */,
 				D5B964F61C92125E0099D2F9 /* Requestable.swift in Sources */,
@@ -881,6 +886,7 @@
 				D5EB7C611CB01E73003A3BA9 /* ETagPolicy.swift in Sources */,
 				DA5B4CF91C8E5936004E21ED /* Error.swift in Sources */,
 				D5B9650E1C922BCF0099D2F9 /* ContentType.swift in Sources */,
+				D5C1D0701CB3D49F00A076D6 /* Ride.swift in Sources */,
 				D5B9651B1C922BDC0099D2F9 /* MIMEType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -916,7 +922,7 @@
 				D5EB7C6D1CB03AA0003A3BA9 /* QueryBuilderSpec.swift in Sources */,
 				D527ED941C9B77150092AD6B /* MockDataTaskSpec.swift in Sources */,
 				D5B9652F1C922C420099D2F9 /* NetworkResultSpec.swift in Sources */,
-				D527ED8A1C9B6B0F0092AD6B /* NetworkTaskRunningSpec.swift in Sources */,
+				D527ED8A1C9B6B0F0092AD6B /* TaskRunningSpec.swift in Sources */,
 				D549C85D1C8F6C8800588A0C /* StringSerializerSpec.swift in Sources */,
 				D527ED9A1C9B84A20092AD6B /* MethodSpec.swift in Sources */,
 				D5B965311C922C420099D2F9 /* NetworkResultValidationSpec.swift in Sources */,

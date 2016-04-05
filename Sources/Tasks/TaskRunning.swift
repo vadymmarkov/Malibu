@@ -1,14 +1,14 @@
 import Foundation
 import When
 
-protocol NetworkTaskRunning: class {
+protocol TaskRunning: class {
   var URLRequest: NSURLRequest { get }
   var promise: Promise<NetworkResult> { get }
 
-  func run()
+  func run() -> Ride
 }
 
-extension NetworkTaskRunning {
+extension TaskRunning {
 
   func process(data: NSData?, response: NSURLResponse?, error: ErrorType?) {
     if let error = error {
