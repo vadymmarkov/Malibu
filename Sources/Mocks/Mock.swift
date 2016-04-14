@@ -27,6 +27,8 @@ public class Mock {
         return
     }
 
+    response.setValue("application/json; charset=utf-8", forKey: "MIMEType")
+
     self.init(request: request, response: response, data: data, error: nil)
   }
 
@@ -43,6 +45,8 @@ public class Mock {
         self.init(request: request, response: nil, data: nil, error: Error.NoResponseReceived)
         return
     }
+
+    response.setValue("application/json; charset=utf-8", forKey: "MIMEType")
 
     self.init(request: request, response: response, data: data, error: nil)
   }
