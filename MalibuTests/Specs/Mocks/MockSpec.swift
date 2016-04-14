@@ -48,6 +48,32 @@ class MockSpec: QuickSpec {
           expect(dictionary["email"]).to(equal("ios@hyper.no"))
         }
       }
+
+      describe("#init:request:JSON") {
+        let JSON = [
+          "first_name" : "John",
+          "last_name" : "Hyperseed",
+          "email" : "ios@hyper.no"
+        ]
+
+        beforeEach {
+          mock = Mock(request: request, JSON: JSON)
+          response = NSHTTPURLResponse(URL: NSURL(string: "mock://JSON")!, statusCode: 200,
+            HTTPVersion: "HTTP/2.0", headerFields: nil)!
+        }
+
+        it("sets properties") {
+          let serializer = JSONSerializer()
+          let dictionary = try! serializer.serialize(mock.data!, response: response) as! [String: String]
+
+          expect(mock.request.message).to(equal(request.message))
+          expect(mock.response?.statusCode).to(equal(response.statusCode))
+          expect(mock.error).to(beNil())
+          expect(dictionary["first_name"]).to(equal("John"))
+          expect(dictionary["last_name"]).to(equal("Hyperseed"))
+          expect(dictionary["email"]).to(equal("ios@hyper.no"))
+        }
+      }
     }
   }
 }

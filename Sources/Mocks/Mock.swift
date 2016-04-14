@@ -29,4 +29,21 @@ public class Mock {
 
     self.init(request: request, response: response, data: data, error: nil)
   }
+
+  public convenience init(request: Requestable, JSON: [String: AnyObject]) {
+    var JSONData: NSData?
+
+    do {
+      JSONData = try NSJSONSerialization.dataWithJSONObject(JSON, options: NSJSONWritingOptions())
+    } catch {}
+
+    guard let URL = NSURL(string: "mock://JSON"), data = JSONData,
+      response = NSHTTPURLResponse(URL: URL, statusCode: 200, HTTPVersion: "HTTP/2.0", headerFields: nil)
+      else {
+        self.init(request: request, response: nil, data: nil, error: Error.NoResponseReceived)
+        return
+    }
+
+    self.init(request: request, response: response, data: data, error: nil)
+  }
 }
