@@ -29,6 +29,8 @@
 		D549C85A1C8F6BB500588A0C /* DataSerializerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549C8581C8F6BB500588A0C /* DataSerializerSpec.swift */; };
 		D549C85C1C8F6C8800588A0C /* StringSerializerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549C85B1C8F6C8800588A0C /* StringSerializerSpec.swift */; };
 		D549C85D1C8F6C8800588A0C /* StringSerializerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549C85B1C8F6C8800588A0C /* StringSerializerSpec.swift */; };
+		D559C5E21CC0191700700B3C /* mock.json in Resources */ = {isa = PBXBuildFile; fileRef = D559C5E11CC0191700700B3C /* mock.json */; };
+		D559C5E31CC0191700700B3C /* mock.json in Resources */ = {isa = PBXBuildFile; fileRef = D559C5E11CC0191700700B3C /* mock.json */; };
 		D560A2E41C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D560A2E31C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift */; };
 		D560A2E51C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D560A2E31C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift */; };
 		D560A2E71C8C694100D4B640 /* ContentTypeValidatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D560A2E61C8C694100D4B640 /* ContentTypeValidatorSpec.swift */; };
@@ -176,6 +178,7 @@
 		D549C8551C8F661E00588A0C /* JSONSerializerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONSerializerSpec.swift; sourceTree = "<group>"; };
 		D549C8581C8F6BB500588A0C /* DataSerializerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSerializerSpec.swift; sourceTree = "<group>"; };
 		D549C85B1C8F6C8800588A0C /* StringSerializerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringSerializerSpec.swift; sourceTree = "<group>"; };
+		D559C5E11CC0191700700B3C /* mock.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mock.json; sourceTree = "<group>"; };
 		D560A2E31C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusCodeVadatorSpec.swift; sourceTree = "<group>"; };
 		D560A2E61C8C694100D4B640 /* ContentTypeValidatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentTypeValidatorSpec.swift; sourceTree = "<group>"; };
 		D5B2E89F1C3A780C00C0327D /* Malibu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Malibu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -329,6 +332,14 @@
 			path = Serialization;
 			sourceTree = "<group>";
 		};
+		D559C5E01CC018FA00700B3C /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				D559C5E11CC0191700700B3C /* mock.json */,
+			);
+			path = JSON;
+			sourceTree = "<group>";
+		};
 		D560A2E21C8C663000D4B640 /* Validation */ = {
 			isa = PBXGroup;
 			children = (
@@ -446,6 +457,7 @@
 		D5C6298F1C3A8BDA007F7B7C /* MalibuTests */ = {
 			isa = PBXGroup;
 			children = (
+				D559C5E01CC018FA00700B3C /* JSON */,
 				D503D3A31C8EC73B0009BDAD /* Helpers */,
 				DAEE2BA01C7F8A1C0000FB12 /* Specs */,
 				D5C629901C3A8BDA007F7B7C /* Info-iOS.plist */,
@@ -700,6 +712,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D559C5E21CC0191700700B3C /* mock.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -714,6 +727,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D559C5E31CC0191700700B3C /* mock.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
