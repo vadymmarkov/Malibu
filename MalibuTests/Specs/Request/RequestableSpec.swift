@@ -53,7 +53,7 @@ class RequestableSpec: QuickSpec {
               expect(URLRequest.cachePolicy).to(equal(request.cachePolicy))
               expect(URLRequest.allHTTPHeaderFields?["Content-Type"]).to(equal(request.contentType.header))
               expect(URLRequest.HTTPBody).to(equal(
-                try! parameterEncoders[request.contentType]?.encode(request.message.parameters)))
+                try! request.contentType.encoder?.encode(request.message.parameters)))
               expect(URLRequest.allHTTPHeaderFields?["key"]).to(equal("value"))
             }
           }
