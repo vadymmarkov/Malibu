@@ -13,8 +13,8 @@ var networkings = [String: Networking]()
 
 public var mode: Mode = .Regular
 public var backfootSurfer = Networking()
-
 public var parameterEncoders = [ContentType: ParameterEncoding]()
+let boundary = "Malibu\(NSUUID().UUIDString)"
 
 // MARK: - Networkings
 

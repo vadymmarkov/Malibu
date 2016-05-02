@@ -4,7 +4,7 @@ public enum ContentType {
   case Query
   case FormURLEncoded
   case JSON
-  case MultipartFormData(String)
+  case MultipartFormData
   case Custom(String)
 
   var header: String? {
@@ -17,7 +17,7 @@ public enum ContentType {
       string = "application/json"
     case .FormURLEncoded:
       string = "application/x-www-form-urlencoded"
-    case .MultipartFormData(let boundary):
+    case .MultipartFormData:
       string = "multipart/form-data; boundary=MalibuBoundary-\(boundary)"
     case .Custom(let value):
       string = value
@@ -34,8 +34,8 @@ public enum ContentType {
       encoder = JSONParameterEncoder()
     case .FormURLEncoded:
       encoder = FormURLEncoder()
-    case .MultipartFormData(let boundary):
-      encoder = MultipartFormEncoder(boundary: boundary)
+    case .MultipartFormData():
+      encoder = MultipartFormEncoder()
     default:
       break
     }
