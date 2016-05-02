@@ -4,6 +4,8 @@ public enum Error: ErrorType {
   case NoMockProvided
   case InvalidRequestURL
   case MissingContentType
+  case InvalidParameter
+  case InvalidUploadFilePath
   case NoDataInResponse
   case NoResponseReceived
   case UnacceptableStatusCode(Int)
@@ -22,6 +24,10 @@ public enum Error: ErrorType {
       text = "Invalid request URL"
     case .MissingContentType:
       text = "Response content type was missing"
+    case .InvalidParameter:
+      text = "Parameter is not convertible to NSData"
+    case .InvalidUploadFilePath:
+      text = "Invalid upload file path"
     case .NoDataInResponse:
       text = "No data in response"
     case .NoResponseReceived:
