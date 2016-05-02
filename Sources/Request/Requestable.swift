@@ -35,6 +35,8 @@ public extension Requestable {
 
     if let encoder = parameterEncoders[contentType] {
       request.HTTPBody = try encoder.encode(message.parameters)
+    } else if let encoder = contentType.encoder {
+      request.HTTPBody = try encoder.encode(message.parameters)
     }
 
     [additionalHeaders, message.headers].forEach {

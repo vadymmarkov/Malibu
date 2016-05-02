@@ -14,10 +14,7 @@ var networkings = [String: Networking]()
 public var mode: Mode = .Regular
 public var backfootSurfer = Networking()
 
-public var parameterEncoders: [ContentType: ParameterEncoding] = [
-  .JSON: JSONParameterEncoder(),
-  .FormURLEncoded: FormURLEncoder()
-]
+public var parameterEncoders = [ContentType: ParameterEncoding]()
 
 // MARK: - Networkings
 
