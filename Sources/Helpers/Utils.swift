@@ -1,13 +1,13 @@
 import Foundation
 
-public struct Utils {
+struct Utils {
 
   // MARK: - Storage
 
-  public static let documentDirectory =  NSSearchPathForDirectoriesInDomains(.DocumentDirectory,
+  static let documentDirectory =  NSSearchPathForDirectoriesInDomains(.DocumentDirectory,
     .UserDomainMask, true).first!
 
-  public static var storageDirectory: String = {
+  static var storageDirectory: String = {
     let directory = "\(documentDirectory)/Malibu"
 
     do {
@@ -21,7 +21,7 @@ public struct Utils {
     return directory
   }()
 
-  public static func filePath(name: String) -> String {
+  static func filePath(name: String) -> String {
     return "\(Utils.storageDirectory)/\(name)"
   }
 }
