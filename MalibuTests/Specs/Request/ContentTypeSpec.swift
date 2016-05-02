@@ -19,6 +19,12 @@ class ContentTypeSpec: QuickSpec {
           }
         }
 
+        describe("#encoder") {
+          it("returns nil") {
+            expect(contentType.encoder).to(beNil())
+          }
+        }
+
         describe("#hashValue") {
           it("returns a hash value") {
             expect(contentType.hashValue).to(equal("query".hashValue))
@@ -42,6 +48,12 @@ class ContentTypeSpec: QuickSpec {
         describe("#value") {
           it("returns a correct string value") {
             expect(contentType.header).to(equal("application/x-www-form-urlencoded"))
+          }
+        }
+
+        describe("#encoder") {
+          it("returns a corresponding encoder") {
+            expect(contentType.encoder is FormURLEncoder).to(beTrue())
           }
         }
 
@@ -71,6 +83,12 @@ class ContentTypeSpec: QuickSpec {
           }
         }
 
+        describe("#encoder") {
+          it("returns a corresponding encoder") {
+            expect(contentType.encoder is JSONParameterEncoder).to(beTrue())
+          }
+        }
+
         describe("#hashValue") {
           it("returns a hash value of corresponding string value") {
             expect(contentType.hashValue).to(equal(contentType.header?.hashValue))
@@ -86,6 +104,39 @@ class ContentTypeSpec: QuickSpec {
         }
       }
 
+      context("when it is MultipartFormData type") {
+        beforeEach {
+          contentType = .MultipartFormData
+        }
+
+        describe("#value") {
+          it("returns a correct string value") {
+            expect(contentType.header).to(equal("multipart/form-data; boundary=MalibuBoundary-\(boundary)"))
+          }
+        }
+
+        describe("#encoder") {
+          it("returns a corresponding encoder") {
+            expect(contentType.encoder is MultipartFormEncoder).to(beTrue())
+          }
+        }
+
+        describe("#hashValue") {
+          it("returns a hash value of corresponding string value") {
+            expect(contentType.hashValue).to(equal(contentType.header?.hashValue))
+          }
+        }
+
+        describe("#equal") {
+          it("compares for value equality") {
+            expect(contentType).to(equal(ContentType.MultipartFormData))
+            expect(contentType).toNot(equal(ContentType.JSON))
+            expect(contentType).toNot(equal(ContentType.FormURLEncoded))
+            expect(contentType).toNot(equal(ContentType.Custom("application/custom")))
+          }
+        }
+      }
+
       context("when it is Custom type") {
         beforeEach {
           contentType = .Custom("application/custom")
@@ -94,6 +145,12 @@ class ContentTypeSpec: QuickSpec {
         describe("#value") {
           it("returns a correct string value") {
             expect(contentType.header).to(equal("application/custom"))
+          }
+        }
+
+        describe("#encoder") {
+          it("returns nil") {
+            expect(contentType.encoder).to(beNil())
           }
         }
 
