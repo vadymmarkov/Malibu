@@ -37,6 +37,8 @@
 		D560A2E81C8C694100D4B640 /* ContentTypeValidatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D560A2E61C8C694100D4B640 /* ContentTypeValidatorSpec.swift */; };
 		D5ABDDAA1CD78BC700C78B5F /* MultipartFormEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ABDDA91CD78BC700C78B5F /* MultipartFormEncoder.swift */; };
 		D5ABDDAB1CD78BC700C78B5F /* MultipartFormEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ABDDA91CD78BC700C78B5F /* MultipartFormEncoder.swift */; };
+		D5ABDDAF1CD8149500C78B5F /* MultipartFormEncoderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ABDDAC1CD8132700C78B5F /* MultipartFormEncoderSpec.swift */; };
+		D5ABDDB01CD8149600C78B5F /* MultipartFormEncoderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ABDDAC1CD8132700C78B5F /* MultipartFormEncoderSpec.swift */; };
 		D5B2E8AA1C3A780C00C0327D /* Malibu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5B2E89F1C3A780C00C0327D /* Malibu.framework */; };
 		D5B964EE1C916CBF0099D2F9 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964ED1C916CBF0099D2F9 /* Mocks.swift */; };
 		D5B964EF1C916CBF0099D2F9 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964ED1C916CBF0099D2F9 /* Mocks.swift */; };
@@ -184,6 +186,7 @@
 		D560A2E31C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusCodeVadatorSpec.swift; sourceTree = "<group>"; };
 		D560A2E61C8C694100D4B640 /* ContentTypeValidatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentTypeValidatorSpec.swift; sourceTree = "<group>"; };
 		D5ABDDA91CD78BC700C78B5F /* MultipartFormEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipartFormEncoder.swift; sourceTree = "<group>"; };
+		D5ABDDAC1CD8132700C78B5F /* MultipartFormEncoderSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipartFormEncoderSpec.swift; sourceTree = "<group>"; };
 		D5B2E89F1C3A780C00C0327D /* Malibu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Malibu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5B2E8A91C3A780C00C0327D /* Malibu-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Malibu-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5B964ED1C916CBF0099D2F9 /* Mocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
@@ -561,6 +564,7 @@
 			children = (
 				DAEE2BB41C7F8C590000FB12 /* JSONEncoderSpec.swift */,
 				DAC92A0B1C7FA5E700F01940 /* FormURLEncoderSpec.swift */,
+				D5ABDDAC1CD8132700C78B5F /* MultipartFormEncoderSpec.swift */,
 			);
 			path = Encoding;
 			sourceTree = "<group>";
@@ -861,6 +865,7 @@
 				D5B965351C922C500099D2F9 /* ContentTypeSpec.swift in Sources */,
 				D5EB7C6C1CB03AA0003A3BA9 /* QueryBuilderSpec.swift in Sources */,
 				D527ED931C9B77150092AD6B /* MockDataTaskSpec.swift in Sources */,
+				D5ABDDAF1CD8149500C78B5F /* MultipartFormEncoderSpec.swift in Sources */,
 				D5B9652E1C922C420099D2F9 /* WaveSpec.swift in Sources */,
 				D527ED891C9B6B0F0092AD6B /* TaskRunningSpec.swift in Sources */,
 				D549C85C1C8F6C8800588A0C /* StringSerializerSpec.swift in Sources */,
@@ -941,6 +946,7 @@
 				D5B965361C922C500099D2F9 /* ContentTypeSpec.swift in Sources */,
 				D5EB7C6D1CB03AA0003A3BA9 /* QueryBuilderSpec.swift in Sources */,
 				D527ED941C9B77150092AD6B /* MockDataTaskSpec.swift in Sources */,
+				D5ABDDB01CD8149600C78B5F /* MultipartFormEncoderSpec.swift in Sources */,
 				D5B9652F1C922C420099D2F9 /* WaveSpec.swift in Sources */,
 				D527ED8A1C9B6B0F0092AD6B /* TaskRunningSpec.swift in Sources */,
 				D549C85D1C8F6C8800588A0C /* StringSerializerSpec.swift in Sources */,

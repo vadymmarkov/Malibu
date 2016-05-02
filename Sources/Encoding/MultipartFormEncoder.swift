@@ -10,12 +10,18 @@ struct MultipartFormEncoder: ParameterEncoding {
   // MARK: - ParameterEncoding
 
   func encode(parameters: [String: AnyObject]) throws -> NSData? {
-    return try createBodyWithParameters(parameters, boundary: boundary)
+    let string = buildMultipartString(parameters, boundary: boundary)
+
+    guard let data = string.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true) else {
+      throw Error.InvalidParameter
+    }
+
+    return data
   }
 
   // MARK: - Helpers
 
-  func createBodyWithParameters(parameters: [String: AnyObject], boundary: String) throws -> NSData {
+  func buildMultipartString(parameters: [String: AnyObject], boundary: String) -> String {
     var string = ""
     let components = QueryBuilder().buildComposents(parameters)
 
@@ -27,10 +33,6 @@ struct MultipartFormEncoder: ParameterEncoding {
 
     string += "--\(boundary)--\r\n"
 
-    guard let data = string.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true) else {
-      throw Error.InvalidParameter
-    }
-
-    return data
+    return string
   }
 }
