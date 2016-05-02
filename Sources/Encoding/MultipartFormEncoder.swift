@@ -5,11 +5,15 @@ import Foundation
   import CoreServices
 #endif
 
-public struct MultipartFormEncoder: ParameterEncoding {
+struct MultipartFormEncoder: ParameterEncoding {
 
-  public func encode(parameters: [String: AnyObject]) throws -> NSData? {
+  // MARK: - ParameterEncoding
+
+  func encode(parameters: [String: AnyObject]) throws -> NSData? {
     return try createBodyWithParameters(parameters, boundary: boundary)
   }
+
+  // MARK: - Helpers
 
   func createBodyWithParameters(parameters: [String: AnyObject], boundary: String) throws -> NSData {
     var string = ""
