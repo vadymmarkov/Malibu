@@ -7,10 +7,10 @@ struct QueryBuilder {
   let escapingCharacters = ":#[]@!$&'()*+,;="
 
   func buildQuery(parameters: [String: AnyObject]) -> String {
-    return buildComposents(parameters).map({ "\($0)=\($1)" }).joinWithSeparator("&")
+    return buildComponents(parameters: parameters).map({ "\($0)=\($1)" }).joinWithSeparator("&")
   }
 
-  func buildComposents(parameters: [String: AnyObject]) -> [Component] {
+  func buildComponents(parameters parameters: [String: AnyObject]) -> [Component] {
     var components: [Component] = []
 
     parameters.forEach { key, value in

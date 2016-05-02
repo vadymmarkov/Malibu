@@ -23,7 +23,7 @@ struct MultipartFormEncoder: ParameterEncoding {
 
   func buildMultipartString(parameters: [String: AnyObject], boundary: String) -> String {
     var string = ""
-    let components = QueryBuilder().buildComposents(parameters)
+    let components = QueryBuilder().buildComponents(parameters: parameters)
 
     for (key, value) in components {
       string += "--\(boundary)\r\n"

@@ -26,7 +26,7 @@ class MultipartFormEncoderSpec: QuickSpec {
       describe("buildMultipartString") {
         it("builds multipart string from parameters and boundary value") {
           let boundary = "TestBoundary"
-          let components = QueryBuilder().buildComposents(parameters)
+          let components = QueryBuilder().buildComponents(parameters: parameters)
           var string = ""
 
           for (key, value) in components {
