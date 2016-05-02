@@ -5,9 +5,13 @@ import Foundation
   import CoreServices
 #endif
 
-public struct MultipartEncoder: ParameterEncoding {
+public struct MultipartFormEncoder: ParameterEncoding {
 
-  let boundary = NSUUID().UUIDString
+  let boundary: String
+
+  public init(boundary: String) {
+    self.boundary = boundary
+  }
 
   public func encode(parameters: [String: AnyObject]) throws -> NSData? {
     return try createBodyWithParameters(parameters, boundary: boundary)
