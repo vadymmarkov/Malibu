@@ -143,10 +143,10 @@
 		DAC92A3E1C8E458A00F01940 /* When.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC92A291C83A38400F01940 /* When.framework */; };
 		DAEE2BAE1C7F8A870000FB12 /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE2BAD1C7F8A870000FB12 /* ParameterEncoding.swift */; };
 		DAEE2BAF1C7F8A870000FB12 /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE2BAD1C7F8A870000FB12 /* ParameterEncoding.swift */; };
-		DAEE2BB11C7F8BA00000FB12 /* JSONParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE2BB01C7F8BA00000FB12 /* JSONParameterEncoder.swift */; };
-		DAEE2BB21C7F8BA00000FB12 /* JSONParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE2BB01C7F8BA00000FB12 /* JSONParameterEncoder.swift */; };
-		DAEE2BB71C7F8C5D0000FB12 /* JSONParameterEncoderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE2BB41C7F8C590000FB12 /* JSONParameterEncoderSpec.swift */; };
-		DAEE2BB81C7F8C5E0000FB12 /* JSONParameterEncoderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE2BB41C7F8C590000FB12 /* JSONParameterEncoderSpec.swift */; };
+		DAEE2BB11C7F8BA00000FB12 /* JSONEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE2BB01C7F8BA00000FB12 /* JSONEncoder.swift */; };
+		DAEE2BB21C7F8BA00000FB12 /* JSONEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE2BB01C7F8BA00000FB12 /* JSONEncoder.swift */; };
+		DAEE2BB71C7F8C5D0000FB12 /* JSONEncoderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE2BB41C7F8C590000FB12 /* JSONEncoderSpec.swift */; };
+		DAEE2BB81C7F8C5E0000FB12 /* JSONEncoderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE2BB41C7F8C590000FB12 /* JSONEncoderSpec.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -245,8 +245,8 @@
 		DAC92A381C87B95100F01940 /* StatusCodeValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusCodeValidator.swift; sourceTree = "<group>"; };
 		DAC92A3B1C87C00C00F01940 /* ContentTypeValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentTypeValidator.swift; sourceTree = "<group>"; };
 		DAEE2BAD1C7F8A870000FB12 /* ParameterEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterEncoding.swift; sourceTree = "<group>"; };
-		DAEE2BB01C7F8BA00000FB12 /* JSONParameterEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParameterEncoder.swift; sourceTree = "<group>"; };
-		DAEE2BB41C7F8C590000FB12 /* JSONParameterEncoderSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParameterEncoderSpec.swift; sourceTree = "<group>"; };
+		DAEE2BB01C7F8BA00000FB12 /* JSONEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONEncoder.swift; sourceTree = "<group>"; };
+		DAEE2BB41C7F8C590000FB12 /* JSONEncoderSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONEncoderSpec.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -549,7 +549,7 @@
 			isa = PBXGroup;
 			children = (
 				DAEE2BAD1C7F8A870000FB12 /* ParameterEncoding.swift */,
-				DAEE2BB01C7F8BA00000FB12 /* JSONParameterEncoder.swift */,
+				DAEE2BB01C7F8BA00000FB12 /* JSONEncoder.swift */,
 				DAC92A081C7F961900F01940 /* FormURLEncoder.swift */,
 				D5ABDDA91CD78BC700C78B5F /* MultipartFormEncoder.swift */,
 			);
@@ -559,7 +559,7 @@
 		DAEE2BB31C7F8C500000FB12 /* Encoding */ = {
 			isa = PBXGroup;
 			children = (
-				DAEE2BB41C7F8C590000FB12 /* JSONParameterEncoderSpec.swift */,
+				DAEE2BB41C7F8C590000FB12 /* JSONEncoderSpec.swift */,
 				DAC92A0B1C7FA5E700F01940 /* FormURLEncoderSpec.swift */,
 			);
 			path = Encoding;
@@ -800,7 +800,7 @@
 				DAC92A3C1C87C00C00F01940 /* ContentTypeValidator.swift in Sources */,
 				D503D3901C8DA95B0009BDAD /* JSONSerializer.swift in Sources */,
 				D5B965071C9225B50099D2F9 /* Utils.swift in Sources */,
-				DAEE2BB11C7F8BA00000FB12 /* JSONParameterEncoder.swift in Sources */,
+				DAEE2BB11C7F8BA00000FB12 /* JSONEncoder.swift in Sources */,
 				DAC92A361C87B92200F01940 /* Validating.swift in Sources */,
 				DAEE2BAE1C7F8A870000FB12 /* ParameterEncoding.swift in Sources */,
 				D5B965131C922BCF0099D2F9 /* URLStringConvertible.swift in Sources */,
@@ -844,7 +844,7 @@
 				D5B9652A1C922C420099D2F9 /* MIMETypeSpec.swift in Sources */,
 				D5B964F91C9216FD0099D2F9 /* MessageSpec.swift in Sources */,
 				D5B9653C1C92340C0099D2F9 /* UtilsSpec.swift in Sources */,
-				DAEE2BB71C7F8C5D0000FB12 /* JSONParameterEncoderSpec.swift in Sources */,
+				DAEE2BB71C7F8C5D0000FB12 /* JSONEncoderSpec.swift in Sources */,
 				DAC92A131C7FCF9400F01940 /* MalibuSpec.swift in Sources */,
 				D5B9652C1C922C420099D2F9 /* WaveSerializationSpec.swift in Sources */,
 				D5B964EE1C916CBF0099D2F9 /* Mocks.swift in Sources */,
@@ -880,7 +880,7 @@
 				DAC92A3D1C87C00C00F01940 /* ContentTypeValidator.swift in Sources */,
 				D503D3911C8DA95B0009BDAD /* JSONSerializer.swift in Sources */,
 				D5B965081C9225B50099D2F9 /* Utils.swift in Sources */,
-				DAEE2BB21C7F8BA00000FB12 /* JSONParameterEncoder.swift in Sources */,
+				DAEE2BB21C7F8BA00000FB12 /* JSONEncoder.swift in Sources */,
 				DAC92A371C87B92200F01940 /* Validating.swift in Sources */,
 				DAEE2BAF1C7F8A870000FB12 /* ParameterEncoding.swift in Sources */,
 				D5B965141C922BCF0099D2F9 /* URLStringConvertible.swift in Sources */,
@@ -924,7 +924,7 @@
 				D5B9652B1C922C420099D2F9 /* MIMETypeSpec.swift in Sources */,
 				D5B964FA1C9216FD0099D2F9 /* MessageSpec.swift in Sources */,
 				D5B9653D1C92340C0099D2F9 /* UtilsSpec.swift in Sources */,
-				DAEE2BB81C7F8C5E0000FB12 /* JSONParameterEncoderSpec.swift in Sources */,
+				DAEE2BB81C7F8C5E0000FB12 /* JSONEncoderSpec.swift in Sources */,
 				DAC92A141C7FCF9500F01940 /* MalibuSpec.swift in Sources */,
 				D5B9652D1C922C420099D2F9 /* WaveSerializationSpec.swift in Sources */,
 				D5B964EF1C916CBF0099D2F9 /* Mocks.swift in Sources */,

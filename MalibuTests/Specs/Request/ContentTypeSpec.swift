@@ -85,7 +85,7 @@ class ContentTypeSpec: QuickSpec {
 
         describe("#encoder") {
           it("returns a corresponding encoder") {
-            expect(contentType.encoder is JSONParameterEncoder).to(beTrue())
+            expect(contentType.encoder is JSONEncoder).to(beTrue())
           }
         }
 
