@@ -6,10 +6,10 @@ class JSONParameterEncoderSpec: QuickSpec {
 
   override func spec() {
     describe("JSONParameterEncoder") {
-      var encoder: JSONParameterEncoder!
+      var encoder: JSONEncoder!
 
       beforeEach {
-        encoder = JSONParameterEncoder()
+        encoder = JSONEncoder()
       }
 
       describe("#encode") {

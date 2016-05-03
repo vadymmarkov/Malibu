@@ -41,6 +41,3 @@ public struct ContentTypeValidator<T : SequenceType where T.Generator.Element ==
     throw error
   }
 }
-
-
-

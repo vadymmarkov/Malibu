@@ -108,7 +108,17 @@ class QueryBuilderSpec: QuickSpec {
         }
       }
 
-      describe("#buildComponents") {
+      describe("#buildComponents:parameters") {
+        it("builds a query component based on key and value") {
+          let parameters: [String: AnyObject] = ["firstname": "Taylor"]
+          let components = builder.buildComponents(parameters: parameters)
+
+          expect(components[0].0).to(equal("firstname"))
+          expect(components[0].1).to(equal("Taylor"))
+        }
+      }
+
+      describe("#buildComponents:key:value") {
         it("builds a query component based on key and value") {
           let key = "firstname"
           let value = "Taylor"
