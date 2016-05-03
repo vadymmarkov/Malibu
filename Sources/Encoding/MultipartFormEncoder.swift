@@ -1,9 +1,4 @@
 import Foundation
-#if os(iOS) || os(watchOS) || os(tvOS)
-  import MobileCoreServices
-#elseif os(OSX)
-  import CoreServices
-#endif
 
 struct MultipartFormEncoder: ParameterEncoding {
 
