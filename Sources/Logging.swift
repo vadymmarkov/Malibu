@@ -2,15 +2,15 @@ import Foundation
 
 // MARK: - Logger
 
-public struct Logger {
+public class Logger {
 
   public enum Level {
     case Debug, Info, Error, Disabled
   }
 
   public var level: Level = .Disabled
-  public var errorLogger = ErrorLogger()
-  public var infoLogger = InfoLogger()
+  public var errorLogger: ErrorLogging = ErrorLogger()
+  public var infoLogger: InfoLogging = InfoLogger()
 
   var logErrors: Bool {
     return level == .Error || level == .Debug
