@@ -1,5 +1,26 @@
 import Foundation
 
+// MARK: - Logger
+
+public struct Logger {
+
+  public enum Level {
+    case Debug, Info, Error, Disabled
+  }
+
+  public var level: Level = .Disabled
+  public var errorLogger = ErrorLogger()
+  public var infoLogger = InfoLogger()
+
+  var logErrors: Bool {
+    return level == .Error || level == .Debug
+  }
+
+  var logInfo: Bool {
+    return level == .Info || level == .Debug
+  }
+}
+
 // MARK: - Errors
 
 public protocol ErrorLogging {
