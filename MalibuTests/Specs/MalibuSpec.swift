@@ -20,14 +20,6 @@ class MalibuSpec: QuickSpec {
         }
       }
 
-      describe(".parameterEncoders") {
-        it("has default encoders for content types") {
-          expect(Malibu.parameterEncoders.isEmpty).to(beFalse())
-          expect(Malibu.parameterEncoders[.JSON] is JSONParameterEncoder).to(beTrue())
-          expect(Malibu.parameterEncoders[.FormURLEncoded] is FormURLEncoder).to(beTrue())
-        }
-      }
-
       describe(".register:networking") {
         it("adds new networking instance with a name") {
           expect(Malibu.networkings.count).to(equal(1))
