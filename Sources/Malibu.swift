@@ -9,11 +9,13 @@ public enum Mode {
 
 var networkings = [String: Networking]()
 
-// MARK: - Public
+// MARK: - Vars
 
 public var mode: Mode = .Regular
 public var backfootSurfer = Networking()
 public var parameterEncoders = [ContentType: ParameterEncoding]()
+public var logger = Logger()
+
 let boundary = "Malibu\(NSUUID().UUIDString)"
 
 // MARK: - Networkings

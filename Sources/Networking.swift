@@ -85,13 +85,27 @@ public class Networking: NSObject {
       task = MockDataTask(mock: mock, URLRequest: URLRequest, promise: promise)
     }
 
-    let nextPromise = promise.then { result -> Wave in
+    let etagPromise = promise.then { result -> Wave in
       self.saveEtag(request, response: result.response)
       return result
     }
 
+    let ridePromise = Promise<Wave>()
+
+    etagPromise
+      .done({ value in
+        ridePromise.resolve(value)
+      })
+      .fail({ error in
+        if logger.logErrors {
+          logger.errorLogger.logError(error)
+        }
+
+        ridePromise.reject(error)
+      })
+
     let ride = task.run()
-    ride.promise = nextPromise
+    ride.promise = ridePromise
 
     return ride
   }
