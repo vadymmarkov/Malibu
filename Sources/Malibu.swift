@@ -5,6 +5,10 @@ public enum Mode {
   case Regular, Partial, Fake
 }
 
+public enum LoggingMode {
+  case Errors, Requests, All, None
+}
+
 // MARK: - Helpers
 
 var networkings = [String: Networking]()
