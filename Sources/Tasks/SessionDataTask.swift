@@ -18,8 +18,8 @@ class SessionDataTask: TaskRunning {
   // MARK: - NetworkTaskRunning
 
   func run() -> Ride {
-    if loggingLevel == .Info || loggingLevel == .Debug {
-      infoLogger.logRequest(URLRequest)
+    if logger.logInfo {
+      logger.infoLogger.logRequest(URLRequest)
     }
 
     let task = session.dataTaskWithRequest(URLRequest, completionHandler: process)
