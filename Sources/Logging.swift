@@ -30,7 +30,7 @@ public protocol ErrorLogging {
 public struct ErrorLogger: ErrorLogging {
 
   public func logError(error: ErrorType) {
-    NSLog("\(error)")
+    print("\(error)")
   }
 }
 
@@ -47,6 +47,6 @@ public struct InfoLogger: InfoLogging {
       return
     }
 
-    NSLog("\(URLString)")
+    print("\(URLString)")
   }
 }
