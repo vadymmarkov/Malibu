@@ -2,26 +2,26 @@ import Foundation
 
 // MARK: - Errors
 
-protocol ErrorLogging {
+public protocol ErrorLogging {
   func logError(error: ErrorType)
 }
 
-struct ErrorLogger: ErrorLogging {
+public struct ErrorLogger: ErrorLogging {
 
-  func logError(error: ErrorType) {
+  public func logError(error: ErrorType) {
     NSLog("\(error)")
   }
 }
 
-// MARK: - Requests
+// MARK: - Info
 
-protocol RequestLogging {
+public protocol InfoLogging {
   func logRequest(request: NSURLRequest)
 }
 
-struct RequestLogger: RequestLogging {
+public struct InfoLogger: InfoLogging {
 
-  func logRequest(request: NSURLRequest) {
+  public func logRequest(request: NSURLRequest) {
     guard let URLString = request.URL?.absoluteString else {
       return
     }

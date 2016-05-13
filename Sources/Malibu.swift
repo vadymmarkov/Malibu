@@ -5,19 +5,23 @@ public enum Mode {
   case Regular, Partial, Fake
 }
 
-public enum LoggingMode {
-  case Errors, Requests, All, None
+public enum LoggingLevel {
+  case Debug, Info, Error, Disabled
 }
 
 // MARK: - Helpers
 
 var networkings = [String: Networking]()
 
-// MARK: - Public
+// MARK: - Vars
 
 public var mode: Mode = .Regular
 public var backfootSurfer = Networking()
 public var parameterEncoders = [ContentType: ParameterEncoding]()
+public var loggingLevel: LoggingLevel = .Disabled
+public var errorLogger = ErrorLogger()
+public var infoLogger = InfoLogger()
+
 let boundary = "Malibu\(NSUUID().UUIDString)"
 
 // MARK: - Networkings
