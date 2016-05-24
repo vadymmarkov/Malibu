@@ -1,16 +1,16 @@
 import Foundation
 
-struct QueryBuilder {
+public struct QueryBuilder {
 
-  typealias Component = (String, String)
+  public typealias Component = (String, String)
 
   let escapingCharacters = ":#[]@!$&'()*+,;="
 
-  func buildQuery(parameters: [String: AnyObject]) -> String {
+  public func buildQuery(parameters: [String: AnyObject]) -> String {
     return buildComponents(parameters: parameters).map({ "\($0)=\($1)" }).joinWithSeparator("&")
   }
 
-  func buildComponents(parameters parameters: [String: AnyObject]) -> [Component] {
+  public func buildComponents(parameters parameters: [String: AnyObject]) -> [Component] {
     var components: [Component] = []
 
     parameters.forEach { key, value in
@@ -20,7 +20,7 @@ struct QueryBuilder {
     return components
   }
 
-  func buildComponents(key key: String, value: AnyObject) -> [Component] {
+  public func buildComponents(key key: String, value: AnyObject) -> [Component] {
     var components: [Component] = []
 
     if let dictionary = value as? [String: AnyObject] {
@@ -38,7 +38,7 @@ struct QueryBuilder {
     return components
   }
 
-  func escape(string: String) -> String {
+  public func escape(string: String) -> String {
     let allowedCharacters = NSCharacterSet.URLQueryAllowedCharacterSet().mutableCopy() as! NSMutableCharacterSet
     allowedCharacters.removeCharactersInString(escapingCharacters)
 
