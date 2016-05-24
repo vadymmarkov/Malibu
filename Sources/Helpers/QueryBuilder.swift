@@ -6,6 +6,8 @@ public struct QueryBuilder {
 
   let escapingCharacters = ":#[]@!$&'()*+,;="
 
+  public init() {}
+
   public func buildQuery(parameters: [String: AnyObject]) -> String {
     return buildComponents(parameters: parameters).map({ "\($0)=\($1)" }).joinWithSeparator("&")
   }
