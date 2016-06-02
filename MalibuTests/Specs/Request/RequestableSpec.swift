@@ -138,9 +138,30 @@ class RequestableSpec: QuickSpec {
               expect(URLRequest.allHTTPHeaderFields?["Content-Type"]).to(beNil())
             }
 
-            it("does not set Content-Type header") {
+            it("does not set body") {
               expect{ URLRequest = try request.toURLRequest() }.toNot(throwError())
               expect(URLRequest.HTTPBody).to(beNil())
+            }
+          }
+
+          context("with MultipartFormData content type") {
+            beforeEach {
+              request = POSTRequest(parameters: ["key": "value", "number": 1],
+                contentType: .MultipartFormData)
+            }
+
+            it("sets Content-Type header") {
+              expect{ URLRequest = try request.toURLRequest() }.toNot(throwError())
+              expect(URLRequest.allHTTPHeaderFields?["Content-Type"]).to(
+                equal("multipart/form-data; boundary=\(boundary)")
+              )
+            }
+
+            it("sets Content-Length header") {
+              expect{ URLRequest = try request.toURLRequest() }.toNot(throwError())
+              expect(URLRequest.allHTTPHeaderFields?["Content-Length"]).to(
+                equal("\(URLRequest.HTTPBody!.length)")
+              )
             }
           }
         }
