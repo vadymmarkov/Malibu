@@ -33,10 +33,18 @@ public extension Requestable {
       request.setValue(contentTypeHeader, forHTTPHeaderField: "Content-Type")
     }
 
+    var data: NSData?
+
     if let encoder = parameterEncoders[contentType] {
-      request.HTTPBody = try encoder.encode(message.parameters)
+      data = try encoder.encode(message.parameters)
     } else if let encoder = contentType.encoder {
-      request.HTTPBody = try encoder.encode(message.parameters)
+      data = try encoder.encode(message.parameters)
+    }
+
+    request.HTTPBody = data
+
+    if let body = data where contentType == .MultipartFormData {
+      request.setValue("\(body.length)", forHTTPHeaderField: "Content-Length")
     }
 
     [additionalHeaders, message.headers].forEach {
