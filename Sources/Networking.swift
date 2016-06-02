@@ -65,6 +65,10 @@ public class Networking: NSObject {
 
     preProcessRequest?(URLRequest)
 
+    if logger.enabled {
+      logger.requestLogger.init(level: logger.level).logRequest(request, URLRequest: URLRequest)
+    }
+
     let task: TaskRunning
 
     switch Malibu.mode {
@@ -97,8 +101,8 @@ public class Networking: NSObject {
         ridePromise.resolve(value)
       })
       .fail({ error in
-        if logger.logErrors {
-          logger.errorLogger.logError(error)
+        if logger.enabled {
+          logger.errorLogger.init(level: logger.level).logError(error)
         }
 
         ridePromise.reject(error)
