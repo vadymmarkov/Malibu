@@ -15,10 +15,18 @@ struct GETRequest: GETRequestable {
 
 struct POSTRequest: POSTRequestable {
   var message = Message(resource: "http://hyper.no")
+  let content: ContentType
 
-  init(parameters: [String: AnyObject] = [:], headers: [String: String] = [:]) {
+  var contentType: ContentType {
+    return content
+  }
+
+  init(parameters: [String: AnyObject] = [:],
+       headers: [String: String] = [:],
+       contentType: ContentType = .JSON) {
     message.parameters = parameters
     message.headers = headers
+    content = contentType
   }
 }
 
