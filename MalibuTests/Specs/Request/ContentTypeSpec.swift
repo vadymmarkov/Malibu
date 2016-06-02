@@ -111,7 +111,7 @@ class ContentTypeSpec: QuickSpec {
 
         describe("#value") {
           it("returns a correct string value") {
-            expect(contentType.header).to(equal("multipart/form-data; boundary=MalibuBoundary-\(boundary)"))
+            expect(contentType.header).to(equal("multipart/form-data; boundary=\(boundary)"))
           }
         }
 

@@ -18,7 +18,7 @@ public enum ContentType {
     case .FormURLEncoded:
       string = "application/x-www-form-urlencoded"
     case .MultipartFormData:
-      string = "multipart/form-data; boundary=MalibuBoundary-\(boundary)"
+      string = "multipart/form-data; boundary=\(boundary)"
     case .Custom(let value):
       string = value
     }
