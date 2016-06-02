@@ -18,10 +18,6 @@ class SessionDataTask: TaskRunning {
   // MARK: - NetworkTaskRunning
 
   func run() -> Ride {
-    if logger.logInfo {
-      logger.infoLogger.logRequest(URLRequest)
-    }
-
     let task = session.dataTaskWithRequest(URLRequest, completionHandler: process)
     task.resume()
 
