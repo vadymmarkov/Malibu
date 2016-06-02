@@ -21,10 +21,6 @@ extension TaskRunning {
       return
     }
 
-    if logger.enabled {
-      logger.responseLogger.init(level: logger.level).logResponse(response)
-    }
-
     guard let data = data else {
       promise.reject(Error.NoDataInResponse)
       return
