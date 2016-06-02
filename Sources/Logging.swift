@@ -69,23 +69,22 @@ public struct RequestLogger: RequestLogging {
       return
     }
 
-    print("============================================")
+    print("🏄 MALIBU: Catching the wave...")
     print("\(request.method.rawValue) \(URLString)")
 
-    if level == .Verbose {
-      logDictionary(request.message.parameters)
-      logDictionary(request.message.headers)
+    guard level == .Verbose else {
+      return
     }
-  }
 
-  func logDictionary(dictionary: [String: AnyObject]) {
-    guard let data = try? NSJSONSerialization.dataWithJSONObject(dictionary, options: .PrettyPrinted),
-      string = NSString(data: data, encoding: NSUTF8StringEncoding)
-      else {
-        return
-      }
+    if let headers = URLRequest.allHTTPHeaderFields where !headers.isEmpty {
+      print("Headers:")
+      print(headers)
+    }
 
-    print(string)
+    if !request.message.parameters.isEmpty && request.contentType != .Query {
+      print("Parameters:")
+      print(request.message.parameters)
+    }
   }
 }
 
@@ -108,7 +107,6 @@ public struct ResponseLogger: ResponseLogging {
       return
     }
 
-    print("Response status code: \(response.statusCode)")
-    print("============================================")
+    print("Response: \(response.statusCode)")
   }
 }
