@@ -14,7 +14,7 @@ var networkings = [String: Networking]()
 public var mode: Mode = .Regular
 public var backfootSurfer = Networking()
 public var parameterEncoders = [ContentType: ParameterEncoding]()
-public var logger = Logger()
+public let logger = Logger()
 
 let boundary = String(format: "Malibu%08x%08x", arc4random(), arc4random())
 
