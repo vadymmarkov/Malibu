@@ -12,15 +12,19 @@
 Palm trees, ocean reefs and breaking waves. Welcome to the surf club **Malibu**,
 a networking library built on ***promises***. It's more than just a
 wrapper around `NSURLSession`, but a powerful framework that helps to chain your
-requests, validations, parsing and handling. Using [When](https://github.com/vadymmarkov/When)
-under the hood, it solves the problem of "callback hell", adds a lot of sugar
-helpers and moves your code up to the next level. Describe requests in one
-place, split your response processing into multiple logical tasks, process data
-and errors separately and don't repeat yourself.
+requests, validations and request processing.
+
+Using [When](https://github.com/vadymmarkov/When) under the hood, **Malibu**
+adds a lot of sugar helpers and moves your code up to the next level:
+
+* No more "callback hell".
+* Your requests are described in one place.
+* Response processing could be easily broken down into multiple logical tasks.
+* Data and errors are handled separately.
+* Your networking code is much cleaner, readable and follows `DRY` principle.
 
 Enjoy the ride, equipped with all necessary gears by `Malibu`, and feel yourself
-like a big wave surfer in sharky waters of asynchronous networking. Swell is
-irregular and there's no guarantee that you'll get any, but we ***promise***.
+like a big wave surfer in sharky waters of asynchronous networking.
 
 ## Table of Contents
 
@@ -29,17 +33,18 @@ irregular and there's no guarantee that you'll get any, but we ***promise***.
   * [Content types](#content-types)
   * [Encoding](#encoding)
 * [Networking](#networking)
-  * [Making a request](#making-a-request)
   * [Session configuration](#session-configuration)
   * [Initialization](#initialization)
-  * [Session configuration](#session-configuration)
   * [Additional headers](#additional-headers)
+  * [Pre-processing](#pre-processing)
+  * [Making a request](#making-a-request)
+  * [Ride](#ride)
+  * [Mocks](#mocks)
 * [Response](#response)
   * [Serialization](#serialization)
   * [Validation](#validation)
-* [Mocks](#mocks)
-* [Logging](#logging)
 * [Core](#core)
+* [Logging](#logging)
 * [Installation](#installation)
 * [Author](#author)
 * [Credits](#credits)
@@ -53,20 +58,17 @@ You can start your ride straight away, not thinking about configurations:
 ```swift
 // Define your request
 struct BoardsRequest: GETRequestable {
-  var message = Message(resource: "https://surfwonderland.com/api/boards")
+  var message = Message(resource: "http://sharkywaters.com/api/boards")
 
   init(kind: Int, text: String) {
-    message.parameters = [
-      "type": kind,
-      "text": text
-    ]
+    message.parameters = ["type": kind, "text": text]
   }
 }
 
 // Make a call
 let request = BoardsRequest(kind: 1, text: "classic")
 
-Malibu.GET(request)
+Malibu.GET(request).promise
   .validate()
   .toJSONDictionary()
   .then({ dictionary -> [Board] in
@@ -92,34 +94,78 @@ more magic 😉...
 You can love it or you can hate it, but either way you have to create a `struct`
 or a `class` representing your request. This decision has been made to separate
 concerns into well-defined layers, so request with all it's properties is
-described in one place, out from actual usage.
+described in one place, out from the actual usage.
 
 There are 6 protocols corresponding to HTTP methods: `GETRequestable`,
 `POSTRequestable`, `PATCHRequestable`, `PUTRequestable`, `DELETERequestable`,
 `HEADRequestable`. Just conform to one of them and you're ready to surf.
 
 ```swift
-struct BoardIndexRequest: GETRequestable {
+struct BoardsRequest: GETRequestable {
+  // Container for request URL, parameters and headers
+  var message = Message(resource: "boards")
 
+  // Enables or disables automatic ETags handling (enabled by default for GET).
+  var etagPolicy = .Disabled
+
+  init(kind: Int, text: String) {
+    message.headers = ["custom": "header"]
+    message.parameters = ["type": kind, "text": text]
+  }
 }
 
 struct BoardCreateRequest: POSTRequestable {
+  var message = Message(resource: "boards")
 
-}
+  // Content type is set to `.JSON` by default for POST.
+  var contentType: ContentType = .FormURLEncoded
 
-struct BoardUpdateRequest: PATCHRequestable {
-
+  init(kind: Int, title: String) {
+    message.parameters = ["type" : kind, "title" : title]
+  }
 }
 
 struct BoardDeleteRequest: DELETERequestable {
+  var message = Message(resource: "boards")
 
+  init(id: Int) {
+    message = Message(resource: "boards:\(id)")
+  }
 }
+```
+
+### Content types
+
+* `Query` - creates a query string to be appended to any existing URL.
+* `FormURLEncoded` - uses `application/x-www-form-urlencoded` as a `Content-Type`
+and formats your parameters with percent-encoding.
+* `JSON` - sets the `Content-Type` to `application/json` and sends a JSON
+representation of the parameters object as the body of the request.
+* `MultipartFormData` - sends parameters encoded as `multipart/form-data`.
+* `Custom(String)` - uses given `Content-Type` string as a header.
+
+### Encoding
+
+**Malibu** comes with 3 parameter encoding implementations:
+* `FormURLEncoder` - a percent-escaped encoding following RFC 3986.
+* `JSONEncoder` - `NSJSONSerialization` based encoding.
+* `MultipartFormEncoder` - multipart data builder.
+
+You can extend default functionality by adding a custom parameter encoder
+that conforms to `ParameterEncoding` protocol:
+
+```swift
+// Override default JSON encoder.
+Malibu.parameterEncoders[.JSON] = CustomJSONEncoder()
+
+// Register encoder for the custom encoding type.
+Malibu.parameterEncoders[.Custom("application/xml")] = CustomXMLEncoder()
 ```
 
 ## Networking
 
 `Networking` class is a core component of **Malibu** that sets shared headers,
-pre-process and executes the actual HTTP request.
+pre-process and executes actual HTTP requests.
 
 ### Session configuration
 
@@ -145,7 +191,7 @@ let simpleNetworking = Networking()
 
 let networking = Networking(
   // Every request made on this networking will be scoped by the base URL
-  baseURLString: "https://surfwonderland.com/api/",
+  baseURLString: "http://sharkywaters.com/api/",
   // `Background` session configuration
   sessionConfiguration: .Background,
   // Custom `NSURLSessionDelegate` could set if needed
@@ -158,7 +204,7 @@ let networking = Networking(
 Additional headers will be used in the each request made on the networking:
 
 ```swift
-let networking = Networking(baseURLString: "https://surfwonderland.com/api/")
+let networking = Networking(baseURLString: "http://sharkywaters.com/api/")
 networking.additionalHeaders = {
   ["Accept" : "application/json"]
 }
@@ -170,7 +216,7 @@ included automatically.
 ### Pre-processing
 
 ```swift
-let networking = Networking(baseURLString: "https://surfwonderland.com/api/")
+let networking = Networking(baseURLString: "http://sharkywaters.com/api/")
 
 // Use this closure to modify your `Requestable` value before `NSURLRequest`
 // is created on base of it.
@@ -188,6 +234,45 @@ networking.preProcessRequest = { (request: NSMutableURLRequest) in
 }
 ```
 
+### Making a request
+
+`Networking` is set up and ready, so it's time to fire some requests. Make
+a request by calling `GET`, `POST`, `PUT`, `PATCH`, `DELETE` or
+`HEAD` functions with the corresponding request as an argument.
+
+```swift
+let networking = Networking(baseURLString: "http://sharkywaters.com/api/")
+
+networking.GET(BoardsRequest(kind: 1, text: "classic")).promise
+  .validate()
+  .toJSONDictionary()
+  .done({ data in
+    print(data)
+  })
+
+networking.POST(BoardCreateRequest(kind: 2, title: "Balsa Fish")).promise
+  .validate()
+  .toJSONDictionary()
+  .done({ data in
+    print(data)
+  })
+
+networking.DELETE(BoardDeleteRequest(id: 11)).promise.
+  fail({ error in
+    print(error)
+  })
+```
+
+### Ride
+
+### Mocks
+
+## Response
+
+### Serialization
+
+### Validation
+
 ## Core
 
 **Multiple Networking instances**
@@ -197,7 +282,7 @@ the container. Doing that, it's super easy to support several APIs and
 configurations in your app.
 
 ```swift
-let networking = Networking(baseURLString: "https://surfwonderland.com/api/")
+let networking = Networking(baseURLString: "http://sharkywaters.com/api/")
 networking.additionalHeaders = {
   ["Accept" : "application/json"]
 }
@@ -209,13 +294,7 @@ Malibu.register("base", networking: networking)
 Malibu.networking("base").GET(BoardsRequest(kind: 1, text: "classic"))
 ```
 
-### Encoding
-### Request
-### Response
-### Serialization
-### Validation
-### Mocks
-### Logging
+## Logging
 
 ## Author
 
