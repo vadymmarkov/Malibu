@@ -94,11 +94,15 @@ public class Networking: NSObject {
 
     etagPromise
       .done({ value in
+        if logger.enabled {
+          logger.requestLogger.init(level: logger.level).logRequest(request, URLRequest: value.request)
+          logger.responseLogger.init(level: logger.level).logResponse(value.response)
+        }
         ridePromise.resolve(value)
       })
       .fail({ error in
-        if logger.logErrors {
-          logger.errorLogger.logError(error)
+        if logger.enabled {
+          logger.errorLogger.init(level: logger.level).logError(error)
         }
 
         ridePromise.reject(error)
