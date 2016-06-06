@@ -25,16 +25,21 @@ irregular and there's no guarantee that you'll get any, but we ***promise***.
 ## Table of Contents
 
 * [Catching the wave](#catching-the-wave)
-* [Usage](#usage)
-  * [Core](#core)
-  * [Networking](#networking)
+* [Request](#request)
+  * [Content types](#content-types)
   * [Encoding](#encoding)
-  * [Request](#request)
-  * [Response](#response)
+* [Networking](#networking)
+  * [Making a request](#making-a-request)
+  * [Session configuration](#session-configuration)
+  * [Initialization](#initialization)
+  * [Session configuration](#session-configuration)
+  * [Additional headers](#additional-headers)
+* [Response](#response)
   * [Serialization](#serialization)
   * [Validation](#validation)
-  * [Mocks](#mocks)
-  * [Logging](#logging)
+* [Mocks](#mocks)
+* [Logging](#logging)
+* [Core](#core)
 * [Installation](#installation)
 * [Author](#author)
 * [Credits](#credits)
@@ -48,7 +53,7 @@ You can start your ride straight away, not thinking about configurations:
 ```swift
 // Define your request
 struct BoardsRequest: GETRequestable {
-  var message = Message(resource: "http://surfwonderland.com/api/boards")
+  var message = Message(resource: "https://surfwonderland.com/api/boards")
 
   init(kind: Int, text: String) {
     message.parameters = [
@@ -79,13 +84,131 @@ Malibu.GET(request)
   })
 ```
 
-If you still don't see any benefits or you're ready for even more magic,
-keep scrolling down 😉...
+If you still don't see any benefits, keep scrolling down and be ready for even
+more magic 😉...
 
-## Usage
+## Request
 
-### Core
-### Networking
+You can love it or you can hate it, but either way you have to create a `struct`
+or a `class` representing your request. This decision has been made to separate
+concerns into well-defined layers, so request with all it's properties is
+described in one place, out from actual usage.
+
+There are 6 protocols corresponding to HTTP methods: `GETRequestable`,
+`POSTRequestable`, `PATCHRequestable`, `PUTRequestable`, `DELETERequestable`,
+`HEADRequestable`. Just conform to one of them and you're ready to surf.
+
+```swift
+struct BoardIndexRequest: GETRequestable {
+
+}
+
+struct BoardCreateRequest: POSTRequestable {
+
+}
+
+struct BoardUpdateRequest: PATCHRequestable {
+
+}
+
+struct BoardDeleteRequest: DELETERequestable {
+
+}
+```
+
+## Networking
+
+`Networking` class is a core component of **Malibu** that sets shared headers,
+pre-process and executes the actual HTTP request.
+
+### Session configuration
+
+`Networking` is created with `SessionConfiguration` which is just a wrapper
+around `NSURLSessionConfiguration` and could represent 3 standard session types
++ 1 custom type:
+* `Default` - configuration that uses the global singleton credential, cache and
+cookie storage objects.
+* `Ephemeral` - configuration with no persistent disk storage for cookies, cache
+or credentials.
+* `Background` - session configuration that can be used to perform networking
+operations on behalf of a suspended application, within certain constraints.  
+* `Custom(NSURLSessionConfiguration)` - if you're not satisfied with standard
+types, your custom `NSURLSessionConfiguration` goes here.
+
+### Initialization
+
+It's pretty straightforward to create a new `Networking` instance:
+
+```swift
+// Simple networking with `Default` configuration and no base URL
+let simpleNetworking = Networking()
+
+let networking = Networking(
+  // Every request made on this networking will be scoped by the base URL
+  baseURLString: "https://surfwonderland.com/api/",
+  // `Background` session configuration
+  sessionConfiguration: .Background,
+  // Custom `NSURLSessionDelegate` could set if needed
+  sessionDelegate: self
+)
+```
+
+### Additional headers
+
+Additional headers will be used in the each request made on the networking:
+
+```swift
+let networking = Networking(baseURLString: "https://surfwonderland.com/api/")
+networking.additionalHeaders = {
+  ["Accept" : "application/json"]
+}
+```
+
+Note that `Accept-Language`, `Accept-Encoding` and `User-Agent` headers are
+included automatically.
+
+### Pre-processing
+
+```swift
+let networking = Networking(baseURLString: "https://surfwonderland.com/api/")
+
+// Use this closure to modify your `Requestable` value before `NSURLRequest`
+// is created on base of it.
+networking.beforeEach = { request in
+  var request = request
+  request.message.parameters["userId"] = "12345"
+
+  return request
+}
+
+// Use this closure to modify generated `NSMutableURLRequest` object
+// before the request is made.
+networking.preProcessRequest = { (request: NSMutableURLRequest) in
+  request.addValue("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9", forHTTPHeaderField: "token")
+}
+```
+
+## Core
+
+**Multiple Networking instances**
+
+**Malibu** handles multiple networkings which you can register and resolve from
+the container. Doing that, it's super easy to support several APIs and
+configurations in your app.
+
+```swift
+let networking = Networking(baseURLString: "https://surfwonderland.com/api/")
+networking.additionalHeaders = {
+  ["Accept" : "application/json"]
+}
+
+// Register
+Malibu.register("base", networking: networking)
+
+// Perform request using specified networking configuration
+Malibu.networking("base").GET(BoardsRequest(kind: 1, text: "classic"))
+```
+
 ### Encoding
 ### Request
 ### Response
