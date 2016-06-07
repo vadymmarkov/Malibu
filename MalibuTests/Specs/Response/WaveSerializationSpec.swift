@@ -5,7 +5,7 @@ import Nimble
 
 class WaveSerializationSpec: QuickSpec, NetworkPromiseSpec {
 
-  var networkPromise: Promise<Wave>!
+  var networkPromise: Ride!
   var request: NSURLRequest!
   var data: NSData!
 
@@ -18,7 +18,7 @@ class WaveSerializationSpec: QuickSpec, NetworkPromiseSpec {
       // MARK: - Specs
 
       beforeEach {
-        self.networkPromise = Promise<Wave>()
+        self.networkPromise = Ride()
         self.request = NSURLRequest(URL: NSURL(string: "http://hyper.no")!)
         self.data = try! NSJSONSerialization.dataWithJSONObject([["name": "Taylor"]],
           options: NSJSONWritingOptions())
