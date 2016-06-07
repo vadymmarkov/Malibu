@@ -46,7 +46,7 @@ public struct QueryBuilder {
 
     var escapedString = ""
 
-    if #available(iOS 8.3, OSX 10.10, *) {
+    if #available(iOS 8.3, *) {
       escapedString = string.stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacters) ?? string
     } else {
       var index = string.startIndex

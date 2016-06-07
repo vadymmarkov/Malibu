@@ -1,4 +1,3 @@
-import UIKit
 import Foundation
 
 protocol ETagStoring {
