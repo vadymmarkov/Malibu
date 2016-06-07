@@ -23,8 +23,9 @@ adds a lot of sugar helpers and moves your code up to the next level:
 * Data and errors are handled separately.
 * Your networking code is much cleaner, readable and follows `DRY` principle.
 
-Enjoy the ride, equipped with all necessary gears by `Malibu`, and feel yourself
-like a big wave surfer in sharky waters of asynchronous networking.
+Equip yourself with the necessary gears of **Malibu**, become a big wave surfer
+and let the days of shark infested asynchronous networking be a thing of the
+past. Enjoy the ride!
 
 ## Features
 
