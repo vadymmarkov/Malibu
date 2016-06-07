@@ -18,7 +18,7 @@ class TaskRunningSpec: QuickSpec {
           it("rejects promise with an error") {
             let expectation = self.expectationWithDescription("No response failure")
 
-            task.promise.fail({ error in
+            task.ride.fail({ error in
               expect(error as! Error == Error.NoResponseReceived).to(beTrue())
               expectation.fulfill()
             })
@@ -33,7 +33,7 @@ class TaskRunningSpec: QuickSpec {
           it("rejects promise with an error") {
             let expectation = self.expectationWithDescription("Error failure")
 
-            task.promise.fail({ error in
+            task.ride.fail({ error in
               expect(error as! Error == Error.JSONDictionarySerializationFailed).to(beTrue())
               expectation.fulfill()
             })
@@ -48,7 +48,7 @@ class TaskRunningSpec: QuickSpec {
           it("rejects promise with an error") {
             let expectation = self.expectationWithDescription("No data failure")
 
-            task.promise.fail({ error in
+            task.ride.fail({ error in
               expect(error as! Error == Error.NoDataInResponse).to(beTrue())
               expectation.fulfill()
             })
@@ -63,7 +63,7 @@ class TaskRunningSpec: QuickSpec {
           it("resolves promise with a result") {
             let expectation = self.expectationWithDescription("Validation succeeded")
 
-            task.promise.done({ result in
+            task.ride.done({ result in
               expect(result.data).to(equal(task.data))
               expect(result.request).to(equal(task.URLRequest))
               expect(result.response).to(equal(task.response))

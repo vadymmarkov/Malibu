@@ -4,7 +4,7 @@ import Quick
 import Nimble
 
 protocol NetworkPromiseSpec {
-  var networkPromise: Promise<Wave>! { get }
+  var networkPromise: Ride! { get }
   var request: NSURLRequest! { get }
   var data: NSData! { get }
 }
