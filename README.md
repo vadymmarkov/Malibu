@@ -9,7 +9,7 @@
 
 ## Description
 
-Palm trees, ocean reefs and breaking waves. Welcome to the surf club **Malibu**,
+Palm trees, coral reefs and breaking waves. Welcome to the surf club **Malibu**,
 a networking library built on ***promises***. It's more than just a wrapper
 around `NSURLSession`, but a powerful framework that helps to chain your
 requests, validations and request processing.
