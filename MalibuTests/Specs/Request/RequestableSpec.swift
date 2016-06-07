@@ -205,8 +205,12 @@ class RequestableSpec: QuickSpec {
 
             it("returns URL") {
               let URLString = "http://hyper.no"
-              let result = NSURL(string: "http://hyper.no?key=value&number=1")
-              expect(try! request.buildURL(URLString)).to(equal(result))
+              let result1 = NSURL(string: "http://hyper.no?key=value&number=1")
+              let result2 = NSURL(string: "http://hyper.no?number=1&key=value")
+
+              let URL = try! request.buildURL(URLString)
+
+              expect(URL == result1 || URL == result2).to(beTrue())
             }
           }
         }
