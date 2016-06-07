@@ -5,22 +5,22 @@ class SessionDataTask: TaskRunning {
 
   var session: NSURLSession
   var URLRequest: NSURLRequest
-  var promise: Promise<Wave>
+  var ride: Ride
 
   // MARK: - Initialization
 
-  init(session: NSURLSession, URLRequest: NSURLRequest, promise: Promise<Wave>) {
+  init(session: NSURLSession, URLRequest: NSURLRequest, ride: Ride) {
     self.session = session
     self.URLRequest = URLRequest
-    self.promise = promise
+    self.ride = ride
   }
 
   // MARK: - NetworkTaskRunning
 
-  func run() -> Ride {
+  func run() {
     let task = session.dataTaskWithRequest(URLRequest, completionHandler: process)
     task.resume()
 
-    return Ride(promise: promise, task: task)
+    ride.task = task
   }
 }

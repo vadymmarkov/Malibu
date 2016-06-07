@@ -52,15 +52,15 @@ public class Networking: NSObject {
   // MARK: - Networking
 
   func execute(request: Requestable) -> Ride {
-    let promise = Promise<Wave>()
+    let ride = Ride()
     let URLRequest: NSMutableURLRequest
 
     do {
       let request = beforeEach?(request) ?? request
       URLRequest = try request.toURLRequest(baseURLString, additionalHeaders: requestHeaders)
     } catch {
-      promise.reject(error)
-      return Ride(promise: promise)
+      ride.reject(error)
+      return ride
     }
 
     preProcessRequest?(URLRequest)
@@ -69,28 +69,28 @@ public class Networking: NSObject {
 
     switch Malibu.mode {
     case .Regular:
-      task = SessionDataTask(session: session, URLRequest: URLRequest, promise: promise)
+      task = SessionDataTask(session: session, URLRequest: URLRequest, ride: ride)
     case .Partial:
       if let mock = prepareMock(request) {
-        task = MockDataTask(mock: mock, URLRequest: URLRequest, promise: promise)
+        task = MockDataTask(mock: mock, URLRequest: URLRequest, ride: ride)
       } else {
-        task = SessionDataTask(session: session, URLRequest: URLRequest, promise: promise)
+        task = SessionDataTask(session: session, URLRequest: URLRequest, ride: ride)
       }
     case .Fake:
       guard let mock = prepareMock(request) else {
-        promise.reject(Error.NoMockProvided)
-        return Ride(promise: promise)
+        ride.reject(Error.NoMockProvided)
+        return ride
       }
 
-      task = MockDataTask(mock: mock, URLRequest: URLRequest, promise: promise)
+      task = MockDataTask(mock: mock, URLRequest: URLRequest, ride: ride)
     }
 
-    let etagPromise = promise.then { result -> Wave in
+    let etagPromise = ride.then { result -> Wave in
       self.saveEtag(request, response: result.response)
       return result
     }
 
-    let ridePromise = Promise<Wave>()
+    let nextRide = Ride()
 
     etagPromise
       .done({ value in
@@ -98,20 +98,19 @@ public class Networking: NSObject {
           logger.requestLogger.init(level: logger.level).logRequest(request, URLRequest: value.request)
           logger.responseLogger.init(level: logger.level).logResponse(value.response)
         }
-        ridePromise.resolve(value)
+        nextRide.resolve(value)
       })
       .fail({ error in
         if logger.enabled {
           logger.errorLogger.init(level: logger.level).logError(error)
         }
 
-        ridePromise.reject(error)
+        nextRide.reject(error)
       })
 
-    let ride = task.run()
-    ride.promise = ridePromise
+    task.run()
 
-    return ride
+    return nextRide
   }
 
   // MARK: - Authentication

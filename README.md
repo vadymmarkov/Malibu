@@ -58,7 +58,7 @@ like a big wave surfer in sharky waters of asynchronous networking.
 You can start your ride straight away, not thinking about configurations:
 
 ```swift
-// Define your request
+// Declare your request
 struct BoardsRequest: GETRequestable {
   var message = Message(resource: "http://sharkywaters.com/api/boards")
 

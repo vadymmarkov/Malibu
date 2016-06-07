@@ -12,7 +12,7 @@ class MockDataSpec: QuickSpec {
       var request: Requestable!
       var URLRequest: NSURLRequest!
       var response: NSHTTPURLResponse!
-      var promise: Promise<Wave>!
+      var ride: Ride!
       let data = "test".dataUsingEncoding(NSUTF32StringEncoding)
       let error = Error.JSONArraySerializationFailed
 
@@ -21,19 +21,19 @@ class MockDataSpec: QuickSpec {
         URLRequest = try! request.toURLRequest()
         response = NSHTTPURLResponse(URL: NSURL(string: "http://hyper.no")!,
           statusCode: 200, HTTPVersion: "HTTP/2.0", headerFields: nil)!
-        promise = Promise<Wave>()
+        ride = Ride()
       }
 
       describe("#init") {
         beforeEach {
           mock = Mock(request: request, response: response, data: data, error: error)
-          task = MockDataTask(mock: mock, URLRequest: URLRequest, promise: promise)
+          task = MockDataTask(mock: mock, URLRequest: URLRequest, ride: ride)
         }
 
         it("sets properties") {
           expect(task.mock === mock).to(beTrue())
           expect(task.URLRequest).to(equal(URLRequest))
-          expect(task.promise === promise).to(beTrue())
+          expect(task.ride === ride).to(beTrue())
         }
       }
 
@@ -43,9 +43,9 @@ class MockDataSpec: QuickSpec {
             let expectation = self.expectationWithDescription("No response failure")
 
             mock = Mock(request: request, response: nil, data: data, error: nil)
-            task = MockDataTask(mock: mock, URLRequest: URLRequest, promise: promise)
+            task = MockDataTask(mock: mock, URLRequest: URLRequest, ride: ride)
 
-            task.promise.fail({ error in
+            task.ride.fail({ error in
               expect(error as! Error == Error.NoResponseReceived).to(beTrue())
               expectation.fulfill()
             })
@@ -61,9 +61,9 @@ class MockDataSpec: QuickSpec {
             let expectation = self.expectationWithDescription("Error failure")
 
             mock = Mock(request: request, response: response, data: data, error: error)
-            task = MockDataTask(mock: mock, URLRequest: URLRequest, promise: promise)
+            task = MockDataTask(mock: mock, URLRequest: URLRequest, ride: ride)
 
-            task.promise.fail({ error in
+            task.ride.fail({ error in
               expect(error as! Error == Error.JSONArraySerializationFailed).to(beTrue())
               expectation.fulfill()
             })
@@ -79,9 +79,9 @@ class MockDataSpec: QuickSpec {
             let expectation = self.expectationWithDescription("No data failure")
 
             mock = Mock(request: request, response: response, data: nil, error: nil)
-            task = MockDataTask(mock: mock, URLRequest: URLRequest, promise: promise)
+            task = MockDataTask(mock: mock, URLRequest: URLRequest, ride: ride)
 
-            task.promise.fail({ error in
+            task.ride.fail({ error in
               expect(error as! Error == Error.NoDataInResponse).to(beTrue())
               expectation.fulfill()
             })
@@ -97,9 +97,9 @@ class MockDataSpec: QuickSpec {
             let expectation = self.expectationWithDescription("Validation succeeded")
 
             mock = Mock(request: request, response: response, data: data, error: nil)
-            task = MockDataTask(mock: mock, URLRequest: URLRequest, promise: promise)
+            task = MockDataTask(mock: mock, URLRequest: URLRequest, ride: ride)
 
-            task.promise.done({ result in
+            task.ride.done({ result in
               expect(result.data).to(equal(task.mock.data))
               expect(result.request).to(equal(task.URLRequest))
               expect(result.response).to(equal(task.mock.response))
