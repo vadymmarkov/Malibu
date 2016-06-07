@@ -34,16 +34,6 @@ class RequestableSpec: QuickSpec {
           }
         }
 
-        context("when parameters encoding fails") {
-          it("throws an error") {
-            let fakeString = String(bytes: [0xD8, 0x00] as [UInt8],
-              encoding: NSUTF16BigEndianStringEncoding)!
-            request.message.parameters = ["firstname": fakeString]
-
-            expect{ try request.toURLRequest() }.to(throwError())
-          }
-        }
-
         context("when there are no errors") {
           context("without base URL") {
             it("does not throw an error and returns created NSMutableURLRequest") {
