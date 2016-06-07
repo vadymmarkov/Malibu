@@ -10,8 +10,8 @@
 ## Description
 
 Palm trees, ocean reefs and breaking waves. Welcome to the surf club **Malibu**,
-a networking library built on ***promises***. It's more than just a
-wrapper around `NSURLSession`, but a powerful framework that helps to chain your
+a networking library built on ***promises***. It's more than just a wrapper
+around `NSURLSession`, but a powerful framework that helps to chain your
 requests, validations and request processing.
 
 Using [When](https://github.com/vadymmarkov/When) under the hood, **Malibu**
@@ -32,6 +32,7 @@ like a big wave surfer in sharky waters of asynchronous networking.
 * [Request](#request)
   * [Content types](#content-types)
   * [Encoding](#encoding)
+  * [ETags](#etags)
 * [Networking](#networking)
   * [Session configuration](#session-configuration)
   * [Initialization](#initialization)
@@ -58,7 +59,7 @@ like a big wave surfer in sharky waters of asynchronous networking.
 You can start your ride straight away, not thinking about configurations:
 
 ```swift
-// Define your request
+// Declare your request
 struct BoardsRequest: GETRequestable {
   var message = Message(resource: "http://sharkywaters.com/api/boards")
 
@@ -70,7 +71,7 @@ struct BoardsRequest: GETRequestable {
 // Make a call
 let request = BoardsRequest(kind: 1, text: "classic")
 
-Malibu.GET(request).promise
+Malibu.GET(request)
   .validate()
   .toJSONDictionary()
   .then({ dictionary -> [Board] in
@@ -104,10 +105,10 @@ There are 6 protocols corresponding to HTTP methods: `GETRequestable`,
 
 ```swift
 struct BoardsRequest: GETRequestable {
-  // Container for request URL, parameters and headers
+  // Message is a container for request URL, parameters and headers
   var message = Message(resource: "boards")
 
-  // Enables or disables automatic ETags handling (enabled by default for GET).
+  // Enables or disables automatic ETags handling
   var etagPolicy = .Disabled
 
   init() {
@@ -118,7 +119,7 @@ struct BoardsRequest: GETRequestable {
 struct BoardCreateRequest: POSTRequestable {
   var message = Message(resource: "boards")
 
-  // Content type is set to `.JSON` by default for POST.
+  // Content type is set to `.JSON` by default for POST
   var contentType: ContentType = .FormURLEncoded
 
   init(kind: Int, title: String) {
@@ -127,7 +128,7 @@ struct BoardCreateRequest: POSTRequestable {
 }
 
 struct BoardDeleteRequest: DELETERequestable {
-  var message = Message(resource: "boards")
+  var message: Message
 
   init(id: Int) {
     message = Message(resource: "boards:\(id)")
@@ -138,10 +139,10 @@ struct BoardDeleteRequest: DELETERequestable {
 ### Content types
 
 * `Query` - creates a query string to be appended to any existing URL.
-* `FormURLEncoded` - uses `application/x-www-form-urlencoded` as a `Content-Type`
-and formats your parameters with percent-encoding.
+* `FormURLEncoded` - uses `application/x-www-form-urlencoded` as a
+`Content-Type` and formats your parameters with percent-encoding.
 * `JSON` - sets the `Content-Type` to `application/json` and sends a JSON
-representation of the parameters object as the body of the request.
+representation of the parameters as the body of the request.
 * `MultipartFormData` - sends parameters encoded as `multipart/form-data`.
 * `Custom(String)` - uses given `Content-Type` string as a header.
 
@@ -156,11 +157,26 @@ You can extend default functionality by adding a custom parameter encoder
 that conforms to `ParameterEncoding` protocol:
 
 ```swift
-// Override default JSON encoder.
+// Override default JSON encoder
 Malibu.parameterEncoders[.JSON] = CustomJSONEncoder()
 
-// Register encoder for the custom encoding type.
+// Register encoder for the custom encoding type
 Malibu.parameterEncoders[.Custom("application/xml")] = CustomXMLEncoder()
+```
+
+### ETags
+
+**Malibu** cares about [HTTP ETags](https://en.wikipedia.org/wiki/HTTP_ETag).
+When the web server returns an HTTP response header `ETag`, it will be
+cached locally and set as `If-None-Match` request header next time you perform
+the same request. Automatic ETags handling is enabled by default for `GET`,
+`PUT` and `PATCH` requests, but it could easily be changed for the each request
+specifically.
+
+```swift
+struct BoardsRequest: GETRequestable {
+  var etagPolicy = .Disabled
+}
 ```
 
 ## Networking
@@ -170,9 +186,9 @@ pre-process and executes actual HTTP requests.
 
 ### Session configuration
 
-`Networking` is created with `SessionConfiguration` which is just a wrapper
-around `NSURLSessionConfiguration` and could represent 3 standard session types
-+ 1 custom type:
+`Networking` is created with `SessionConfiguration` which is a wrapper around
+`NSURLSessionConfiguration` and could represent 3 standard session types + 1
+custom type:
 * `Default` - configuration that uses the global singleton credential, cache and
 cookie storage objects.
 * `Ephemeral` - configuration with no persistent disk storage for cookies, cache
@@ -190,6 +206,7 @@ It's pretty straightforward to create a new `Networking` instance:
 // Simple networking with `Default` configuration and no base URL
 let simpleNetworking = Networking()
 
+// More advanced networking
 let networking = Networking(
   // Every request made on this networking will be scoped by the base URL
   baseURLString: "http://sharkywaters.com/api/",
@@ -205,22 +222,19 @@ let networking = Networking(
 Additional headers will be used in the each request made on the networking:
 
 ```swift
-let networking = Networking(baseURLString: "http://sharkywaters.com/api/")
 networking.additionalHeaders = {
   ["Accept" : "application/json"]
 }
 ```
 
-Note that `Accept-Language`, `Accept-Encoding` and `User-Agent` headers are
+**Note** that `Accept-Language`, `Accept-Encoding` and `User-Agent` headers are
 included automatically.
 
 ### Pre-processing
 
 ```swift
-let networking = Networking(baseURLString: "http://sharkywaters.com/api/")
-
 // Use this closure to modify your `Requestable` value before `NSURLRequest`
-// is created on base of it.
+// is created on base of it
 networking.beforeEach = { request in
   var request = request
   request.message.parameters["userId"] = "12345"
@@ -229,7 +243,7 @@ networking.beforeEach = { request in
 }
 
 // Use this closure to modify generated `NSMutableURLRequest` object
-// before the request is made.
+// before the request is made
 networking.preProcessRequest = { (request: NSMutableURLRequest) in
   request.addValue("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9", forHTTPHeaderField: "token")
 }
@@ -244,35 +258,35 @@ a request by calling `GET`, `POST`, `PUT`, `PATCH`, `DELETE` or
 ```swift
 let networking = Networking(baseURLString: "http://sharkywaters.com/api/")
 
-networking.GET(BoardsRequest()).promise
+networking.GET(BoardsRequest())
   .validate()
   .toJSONDictionary()
   .done({ data in
     print(data)
   })
 
-networking.POST(BoardCreateRequest(kind: 2, title: "Balsa Fish")).promise
+networking.POST(BoardCreateRequest(kind: 2, title: "Balsa Fish"))
   .validate()
   .toJSONDictionary()
   .done({ data in
     print(data)
   })
 
-networking.DELETE(BoardDeleteRequest(id: 11)).promise.
-  fail({ error in
+networking.DELETE(BoardDeleteRequest(id: 11))
+  .fail({ error in
     print(error)
   })
 ```
 
 ### Wave and Ride
 
-`Ride` object is returned by every request method. It has 2 properties:
-- `NSURLSessionTask` that you might want to cancel when it's needed.
-- `Promise<Wave>` that you use to add callbacks and build chains of tasks. It
-has a range of useful helpers, such as validations and serialization.
-
 `Wave` object consists of `NSData`, `NSURLRequest` and `NSHTTPURLResponse`
 properties.
+
+`Ride` is returned by every request method. It extends `Promise<Wave>` by
+adding `NSURLSessionTask` that you might want to cancel when it's needed. You
+may use `Ride` object to add different callbacks and build chains of tasks. It
+has a range of useful helpers, such as validations and serialization.
 
 ```swift
 let ride = networking.GET(BoardsRequest())
@@ -281,7 +295,7 @@ let ride = networking.GET(BoardsRequest())
 ride.cancel()
 
 // Create chains and add callbacks on promise object
-ride.promise
+ride
   .validate()
   .toString()
   .then({ string in
@@ -295,7 +309,7 @@ ride.promise
 ### Mocks
 
 Mocking is great when it comes to writing your tests. But it also could speed
-up your development process while the backend developers are working really hard
+up your development while the backend developers are working really hardly
 on API implementation.
 
 In order to start mocking you have to do the following:
@@ -318,7 +332,7 @@ Malibu.mode = .Partial
 ```swift
 // With response data from file
 networking.register(mock: Mock(
-  // Request to mock
+  // Request to be mocked
   request: BoardsRequest(),
   // Name of the file
   fileName: "boards.json"
@@ -326,7 +340,7 @@ networking.register(mock: Mock(
 
 // With response from JSON dictionary
 networking.register(mock: Mock(
-  // Request to mock
+  // Request to be mocked
   request: BoardsRequest(),
   // JSON dictionary
   JSON: ["boards": [["id": 1, "title": "Balsa Fish"]]]
@@ -334,7 +348,7 @@ networking.register(mock: Mock(
 
 // NSData mock
 networking.register(mock: Mock(
-  // Request to mock
+  // Request to be mocked
   request: BoardsRequest(),
   // Needed response
   response: mockedResponse,
@@ -352,10 +366,12 @@ networking.register(mock: Mock(
 **Malibu** gives you a bunch of methods to serialize response data:
 
 ```swift
-func toData() -> Promise<NSData>
-func toString(encoding: NSStringEncoding? = nil) -> Promise<String>
-func toJSONArray(options: NSJSONReadingOptions = .AllowFragments) -> Promise<[[String: AnyObject]]>
-func toJSONDictionary(options: NSJSONReadingOptions = .AllowFragments) -> Promise<[String: AnyObject]>
+let ride = networking.GET(BoardsRequest())
+
+ride.toData() // -> Promise<NSData>
+ride.toString() // -> Promise<String>
+ride.toJSONArray() // -> Promise<[[String: AnyObject]]>
+ride.toJSONDictionary() // -> Promise<[String: AnyObject]>
 ```
 
 ### Validation
@@ -364,19 +380,19 @@ func toJSONDictionary(options: NSJSONReadingOptions = .AllowFragments) -> Promis
 
 ```swift
 // Validates a status code to be within 200..<300
-// Validates a response content type based on a request "Accept" header
-networking.GET(BoardsRequest()).promise.validate()
+// Validates a response content type based on a request's "Accept" header
+networking.GET(BoardsRequest()).validate()
 
 // Validates a response content type
-networking.GET(BoardsRequest()).promise.validate(
+networking.GET(BoardsRequest()).validate(
   contentTypes: ["application/json; charset=utf-8"]
 )
 
 // Validates a status code
-networking.GET(BoardsRequest()).promise.validate(statusCodes: [200])
+networking.GET(BoardsRequest()).validate(statusCodes: [200])
 
 // Validates with custom validator conforming to `Validating` protocol
-networking.GET(BoardsRequest()).promise.validate(validator: CustomValidator())
+networking.GET(BoardsRequest()).validate(validator: CustomValidator())
 ```
 
 ## Core
@@ -417,7 +433,7 @@ Malibu.GET(BoardsRequest())
 ## Logging
 
 If you want to see some request, response and error info in the console, you
-get this awesome feature for free. Just choose one of the available log levels:
+get this for free. Just choose one of the available log levels:
 
 * `None` - logging is disabled, so your console is not littered with networking
 stuff.
@@ -462,6 +478,11 @@ github "hyperoslo/Malibu"
 ## Author
 
 Hyper Interaktiv AS, ios@hyper.no
+
+## Credits
+
+Credits go to [Alamofire](https://github.com/Alamofire/Alamofire) for
+inspiration and to [When](https://github.com/vadymmarkov/When) for ***promises***.
 
 ## Contributing
 
