@@ -20,14 +20,6 @@ class JSONParameterEncoderSpec: QuickSpec {
 
           expect{ try encoder.encode(parameters) }.to(equal(data))
         }
-
-        it("throws an error if the object will not produce valid JSON") {
-          let fakeString = String(bytes: [0xD8, 0x00] as [UInt8],
-            encoding: NSUTF16BigEndianStringEncoding)!
-          let parameters = ["firstname": fakeString]
-
-          expect{ try encoder.encode(parameters) }.to(throwError())
-        }
       }
     }
   }

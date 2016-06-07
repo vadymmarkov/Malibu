@@ -5,20 +5,19 @@ class MockDataTask: TaskRunning {
 
   let mock: Mock
   let URLRequest: NSURLRequest
-  let promise: Promise<Wave>
+  let ride: Ride
 
   // MARK: - Initialization
 
-  init(mock: Mock, URLRequest: NSURLRequest, promise: Promise<Wave>) {
+  init(mock: Mock, URLRequest: NSURLRequest, ride: Ride) {
     self.mock = mock
     self.URLRequest = URLRequest
-    self.promise = promise
+    self.ride = ride
   }
 
   // MARK: - NetworkTaskRunning
 
-  func run() -> Ride {
+  func run() {
     process(mock.data, response: mock.response, error: mock.error)
-    return Ride(promise: promise)
   }
 }

@@ -10,17 +10,17 @@ class SessionDataTaskSpec: QuickSpec {
       var task: SessionDataTask!
       let session = NSURLSession()
       let URLRequest = try! GETRequest().toURLRequest()
-      let promise = Promise<Wave>()
+      let ride = Ride()
 
       describe("#init") {
         beforeEach {
-          task = SessionDataTask(session: session, URLRequest: URLRequest, promise: promise)
+          task = SessionDataTask(session: session, URLRequest: URLRequest, ride: ride)
         }
 
         it("sets properties") {
           expect(task.session).to(equal(session))
           expect(task.URLRequest).to(equal(URLRequest))
-          expect(task.promise === promise).to(beTrue())
+          expect(task.ride === ride).to(beTrue())
         }
       }
     }

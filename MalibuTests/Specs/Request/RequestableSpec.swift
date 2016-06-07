@@ -34,16 +34,6 @@ class RequestableSpec: QuickSpec {
           }
         }
 
-        context("when parameters encoding fails") {
-          it("throws an error") {
-            let fakeString = String(bytes: [0xD8, 0x00] as [UInt8],
-              encoding: NSUTF16BigEndianStringEncoding)!
-            request.message.parameters = ["firstname": fakeString]
-
-            expect{ try request.toURLRequest() }.to(throwError())
-          }
-        }
-
         context("when there are no errors") {
           context("without base URL") {
             it("does not throw an error and returns created NSMutableURLRequest") {
@@ -205,8 +195,12 @@ class RequestableSpec: QuickSpec {
 
             it("returns URL") {
               let URLString = "http://hyper.no"
-              let result = NSURL(string: "http://hyper.no?key=value&number=1")
-              expect(try! request.buildURL(URLString)).to(equal(result))
+              let result1 = NSURL(string: "http://hyper.no?key=value&number=1")
+              let result2 = NSURL(string: "http://hyper.no?number=1&key=value")
+
+              let URL = try! request.buildURL(URLString)
+
+              expect(URL == result1 || URL == result2).to(beTrue())
             }
           }
         }
