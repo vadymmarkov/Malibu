@@ -38,12 +38,14 @@ like a big wave surfer in sharky waters of asynchronous networking.
   * [Additional headers](#additional-headers)
   * [Pre-processing](#pre-processing)
   * [Making a request](#making-a-request)
-  * [Ride](#ride)
+  * [Wave and Ride](#wave-and-ride)
   * [Mocks](#mocks)
 * [Response](#response)
   * [Serialization](#serialization)
   * [Validation](#validation)
 * [Core](#core)
+  * [Multiple networkings](#multiple-networkings)
+  * [Backfoot surfer](#backfoot-surfer)
 * [Logging](#logging)
 * [Installation](#installation)
 * [Author](#author)
@@ -108,9 +110,8 @@ struct BoardsRequest: GETRequestable {
   // Enables or disables automatic ETags handling (enabled by default for GET).
   var etagPolicy = .Disabled
 
-  init(kind: Int, text: String) {
+  init() {
     message.headers = ["custom": "header"]
-    message.parameters = ["type": kind, "text": text]
   }
 }
 
@@ -243,7 +244,7 @@ a request by calling `GET`, `POST`, `PUT`, `PATCH`, `DELETE` or
 ```swift
 let networking = Networking(baseURLString: "http://sharkywaters.com/api/")
 
-networking.GET(BoardsRequest(kind: 1, text: "classic")).promise
+networking.GET(BoardsRequest()).promise
   .validate()
   .toJSONDictionary()
   .done({ data in
@@ -263,19 +264,124 @@ networking.DELETE(BoardDeleteRequest(id: 11)).promise.
   })
 ```
 
-### Ride
+### Wave and Ride
+
+`Ride` object is returned by every request method. It has 2 properties:
+- `NSURLSessionTask` that you might want to cancel when it's needed.
+- `Promise<Wave>` that you use to add callbacks and build chains of tasks. It
+has a range of useful helpers, such as validations and serialization.
+
+`Wave` object consists of `NSData`, `NSURLRequest` and `NSHTTPURLResponse`
+properties.
+
+```swift
+let ride = networking.GET(BoardsRequest())
+
+// Cancel the task
+ride.cancel()
+
+// Create chains and add callbacks on promise object
+ride.promise
+  .validate()
+  .toString()
+  .then({ string in
+    // ...
+  })
+  .done({ _ in
+    // ...
+  })
+```
 
 ### Mocks
+
+Mocking is great when it comes to writing your tests. But it also could speed
+up your development process while the backend developers are working really hard
+on API implementation.
+
+In order to start mocking you have to do the following:
+
+**Change the `mode`**
+
+```swift
+// A mode for real HTTP request only
+Malibu.mode = .Regular
+
+// A mode for mocks only
+Malibu.mode = .Fake
+
+// Both real and fake requests can be used in a mix
+Malibu.mode = .Partial
+```
+
+**Register the mock**
+
+```swift
+// With response data from file
+networking.register(mock: Mock(
+  // Request to mock
+  request: BoardsRequest(),
+  // Name of the file
+  fileName: "boards.json"
+))
+
+// With response from JSON dictionary
+networking.register(mock: Mock(
+  // Request to mock
+  request: BoardsRequest(),
+  // JSON dictionary
+  JSON: ["boards": [["id": 1, "title": "Balsa Fish"]]]
+))
+
+// NSData mock
+networking.register(mock: Mock(
+  // Request to mock
+  request: BoardsRequest(),
+  // Needed response
+  response: mockedResponse,
+  // Response data
+  data: responseData,
+  // Custom error, `nil` by default
+  error: customError
+))
+```
 
 ## Response
 
 ### Serialization
 
+**Malibu** gives you a bunch of methods to serialize response data:
+
+```swift
+func toData() -> Promise<NSData>
+func toString(encoding: NSStringEncoding? = nil) -> Promise<String>
+func toJSONArray(options: NSJSONReadingOptions = .AllowFragments) -> Promise<[[String: AnyObject]]>
+func toJSONDictionary(options: NSJSONReadingOptions = .AllowFragments) -> Promise<[String: AnyObject]>
+```
+
 ### Validation
+
+**Malibu** comes with 4 validation methods:
+
+```swift
+// Validates a status code to be within 200..<300
+// Validates a response content type based on a request "Accept" header
+networking.GET(BoardsRequest()).promise.validate()
+
+// Validates a response content type
+networking.GET(BoardsRequest()).promise.validate(
+  contentTypes: ["application/json; charset=utf-8"]
+)
+
+// Validates a status code
+networking.GET(BoardsRequest()).promise.validate(statusCodes: [200])
+
+// Validates with custom validator conforming to `Validating` protocol
+networking.GET(BoardsRequest()).promise.validate(validator: CustomValidator())
+```
 
 ## Core
 
-**Multiple Networking instances**
+### Multiple networkings
 
 **Malibu** handles multiple networkings which you can register and resolve from
 the container. Doing that, it's super easy to support several APIs and
@@ -292,9 +398,46 @@ Malibu.register("base", networking: networking)
 
 // Perform request using specified networking configuration
 Malibu.networking("base").GET(BoardsRequest(kind: 1, text: "classic"))
+
+// Unregister
+Malibu.unregister("base")
+```
+
+### Backfoot surfer
+
+**Malibu** has a shared networking object with default configurations for the
+case when you need just something simple to catch the wave. It's not necessary
+to invoke it directly, just call the same `GET`, `POST`, `PUT`, `PATCH`,
+`DELETE` methods right on `Malibu`:
+
+```swift
+Malibu.GET(BoardsRequest())
 ```
 
 ## Logging
+
+If you want to see some request, response and error info in the console, you
+get this awesome feature for free. Just choose one of the available log levels:
+
+* `None` - logging is disabled, so your console is not littered with networking
+stuff.
+* `Error` - prints only errors that occur during the request execution.
+* `Info` - prints incoming request method + URL, response status code and errors.
+* `Verbose` - prints incoming request headers and parameters in addition to
+everything printed in the `Info` level.
+
+Optionally you can set your own loggers and adjust the logging to your needs:
+
+```swift
+// Custom logger that conforms to `ErrorLogging` protocol
+Malibu.logger.errorLogger = CustomErrorLogger.self
+
+// Custom logger that conforms to `RequestLogging` protocol
+Malibu.logger.requestLogger = RequestLogger.self
+
+// Custom logger that conforms to `ResponseLogging` protocol
+Malibu.logger.responseLogger = ResponseLogger.self
+```
 
 ## Author
 
