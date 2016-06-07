@@ -26,6 +26,19 @@ adds a lot of sugar helpers and moves your code up to the next level:
 Enjoy the ride, equipped with all necessary gears by `Malibu`, and feel yourself
 like a big wave surfer in sharky waters of asynchronous networking.
 
+## Features
+
+- [x] Multiple networkings
+- [x] Declarative requests
+- [x] Chainable response callbacks built on ***promises***
+- [x] All needed content types and parameter encodings
+- [x] HTTP response validation
+- [x] Response data serialization
+- [x] Response mocking
+- [x] Request, response and error logging
+- [x] `ETag` support
+- [x] Extensive unit test coverage
+
 ## Table of Contents
 
 * [Catching the wave](#catching-the-wave)
@@ -38,6 +51,7 @@ like a big wave surfer in sharky waters of asynchronous networking.
   * [Initialization](#initialization)
   * [Additional headers](#additional-headers)
   * [Pre-processing](#pre-processing)
+  * [Authentication](#authentication)
   * [Making a request](#making-a-request)
   * [Wave and Ride](#wave-and-ride)
   * [Mocks](#mocks)
@@ -247,6 +261,19 @@ networking.beforeEach = { request in
 networking.preProcessRequest = { (request: NSMutableURLRequest) in
   request.addValue("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9", forHTTPHeaderField: "token")
 }
+```
+
+### Authentication
+
+```swift
+// HTTP basic authentication with username and password
+networking.authenticate(username: "malibu", password: "surfingparadise")
+
+// OAuth 2.0 authentication with Bearer token
+networking.authenticate(bearerToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9")
+
+// Custom authorization header
+networking.authenticate(authorizationHeader: "Malibu-Header")
 ```
 
 ### Making a request
