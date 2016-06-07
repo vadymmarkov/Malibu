@@ -3,7 +3,7 @@ import When
 
 // MARK: - Serialization
 
-public extension Ride {
+public extension Promise where T: Wave {
 
   public func toData() -> Promise<NSData> {
     return then({ result -> NSData in

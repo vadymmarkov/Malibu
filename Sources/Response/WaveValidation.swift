@@ -3,7 +3,7 @@ import When
 
 // MARK: - Validations
 
-public extension Ride {
+public extension Promise where T: Wave {
 
   public func validate(validator: Validating) -> Promise<Wave> {
     return then({ result -> Wave in
