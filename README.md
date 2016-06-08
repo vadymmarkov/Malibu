@@ -1,4 +1,4 @@
-# Malibu
+![Malibu logo](https://raw.githubusercontent.com/hyperoslo/Malibu/master/Images/cover.png)
 
 [![CI Status](http://img.shields.io/travis/hyperoslo/Malibu.svg?style=flat)](https://travis-ci.org/hyperoslo/Malibu)
 [![Version](https://img.shields.io/cocoapods/v/Malibu.svg?style=flat)](http://cocoadocs.org/docsets/Malibu)
@@ -209,7 +209,7 @@ cookie storage objects.
 * `Ephemeral` - configuration with no persistent disk storage for cookies, cache
 or credentials.
 * `Background` - session configuration that can be used to perform networking
-operations on behalf of a suspended application, within certain constraints.  
+operations on behalf of a suspended application, within certain constraints.
 * `Custom(NSURLSessionConfiguration)` - if you're not satisfied with standard
 types, your custom `NSURLSessionConfiguration` goes here.
 
