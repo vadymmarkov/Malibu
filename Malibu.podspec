@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "Malibu"
-  s.summary          = "A short description of Malibu."
+  s.summary          = "A networking library built on promises."
   s.version          = "1.0.0"
   s.homepage         = "https://github.com/hyperoslo/Malibu"
   s.license          = 'MIT'
