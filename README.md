@@ -503,6 +503,9 @@ To install just write into your Cartfile:
 github "hyperoslo/Malibu"
 ```
 
+**Malibu** can also be installed manually.
+Just *Download* and *drop* ```/Sources``` folder in your project.  
+
 ## Author
 
 Hyper Interaktiv AS, ios@hyper.no
