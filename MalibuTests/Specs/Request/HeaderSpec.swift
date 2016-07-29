@@ -32,7 +32,7 @@ class HeaderSpec: QuickSpec {
             let executable: AnyObject = info[kCFBundleExecutableKey as String] ?? "Unknown"
             let bundle: AnyObject = info[kCFBundleIdentifierKey as String] ?? "Unknown"
             let version: AnyObject = info[kCFBundleVersionKey as String] ?? "Unknown"
-            let os: AnyObject = NSProcessInfo.processInfo().operatingSystemVersionString ?? "Unknown"
+            let os: AnyObject = Utils.osInfo
             let mutableUserAgent = NSMutableString(
               string: "\(executable)/\(bundle) (\(version); OS \(os))") as CFMutableString
             let transform = NSString(string: "Any-Latin; Latin-ASCII; [:^ASCII:] Remove") as CFString
