@@ -15,7 +15,7 @@ class MultipartFormEncoderSpec: QuickSpec {
 
       describe("#encode") {
         it("encodes a dictionary of parameters to NSData object") {
-          let string = encoder.buildMultipartString(parameters, boundary: boundary)
+          let string = encoder.buildMultipartString(parameters)
           let data = string.dataUsingEncoding(NSUTF8StringEncoding,
                                               allowLossyConversion: true)
 
@@ -25,7 +25,6 @@ class MultipartFormEncoderSpec: QuickSpec {
 
       describe("buildMultipartString") {
         it("builds multipart string from parameters and boundary value") {
-          let boundary = "TestBoundary"
           let components = QueryBuilder().buildComponents(parameters: parameters)
           var string = ""
 
@@ -37,7 +36,7 @@ class MultipartFormEncoderSpec: QuickSpec {
 
           string += "--\(boundary)--\r\n"
 
-          expect(encoder.buildMultipartString(parameters, boundary: boundary)).to(equal(string))
+          expect(encoder.buildMultipartString(parameters)).to(equal(string))
         }
       }
     }
