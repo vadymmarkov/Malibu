@@ -2,6 +2,8 @@ import Foundation
 
 public struct MultipartBuilder {
 
+  public init() {}
+
   public func buildMultipartString(parameters: [String: AnyObject]) -> String {
     var string = ""
     let components = QueryBuilder().buildComponents(parameters: parameters)
