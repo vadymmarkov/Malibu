@@ -5,7 +5,7 @@ struct MultipartFormEncoder: ParameterEncoding {
   // MARK: - ParameterEncoding
 
   func encode(parameters: [String: AnyObject]) throws -> NSData? {
-    let string = buildMultipartString(parameters, boundary: boundary)
+    let string = buildMultipartString(parameters)
 
     guard let data = string.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true) else {
       throw Error.InvalidParameter
@@ -16,7 +16,7 @@ struct MultipartFormEncoder: ParameterEncoding {
 
   // MARK: - Helpers
 
-  func buildMultipartString(parameters: [String: AnyObject], boundary: String) -> String {
+  func buildMultipartString(parameters: [String: AnyObject]) -> String {
     var string = ""
     let components = QueryBuilder().buildComponents(parameters: parameters)
 
