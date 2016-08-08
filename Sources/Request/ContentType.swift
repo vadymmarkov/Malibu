@@ -34,7 +34,7 @@ public enum ContentType {
       encoder = JSONEncoder()
     case .FormURLEncoded:
       encoder = FormURLEncoder()
-    case .MultipartFormData():
+    case .MultipartFormData:
       encoder = MultipartFormEncoder()
     default:
       break
