@@ -16,7 +16,7 @@ public var backfootSurfer = Networking()
 public var parameterEncoders = [ContentType: ParameterEncoding]()
 public let logger = Logger()
 
-let boundary = String(format: "Malibu%08x%08x", arc4random(), arc4random())
+public let boundary = String(format: "Malibu%08x%08x", arc4random(), arc4random())
 
 // MARK: - Networkings
 
