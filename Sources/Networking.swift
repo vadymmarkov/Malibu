@@ -11,6 +11,10 @@ public class Networking: NSObject {
   public var beforeEach: (Requestable -> Requestable)?
   public var preProcessRequest: (NSMutableURLRequest -> Void)?
 
+  public var middleware: (() -> Promise<Void>) = {
+    return Promise<Void> { return }
+  }
+
   var baseURLString: URLStringConvertible?
   let sessionConfiguration: SessionConfiguration
   var customHeaders = [String: String]()
@@ -51,8 +55,7 @@ public class Networking: NSObject {
 
   // MARK: - Networking
 
-  func execute(request: Requestable) -> Ride {
-    let ride = Ride()
+  func start(ride: Ride, with request: Requestable) -> Ride {
     let URLRequest: NSMutableURLRequest
 
     do {
@@ -111,6 +114,20 @@ public class Networking: NSObject {
     task.run()
 
     return nextRide
+  }
+
+  func execute(request: Requestable) -> Ride {
+    let ride = Ride()
+
+    middleware()
+      .done({ _ in
+        self.start(ride, with: request)
+      })
+      .fail({ error in
+        ride.reject(error)
+      })
+
+    return ride
   }
 
   // MARK: - Authentication
