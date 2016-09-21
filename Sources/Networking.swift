@@ -22,7 +22,7 @@ public class Networking: NSObject {
 
   weak var sessionDelegate: NSURLSessionDelegate?
 
-  lazy var session: NSURLSession = {
+  lazy var session: NSURLSession = { [unowned self] in
     return NSURLSession(
       configuration: self.sessionConfiguration.value,
       delegate: self.sessionDelegate ?? self,
@@ -88,8 +88,8 @@ public class Networking: NSObject {
       task = MockDataTask(mock: mock, URLRequest: URLRequest, ride: ride)
     }
 
-    let etagPromise = ride.then { result -> Wave in
-      self.saveEtag(request, response: result.response)
+    let etagPromise = ride.then { [weak self] result -> Wave in
+      self?.saveEtag(request, response: result.response)
       return result
     }
 
@@ -120,8 +120,8 @@ public class Networking: NSObject {
     let ride = Ride()
 
     middleware()
-      .done({ _ in
-        self.start(ride, with: request)
+      .done({ [weak self] in
+        self?.start(ride, with: request)
       })
       .fail({ error in
         ride.reject(error)
