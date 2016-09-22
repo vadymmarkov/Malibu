@@ -27,7 +27,7 @@ public class Networking: NSObject {
       configuration: self.sessionConfiguration.value,
       delegate: self.sessionDelegate ?? self,
       delegateQueue: nil)
-  }()
+    }()
 
   var requestHeaders: [String: String] {
     var headers = customHeaders
@@ -55,7 +55,8 @@ public class Networking: NSObject {
 
   // MARK: - Networking
 
-  func start(ride: Ride, with request: Requestable) -> Ride {
+  func start(request: Requestable) -> Ride {
+    let ride = Ride()
     let URLRequest: NSMutableURLRequest
 
     do {
@@ -120,21 +121,20 @@ public class Networking: NSObject {
     let ride = Ride()
     let beforePromise = Promise<Void>()
 
-    let nextRide = beforePromise
+    beforePromise
+      .then({
+        return self.start(request)
+      })
+      .done({ wave in
+        ride.resolve(wave)
+      })
       .fail({ error in
         ride.reject(error)
-      })
-      .then({
-        return self.start(ride, with: request)
       })
 
     middleware(beforePromise)
 
-    guard let startRide = nextRide as? Ride else {
-      return ride
-    }
-
-    return startRide
+    return ride
   }
 
   // MARK: - Authentication
