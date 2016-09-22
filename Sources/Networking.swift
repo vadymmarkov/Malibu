@@ -11,8 +11,8 @@ public class Networking: NSObject {
   public var beforeEach: (Requestable -> Requestable)?
   public var preProcessRequest: (NSMutableURLRequest -> Void)?
 
-  public var middleware: (() -> Promise<Void>) = {
-    return Promise<Void> { return }
+  public var middleware: (Promise<Void>) -> Void = { promise in
+    promise.resolve()
   }
 
   var baseURLString: URLStringConvertible?
@@ -118,14 +118,17 @@ public class Networking: NSObject {
 
   func execute(request: Requestable) -> Ride {
     let ride = Ride()
+    let beforePromise = Promise<Void>()
 
-    middleware()
+    beforePromise
       .done({ [weak self] in
         self?.start(ride, with: request)
       })
       .fail({ error in
         ride.reject(error)
       })
+
+    middleware(beforePromise)
 
     return ride
   }
