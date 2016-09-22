@@ -120,17 +120,19 @@ public class Networking: NSObject {
     let ride = Ride()
     let beforePromise = Promise<Void>()
 
-    beforePromise
-      .done({ [weak self] in
-        self?.start(ride, with: request)
-      })
+    let nextRide = beforePromise
       .fail({ error in
         ride.reject(error)
       })
+      .then({
+        return self.start(ride, with: request)
+      })
 
-    middleware(beforePromise)
+    guard let startRide = nextRide as? Ride else {
+      return ride
+    }
 
-    return ride
+    return startRide
   }
 
   // MARK: - Authentication
