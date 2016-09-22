@@ -128,6 +128,8 @@ public class Networking: NSObject {
         return self.start(ride, with: request)
       })
 
+    middleware(beforePromise)
+
     guard let startRide = nextRide as? Ride else {
       return ride
     }
