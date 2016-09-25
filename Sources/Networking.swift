@@ -7,6 +7,10 @@ public class Networking: NSObject {
     case Data, Upload, Download
   }
 
+  public enum OperationKind {
+    case Sync, Async, Limited(Int)
+  }
+
   public var additionalHeaders: (() -> [String: String])?
   public var beforeEach: (Requestable -> Requestable)?
   public var preProcessRequest: (NSMutableURLRequest -> Void)?
@@ -19,6 +23,7 @@ public class Networking: NSObject {
   let sessionConfiguration: SessionConfiguration
   var customHeaders = [String: String]()
   var mocks = [String: Mock]()
+  let queue: NSOperationQueue
 
   weak var sessionDelegate: NSURLSessionDelegate?
 
@@ -46,11 +51,23 @@ public class Networking: NSObject {
   // MARK: - Initialization
 
   public init(baseURLString: URLStringConvertible? = nil,
+              operationKind: OperationKind = .Async,
               sessionConfiguration: SessionConfiguration = .Default,
               sessionDelegate: NSURLSessionDelegate? = nil) {
     self.baseURLString = baseURLString
     self.sessionConfiguration = sessionConfiguration
     self.sessionDelegate = sessionDelegate
+
+    queue = NSOperationQueue()
+
+    switch operationKind {
+    case .Sync:
+      queue.maxConcurrentOperationCount = 1
+    case .Async:
+      queue.maxConcurrentOperationCount = -1
+    case .Limited(let count):
+      queue.maxConcurrentOperationCount = count
+    }
   }
 
   // MARK: - Networking
