@@ -11,6 +11,10 @@ public class Networking: NSObject {
   public var beforeEach: (Requestable -> Requestable)?
   public var preProcessRequest: (NSMutableURLRequest -> Void)?
 
+  public var middleware: (Promise<Void>) -> Void = { promise in
+    promise.resolve()
+  }
+
   var baseURLString: URLStringConvertible?
   let sessionConfiguration: SessionConfiguration
   var customHeaders = [String: String]()
@@ -18,12 +22,12 @@ public class Networking: NSObject {
 
   weak var sessionDelegate: NSURLSessionDelegate?
 
-  lazy var session: NSURLSession = {
+  lazy var session: NSURLSession = { [unowned self] in
     return NSURLSession(
       configuration: self.sessionConfiguration.value,
       delegate: self.sessionDelegate ?? self,
       delegateQueue: nil)
-  }()
+    }()
 
   var requestHeaders: [String: String] {
     var headers = customHeaders
@@ -51,7 +55,7 @@ public class Networking: NSObject {
 
   // MARK: - Networking
 
-  func execute(request: Requestable) -> Ride {
+  func start(request: Requestable) -> Ride {
     let ride = Ride()
     let URLRequest: NSMutableURLRequest
 
@@ -85,8 +89,8 @@ public class Networking: NSObject {
       task = MockDataTask(mock: mock, URLRequest: URLRequest, ride: ride)
     }
 
-    let etagPromise = ride.then { result -> Wave in
-      self.saveEtag(request, response: result.response)
+    let etagPromise = ride.then { [weak self] result -> Wave in
+      self?.saveEtag(request, response: result.response)
       return result
     }
 
@@ -111,6 +115,26 @@ public class Networking: NSObject {
     task.run()
 
     return nextRide
+  }
+
+  func execute(request: Requestable) -> Ride {
+    let ride = Ride()
+    let beforePromise = Promise<Void>()
+
+    beforePromise
+      .then({
+        return self.start(request)
+      })
+      .done({ wave in
+        ride.resolve(wave)
+      })
+      .fail({ error in
+        ride.reject(error)
+      })
+
+    middleware(beforePromise)
+
+    return ride
   }
 
   // MARK: - Authentication
