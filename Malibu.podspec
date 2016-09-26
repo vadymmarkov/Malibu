@@ -19,5 +19,5 @@ Pod::Spec.new do |s|
   s.source_files = 'Sources/**/*'
 
   s.frameworks = 'Foundation'
-  s.dependency 'When'
+  s.dependency 'When', '1.0.4'
 end
