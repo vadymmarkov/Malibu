@@ -10,7 +10,7 @@ class MockSpec: QuickSpec {
       var mock: Mock!
       let request = GETRequest()
       var response = NSHTTPURLResponse(URL: NSURL(string: "http://hyper.no")!,
-        statusCode: 200, HTTPVersion: "HTTP/2.0", headerFields: nil)!
+                                       statusCode: 200, HTTPVersion: "HTTP/2.0", headerFields: nil)!
       let data = "test".dataUsingEncoding(NSUTF32StringEncoding)
       let error = Error.NoDataInResponse
 

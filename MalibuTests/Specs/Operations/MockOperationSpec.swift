@@ -3,11 +3,11 @@ import Quick
 import Nimble
 import When
 
-class MockDataSpec: QuickSpec {
+class MockOperationSpec: QuickSpec {
 
   override func spec() {
-    describe("MockDataTask") {
-      var task: MockDataTask!
+    describe("MockOperation") {
+      var operation: MockOperation!
       var mock: Mock!
       var request: Requestable!
       var URLRequest: NSURLRequest!
@@ -27,30 +27,30 @@ class MockDataSpec: QuickSpec {
       describe("#init") {
         beforeEach {
           mock = Mock(request: request, response: response, data: data, error: error)
-          task = MockDataTask(mock: mock, URLRequest: URLRequest, ride: ride)
+          operation = MockOperation(mock: mock, URLRequest: URLRequest, ride: ride)
         }
 
         it("sets properties") {
-          expect(task.mock === mock).to(beTrue())
-          expect(task.URLRequest).to(equal(URLRequest))
-          expect(task.ride === ride).to(beTrue())
+          expect(operation.mock === mock).to(beTrue())
+          expect(operation.URLRequest).to(equal(URLRequest))
+          expect(operation.ride === ride).to(beTrue())
         }
       }
 
-      describe("#run") {
+      describe("#execute") {
         context("when response is nil") {
           it("rejects promise with an error") {
             let expectation = self.expectationWithDescription("No response failure")
 
             mock = Mock(request: request, response: nil, data: data, error: nil)
-            task = MockDataTask(mock: mock, URLRequest: URLRequest, ride: ride)
+            operation = MockOperation(mock: mock, URLRequest: URLRequest, ride: ride)
 
-            task.ride.fail({ error in
+            operation.ride.fail({ error in
               expect(error as! Error == Error.NoResponseReceived).to(beTrue())
               expectation.fulfill()
             })
 
-            task.run()
+            operation.execute()
 
             self.waitForExpectationsWithTimeout(4.0, handler:nil)
           }
@@ -61,14 +61,14 @@ class MockDataSpec: QuickSpec {
             let expectation = self.expectationWithDescription("Error failure")
 
             mock = Mock(request: request, response: response, data: data, error: error)
-            task = MockDataTask(mock: mock, URLRequest: URLRequest, ride: ride)
+            operation = MockOperation(mock: mock, URLRequest: URLRequest, ride: ride)
 
-            task.ride.fail({ error in
+            operation.ride.fail({ error in
               expect(error as! Error == Error.JSONArraySerializationFailed).to(beTrue())
               expectation.fulfill()
             })
 
-            task.run()
+            operation.execute()
 
             self.waitForExpectationsWithTimeout(4.0, handler:nil)
           }
@@ -79,14 +79,14 @@ class MockDataSpec: QuickSpec {
             let expectation = self.expectationWithDescription("No data failure")
 
             mock = Mock(request: request, response: response, data: nil, error: nil)
-            task = MockDataTask(mock: mock, URLRequest: URLRequest, ride: ride)
+            operation = MockOperation(mock: mock, URLRequest: URLRequest, ride: ride)
 
-            task.ride.fail({ error in
+            operation.ride.fail({ error in
               expect(error as! Error == Error.NoDataInResponse).to(beTrue())
               expectation.fulfill()
             })
 
-            task.run()
+            operation.execute()
 
             self.waitForExpectationsWithTimeout(4.0, handler:nil)
           }
@@ -97,17 +97,17 @@ class MockDataSpec: QuickSpec {
             let expectation = self.expectationWithDescription("Validation succeeded")
 
             mock = Mock(request: request, response: response, data: data, error: nil)
-            task = MockDataTask(mock: mock, URLRequest: URLRequest, ride: ride)
+            operation = MockOperation(mock: mock, URLRequest: URLRequest, ride: ride)
 
-            task.ride.done({ result in
-              expect(result.data).to(equal(task.mock.data))
-              expect(result.request).to(equal(task.URLRequest))
-              expect(result.response).to(equal(task.mock.response))
+            operation.ride.done({ result in
+              expect(result.data).to(equal(operation.mock.data))
+              expect(result.request).to(equal(operation.URLRequest))
+              expect(result.response).to(equal(operation.mock.response))
 
               expectation.fulfill()
             })
 
-            task.run()
+            operation.execute()
 
             self.waitForExpectationsWithTimeout(4.0, handler:nil)
           }

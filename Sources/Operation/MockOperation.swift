@@ -29,4 +29,3 @@ class MockOperation: ConcurrentOperation, ResponseHandler {
     super.cancel()
   }
 }
-

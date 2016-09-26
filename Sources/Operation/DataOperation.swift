@@ -7,11 +7,15 @@ class DataOperation: ConcurrentOperation, ResponseHandler {
   var ride: Ride
   private var task: NSURLSessionDataTask?
 
+  // MARK: - Initialization
+
   init(session: NSURLSession, URLRequest: NSURLRequest, ride: Ride) {
     self.session = session
     self.URLRequest = URLRequest
     self.ride = ride
   }
+
+  // MARK: - Operation
 
   override func execute() {
     task = session.dataTaskWithRequest(URLRequest) { [weak self] (data, response, error) in
