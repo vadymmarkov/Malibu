@@ -16,7 +16,7 @@ class MockSpec: QuickSpec {
 
       describe("#init:request:response:data:error") {
         beforeEach {
-          mock = Mock(request: request, response: response, data: data, error: error)
+          mock = Mock(request: request, response: response, data: data, error: error, delay: 0.1)
         }
 
         it("sets properties") {
@@ -24,6 +24,7 @@ class MockSpec: QuickSpec {
           expect(mock.response).to(equal(response))
           expect(mock.data).to(equal(data))
           expect(mock.error as! Error == error).to(beTrue())
+          expect(mock.delay).to(equal(0.1))
         }
       }
 
