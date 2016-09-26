@@ -48,7 +48,7 @@ struct HEADRequest: HEADRequestable {
 
 // MARK: - Tasks
 
-class TestNetworkTask: TaskRunning {
+class TestResponseHandler: ResponseHandler {
   let URLRequest: NSURLRequest
   let ride: Ride
   let data = "test".dataUsingEncoding(NSUTF32StringEncoding)
@@ -60,11 +60,5 @@ class TestNetworkTask: TaskRunning {
     URLRequest = try! GETRequest().toURLRequest()
     ride = Ride()
     response = NSHTTPURLResponse(URL: URLRequest.URL!, statusCode: 200, HTTPVersion: "HTTP/2.0", headerFields: nil)!
-  }
-
-  // MARK: - NetworkTaskRunning
-
-  func run() {
-    process(data, response: response, error: nil)
   }
 }

@@ -7,6 +7,10 @@ public class Networking: NSObject {
     case Data, Upload, Download
   }
 
+  public enum OperationKind {
+    case Sync, Async, Limited(Int)
+  }
+
   public var additionalHeaders: (() -> [String: String])?
   public var beforeEach: (Requestable -> Requestable)?
   public var preProcessRequest: (NSMutableURLRequest -> Void)?
@@ -19,6 +23,7 @@ public class Networking: NSObject {
   let sessionConfiguration: SessionConfiguration
   var customHeaders = [String: String]()
   var mocks = [String: Mock]()
+  let queue: NSOperationQueue
 
   weak var sessionDelegate: NSURLSessionDelegate?
 
@@ -46,11 +51,23 @@ public class Networking: NSObject {
   // MARK: - Initialization
 
   public init(baseURLString: URLStringConvertible? = nil,
+              operationKind: OperationKind = .Async,
               sessionConfiguration: SessionConfiguration = .Default,
               sessionDelegate: NSURLSessionDelegate? = nil) {
     self.baseURLString = baseURLString
     self.sessionConfiguration = sessionConfiguration
     self.sessionDelegate = sessionDelegate
+
+    queue = NSOperationQueue()
+
+    switch operationKind {
+    case .Sync:
+      queue.maxConcurrentOperationCount = 1
+    case .Async:
+      queue.maxConcurrentOperationCount = -1
+    case .Limited(let count):
+      queue.maxConcurrentOperationCount = count
+    }
   }
 
   // MARK: - Networking
@@ -69,16 +86,16 @@ public class Networking: NSObject {
 
     preProcessRequest?(URLRequest)
 
-    let task: TaskRunning
+    let operation: ConcurrentOperation
 
     switch Malibu.mode {
     case .Regular:
-      task = SessionDataTask(session: session, URLRequest: URLRequest, ride: ride)
+      operation = DataOperation(session: session, URLRequest: URLRequest, ride: ride)
     case .Partial:
       if let mock = prepareMock(request) {
-        task = MockDataTask(mock: mock, URLRequest: URLRequest, ride: ride)
+        operation = MockOperation(mock: mock, URLRequest: URLRequest, ride: ride)
       } else {
-        task = SessionDataTask(session: session, URLRequest: URLRequest, ride: ride)
+        operation = DataOperation(session: session, URLRequest: URLRequest, ride: ride)
       }
     case .Fake:
       guard let mock = prepareMock(request) else {
@@ -86,7 +103,7 @@ public class Networking: NSObject {
         return ride
       }
 
-      task = MockDataTask(mock: mock, URLRequest: URLRequest, ride: ride)
+      operation = MockOperation(mock: mock, URLRequest: URLRequest, ride: ride)
     }
 
     let etagPromise = ride.then { [weak self] result -> Wave in
@@ -112,7 +129,7 @@ public class Networking: NSObject {
         nextRide.reject(error)
       })
 
-    task.run()
+    queue.addOperation(operation)
 
     return nextRide
   }
@@ -208,6 +225,10 @@ public extension Networking {
 
   func HEAD(request: HEADRequestable) -> Ride {
     return execute(request)
+  }
+
+  func cancelAllRequests() {
+    queue.cancelAllOperations()
   }
 }
 

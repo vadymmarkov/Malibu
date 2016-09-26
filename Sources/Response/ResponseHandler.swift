@@ -1,16 +1,14 @@
 import Foundation
 import When
 
-protocol TaskRunning: class {
+protocol ResponseHandler {
   var URLRequest: NSURLRequest { get }
   var ride: Ride { get }
-
-  func run()
 }
 
-extension TaskRunning {
+extension ResponseHandler {
 
-  func process(data: NSData?, response: NSURLResponse?, error: ErrorType?) {
+  func handle(data: NSData?, response: NSURLResponse?, error: ErrorType?) {
     if let error = error {
       ride.reject(error)
       return

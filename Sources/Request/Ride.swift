@@ -3,15 +3,15 @@ import When
 
 public class Ride: Promise<Wave> {
 
-  public var task: NSURLSessionTask?
+  public var operation: NSOperation?
 
-  public init(task: NSURLSessionTask? = nil) {
-    self.task = task
+  public init(operation: NSOperation? = nil) {
+    self.operation = operation
     super.init()
   }
 
   public func cancel() {
-    task?.cancel()
-    task = nil
+    operation?.cancel()
+    operation = nil
   }
 }
