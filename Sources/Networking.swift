@@ -226,6 +226,10 @@ public extension Networking {
   func HEAD(request: HEADRequestable) -> Ride {
     return execute(request)
   }
+
+  func cancelAllRequests() {
+    queue.cancelAllOperations()
+  }
 }
 
 // MARK: - NSURLSessionDelegate
