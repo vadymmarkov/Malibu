@@ -6,6 +6,7 @@ public class Mock {
   public var response: NSHTTPURLResponse?
   public var data: NSData?
   public var error: ErrorType?
+  public var delay: Double = 1.0
 
   // MARK: - Initialization
 

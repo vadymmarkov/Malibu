@@ -1,23 +1,26 @@
 import Foundation
 
-public typealias DataTaskCompletion = (NSData?, NSURLResponse?, NSError?) -> Void
+class DataOperation: ConcurrentOperation, ResponseHandler {
 
-class DataOperation: ConcurrentOperation {
-
-  private let session: NSURLSession
-  private let request: NSURLRequest
-  private let completion: DataTaskCompletion
+  let session: NSURLSession
+  let URLRequest: NSURLRequest
+  var ride: Ride
   private var task: NSURLSessionDataTask?
 
-  init(session: NSURLSession, request: NSURLRequest, ride: Ride) {
+  init(session: NSURLSession, URLRequest: NSURLRequest, ride: Ride) {
     self.session = session
-    self.request = request
-    self.completion = completion
+    self.URLRequest = URLRequest
+    self.ride = ride
   }
 
   override func execute() {
-    task = session.dataTaskWithRequest(request) { [weak self] (data, response, error) in
-      self?.completion(data, response, error)
+    task = session.dataTaskWithRequest(URLRequest) { [weak self] (data, response, error) in
+      guard let weakSelf = self else {
+        return
+      }
+
+      weakSelf.handle(data, response: response, error: error)
+
       self?.state = .Finished
     }
 

@@ -86,16 +86,16 @@ public class Networking: NSObject {
 
     preProcessRequest?(URLRequest)
 
-    let operationBuilder: OperationBuilder
+    let operation: ConcurrentOperation
 
     switch Malibu.mode {
     case .Regular:
-      operationBuilder = DataOperationBuilder(session: session, URLRequest: URLRequest, ride: ride)
+      operation = DataOperation(session: session, URLRequest: URLRequest, ride: ride)
     case .Partial:
       if let mock = prepareMock(request) {
-        task = MockDataTask(mock: mock, URLRequest: URLRequest, ride: ride)
+        operation = MockOperation(mock: mock, URLRequest: URLRequest, ride: ride)
       } else {
-        task = SessionDataTask(session: session, URLRequest: URLRequest, ride: ride)
+        operation = DataOperation(session: session, URLRequest: URLRequest, ride: ride)
       }
     case .Fake:
       guard let mock = prepareMock(request) else {
@@ -103,7 +103,7 @@ public class Networking: NSObject {
         return ride
       }
 
-      task = MockDataTask(mock: mock, URLRequest: URLRequest, ride: ride)
+      operation = MockOperation(mock: mock, URLRequest: URLRequest, ride: ride)
     }
 
     let etagPromise = ride.then { [weak self] result -> Wave in
@@ -129,7 +129,6 @@ public class Networking: NSObject {
         nextRide.reject(error)
       })
 
-    let operation = operationBuilder.build()
     queue.addOperation(operation)
 
     return nextRide
