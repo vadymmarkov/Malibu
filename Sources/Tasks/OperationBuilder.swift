@@ -1,14 +1,14 @@
 import Foundation
 import When
 
-protocol TaskRunning: class {
+protocol OperationBuilder: class {
   var URLRequest: NSURLRequest { get }
   var ride: Ride { get }
 
-  func run()
+  func build() -> NSOperation
 }
 
-extension TaskRunning {
+extension OperationBuilder {
 
   func process(data: NSData?, response: NSURLResponse?, error: ErrorType?) {
     if let error = error {

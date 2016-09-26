@@ -9,7 +9,7 @@ class DataOperation: ConcurrentOperation {
   private let completion: DataTaskCompletion
   private var task: NSURLSessionDataTask?
 
-  init(session: NSURLSession, request: NSURLRequest, completion: DataTaskCompletion) {
+  init(session: NSURLSession, request: NSURLRequest, ride: Ride) {
     self.session = session
     self.request = request
     self.completion = completion

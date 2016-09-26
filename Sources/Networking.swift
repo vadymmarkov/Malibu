@@ -86,11 +86,11 @@ public class Networking: NSObject {
 
     preProcessRequest?(URLRequest)
 
-    let task: TaskRunning
+    let operationBuilder: OperationBuilder
 
     switch Malibu.mode {
     case .Regular:
-      task = SessionDataTask(session: session, URLRequest: URLRequest, ride: ride)
+      operationBuilder = DataOperationBuilder(session: session, URLRequest: URLRequest, ride: ride)
     case .Partial:
       if let mock = prepareMock(request) {
         task = MockDataTask(mock: mock, URLRequest: URLRequest, ride: ride)
@@ -129,7 +129,8 @@ public class Networking: NSObject {
         nextRide.reject(error)
       })
 
-    task.run()
+    let operation = operationBuilder.build()
+    queue.addOperation(operation)
 
     return nextRide
   }

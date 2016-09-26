@@ -1,7 +1,7 @@
 import Foundation
 import When
 
-class MockDataTask: TaskRunning {
+class MockDataOperationBuilder: OperationBuilder {
 
   let mock: Mock
   let URLRequest: NSURLRequest
@@ -17,7 +17,7 @@ class MockDataTask: TaskRunning {
 
   // MARK: - NetworkTaskRunning
 
-  func run() {
+  func build() -> NSOperation {
     process(mock.data, response: mock.response, error: mock.error)
   }
 }
