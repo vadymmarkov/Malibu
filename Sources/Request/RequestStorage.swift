@@ -1,11 +1,9 @@
 import Foundation
 
-public final class RequestStorage {
-  let key = "Offline.RequestStorage"
+final class RequestStorage {
 
-  public static let shared: RequestStorage = RequestStorage()
-
-  public private(set) var requests = [String: NSURLRequest]()
+  let key: String
+  private(set) var requests = [String: NSURLRequest]()
 
   private var userDefaults: NSUserDefaults {
     return NSUserDefaults.standardUserDefaults()
@@ -13,13 +11,14 @@ public final class RequestStorage {
 
   // MARK: - Initialization
 
-  init() {
+  init(name: String) {
+    key = "no.hyper.Malibu.RequestStorage.\(name)"
     requests = load()
   }
 
   // MARK: - Save
 
-  public func save(request: NSURLRequest) {
+  func save(request: NSURLRequest) {
     guard let key = request.URL?.absoluteString else {
       return
     }
@@ -28,7 +27,7 @@ public final class RequestStorage {
     saveAll()
   }
 
-  public func saveAll() {
+  func saveAll() {
     let data = NSKeyedArchiver.archivedDataWithRootObject(requests)
     userDefaults.setObject(data, forKey: key)
     userDefaults.synchronize()
@@ -36,7 +35,7 @@ public final class RequestStorage {
 
   // MARK: - Remove
 
-  public func remove(request: NSURLRequest) {
+  func remove(request: NSURLRequest) {
     guard let key = request.URL?.absoluteString else {
       return
     }
@@ -45,7 +44,7 @@ public final class RequestStorage {
     saveAll()
   }
 
-  public func clear() {
+  func clear() {
     requests.removeAll()
     userDefaults.removeObjectForKey(key)
     userDefaults.synchronize()
