@@ -71,6 +71,24 @@ class ErrorSpec: QuickSpec {
           }
         }
       }
+
+      context("when it's offline error") {
+        var offlineError: NSError!
+
+        beforeEach {
+          offlineError = NSError(
+            domain: "no.hyper.Malibu",
+            code: Int(CFNetworkErrors.CFURLErrorNotConnectedToInternet.rawValue),
+            userInfo: nil
+          )
+        }
+
+        describe("#reason") {
+          it("returns true") {
+            expect(offlineError.isOffline).to(beTrue())
+          }
+        }
+      }
     }
   }
 }
