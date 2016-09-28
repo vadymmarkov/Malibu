@@ -5,6 +5,7 @@ public protocol Requestable {
   var message: Message { get set }
   var contentType: ContentType { get }
   var etagPolicy: ETagPolicy { get }
+  var storePolicy: StorePolicy { get }
   var cachePolicy: NSURLRequestCachePolicy { get }
 
   func toURLRequest(baseURLString: URLStringConvertible?,
@@ -14,6 +15,10 @@ public protocol Requestable {
 public extension Requestable {
 
   // MARK: - Default implementations
+
+  var storePolicy: StorePolicy {
+    return .Unspecified
+  }
 
   var cachePolicy: NSURLRequestCachePolicy {
     return .UseProtocolCachePolicy
