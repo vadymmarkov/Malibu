@@ -2,7 +2,10 @@ import Foundation
 
 final class RequestStorage {
 
-  let key: String
+  static let domain = "no.hyper.Malibu.RequestStorage"
+
+  var key: String
+
   private(set) var requests = [String: NSURLRequest]()
 
   private var userDefaults: NSUserDefaults {
@@ -11,8 +14,8 @@ final class RequestStorage {
 
   // MARK: - Initialization
 
-  init(name: String) {
-    key = "no.hyper.Malibu.RequestStorage.\(name)"
+  init(name: String = "Default") {
+    key = "\(RequestStorage.domain).\(name)"
     requests = load()
   }
 
@@ -48,6 +51,16 @@ final class RequestStorage {
     requests.removeAll()
     userDefaults.removeObjectForKey(key)
     userDefaults.synchronize()
+  }
+
+  static func clearAll() {
+    let userDefaults = NSUserDefaults.standardUserDefaults()
+    let keys = userDefaults.dictionaryRepresentation().keys
+    let storageKeys = keys.filter { $0.containsString(domain) }
+
+    for key in storageKeys {
+      userDefaults.removeObjectForKey(key)
+    }
   }
 
   // MARK: - Load

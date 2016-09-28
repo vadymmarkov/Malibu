@@ -23,6 +23,7 @@ public class Networking: NSObject {
   let sessionConfiguration: SessionConfiguration
   var customHeaders = [String: String]()
   var mocks = [String: Mock]()
+  var requestStorage = RequestStorage()
   let queue: NSOperationQueue
 
   weak var sessionDelegate: NSURLSessionDelegate?
@@ -121,11 +122,12 @@ public class Networking: NSObject {
         }
         nextRide.resolve(value)
       })
-      .fail({ error in
+      .fail({ [weak self] error in
         if logger.enabled {
           logger.errorLogger.init(level: logger.level).logError(error)
         }
 
+        self?.handleError(error, request: request, URLRequest: URLRequest)
         nextRide.reject(error)
       })
 
@@ -196,6 +198,12 @@ public class Networking: NSObject {
     let prefix = baseURLString?.URLString ?? ""
 
     ETagStorage().add(etag, forKey: request.etagKey(prefix))
+  }
+
+  func handleError(error: ErrorType, request: Requestable, URLRequest: NSURLRequest) {
+    if request.storePolicy == StorePolicy.Offline && (error as NSError).isOffline == true {
+      self.requestStorage.save(URLRequest)
+    }
   }
 }
 
