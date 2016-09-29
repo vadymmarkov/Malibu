@@ -6,7 +6,7 @@ final class RequestStorage {
 
   var key: String
 
-  private(set) var requests = [String: NSURLRequest]()
+  private(set) var requests = [String: RequestCapsule]()
 
   private var userDefaults: NSUserDefaults {
     return NSUserDefaults.standardUserDefaults()
@@ -21,12 +21,8 @@ final class RequestStorage {
 
   // MARK: - Save
 
-  func save(request: NSURLRequest) {
-    guard let key = request.URL?.absoluteString else {
-      return
-    }
-
-    requests[key] = request
+  func save(capsule: RequestCapsule) {
+    requests[capsule.id] = capsule
     saveAll()
   }
 
@@ -38,12 +34,8 @@ final class RequestStorage {
 
   // MARK: - Remove
 
-  func remove(request: NSURLRequest) {
-    guard let key = request.URL?.absoluteString else {
-      return
-    }
-
-    requests.removeValueForKey(key)
+  func remove(capsule: RequestCapsule) {
+    requests.removeValueForKey(capsule.id)
     saveAll()
   }
 
@@ -65,9 +57,9 @@ final class RequestStorage {
 
   // MARK: - Load
 
-  func load() -> [String: NSURLRequest] {
+  func load() -> [String: RequestCapsule] {
     guard let data = userDefaults.objectForKey(key) as? NSData,
-      dictionary = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [String: NSURLRequest]
+      dictionary = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [String: RequestCapsule]
       else { return [:] }
 
     return dictionary

@@ -7,7 +7,7 @@ public class Networking: NSObject {
     case Data, Upload, Download
   }
 
-  public enum OperationKind {
+  public enum Mode {
     case Sync, Async, Limited(Int)
   }
 
@@ -24,6 +24,7 @@ public class Networking: NSObject {
   var customHeaders = [String: String]()
   var mocks = [String: Mock]()
   var requestStorage = RequestStorage()
+  var mode: Mode = .Async
   let queue: NSOperationQueue
 
   weak var sessionDelegate: NSURLSessionDelegate?
@@ -52,7 +53,7 @@ public class Networking: NSObject {
   // MARK: - Initialization
 
   public init(baseURLString: URLStringConvertible? = nil,
-              operationKind: OperationKind = .Async,
+              mode: Mode = .Async,
               sessionConfiguration: SessionConfiguration = .Default,
               sessionDelegate: NSURLSessionDelegate? = nil) {
     self.baseURLString = baseURLString
@@ -60,8 +61,16 @@ public class Networking: NSObject {
     self.sessionDelegate = sessionDelegate
 
     queue = NSOperationQueue()
+    super.init()
+    resetMode(mode)
+  }
 
-    switch operationKind {
+  // MARK: - Mode
+
+  func resetMode(mode: Mode) {
+    self.mode = mode
+
+    switch mode {
     case .Sync:
       queue.maxConcurrentOperationCount = 1
     case .Async:
@@ -127,7 +136,7 @@ public class Networking: NSObject {
           logger.errorLogger.init(level: logger.level).logError(error)
         }
 
-        self?.handleError(error, request: request, URLRequest: URLRequest)
+        self?.handleError(error, on: request)
         nextRide.reject(error)
       })
 
@@ -200,12 +209,12 @@ public class Networking: NSObject {
     ETagStorage().add(etag, forKey: request.etagKey(prefix))
   }
 
-  func handleError(error: ErrorType, request: Requestable, URLRequest: NSURLRequest) {
+  func handleError(error: ErrorType, on request: Requestable) {
     guard request.storePolicy == StorePolicy.Offline && (error as NSError).isOffline else {
       return
     }
 
-    requestStorage.save(URLRequest)
+    requestStorage.save(RequestCapsule(request: request))
   }
 }
 
@@ -239,6 +248,37 @@ public extension Networking {
 
   func cancelAllRequests() {
     queue.cancelAllOperations()
+  }
+}
+
+// MARK: - Replay
+
+extension Networking {
+
+  public func replay() -> Ride {
+    let requests = requestStorage.requests.values
+    let currentMode = mode
+
+    resetMode(.Sync)
+
+    let lastRide = Ride()
+
+    for (index, request) in requests.enumerate() {
+      execute(request)
+        .done({ value in
+          lastRide.resolve(value)
+        })
+        .fail({ error in
+          lastRide.reject(error)
+        })
+        .always({ [weak self] _ in
+          if index == requests.count - 1 {
+            self?.resetMode(currentMode)
+          }
+        })
+    }
+
+    return lastRide
   }
 }
 

@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol Requestable {
+public protocol Requestable: NSCoding {
   var method: Method { get }
   var message: Message { get set }
   var contentType: ContentType { get }
