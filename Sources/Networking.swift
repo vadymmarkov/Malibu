@@ -201,9 +201,11 @@ public class Networking: NSObject {
   }
 
   func handleError(error: ErrorType, request: Requestable, URLRequest: NSURLRequest) {
-    if request.storePolicy == StorePolicy.Offline && (error as NSError).isOffline == true {
-      self.requestStorage.save(URLRequest)
+    guard request.storePolicy == StorePolicy.Offline && (error as NSError).isOffline == true else {
+      return
     }
+
+    requestStorage.save(URLRequest)
   }
 }
 
