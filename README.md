@@ -29,7 +29,7 @@ past. Enjoy the ride!
 
 ## Features
 
-- [x] Multiple networkings
+- [x] Multiple network stacks
 - [x] Declarative requests
 - [x] Chainable response callbacks built on ***promises***
 - [x] All needed content types and parameter encodings
@@ -38,6 +38,9 @@ past. Enjoy the ride!
 - [x] Response mocking
 - [x] Request, response and error logging
 - [x] `ETag` support
+- [x] Synchronous and asynchronous modes
+- [x] Request pre-processing and middleware
+- [x] Request offline storage
 - [x] Extensive unit test coverage
 
 ## Table of Contents
@@ -50,12 +53,15 @@ past. Enjoy the ride!
 * [Networking](#networking)
   * [Session configuration](#session-configuration)
   * [Initialization](#initialization)
+  * [Mode](#mode)
   * [Additional headers](#additional-headers)
   * [Pre-processing](#pre-processing)
+  * [Middleware](#middleware)
   * [Authentication](#authentication)
   * [Making a request](#making-a-request)
   * [Wave and Ride](#wave-and-ride)
   * [Mocks](#mocks)
+  * [Offline storage](#offline-storage)
 * [Response](#response)
   * [Serialization](#serialization)
   * [Validation](#validation)
@@ -232,6 +238,18 @@ let networking = Networking(
 )
 ```
 
+### Mode
+
+**Malibu** uses `NSOperationQueue` to execute/cancel requests. It makes it
+easier to manage request lifetime and concurrency.
+
+When you create a new networking instance there is an optional argument to
+specify **mode** which will be used:
+
+- `Sync`
+- `Async`
+- `Limited(maxConcurrentOperationCount)`
+
 ### Additional headers
 
 Additional headers will be used in the each request made on the networking:
@@ -262,6 +280,41 @@ networking.beforeEach = { request in
 networking.preProcessRequest = { (request: NSMutableURLRequest) in
   request.addValue("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9", forHTTPHeaderField: "token")
 }
+```
+
+### Middleware
+
+**Middleware** is the function which works as the first promise in the chain,
+before the actual request. It could be used to prepare networking, do some
+kind of pre-processing task, cancel request under particular conditions, etc.
+
+For example, in the combination with https://github.com/hyperoslo/OhMyAuth
+
+```swift
+// Set middleware in your configuration
+// Remember to `resolve` or `reject` the promise
+networking.middleware = { promise in
+  AuthContainer.serviceNamed("service")?.accessToken { accessToken, error in
+    if let error == error {
+      promise.reject(error)
+      return
+    }
+
+    guard let accessToken = accessToken else {
+      promise.reject(CustomError())
+      return
+    }
+
+    self.networking.authenticate(bearerToken: accessToken)
+    promise.resolve()
+  }
+}
+
+// Send your request like you usually do.
+// Valid access token will be set to headers before the each request.
+networking.GET(request)
+  .validate()
+  .toJSONDictionary()
 ```
 
 ### Authentication
@@ -386,6 +439,34 @@ networking.register(mock: Mock(
   error: customError
 ))
 ```
+
+### Offline storage
+
+Want to **store request** when there is no network connection?
+
+```swift
+struct BoardDeleteRequest: DELETERequestable {
+  var message: Message
+  var storePolicy: StorePolicy = .Offline // Set store policy
+
+  init(id: Int) {
+    message = Message(resource: "boards:\(id)")
+  }
+}
+```
+
+Want to **replay** cached requests?
+
+```swift
+networking.replay().done({ result
+  print(result)
+})
+```
+
+Request storage is networking-specific, and while it replays cached requests
+it will be set to `Sync` mode. Cached request will go through normal request
+lifecycle, with applied middleware and pre-process operations. Request will be
+automatically removed from the storage when it's completed.
 
 ## Response
 
