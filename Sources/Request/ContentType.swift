@@ -7,6 +7,34 @@ public enum ContentType {
   case MultipartFormData
   case Custom(String)
 
+  enum Header: String {
+    case JSON = "application/json"
+    case FormURLEncoded = "application/x-www-form-urlencoded"
+    case MultipartFormData = "multipart/form-data; boundary="
+  }
+
+  init(header: String?) {
+    guard let header = header else {
+      self = .Query
+      return
+    }
+
+    let result: ContentType
+
+    switch header {
+    case Header.JSON.rawValue:
+      result = .JSON
+    case Header.FormURLEncoded.rawValue:
+      result = .FormURLEncoded
+    case "\(Header.MultipartFormData.rawValue)\(boundary)":
+      result = .MultipartFormData
+    default:
+      result = .Custom(header)
+    }
+
+    self = result
+  }
+
   var header: String? {
     let string: String?
 
@@ -14,11 +42,11 @@ public enum ContentType {
     case .Query:
       string = nil
     case .JSON:
-      string = "application/json"
+      string = Header.JSON.rawValue
     case .FormURLEncoded:
-      string = "application/x-www-form-urlencoded"
+      string = Header.FormURLEncoded.rawValue
     case .MultipartFormData:
-      string = "multipart/form-data; boundary=\(boundary)"
+      string = Header.MultipartFormData.rawValue
     case .Custom(let value):
       string = value
     }
