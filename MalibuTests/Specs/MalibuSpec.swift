@@ -24,7 +24,7 @@ class MalibuSpec: QuickSpec {
         it("adds new networking instance with a name") {
           expect(Malibu.networkings.count).to(equal(1))
           expect(Malibu.networkings["surfer"]?.baseURLString?.URLString).to(equal(baseURLString.URLString))
-          expect(Malibu.networkings["surfer"]?.requestStorage.name).to(equal("surfer"))
+          expect(Malibu.networkings["surfer"]?.requestStorage.key).to(equal("\(RequestStorage.domain).surfer"))
         }
       }
 

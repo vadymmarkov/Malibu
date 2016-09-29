@@ -13,6 +13,11 @@ class ContentTypeSpec: QuickSpec {
           contentType = .Query
         }
 
+        describe("init:header") {
+          let result = ContentType(header: nil)
+          expect(result).to(equal(ContentType.Query))
+        }
+
         describe("#value") {
           it("returns nil") {
             expect(contentType.header).to(beNil())
@@ -43,6 +48,11 @@ class ContentTypeSpec: QuickSpec {
       context("when it is FormURLEncoded type") {
         beforeEach {
           contentType = .FormURLEncoded
+        }
+
+        describe("init:header") {
+          let result = ContentType(header: "application/x-www-form-urlencoded")
+          expect(result).to(equal(ContentType.FormURLEncoded))
         }
 
         describe("#value") {
@@ -77,6 +87,11 @@ class ContentTypeSpec: QuickSpec {
           contentType = .JSON
         }
 
+        describe("init:header") {
+          let result = ContentType(header: "application/json")
+          expect(result).to(equal(ContentType.JSON))
+        }
+
         describe("#value") {
           it("returns a correct string value") {
             expect(contentType.header).to(equal("application/json"))
@@ -107,6 +122,11 @@ class ContentTypeSpec: QuickSpec {
       context("when it is MultipartFormData type") {
         beforeEach {
           contentType = .MultipartFormData
+        }
+
+        describe("init:header") {
+          let result = ContentType(header: "multipart/form-data; boundary=\(boundary)")
+          expect(result).to(equal(ContentType.MultipartFormData))
         }
 
         describe("#value") {
@@ -140,6 +160,11 @@ class ContentTypeSpec: QuickSpec {
       context("when it is Custom type") {
         beforeEach {
           contentType = .Custom("application/custom")
+        }
+
+        describe("init:header") {
+          let result = ContentType(header: "application/custom")
+          expect(result).to(equal(ContentType.Custom("application/custom")))
         }
 
         describe("#value") {

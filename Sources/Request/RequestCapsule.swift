@@ -31,7 +31,7 @@ class RequestCapsule: NSObject, Requestable, NSCoding {
     message = request.message
     contentType = request.contentType
     etagPolicy = request.etagPolicy
-    storePolicy = .Unspecified
+    storePolicy = request.storePolicy
     cachePolicy = request.cachePolicy
   }
 

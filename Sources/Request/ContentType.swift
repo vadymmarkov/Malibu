@@ -46,7 +46,7 @@ public enum ContentType {
     case .FormURLEncoded:
       string = Header.FormURLEncoded.rawValue
     case .MultipartFormData:
-      string = Header.MultipartFormData.rawValue
+      string = "\(Header.MultipartFormData.rawValue)\(boundary)"
     case .Custom(let value):
       string = value
     }
