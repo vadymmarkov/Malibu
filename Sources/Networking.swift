@@ -264,17 +264,27 @@ extension Networking {
     let lastRide = Ride()
 
     for (index, request) in requests.enumerate() {
+      let isLast = index == requests.count - 1
+
       execute(request)
         .done({ value in
+          guard isLast else { return }
           lastRide.resolve(value)
         })
         .fail({ error in
+          guard isLast else { return }
           lastRide.reject(error)
         })
-        .always({ [weak self] _ in
-          if index == requests.count - 1 {
+        .always({ [weak self] result in
+          if isLast {
             self?.resetMode(currentMode)
           }
+
+          if let error = result.error where (error as NSError).isOffline {
+            return
+          }
+
+          self?.requestStorage.remove(request)
         })
     }
 
