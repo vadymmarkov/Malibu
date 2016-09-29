@@ -104,6 +104,8 @@
 		D5B9653A1C922C500099D2F9 /* URLStringConvertibleSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965341C922C500099D2F9 /* URLStringConvertibleSpec.swift */; };
 		D5B9653C1C92340C0099D2F9 /* UtilsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B9653B1C92340C0099D2F9 /* UtilsSpec.swift */; };
 		D5B9653D1C92340C0099D2F9 /* UtilsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B9653B1C92340C0099D2F9 /* UtilsSpec.swift */; };
+		D5C000C21D9D9D3E00744A12 /* RequestCapsuleSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C000C11D9D9D3E00744A12 /* RequestCapsuleSpec.swift */; };
+		D5C000C31D9D9D3E00744A12 /* RequestCapsuleSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C000C11D9D9D3E00744A12 /* RequestCapsuleSpec.swift */; };
 		D5C1D06F1CB3D49F00A076D6 /* Ride.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C1D06E1CB3D49F00A076D6 /* Ride.swift */; };
 		D5C1D0701CB3D49F00A076D6 /* Ride.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C1D06E1CB3D49F00A076D6 /* Ride.swift */; };
 		D5C6294A1C3A7FAA007F7B7C /* Malibu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629401C3A7FAA007F7B7C /* Malibu.framework */; };
@@ -238,6 +240,7 @@
 		D5B965331C922C500099D2F9 /* SessionConfigurationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionConfigurationSpec.swift; sourceTree = "<group>"; };
 		D5B965341C922C500099D2F9 /* URLStringConvertibleSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLStringConvertibleSpec.swift; sourceTree = "<group>"; };
 		D5B9653B1C92340C0099D2F9 /* UtilsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilsSpec.swift; sourceTree = "<group>"; };
+		D5C000C11D9D9D3E00744A12 /* RequestCapsuleSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestCapsuleSpec.swift; sourceTree = "<group>"; };
 		D5C1D06E1CB3D49F00A076D6 /* Ride.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ride.swift; sourceTree = "<group>"; };
 		D5C629401C3A7FAA007F7B7C /* Malibu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Malibu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5C629491C3A7FAA007F7B7C /* Malibu-Mac-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Malibu-Mac-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -441,6 +444,7 @@
 				D5B964F81C9216FD0099D2F9 /* MessageSpec.swift */,
 				D5B964FB1C9217140099D2F9 /* RequestableSpec.swift */,
 				D5EB7C6E1CB04543003A3BA9 /* MethodRequestableSpec.swift */,
+				D5C000C11D9D9D3E00744A12 /* RequestCapsuleSpec.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -912,6 +916,7 @@
 				D560A2E41C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift in Sources */,
 				D5B965351C922C500099D2F9 /* ContentTypeSpec.swift in Sources */,
 				D5EB7C6C1CB03AA0003A3BA9 /* QueryBuilderSpec.swift in Sources */,
+				D5C000C21D9D9D3E00744A12 /* RequestCapsuleSpec.swift in Sources */,
 				D53FBEAA1D9922BB0014AE4A /* ConcurrentOperationSpec.swift in Sources */,
 				D5ABDDAF1CD8149500C78B5F /* MultipartFormEncoderSpec.swift in Sources */,
 				D5B9652E1C922C420099D2F9 /* WaveSpec.swift in Sources */,
@@ -1000,6 +1005,7 @@
 				D560A2E51C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift in Sources */,
 				D5B965361C922C500099D2F9 /* ContentTypeSpec.swift in Sources */,
 				D5EB7C6D1CB03AA0003A3BA9 /* QueryBuilderSpec.swift in Sources */,
+				D5C000C31D9D9D3E00744A12 /* RequestCapsuleSpec.swift in Sources */,
 				D53FBEAB1D9922BB0014AE4A /* ConcurrentOperationSpec.swift in Sources */,
 				D5ABDDB01CD8149600C78B5F /* MultipartFormEncoderSpec.swift in Sources */,
 				D5B9652F1C922C420099D2F9 /* WaveSpec.swift in Sources */,

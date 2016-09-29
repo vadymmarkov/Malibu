@@ -42,9 +42,9 @@ class RequestCapsule: NSObject, Requestable, NSCoding {
       resource = aDecoder.decodeObjectForKey(Key.Resource.rawValue) as? String,
       parameters = aDecoder.decodeObjectForKey(Key.Parameters.rawValue) as? [String: AnyObject],
       headers = aDecoder.decodeObjectForKey(Key.Headers.rawValue) as? [String: String],
-      etagPolicy = ETagPolicy(rawValue: aDecoder.decodeIntegerForKey(Key.EtagPolicy.rawValue)),
-      storePolicy = StorePolicy(rawValue: aDecoder.decodeIntegerForKey(Key.StorePolicy.rawValue)),
-      cachePolicy = NSURLRequestCachePolicy(rawValue: UInt(aDecoder.decodeIntegerForKey(Key.CachePolicy.rawValue)))
+      etagPolicy = ETagPolicy(rawValue: aDecoder.decodeIntForKey(Key.EtagPolicy.rawValue)),
+      storePolicy = StorePolicy(rawValue: aDecoder.decodeIntForKey(Key.StorePolicy.rawValue)),
+      cachePolicy = NSURLRequestCachePolicy(rawValue: UInt(aDecoder.decodeIntForKey(Key.CachePolicy.rawValue)))
     else {
       return nil
     }
@@ -65,8 +65,8 @@ class RequestCapsule: NSObject, Requestable, NSCoding {
     aCoder.encodeObject(message.parameters, forKey: Key.Parameters.rawValue)
     aCoder.encodeObject(message.headers, forKey: Key.Headers.rawValue)
     aCoder.encodeObject(contentType.header, forKey: Key.ContentType.rawValue)
-    aCoder.encodeObject(etagPolicy.rawValue, forKey: Key.EtagPolicy.rawValue)
-    aCoder.encodeObject(storePolicy.rawValue, forKey: Key.StorePolicy.rawValue)
-    aCoder.encodeObject(cachePolicy.rawValue, forKey: Key.CachePolicy.rawValue)
+    aCoder.encodeInt(etagPolicy.rawValue, forKey: Key.EtagPolicy.rawValue)
+    aCoder.encodeInt(storePolicy.rawValue, forKey: Key.StorePolicy.rawValue)
+    aCoder.encodeInt(Int32(cachePolicy.rawValue), forKey: Key.CachePolicy.rawValue)
   }
 }
