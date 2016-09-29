@@ -6,7 +6,7 @@ final class RequestStorage {
 
   var key: String
 
-  private(set) var requests = [String: RequestCapsule]()
+  var requests = [String: RequestCapsule]()
 
   private var userDefaults: NSUserDefaults {
     return NSUserDefaults.standardUserDefaults()

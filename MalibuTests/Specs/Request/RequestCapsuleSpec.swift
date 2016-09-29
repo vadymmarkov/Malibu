@@ -22,6 +22,7 @@ class RequestCapsuleSpec: QuickSpec {
           expect(capsule.etagPolicy).to(equal(request.etagPolicy))
           expect(capsule.storePolicy).to(equal(request.storePolicy))
           expect(capsule.cachePolicy).to(equal(request.cachePolicy))
+          expect(capsule.id).to(equal(request.message.resource.URLString))
         }
       }
 
