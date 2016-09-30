@@ -21,15 +21,29 @@ public let boundary = String(format: "Malibu%08x%08x", arc4random(), arc4random(
 // MARK: - Networkings
 
 public func register(name: String, networking: Networking) {
+  networking.requestStorage = RequestStorage(name: name)
   networkings[name] = networking
 }
 
 public func unregister(name: String) -> Bool {
-  return networkings.removeValueForKey(name) != nil
+  guard let networking = networkings.removeValueForKey(name) else {
+    return false
+  }
+
+  networking.requestStorage.clear()
+
+  return true
 }
 
 public func networking(name: String) -> Networking {
   return networkings[name] ?? backfootSurfer
+}
+
+// MARK: - Storages
+
+public func clearStorages() {
+  ETagStorage().clear()
+  RequestStorage.clearAll()
 }
 
 // MARK: - Mocks

@@ -62,3 +62,12 @@ extension Error: Hashable {
 public func ==(lhs: Error, rhs: Error) -> Bool {
   return lhs.reason == rhs.reason
 }
+
+// MARK: - NSError
+
+extension NSError {
+
+  var isOffline: Bool {
+    return Int32(code) == CFNetworkErrors.CFURLErrorNotConnectedToInternet.rawValue
+  }
+}

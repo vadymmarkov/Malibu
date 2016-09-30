@@ -20,6 +20,12 @@ class RequestableSpec: QuickSpec {
         } catch {}
       }
 
+      describe("#storePolicy") {
+        it("has default value") {
+          expect(request.storePolicy).to(equal(StorePolicy.Unspecified))
+        }
+      }
+
       describe("#cachePolicy") {
         it("has default value") {
           expect(request.cachePolicy).to(equal(NSURLRequestCachePolicy.UseProtocolCachePolicy))
