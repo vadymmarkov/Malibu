@@ -22,7 +22,7 @@ class EtagStorageSpec: QuickSpec {
         } catch {}
       }
 
-      describe("#addValue:forKey:save") {
+      describe("#addValue:forKey") {
         it("adds value to the dictionary") {
           storage.add(value: value, forKey: key)
           expect(storage.get(key)).to(equal(value))

@@ -13,7 +13,7 @@ class MultipartFormEncoderSpec: QuickSpec {
         encoder = MultipartFormEncoder()
       }
 
-      describe("#encode") {
+      describe("#encode:parameters") {
         it("encodes a dictionary of parameters to NSData object") {
           let string = MultipartBuilder().buildMultipartString(from: parameters)
           let data = string.data(using: String.Encoding.utf8,

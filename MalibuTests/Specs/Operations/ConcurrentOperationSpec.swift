@@ -42,27 +42,27 @@ class ConcurrentOperationSpec: QuickSpec {
         }
       }
 
-      describe("#asynchronous") {
+      describe("#isAsynchronous") {
         it("is set to true") {
           expect(operation.isAsynchronous).to(beTrue())
         }
       }
 
-      describe("#ready") {
+      describe("#isReady") {
         it("changes to true when state is set to .Ready") {
           operation.state = .Ready
           expect(operation.isReady).to(beTrue())
         }
       }
 
-      describe("#executing") {
+      describe("#isExecuting") {
         it("changes to true when state is set to .Ready") {
           operation.state = .Executing
           expect(operation.isExecuting).to(beTrue())
         }
       }
 
-      describe("#finished") {
+      describe("#isFinished") {
         it("changes to true when state is set to .Finished") {
           operation.state = .Finished
           expect(operation.isFinished).to(beTrue())

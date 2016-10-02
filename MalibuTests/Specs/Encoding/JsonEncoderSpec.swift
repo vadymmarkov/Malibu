@@ -12,7 +12,7 @@ class JsonEncoderSpec: QuickSpec {
         encoder = JsonEncoder()
       }
 
-      describe("#encode") {
+      describe("#encode:parameters") {
         it("encodes a dictionary of parameters to NSData object") {
           let parameters = ["firstname": "John", "lastname": "Hyperseed"]
           let data = try! JSONSerialization.data(withJSONObject: parameters,
