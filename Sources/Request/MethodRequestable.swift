@@ -8,7 +8,7 @@ public protocol HEADRequestable: Requestable {}
 public extension GETRequestable {
 
   var method: Method {
-    return .GET
+    return .get
   }
 
   var contentType: ContentType {
@@ -23,7 +23,7 @@ public extension GETRequestable {
 public extension POSTRequestable {
 
   var method: Method {
-    return .POST
+    return .post
   }
 
   var contentType: ContentType {
@@ -38,7 +38,7 @@ public extension POSTRequestable {
 public extension PUTRequestable {
 
   var method: Method {
-    return .PUT
+    return .put
   }
 
   var contentType: ContentType {
@@ -53,7 +53,7 @@ public extension PUTRequestable {
 public extension PATCHRequestable {
 
   var method: Method {
-    return .PATCH
+    return .patch
   }
 
   var contentType: ContentType {
@@ -68,7 +68,7 @@ public extension PATCHRequestable {
 public extension DELETERequestable {
 
   var method: Method {
-    return .DELETE
+    return .delete
   }
 
   var contentType: ContentType {
@@ -83,7 +83,7 @@ public extension DELETERequestable {
 public extension HEADRequestable {
 
   var method: Method {
-    return .HEAD
+    return .head
   }
 
   var contentType: ContentType {

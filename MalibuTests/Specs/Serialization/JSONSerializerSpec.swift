@@ -16,12 +16,12 @@ class JSONSerializerSpec: QuickSpec {
 
       describe("#init") {
         it("sets default options") {
-          expect(serializer.options).to(equal(JSONSerialization.ReadingOptions.AllowFragments))
+          expect(serializer.options).to(equal(JSONSerialization.ReadingOptions.allowFragments))
         }
 
         it("sets parameter options to the instance var") {
-          serializer = JSONSerializer(options: .MutableContainers)
-          expect(serializer.options).to(equal(JSONSerialization.ReadingOptions.MutableContainers))
+          serializer = JSONSerializer(options: .mutableContainers)
+          expect(serializer.options).to(equal(JSONSerialization.ReadingOptions.mutableContainers))
         }
       }
 
@@ -29,7 +29,7 @@ class JSONSerializerSpec: QuickSpec {
         context("when there is no data in response") {
           it("throws an error") {
             let data = Data()
-            expect{ try serializer.serialize(data, response: response) }.to(throwError(Error.NoDataInResponse))
+            expect{ try serializer.serialize(data, response: response) }.to(throwError(NetworkError.noDataInResponse))
           }
         }
 
@@ -45,7 +45,7 @@ class JSONSerializerSpec: QuickSpec {
             let response = HTTPURLResponse(url: url, statusCode: 204,
               httpVersion: "HTTP/2.0", headerFields: nil)!
             let data = Data()
-            var result: AnyObject?
+            var result: Any?
 
             expect{ result = try serializer.serialize(data, response: response) }.toNot(throwError())
             expect(result is NSNull).to(beTrue())
@@ -57,7 +57,7 @@ class JSONSerializerSpec: QuickSpec {
             let dictionary = ["name": "Taylor"]
             let data = try! JSONSerialization.data(withJSONObject: dictionary,
               options: JSONSerialization.WritingOptions())
-            var result: AnyObject?
+            var result: Any?
 
             expect{ result = try serializer.serialize(data, response: response) }.toNot(throwError())
             expect(result as? [String: String]).to(equal(dictionary))

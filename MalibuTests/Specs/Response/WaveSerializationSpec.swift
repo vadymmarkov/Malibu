@@ -42,7 +42,9 @@ class WaveSerializationSpec: QuickSpec, NetworkPromiseSpec {
             it("rejects promise with an error") {
               self.data = "string".data(using: String.Encoding.utf32)
 
-              self.testFailedPromise(promise, error: Error.StringSerializationFailed(String.Encoding.utf8),
+              self.testFailedPromise(
+                promise,
+                error: NetworkError.stringSerializationFailed(String.Encoding.utf8.rawValue),
                 response: response)
             }
           }
@@ -51,7 +53,7 @@ class WaveSerializationSpec: QuickSpec, NetworkPromiseSpec {
             it("rejects promise with an error") {
               self.data = Data()
 
-              self.testFailedPromise(promise, error: Error.NoDataInResponse,
+              self.testFailedPromise(promise, error: NetworkError.noDataInResponse,
                 response: response)
             }
           }
@@ -81,7 +83,7 @@ class WaveSerializationSpec: QuickSpec, NetworkPromiseSpec {
       }
 
       describe("#toJSONArray") {
-        var promise: Promise<[[String: AnyObject]]>!
+        var promise: Promise<[[String: Any]]>!
 
         beforeEach {
           promise = self.networkPromise.toJSONArray()
@@ -99,7 +101,7 @@ class WaveSerializationSpec: QuickSpec, NetworkPromiseSpec {
               self.data = try! JSONSerialization.data(withJSONObject: ["name": "Taylor"],
                 options: JSONSerialization.WritingOptions())
 
-              self.testFailedPromise(promise, error: Error.JSONArraySerializationFailed,
+              self.testFailedPromise(promise, error: NetworkError.jsonArraySerializationFailed,
                 response: response)
             }
           }
@@ -108,7 +110,7 @@ class WaveSerializationSpec: QuickSpec, NetworkPromiseSpec {
             it("rejects promise with an error") {
               self.data = Data()
 
-              self.testFailedPromise(promise, error: Error.NoDataInResponse,
+              self.testFailedPromise(promise, error: NetworkError.noDataInResponse,
                 response: response)
             }
           }
@@ -139,7 +141,7 @@ class WaveSerializationSpec: QuickSpec, NetworkPromiseSpec {
       }
 
       describe("#toJSONDictionary") {
-        var promise: Promise<[String: AnyObject]>!
+        var promise: Promise<[String: Any]>!
 
         beforeEach {
           promise = self.networkPromise.toJSONDictionary()
@@ -157,7 +159,9 @@ class WaveSerializationSpec: QuickSpec, NetworkPromiseSpec {
               self.data = try! JSONSerialization.data(withJSONObject: [["name": "Taylor"]],
                 options: JSONSerialization.WritingOptions())
 
-              self.testFailedPromise(promise, error: Error.JSONDictionarySerializationFailed,
+              self.testFailedPromise(
+                promise,
+                error: NetworkError.jsonDictionarySerializationFailed,
                 response: response)
             }
           }
@@ -166,7 +170,7 @@ class WaveSerializationSpec: QuickSpec, NetworkPromiseSpec {
             it("rejects promise with an error") {
               self.data = Data()
 
-              self.testFailedPromise(promise, error: Error.NoDataInResponse,
+              self.testFailedPromise(promise, error: NetworkError.noDataInResponse,
                 response: response)
             }
           }

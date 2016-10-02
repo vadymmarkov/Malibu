@@ -25,7 +25,7 @@ public func register(_ name: String, networking: Networking) {
   networkings[name] = networking
 }
 
-public func unregister(_ name: String) -> Bool {
+@discardableResult public func unregister(_ name: String) -> Bool {
   guard let networking = networkings.removeValue(forKey: name) else {
     return false
   }
@@ -42,7 +42,7 @@ public func networking(_ name: String) -> Networking {
 // MARK: - Storages
 
 public func clearStorages() {
-  ETagStorage().clear()
+  EtagStorage().clear()
   RequestStorage.clearAll()
 }
 

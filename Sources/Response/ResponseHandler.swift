@@ -8,7 +8,7 @@ protocol ResponseHandler {
 
 extension ResponseHandler {
 
-  func handle(_ data: Data?, response: URLResponse?, error: Error?) {
+  func handle(data: Data?, response: URLResponse?, error: Error?) {
     if let error = error {
       ride.reject(error)
       return

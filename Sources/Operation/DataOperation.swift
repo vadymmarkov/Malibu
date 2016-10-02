@@ -1,6 +1,6 @@
 import Foundation
 
-class DataOperation: ConcurrentOperation, ResponseHandler {
+final class DataOperation: ConcurrentOperation, ResponseHandler {
 
   let session: URLSession
   let urlRequest: URLRequest
@@ -23,7 +23,7 @@ class DataOperation: ConcurrentOperation, ResponseHandler {
         return
       }
 
-      weakSelf.handle(data, response: response, error: error)
+      weakSelf.handle(data: data, response: response, error: error)
 
       self?.state = .Finished
     }) 

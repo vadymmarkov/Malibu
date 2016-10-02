@@ -8,7 +8,7 @@ public struct StringSerializer: Serializing {
     self.encoding = encoding
   }
 
-  public func serialize(_ data: Data, response: HTTPURLResponse) throws -> String {
+  public func serialize(data: Data, response: HTTPURLResponse) throws -> String {
     if response.statusCode == 204 { return "" }
 
     guard data.count > 0 else {

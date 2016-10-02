@@ -29,7 +29,8 @@ public final class Mock {
       let data = try? Data(contentsOf: URL(fileURLWithPath: filePath)),
       let response = HTTPURLResponse(url: fileURL, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)
       else {
-        self.init(request: request, response: nil, data: nil, error: NetworkError.noResponseReceived, delay: delay)
+        self.init(request: request, response: nil, data: nil,
+                  error: NetworkError.noResponseReceived, delay: delay)
         return
     }
 
@@ -38,7 +39,7 @@ public final class Mock {
     self.init(request: request, response: response, data: data, error: nil, delay: delay)
   }
 
-  public convenience init(request: Requestable, json: [String: AnyObject], delay: Double = 0.0) {
+  public convenience init(request: Requestable, json: [String: Any], delay: Double = 0.0) {
     var jsonData: Data?
 
     do {
@@ -48,7 +49,8 @@ public final class Mock {
     guard let url = URL(string: "mock://JSON"), let data = jsonData,
       let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)
       else {
-        self.init(request: request, response: nil, data: nil, error: NetworkError.noResponseReceived, delay: delay)
+        self.init(request: request, response: nil, data: nil,
+                  error: NetworkError.noResponseReceived, delay: delay)
         return
     }
 

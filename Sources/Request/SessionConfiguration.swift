@@ -1,7 +1,10 @@
 import Foundation
 
 public enum SessionConfiguration {
-  case `default`, ephemeral, background, custom(URLSessionConfiguration)
+  case `default`
+  case ephemeral
+  case background
+  case custom(URLSessionConfiguration)
 
   var value: URLSessionConfiguration {
     var value: URLSessionConfiguration

@@ -2,9 +2,11 @@ import Foundation
 
 struct FormURLEncoder: ParameterEncoding {
 
-  func encode(_ parameters: [String: AnyObject]) throws -> Data? {
+  // MARK: - ParameterEncoding
+
+  func encode(parameters: [String: Any]) throws -> Data? {
     return QueryBuilder()
-      .buildQuery(parameters)
+      .buildQuery(from: parameters)
       .data(using: String.Encoding.utf8, allowLossyConversion: false)
   }
 }

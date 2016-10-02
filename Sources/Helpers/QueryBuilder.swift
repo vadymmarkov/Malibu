@@ -8,11 +8,11 @@ public struct QueryBuilder {
 
   public init() {}
 
-  public func buildQuery(_ parameters: [String: AnyObject]) -> String {
-    return buildComponents(parameters: parameters).map({ "\($0)=\($1)" }).joined(separator: "&")
+  public func buildQuery(from parameters: [String: Any]) -> String {
+    return buildComponents(from: parameters).map({ "\($0)=\($1)" }).joined(separator: "&")
   }
 
-  public func buildComponents(parameters: [String: AnyObject]) -> [Component] {
+  public func buildComponents(from parameters: [String: Any]) -> [Component] {
     var components: [Component] = []
 
     parameters.forEach { key, value in
@@ -22,14 +22,14 @@ public struct QueryBuilder {
     return components
   }
 
-  public func buildComponents(key: String, value: AnyObject) -> [Component] {
+  public func buildComponents(key: String, value: Any) -> [Component] {
     var components: [Component] = []
 
-    if let dictionary = value as? [String: AnyObject] {
+    if let dictionary = value as? [String: Any] {
       dictionary.forEach { nestedKey, value in
         components += buildComponents(key: "\(key)[\(nestedKey)]", value: value)
       }
-    } else if let array = value as? [AnyObject] {
+    } else if let array = value as? [Any] {
       array.forEach { value in
         components += buildComponents(key: "\(key)[]", value: value)
       }
@@ -47,7 +47,8 @@ public struct QueryBuilder {
     var escapedString = ""
 
     if #available(iOS 8.3, *) {
-      escapedString = string.addingPercentEncoding(withAllowedCharacters: allowedCharacters as CharacterSet) ?? string
+      escapedString = string.addingPercentEncoding(
+        withAllowedCharacters: allowedCharacters as CharacterSet) ?? string
     } else {
       var index = string.startIndex
 
@@ -60,8 +61,8 @@ public struct QueryBuilder {
         let substring = string.substring(with: range)
 
         index = endIndex
-        escapedString += substring.addingPercentEncoding(withAllowedCharacters: allowedCharacters as CharacterSet)
-          ?? substring
+        escapedString += substring.addingPercentEncoding(
+          withAllowedCharacters: allowedCharacters as CharacterSet) ?? substring
       }
     }
 

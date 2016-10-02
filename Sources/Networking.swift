@@ -1,14 +1,14 @@
 import Foundation
 import When
 
-public class Networking: NSObject {
+public final class Networking: NSObject {
 
   enum SessionTaskKind {
-    case Data, Upload, Download
+    case data, upload, download
   }
 
   public enum Mode {
-    case Sync, Async, Limited(Int)
+    case sync, async, limited(Int)
   }
 
   public var additionalHeaders: (() -> [String: String])?
@@ -24,17 +24,18 @@ public class Networking: NSObject {
   var customHeaders = [String: String]()
   var mocks = [String: Mock]()
   var requestStorage = RequestStorage()
-  var mode: Mode = .Async
+  var mode: Mode = .async
   let queue: OperationQueue
 
   weak var sessionDelegate: URLSessionDelegate?
 
   lazy var session: URLSession = { [unowned self] in
-    return URLSession(
+    let session = URLSession(
       configuration: self.sessionConfiguration.value,
       delegate: self.sessionDelegate ?? self,
       delegateQueue: nil)
-    }()
+    return session
+  }()
 
   var requestHeaders: [String: String] {
     var headers = customHeaders
@@ -53,7 +54,7 @@ public class Networking: NSObject {
   // MARK: - Initialization
 
   public init(baseUrlString: URLStringConvertible? = nil,
-              mode: Mode = .Async,
+              mode: Mode = .async,
               sessionConfiguration: SessionConfiguration = .default,
               sessionDelegate: URLSessionDelegate? = nil) {
     self.baseUrlString = baseUrlString
@@ -71,11 +72,11 @@ public class Networking: NSObject {
     self.mode = mode
 
     switch mode {
-    case .Sync:
+    case .sync:
       queue.maxConcurrentOperationCount = 1
-    case .Async:
+    case .async:
       queue.maxConcurrentOperationCount = -1
-    case .Limited(let count):
+    case .limited(let count):
       queue.maxConcurrentOperationCount = count
     }
   }
@@ -88,7 +89,7 @@ public class Networking: NSObject {
 
     do {
       let request = beforeEach?(request) ?? request
-      urlRequest = try request.toURLRequest(baseUrlString, additionalHeaders: requestHeaders)
+      urlRequest = try request.toUrlRequest(baseUrl: baseUrlString, additionalHeaders: requestHeaders)
     } catch {
       ride.reject(error)
       return ride
@@ -207,7 +208,7 @@ public class Networking: NSObject {
 
     let prefix = baseUrlString?.urlString ?? ""
 
-    ETagStorage().add(etag, forKey: request.etagKey(prefix))
+    EtagStorage().add(value: etag, forKey: request.etagKey(prefix: prefix))
   }
 
   func handle(error: Error, on request: Requestable) {
@@ -260,7 +261,7 @@ extension Networking {
     let requests = requestStorage.requests.values
     let currentMode = mode
 
-    reset(mode: .Sync)
+    reset(mode: .sync)
 
     let lastRide = Ride()
 

@@ -1,6 +1,6 @@
 import Foundation
 
-public struct JSONSerializer: Serializing {
+public struct JsonSerializer: Serializing {
 
   let options: JSONSerialization.ReadingOptions
 
@@ -8,7 +8,7 @@ public struct JSONSerializer: Serializing {
     self.options = options
   }
 
-  public func serialize(_ data: Data, response: HTTPURLResponse) throws -> Any {
+  public func serialize(data: Data, response: HTTPURLResponse) throws -> Any {
     if response.statusCode == 204 { return NSNull() }
 
     guard data.count > 0 else {

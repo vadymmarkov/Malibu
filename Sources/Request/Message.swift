@@ -3,11 +3,11 @@ import Foundation
 public struct Message: Equatable {
 
   public var resource: URLStringConvertible
-  public var parameters: [String: AnyObject]
+  public var parameters: [String: Any]
   public var headers: [String: String]
 
   public init(resource: URLStringConvertible,
-              parameters: [String: AnyObject] = [:],
+              parameters: [String: Any] = [:],
               headers: [String: String] = [:]) {
     self.resource = resource
     self.parameters = parameters

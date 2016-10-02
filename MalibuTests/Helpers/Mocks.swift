@@ -7,7 +7,7 @@ import When
 struct GETRequest: GETRequestable {
   var message = Message(resource: "http://hyper.no")
 
-  init(parameters: [String: AnyObject] = [:], headers: [String: String] = [:]) {
+  init(parameters: [String: Any] = [:], headers: [String: String] = [:]) {
     message.parameters = parameters
     message.headers = headers
   }
@@ -21,9 +21,9 @@ struct POSTRequest: POSTRequestable {
     return content
   }
 
-  init(parameters: [String: AnyObject] = [:],
+  init(parameters: [String: Any] = [:],
        headers: [String: String] = [:],
-       contentType: ContentType = .JSON) {
+       contentType: ContentType = .json) {
     message.parameters = parameters
     message.headers = headers
     content = contentType
@@ -57,7 +57,7 @@ class TestResponseHandler: ResponseHandler {
   // MARK: - Initialization
 
   init() {
-    urlRequest = try! GETRequest().toURLRequest()
+    urlRequest = try! GETRequest().toUrlRequest()
     ride = Ride()
     response = HTTPURLResponse(url: urlRequest.url!, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!
   }

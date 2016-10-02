@@ -4,7 +4,8 @@ struct Utils {
 
   // MARK: - Storage
 
-  static let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory,
+  static let documentDirectory = NSSearchPathForDirectoriesInDomains(
+    .documentDirectory,
     .userDomainMask, true).first!
 
   static var storageDirectory: String = {

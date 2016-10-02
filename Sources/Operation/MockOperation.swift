@@ -1,6 +1,6 @@
 import Foundation
 
-class MockOperation: ConcurrentOperation, ResponseHandler {
+final class MockOperation: ConcurrentOperation, ResponseHandler {
 
   let mock: Mock
   let urlRequest: URLRequest
@@ -17,10 +17,10 @@ class MockOperation: ConcurrentOperation, ResponseHandler {
   // MARK: - Operation
 
   override func execute() {
-    DispatchQueue.main.asyncAfter(
-      deadline: DispatchTime.now() + Double(Int64(mock.delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)) { [weak self] in
-        self?.handle(self?.mock.data, response: self?.mock.response, error: self?.mock.error)
-        self?.state = .Finished
+    let when = DispatchTime.now() + mock.delay
+    DispatchQueue.main.asyncAfter(deadline: when) { [weak self] in
+      self?.handle(data: self?.mock.data, response: self?.mock.response, error: self?.mock.error)
+      self?.state = .Finished
     }
   }
 

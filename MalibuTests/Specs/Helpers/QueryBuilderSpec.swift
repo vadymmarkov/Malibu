@@ -21,7 +21,7 @@ class QueryBuilderSpec: QuickSpec {
       describe("#buildQuery") {
         context("with empty dictionary") {
           it("builds encoded query string") {
-            let parameters = [String: AnyObject]()
+            let parameters = [String: Any]()
             expect(builder.buildQuery(parameters)).to(equal(""))
           }
         }
@@ -110,7 +110,7 @@ class QueryBuilderSpec: QuickSpec {
 
       describe("#buildComponents:parameters") {
         it("builds a query component based on key and value") {
-          let parameters: [String: AnyObject] = ["firstname": "Taylor"]
+          let parameters: [String: Any] = ["firstname": "Taylor"]
           let components = builder.buildComponents(parameters: parameters)
 
           expect(components[0].0).to(equal("firstname"))

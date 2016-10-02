@@ -1,8 +1,8 @@
 import Foundation
 
-struct MIMEType {
+struct MimeType {
 
-  static func components(_ string: String) -> (type: String?, subtype: String?) {
+  static func components(from string: String) -> (type: String?, subtype: String?) {
     let trimmed = string.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
     let splitted = trimmed.substring(to: trimmed.range(of: ";")?.lowerBound ?? trimmed.endIndex)
     let array = splitted.components(separatedBy: "/")
@@ -16,7 +16,7 @@ struct MIMEType {
   // MARK: - Initialization
 
   init?(contentType: String) {
-    let components = MIMEType.components(contentType)
+    let components = MimeType.components(from: contentType)
 
     guard let type = components.type, let subtype = components.subtype else {
       return nil
@@ -28,7 +28,7 @@ struct MIMEType {
 
   // MARK: - Matches
 
-  func matches(_ mime: MIMEType) -> Bool {
+  func matches(to mime: MimeType) -> Bool {
     var result: Bool
 
     switch (type, subtype) {

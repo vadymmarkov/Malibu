@@ -5,7 +5,7 @@ import When
 
 public extension Promise where T: Wave {
 
-  public func validate(_ validator: Validating) -> Promise<Wave> {
+  public func validate(using validator: Validating) -> Promise<Wave> {
     return then({ result -> Wave in
       try validator.validate(result)
       return result
@@ -13,11 +13,11 @@ public extension Promise where T: Wave {
   }
 
   public func validate<T: Sequence>(statusCodes: T) -> Promise<Wave> where T.Iterator.Element == Int {
-    return validate(StatusCodeValidator(statusCodes: statusCodes))
+    return validate(using: StatusCodeValidator(statusCodes: statusCodes))
   }
 
   public func validate<T : Sequence>(contentTypes: T) -> Promise<Wave> where T.Iterator.Element == String {
-    return validate(ContentTypeValidator(contentTypes: contentTypes))
+    return validate(using: ContentTypeValidator(contentTypes: contentTypes))
   }
 
   public func validate() -> Promise<Wave> {

@@ -8,7 +8,7 @@ public protocol Requestable {
   var storePolicy: StorePolicy { get }
   var cachePolicy: NSURLRequest.CachePolicy { get }
 
-  func toURLRequest(_ baseURLString: URLStringConvertible?,
+  func toUrlRequest(baseUrl: URLStringConvertible?,
                     additionalHeaders: [String: String]) throws -> NSMutableURLRequest
 }
 
@@ -24,11 +24,11 @@ public extension Requestable {
     return .useProtocolCachePolicy
   }
 
-  func toURLRequest(_ baseURLString: URLStringConvertible? = nil,
-                           additionalHeaders: [String: String] = [:]) throws -> NSMutableURLRequest {
-    let prefix = baseURLString?.urlString ?? ""
+  func toUrlRequest(baseUrl: URLStringConvertible? = nil,
+                    additionalHeaders: [String: String] = [:]) throws -> NSMutableURLRequest {
+    let prefix = baseUrl?.urlString ?? ""
     let resourceString = "\(prefix)\(message.resource.urlString)"
-    let url = try buildURL(resourceString)
+    let url = try buildUrl(from: resourceString)
     let request = NSMutableURLRequest(url: url)
 
     request.httpMethod = method.rawValue
@@ -41,14 +41,14 @@ public extension Requestable {
     var data: Data?
 
     if let encoder = parameterEncoders[contentType] {
-      data = try encoder.encode(message.parameters)
+      data = try encoder.encode(parameters: message.parameters)
     } else if let encoder = contentType.encoder {
-      data = try encoder.encode(message.parameters)
+      data = try encoder.encode(parameters: message.parameters)
     }
 
     request.httpBody = data
 
-    if let body = data , contentType == .multipartFormData {
+    if let body = data, contentType == .multipartFormData {
       request.setValue("\(body.count)", forHTTPHeaderField: "Content-Length")
     }
 
@@ -59,7 +59,7 @@ public extension Requestable {
     }
 
     if etagPolicy == .enabled {
-      if let etag = ETagStorage().get(etagKey(prefix)) {
+      if let etag = EtagStorage().get(etagKey(prefix: prefix)) {
         request.setValue(etag, forHTTPHeaderField: "If-None-Match")
       }
     }
@@ -69,7 +69,7 @@ public extension Requestable {
 
   // MARK: - Helpers
 
-  func buildURL(_ string: String) throws -> URL {
+  func buildUrl(from string: String) throws -> URL {
     guard let url = URL(string: string) else {
       throw NetworkError.invalidRequestURL
     }
@@ -78,23 +78,23 @@ public extension Requestable {
       return url
     }
 
-    guard var URLComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
+    guard var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
       return url
     }
 
-    let percentEncodedQuery = (URLComponents.percentEncodedQuery.map { $0 + "&" } ?? "")
-      + QueryBuilder().buildQuery(message.parameters)
+    let percentEncodedQuery = (urlComponents.percentEncodedQuery.map { $0 + "&" } ?? "")
+      + QueryBuilder().buildQuery(from: message.parameters)
 
-    URLComponents.percentEncodedQuery = percentEncodedQuery
+    urlComponents.percentEncodedQuery = percentEncodedQuery
 
-    guard let queryURL = URLComponents.url else {
+    guard let queryURL = urlComponents.url else {
       throw NetworkError.invalidRequestURL
     }
 
     return queryURL
   }
 
-  func etagKey(_ prefix: String = "") -> String {
+  func etagKey(prefix: String = "") -> String {
     return "\(method)\(prefix)\(message.resource.urlString)\(message.parameters.description)"
   }
 

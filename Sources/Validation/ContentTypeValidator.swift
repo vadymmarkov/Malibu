@@ -16,17 +16,17 @@ public struct ContentTypeValidator<T : Sequence>: Validating where T.Iterator.El
     let response = result.response
 
     if let responseContentType = response.mimeType,
-      let responseMIMEType = MIMEType(contentType: responseContentType) {
+      let responseMimeType = MimeType(contentType: responseContentType) {
       for contentType in contentTypes {
-        if MIMEType(contentType: contentType)?.matches(responseMIMEType) == true {
+        if MimeType(contentType: contentType)?.matches(to: responseMimeType) == true {
           return
         }
       }
     } else {
       for contentType in contentTypes {
-        let expectedMIMEType = MIMEType(contentType: contentType)
+        let expectedMimeType = MimeType(contentType: contentType)
 
-        if expectedMIMEType?.type == "*" && expectedMIMEType?.subtype == "*" {
+        if expectedMimeType?.type == "*" && expectedMimeType?.subtype == "*" {
           return
         }
       }

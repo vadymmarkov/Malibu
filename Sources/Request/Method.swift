@@ -1,11 +1,11 @@
 public enum Method: String {
-  case GET
-  case POST
-  case PUT
-  case PATCH
-  case DELETE
-  case HEAD
-  case OPTIONS
-  case TRACE
-  case CONNECT
+  case get = "GET"
+  case post = "POST"
+  case put = "PUT"
+  case patch = "PATCH"
+  case delete = "DELETE"
+  case head = "HEAD"
+  case options = "OPTIONS"
+  case trace = "TRACE"
+  case connect = "CONNECT"
 }

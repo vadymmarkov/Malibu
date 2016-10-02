@@ -1,12 +1,12 @@
 import Foundation
 
-protocol ETagStoring {
-  func add(_ value: String, forKey key: String)
+protocol EtagStoring {
+  func add(value: String, forKey key: String)
   func get(_ key: String) -> String?
   func clear()
 }
 
-class ETagStorage: ETagStoring {
+final class EtagStorage: EtagStoring {
 
   static fileprivate(set) var path = Utils.filePath("ETags.dictionary")
 
@@ -25,7 +25,7 @@ class ETagStorage: ETagStoring {
 
   // MARK: - Public Methods
 
-  func add(_ value: String, forKey key: String) {
+  func add(value: String, forKey key: String) {
     dictionary[key] = value
     save()
   }
@@ -45,18 +45,18 @@ class ETagStorage: ETagStoring {
     let data: Data = NSKeyedArchiver.archivedData(withRootObject: dictionary)
 
     do {
-      try data.write(to: URL(fileURLWithPath: ETagStorage.path), options: .atomic)
+      try data.write(to: URL(fileURLWithPath: EtagStorage.path), options: .atomic)
     } catch {
-      NSLog("Malibu: Error in saving of \(ETagStorage.path) to the local storage")
+      NSLog("Malibu: Error in saving of \(EtagStorage.path) to the local storage")
     }
   }
 
   func reload() {
     dictionary = [:]
 
-    guard fileManager.fileExists(atPath: ETagStorage.path) else { return }
+    guard fileManager.fileExists(atPath: EtagStorage.path) else { return }
 
-    guard let data = NSKeyedUnarchiver.unarchiveObject(withFile: ETagStorage.path)
+    guard let data = NSKeyedUnarchiver.unarchiveObject(withFile: EtagStorage.path)
       as? [String : String] else { return }
 
     dictionary = data

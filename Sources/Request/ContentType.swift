@@ -59,7 +59,7 @@ public enum ContentType {
 
     switch self {
     case .json:
-      encoder = JSONEncoder()
+      encoder = JsonEncoder()
     case .formURLEncoded:
       encoder = FormURLEncoder()
     case .multipartFormData:
