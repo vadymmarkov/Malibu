@@ -84,6 +84,6 @@ extension ContentType: Hashable {
 
 // MARK: - Equatable
 
-public func ==(lhs: ContentType, rhs: ContentType) -> Bool {
+public func == (lhs: ContentType, rhs: ContentType) -> Bool {
   return lhs.hashValue == rhs.hashValue
 }

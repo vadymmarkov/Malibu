@@ -16,7 +16,7 @@ public extension Promise where T: Wave {
     return validate(using: StatusCodeValidator(statusCodes: statusCodes))
   }
 
-  public func validate<T : Sequence>(contentTypes: T) -> Promise<Wave> where T.Iterator.Element == String {
+  public func validate<T: Sequence>(contentTypes: T) -> Promise<Wave> where T.Iterator.Element == String {
     return validate(using: ContentTypeValidator(contentTypes: contentTypes))
   }
 

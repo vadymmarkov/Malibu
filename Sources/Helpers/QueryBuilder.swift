@@ -19,7 +19,7 @@ public struct QueryBuilder {
       guard let value = parameters[key] else {
         continue
       }
-      
+
       components += buildComponents(key: key, value: value)
     }
 
@@ -47,7 +47,10 @@ public struct QueryBuilder {
   }
 
   public func escape(_ string: String) -> String {
-    let allowedCharacters = (CharacterSet.urlQueryAllowed as NSCharacterSet).mutableCopy() as! NSMutableCharacterSet
+    guard let allowedCharacters = (CharacterSet.urlQueryAllowed as NSCharacterSet).mutableCopy() as? NSMutableCharacterSet else {
+      return string
+    }
+
     allowedCharacters.removeCharacters(in: escapingCharacters)
 
     var escapedString = ""
@@ -62,7 +65,7 @@ public struct QueryBuilder {
         guard let endIndex = string.index(index, offsetBy: 50, limitedBy: string.endIndex) else {
           break
         }
-        
+
         let range = Range(index..<endIndex)
         let substring = string.substring(with: range)
 

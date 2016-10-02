@@ -16,7 +16,7 @@ public final class Wave: Equatable {
 
 // MARK: - Equatable
 
-public func ==(lhs: Wave, rhs: Wave) -> Bool {
+public func == (lhs: Wave, rhs: Wave) -> Bool {
   return lhs.data == rhs.data
     && lhs.request == rhs.request
     && lhs.response == rhs.response

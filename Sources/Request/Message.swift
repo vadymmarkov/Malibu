@@ -15,7 +15,7 @@ public struct Message: Equatable {
   }
 }
 
-public func ==(lhs: Message, rhs: Message) -> Bool {
+public func == (lhs: Message, rhs: Message) -> Bool {
   return lhs.resource.urlString == rhs.resource.urlString
     && (lhs.parameters as NSDictionary).isEqual(rhs.parameters as NSDictionary)
     && lhs.headers == rhs.headers

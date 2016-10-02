@@ -59,7 +59,7 @@ extension NetworkError: Hashable {
 
 // MARK: - Equatable
 
-public func ==(lhs: NetworkError, rhs: NetworkError) -> Bool {
+public func == (lhs: NetworkError, rhs: NetworkError) -> Bool {
   return lhs.reason == rhs.reason
 }
 

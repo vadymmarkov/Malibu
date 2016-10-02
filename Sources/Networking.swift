@@ -97,26 +97,11 @@ public final class Networking: NSObject {
 
     preProcessRequest?(urlRequest)
 
-    let operation: ConcurrentOperation
-    let resultUrlRequest = urlRequest as URLRequest
-
-    switch Malibu.mode {
-    case .regular:
-      operation = DataOperation(session: session, urlRequest: resultUrlRequest, ride: ride)
-    case .partial:
-      if let mock = prepareMock(for: request) {
-        operation = MockOperation(mock: mock, urlRequest: resultUrlRequest, ride: ride)
-      } else {
-        operation = DataOperation(session: session, urlRequest: resultUrlRequest, ride: ride)
-      }
-    case .fake:
-      guard let mock = prepareMock(for: request) else {
-        ride.reject(NetworkError.noMockProvided)
+    guard let operation = buildOperation(ride: ride, request: request, urlRequest: urlRequest as URLRequest)
+      else {
         return ride
-      }
-
-      operation = MockOperation(mock: mock, urlRequest: resultUrlRequest, ride: ride)
     }
+
 
     let etagPromise = ride.then { [weak self] result -> Wave in
       self?.saveEtag(request: request, response: result.response)
@@ -131,6 +116,7 @@ public final class Networking: NSObject {
           logger.requestLogger.init(level: logger.level).log(request: request, urlRequest: value.request)
           logger.responseLogger.init(level: logger.level).log(response: value.response)
         }
+
         nextRide.resolve(value)
       })
       .fail({ [weak self] error in
@@ -165,6 +151,30 @@ public final class Networking: NSObject {
     middleware(beforePromise)
 
     return ride
+  }
+
+  func buildOperation(ride: Ride, request: Requestable, urlRequest: URLRequest) -> ConcurrentOperation? {
+    var operation: ConcurrentOperation?
+
+    switch Malibu.mode {
+    case .regular:
+      operation = DataOperation(session: session, urlRequest: urlRequest, ride: ride)
+    case .partial:
+      if let mock = prepareMock(for: request) {
+        operation = MockOperation(mock: mock, urlRequest: urlRequest, ride: ride)
+      } else {
+        operation = DataOperation(session: session, urlRequest: urlRequest, ride: ride)
+      }
+    case .fake:
+      guard let mock = prepareMock(for: request) else {
+        ride.reject(NetworkError.noMockProvided)
+        break
+      }
+
+      operation = MockOperation(mock: mock, urlRequest: urlRequest, ride: ride)
+    }
+
+    return operation
   }
 
   // MARK: - Authentication

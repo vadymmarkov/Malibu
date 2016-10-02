@@ -26,7 +26,7 @@ final class DataOperation: ConcurrentOperation, ResponseHandler {
       weakSelf.handle(data: data, response: response, error: error)
 
       self?.state = .Finished
-    }) 
+    })
 
     task?.resume()
   }
