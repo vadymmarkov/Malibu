@@ -10,7 +10,7 @@ class ETagStorageSpec: QuickSpec {
       let value = "value", key = "key"
       var storage: ETagStorage!
 
-      let fileManager = NSFileManager.defaultManager()
+      let fileManager = FileManager.default
 
       beforeEach {
         storage = ETagStorage()
@@ -52,7 +52,7 @@ class ETagStorageSpec: QuickSpec {
           storage.add("value", forKey: "key")
           storage.save()
 
-          let exists = NSFileManager.defaultManager().fileExistsAtPath(filePath)
+          let exists = FileManager.defaultManager().fileExistsAtPath(filePath)
 
           expect(exists).to(beTrue())
         }

@@ -6,7 +6,7 @@ class UtilsSpec: QuickSpec {
 
   override func spec() {
     describe("Utils") {
-      let fileManager = NSFileManager.defaultManager()
+      let fileManager = FileManager.default
 
       afterSuite {
         do {
@@ -16,8 +16,8 @@ class UtilsSpec: QuickSpec {
 
       describe(".documentDirectory") {
         it("returns document directory") {
-          let documentDirectory =  NSSearchPathForDirectoriesInDomains(.DocumentDirectory,
-            .UserDomainMask, true).first!
+          let documentDirectory =  NSSearchPathForDirectoriesInDomains(.documentDirectory,
+            .userDomainMask, true).first!
 
           expect(Utils.documentDirectory).to(equal(documentDirectory))
         }

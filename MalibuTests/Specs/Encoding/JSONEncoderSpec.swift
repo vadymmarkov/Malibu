@@ -15,8 +15,8 @@ class JSONParameterEncoderSpec: QuickSpec {
       describe("#encode") {
         it("encodes a dictionary of parameters to NSData object") {
           let parameters = ["firstname": "John", "lastname": "Hyperseed"]
-          let data = try! NSJSONSerialization.dataWithJSONObject(parameters,
-            options: NSJSONWritingOptions())
+          let data = try! JSONSerialization.data(withJSONObject: parameters,
+            options: JSONSerialization.WritingOptions())
 
           expect{ try encoder.encode(parameters) }.to(equal(data))
         }

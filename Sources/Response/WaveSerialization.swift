@@ -5,19 +5,19 @@ import When
 
 public extension Promise where T: Wave {
 
-  public func toData() -> Promise<NSData> {
-    return then({ result -> NSData in
+  public func toData() -> Promise<Data> {
+    return then({ result -> Data in
       return try DataSerializer().serialize(result.data, response: result.response)
     })
   }
 
-  public func toString(encoding: NSStringEncoding? = nil) -> Promise<String> {
+  public func toString(_ encoding: String.Encoding? = nil) -> Promise<String> {
     return then({ result -> String in
       return try StringSerializer(encoding: encoding).serialize(result.data, response: result.response)
     })
   }
 
-  public func toJSONArray(options: NSJSONReadingOptions = .AllowFragments) -> Promise<[[String: AnyObject]]> {
+  public func toJSONArray(_ options: JSONSerialization.ReadingOptions = .allowFragments) -> Promise<[[String: AnyObject]]> {
     return then({ result -> [[String: AnyObject]] in
       let serializer = JSONSerializer(options: options)
 
@@ -29,13 +29,13 @@ public extension Promise where T: Wave {
       }
 
       guard let array = data as? [[String : AnyObject]]
-        else { throw Error.JSONArraySerializationFailed }
+        else { throw NetworkError.jsonArraySerializationFailed }
 
       return array
     })
   }
 
-  public func toJSONDictionary(options: NSJSONReadingOptions = .AllowFragments) -> Promise<[String: AnyObject]> {
+  public func toJSONDictionary(_ options: JSONSerialization.ReadingOptions = .allowFragments) -> Promise<[String: AnyObject]> {
     return then({ result -> [String: AnyObject] in
       let serializer = JSONSerializer(options: options)
 
@@ -47,7 +47,7 @@ public extension Promise where T: Wave {
       }
 
       guard let dictionary = data as? [String : AnyObject]
-        else { throw Error.JSONDictionarySerializationFailed }
+        else { throw NetworkError.jsonDictionarySerializationFailed }
 
       return dictionary
     })

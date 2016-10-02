@@ -6,9 +6,9 @@ public protocol Requestable {
   var contentType: ContentType { get }
   var etagPolicy: ETagPolicy { get }
   var storePolicy: StorePolicy { get }
-  var cachePolicy: NSURLRequestCachePolicy { get }
+  var cachePolicy: NSURLRequest.CachePolicy { get }
 
-  func toURLRequest(baseURLString: URLStringConvertible?,
+  func toURLRequest(_ baseURLString: URLStringConvertible?,
                     additionalHeaders: [String: String]) throws -> NSMutableURLRequest
 }
 
@@ -17,28 +17,28 @@ public extension Requestable {
   // MARK: - Default implementations
 
   var storePolicy: StorePolicy {
-    return .Unspecified
+    return .unspecified
   }
 
-  var cachePolicy: NSURLRequestCachePolicy {
-    return .UseProtocolCachePolicy
+  var cachePolicy: NSURLRequest.CachePolicy {
+    return .useProtocolCachePolicy
   }
 
-  func toURLRequest(baseURLString: URLStringConvertible? = nil,
+  func toURLRequest(_ baseURLString: URLStringConvertible? = nil,
                            additionalHeaders: [String: String] = [:]) throws -> NSMutableURLRequest {
-    let prefix = baseURLString?.URLString ?? ""
-    let resourceString = "\(prefix)\(message.resource.URLString)"
-    let URL = try buildURL(resourceString)
-    let request = NSMutableURLRequest(URL: URL)
+    let prefix = baseURLString?.urlString ?? ""
+    let resourceString = "\(prefix)\(message.resource.urlString)"
+    let url = try buildURL(resourceString)
+    let request = NSMutableURLRequest(url: url)
 
-    request.HTTPMethod = method.rawValue
+    request.httpMethod = method.rawValue
     request.cachePolicy = cachePolicy
 
     if let contentTypeHeader = contentType.header {
       request.setValue(contentTypeHeader, forHTTPHeaderField: "Content-Type")
     }
 
-    var data: NSData?
+    var data: Data?
 
     if let encoder = parameterEncoders[contentType] {
       data = try encoder.encode(message.parameters)
@@ -46,10 +46,10 @@ public extension Requestable {
       data = try encoder.encode(message.parameters)
     }
 
-    request.HTTPBody = data
+    request.httpBody = data
 
-    if let body = data where contentType == .MultipartFormData {
-      request.setValue("\(body.length)", forHTTPHeaderField: "Content-Length")
+    if let body = data , contentType == .multipartFormData {
+      request.setValue("\(body.count)", forHTTPHeaderField: "Content-Length")
     }
 
     [additionalHeaders, message.headers].forEach {
@@ -58,7 +58,7 @@ public extension Requestable {
       }
     }
 
-    if etagPolicy == .Enabled {
+    if etagPolicy == .enabled {
       if let etag = ETagStorage().get(etagKey(prefix)) {
         request.setValue(etag, forHTTPHeaderField: "If-None-Match")
       }
@@ -69,17 +69,17 @@ public extension Requestable {
 
   // MARK: - Helpers
 
-  func buildURL(string: String) throws -> NSURL {
-    guard let URL = NSURL(string: string) else {
-      throw Error.InvalidRequestURL
+  func buildURL(_ string: String) throws -> URL {
+    guard let url = URL(string: string) else {
+      throw NetworkError.invalidRequestURL
     }
 
-    guard contentType == .Query && !message.parameters.isEmpty else {
-      return URL
+    guard contentType == .query && !message.parameters.isEmpty else {
+      return url
     }
 
-    guard let URLComponents = NSURLComponents(URL: URL, resolvingAgainstBaseURL: false) else {
-      return URL
+    guard var URLComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
+      return url
     }
 
     let percentEncodedQuery = (URLComponents.percentEncodedQuery.map { $0 + "&" } ?? "")
@@ -87,18 +87,18 @@ public extension Requestable {
 
     URLComponents.percentEncodedQuery = percentEncodedQuery
 
-    guard let queryURL = URLComponents.URL else {
-      throw Error.InvalidRequestURL
+    guard let queryURL = URLComponents.url else {
+      throw NetworkError.invalidRequestURL
     }
 
     return queryURL
   }
 
-  func etagKey(prefix: String = "") -> String {
-    return "\(method)\(prefix)\(message.resource.URLString)\(message.parameters.description)"
+  func etagKey(_ prefix: String = "") -> String {
+    return "\(method)\(prefix)\(message.resource.urlString)\(message.parameters.description)"
   }
 
   var key: String {
-    return "\(method) \(message.resource.URLString)"
+    return "\(method) \(message.resource.urlString)"
   }
 }

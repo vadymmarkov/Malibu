@@ -8,11 +8,11 @@ public struct QueryBuilder {
 
   public init() {}
 
-  public func buildQuery(parameters: [String: AnyObject]) -> String {
-    return buildComponents(parameters: parameters).map({ "\($0)=\($1)" }).joinWithSeparator("&")
+  public func buildQuery(_ parameters: [String: AnyObject]) -> String {
+    return buildComponents(parameters: parameters).map({ "\($0)=\($1)" }).joined(separator: "&")
   }
 
-  public func buildComponents(parameters parameters: [String: AnyObject]) -> [Component] {
+  public func buildComponents(parameters: [String: AnyObject]) -> [Component] {
     var components: [Component] = []
 
     parameters.forEach { key, value in
@@ -22,7 +22,7 @@ public struct QueryBuilder {
     return components
   }
 
-  public func buildComponents(key key: String, value: AnyObject) -> [Component] {
+  public func buildComponents(key: String, value: AnyObject) -> [Component] {
     var components: [Component] = []
 
     if let dictionary = value as? [String: AnyObject] {
@@ -40,24 +40,27 @@ public struct QueryBuilder {
     return components
   }
 
-  public func escape(string: String) -> String {
-    let allowedCharacters = NSCharacterSet.URLQueryAllowedCharacterSet().mutableCopy() as! NSMutableCharacterSet
-    allowedCharacters.removeCharactersInString(escapingCharacters)
+  public func escape(_ string: String) -> String {
+    let allowedCharacters = (CharacterSet.urlQueryAllowed as NSCharacterSet).mutableCopy() as! NSMutableCharacterSet
+    allowedCharacters.removeCharacters(in: escapingCharacters)
 
     var escapedString = ""
 
     if #available(iOS 8.3, *) {
-      escapedString = string.stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacters) ?? string
+      escapedString = string.addingPercentEncoding(withAllowedCharacters: allowedCharacters as CharacterSet) ?? string
     } else {
       var index = string.startIndex
 
       while index != string.endIndex {
-        let endIndex = index.advancedBy(50, limit: string.endIndex)
+        guard let endIndex = string.index(index, offsetBy: 50, limitedBy: string.endIndex) else {
+          break
+        }
+        
         let range = Range(index..<endIndex)
-        let substring = string.substringWithRange(range)
+        let substring = string.substring(with: range)
 
         index = endIndex
-        escapedString += substring.stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacters)
+        escapedString += substring.addingPercentEncoding(withAllowedCharacters: allowedCharacters as CharacterSet)
           ?? substring
       }
     }

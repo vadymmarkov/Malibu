@@ -1,19 +1,19 @@
 import Foundation
 
 protocol ETagStoring {
-  func add(value: String, forKey key: String)
-  func get(key: String) -> String?
+  func add(_ value: String, forKey key: String)
+  func get(_ key: String) -> String?
   func clear()
 }
 
 class ETagStorage: ETagStoring {
 
-  static private(set) var path = Utils.filePath("ETags.dictionary")
+  static fileprivate(set) var path = Utils.filePath("ETags.dictionary")
 
-  private var dictionary = [String: String]()
+  fileprivate var dictionary = [String: String]()
 
-  private let fileManager: NSFileManager = {
-    let manager = NSFileManager.defaultManager()
+  fileprivate let fileManager: FileManager = {
+    let manager = FileManager.default
     return manager
   }()
 
@@ -25,12 +25,12 @@ class ETagStorage: ETagStoring {
 
   // MARK: - Public Methods
 
-  func add(value: String, forKey key: String) {
+  func add(_ value: String, forKey key: String) {
     dictionary[key] = value
     save()
   }
 
-  func get(key: String) -> String? {
+  func get(_ key: String) -> String? {
     return dictionary[key]
   }
 
@@ -42,10 +42,10 @@ class ETagStorage: ETagStoring {
   // MARK: - Helpers
 
   func save() {
-    let data: NSData = NSKeyedArchiver.archivedDataWithRootObject(dictionary)
+    let data: Data = NSKeyedArchiver.archivedData(withRootObject: dictionary)
 
     do {
-      try data.writeToFile(ETagStorage.path, options: .DataWritingAtomic)
+      try data.write(to: URL(fileURLWithPath: ETagStorage.path), options: .atomic)
     } catch {
       NSLog("Malibu: Error in saving of \(ETagStorage.path) to the local storage")
     }
@@ -54,9 +54,9 @@ class ETagStorage: ETagStoring {
   func reload() {
     dictionary = [:]
 
-    guard fileManager.fileExistsAtPath(ETagStorage.path) else { return }
+    guard fileManager.fileExists(atPath: ETagStorage.path) else { return }
 
-    guard let data = NSKeyedUnarchiver.unarchiveObjectWithFile(ETagStorage.path)
+    guard let data = NSKeyedUnarchiver.unarchiveObject(withFile: ETagStorage.path)
       as? [String : String] else { return }
 
     dictionary = data

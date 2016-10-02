@@ -6,29 +6,29 @@ import Nimble
 class WaveSerializationSpec: QuickSpec, NetworkPromiseSpec {
 
   var networkPromise: Ride!
-  var request: NSURLRequest!
-  var data: NSData!
+  var request: URLRequest!
+  var data: Data!
 
   override func spec() {
     describe("WaveSerialization") {
 
-      let URL = NSURL(string: "http://hyper.no")!
-      let response = NSHTTPURLResponse(URL: URL, statusCode: 200, HTTPVersion: "HTTP/2.0", headerFields: nil)!
+      let URL = Foundation.URL(string: "http://hyper.no")!
+      let response = HTTPURLResponse(url: URL, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!
 
       // MARK: - Specs
 
       beforeEach {
         self.networkPromise = Ride()
-        self.request = NSURLRequest(URL: NSURL(string: "http://hyper.no")!)
-        self.data = try! NSJSONSerialization.dataWithJSONObject([["name": "Taylor"]],
-          options: NSJSONWritingOptions())
+        self.request = URLRequest(url: Foundation.URL(string: "http://hyper.no")!)
+        self.data = try! JSONSerialization.data(withJSONObject: [["name": "Taylor"]],
+          options: JSONSerialization.WritingOptions())
       }
 
       describe("#toString") {
         var promise: Promise<String>!
 
         beforeEach {
-          promise = self.networkPromise.toString(NSUTF8StringEncoding)
+          promise = self.networkPromise.toString(String.Encoding.utf8)
         }
 
         context("when response is rejected") {
@@ -40,16 +40,16 @@ class WaveSerializationSpec: QuickSpec, NetworkPromiseSpec {
         context("when response is resolved") {
           context("when serialization fails") {
             it("rejects promise with an error") {
-              self.data = "string".dataUsingEncoding(NSUTF32StringEncoding)
+              self.data = "string".data(using: String.Encoding.utf32)
 
-              self.testFailedPromise(promise, error: Error.StringSerializationFailed(NSUTF8StringEncoding),
+              self.testFailedPromise(promise, error: Error.StringSerializationFailed(String.Encoding.utf8),
                 response: response)
             }
           }
 
           context("when there is no data in response") {
             it("rejects promise with an error") {
-              self.data = NSData()
+              self.data = Data()
 
               self.testFailedPromise(promise, error: Error.NoDataInResponse,
                 response: response)
@@ -58,8 +58,8 @@ class WaveSerializationSpec: QuickSpec, NetworkPromiseSpec {
 
           context("when response status code is 204 No Content") {
             it("resolves promise with an empty string") {
-              self.data = NSData()
-              let response = NSHTTPURLResponse(URL: URL, statusCode: 204, HTTPVersion: "HTTP/2.0", headerFields: nil)!
+              self.data = Data()
+              let response = HTTPURLResponse(url: URL, statusCode: 204, httpVersion: "HTTP/2.0", headerFields: nil)!
 
               self.testSucceededPromise(promise, response: response) { result in
                 expect(result.isEmpty).to(beTrue())
@@ -70,7 +70,7 @@ class WaveSerializationSpec: QuickSpec, NetworkPromiseSpec {
           context("when serialization succeeded") {
             it("resolves promise with a result") {
               let string = "string"
-              self.data = string.dataUsingEncoding(NSUTF8StringEncoding)
+              self.data = string.data(using: String.Encoding.utf8)
 
               self.testSucceededPromise(promise, response: response) { result in
                 expect(result == string).to(beTrue())
@@ -96,8 +96,8 @@ class WaveSerializationSpec: QuickSpec, NetworkPromiseSpec {
         context("when response is resolved") {
           context("when serialization fails") {
             it("rejects promise with an error") {
-              self.data = try! NSJSONSerialization.dataWithJSONObject(["name": "Taylor"],
-                options: NSJSONWritingOptions())
+              self.data = try! JSONSerialization.data(withJSONObject: ["name": "Taylor"],
+                options: JSONSerialization.WritingOptions())
 
               self.testFailedPromise(promise, error: Error.JSONArraySerializationFailed,
                 response: response)
@@ -106,7 +106,7 @@ class WaveSerializationSpec: QuickSpec, NetworkPromiseSpec {
 
           context("when there is no data in response") {
             it("rejects promise with an error") {
-              self.data = NSData()
+              self.data = Data()
 
               self.testFailedPromise(promise, error: Error.NoDataInResponse,
                 response: response)
@@ -115,8 +115,8 @@ class WaveSerializationSpec: QuickSpec, NetworkPromiseSpec {
 
           context("when response status code is 204 No Content") {
             it("resolves promise with an empty array") {
-              self.data = NSData()
-              let response = NSHTTPURLResponse(URL: URL, statusCode: 204, HTTPVersion: "HTTP/2.0", headerFields: nil)!
+              self.data = Data()
+              let response = HTTPURLResponse(url: URL, statusCode: 204, httpVersion: "HTTP/2.0", headerFields: nil)!
 
               self.testSucceededPromise(promise, response: response) { result in
                 expect(result).to(equal([]))
@@ -127,8 +127,8 @@ class WaveSerializationSpec: QuickSpec, NetworkPromiseSpec {
           context("when serialization succeeded") {
             it("resolves promise with a result") {
               let array = [["name": "Taylor"]]
-              self.data = try! NSJSONSerialization.dataWithJSONObject(array,
-                options: NSJSONWritingOptions())
+              self.data = try! JSONSerialization.data(withJSONObject: array,
+                options: JSONSerialization.WritingOptions())
 
               self.testSucceededPromise(promise, response: response) { result in
                 expect(result).to(equal(array))
@@ -154,8 +154,8 @@ class WaveSerializationSpec: QuickSpec, NetworkPromiseSpec {
         context("when response is resolved") {
           context("when serialization fails") {
             it("rejects promise with an error") {
-              self.data = try! NSJSONSerialization.dataWithJSONObject([["name": "Taylor"]],
-                options: NSJSONWritingOptions())
+              self.data = try! JSONSerialization.data(withJSONObject: [["name": "Taylor"]],
+                options: JSONSerialization.WritingOptions())
 
               self.testFailedPromise(promise, error: Error.JSONDictionarySerializationFailed,
                 response: response)
@@ -164,7 +164,7 @@ class WaveSerializationSpec: QuickSpec, NetworkPromiseSpec {
 
           context("when there is no data in response") {
             it("rejects promise with an error") {
-              self.data = NSData()
+              self.data = Data()
 
               self.testFailedPromise(promise, error: Error.NoDataInResponse,
                 response: response)
@@ -173,8 +173,8 @@ class WaveSerializationSpec: QuickSpec, NetworkPromiseSpec {
 
           context("when response status code is 204 No Content") {
             it("resolves promise with an empty dictionary") {
-              self.data = NSData()
-              let response = NSHTTPURLResponse(URL: URL, statusCode: 204, HTTPVersion: "HTTP/2.0", headerFields: nil)!
+              self.data = Data()
+              let response = HTTPURLResponse(url: URL, statusCode: 204, httpVersion: "HTTP/2.0", headerFields: nil)!
 
               self.testSucceededPromise(promise, response: response) { result in
                 if let stringDictionary = result as? [String: String] {
@@ -187,8 +187,8 @@ class WaveSerializationSpec: QuickSpec, NetworkPromiseSpec {
           context("when serialization succeeded") {
             it("resolves promise with a result") {
               let dictionary = ["name": "Taylor"]
-              self.data = try! NSJSONSerialization.dataWithJSONObject(dictionary,
-                options: NSJSONWritingOptions())
+              self.data = try! JSONSerialization.data(withJSONObject: dictionary,
+                options: JSONSerialization.WritingOptions())
 
               self.testSucceededPromise(promise, response: response) { result in
                 if let stringDictionary = result as? [String: String] {

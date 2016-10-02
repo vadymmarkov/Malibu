@@ -7,8 +7,8 @@ class JSONSerializerSpec: QuickSpec {
   override func spec() {
     describe("JSONSerializer") {
       var serializer: JSONSerializer!
-      let URL = NSURL(string: "http://hyper.no")!
-      let response = NSHTTPURLResponse(URL: URL, statusCode: 200, HTTPVersion: "HTTP/2.0", headerFields: nil)!
+      let url = URL(string: "http://hyper.no")!
+      let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!
 
       beforeEach {
         serializer = JSONSerializer()
@@ -16,35 +16,35 @@ class JSONSerializerSpec: QuickSpec {
 
       describe("#init") {
         it("sets default options") {
-          expect(serializer.options).to(equal(NSJSONReadingOptions.AllowFragments))
+          expect(serializer.options).to(equal(JSONSerialization.ReadingOptions.AllowFragments))
         }
 
         it("sets parameter options to the instance var") {
           serializer = JSONSerializer(options: .MutableContainers)
-          expect(serializer.options).to(equal(NSJSONReadingOptions.MutableContainers))
+          expect(serializer.options).to(equal(JSONSerialization.ReadingOptions.MutableContainers))
         }
       }
 
       describe("#serialize") {
         context("when there is no data in response") {
           it("throws an error") {
-            let data = NSData()
+            let data = Data()
             expect{ try serializer.serialize(data, response: response) }.to(throwError(Error.NoDataInResponse))
           }
         }
 
         context("when the data will not produce valid JSON") {
           it("throws an error") {
-            let data = "ff^%^$".dataUsingEncoding(NSUTF8StringEncoding)!
+            let data = "ff^%^$".data(using: String.Encoding.utf8)!
             expect{ try serializer.serialize(data, response: response) }.to(throwError())
           }
         }
 
         context("when response status code is 204 No Content") {
           it("does not throw an error and returns NSNull") {
-            let response = NSHTTPURLResponse(URL: URL, statusCode: 204,
-              HTTPVersion: "HTTP/2.0", headerFields: nil)!
-            let data = NSData()
+            let response = HTTPURLResponse(url: url, statusCode: 204,
+              httpVersion: "HTTP/2.0", headerFields: nil)!
+            let data = Data()
             var result: AnyObject?
 
             expect{ result = try serializer.serialize(data, response: response) }.toNot(throwError())
@@ -55,8 +55,8 @@ class JSONSerializerSpec: QuickSpec {
         context("when serialization succeeded") {
           it("does not throw an error and returns result") {
             let dictionary = ["name": "Taylor"]
-            let data = try! NSJSONSerialization.dataWithJSONObject(dictionary,
-              options: NSJSONWritingOptions())
+            let data = try! JSONSerialization.data(withJSONObject: dictionary,
+              options: JSONSerialization.WritingOptions())
             var result: AnyObject?
 
             expect{ result = try serializer.serialize(data, response: response) }.toNot(throwError())

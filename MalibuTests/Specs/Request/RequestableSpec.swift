@@ -7,7 +7,7 @@ class RequestableSpec: QuickSpec {
   override func spec() {
     describe("Requestable") {
       var request: Requestable!
-      var URLRequest: NSURLRequest!
+      var urlRequest: URLRequest!
 
       beforeEach {
         request = POSTRequest(parameters: ["key": "value"], headers: ["key": "value"])
@@ -16,7 +16,7 @@ class RequestableSpec: QuickSpec {
 
       afterSuite {
         do {
-          try NSFileManager.defaultManager().removeItemAtPath(Utils.storageDirectory)
+          try FileManager.defaultManager().removeItemAtPath(Utils.storageDirectory)
         } catch {}
       }
 
@@ -28,7 +28,7 @@ class RequestableSpec: QuickSpec {
 
       describe("#cachePolicy") {
         it("has default value") {
-          expect(request.cachePolicy).to(equal(NSURLRequestCachePolicy.UseProtocolCachePolicy))
+          expect(request.cachePolicy).to(equal(NSURLRequest.CachePolicy.UseProtocolCachePolicy))
         }
       }
 
@@ -43,14 +43,14 @@ class RequestableSpec: QuickSpec {
         context("when there are no errors") {
           context("without base URL") {
             it("does not throw an error and returns created NSMutableURLRequest") {
-              expect{ URLRequest = try request.toURLRequest() }.toNot(throwError())
-              expect(URLRequest.URL).to(equal(NSURL(string: request.message.resource.URLString)))
-              expect(URLRequest.HTTPMethod).to(equal(Method.POST.rawValue))
-              expect(URLRequest.cachePolicy).to(equal(request.cachePolicy))
-              expect(URLRequest.allHTTPHeaderFields?["Content-Type"]).to(equal(request.contentType.header))
-              expect(URLRequest.HTTPBody).to(equal(
+              expect{ urlRequest = try request.toURLRequest() }.toNot(throwError())
+              expect(URLRequest.URL).to(equal(URL(string: request.message.resource.URLString)))
+              expect(urlRequest.httpMethod).to(equal(Method.POST.rawValue))
+              expect(urlRequest.cachePolicy).to(equal(request.cachePolicy))
+              expect(urlRequest.allHTTPHeaderFields?["Content-Type"]).to(equal(request.contentType.header))
+              expect(urlRequest.HTTPBody).to(equal(
                 try! request.contentType.encoder?.encode(request.message.parameters)))
-              expect(URLRequest.allHTTPHeaderFields?["key"]).to(equal("value"))
+              expect(urlRequest.allHTTPHeaderFields?["key"]).to(equal("value"))
             }
           }
 
@@ -58,8 +58,8 @@ class RequestableSpec: QuickSpec {
             it("does not throw an error and returns created NSMutableURLRequest") {
               request.message.resource = "/about"
 
-              expect { URLRequest = try request.toURLRequest("http://hyper.no") }.toNot(throwError())
-              expect(URLRequest.URL?.absoluteString).to(equal("http://hyper.no/about"))
+              expect { urlRequest = try request.toURLRequest("http://hyper.no") }.toNot(throwError())
+              expect(urlRequest.url?.absoluteString).to(equal("http://hyper.no/about"))
             }
           }
 
@@ -68,10 +68,10 @@ class RequestableSpec: QuickSpec {
               let headers = ["foo": "bar", "key": "bar"]
               request.message.resource = "/about"
 
-              expect { URLRequest = try request.toURLRequest("http://hyper.no", additionalHeaders: headers) }.toNot(throwError())
+              expect { urlRequest = try request.toURLRequest("http://hyper.no", additionalHeaders: headers) }.toNot(throwError())
 
-              expect(URLRequest.allHTTPHeaderFields?["foo"]).to(equal("bar"))
-              expect(URLRequest.allHTTPHeaderFields?["key"]).to(equal("value"))
+              expect(urlRequest.allHTTPHeaderFields?["foo"]).to(equal("bar"))
+              expect(urlRequest.allHTTPHeaderFields?["key"]).to(equal("value"))
             }
           }
 
@@ -87,16 +87,16 @@ class RequestableSpec: QuickSpec {
 
                 storage.add(etag, forKey: request.etagKey())
 
-                let URLRequest = try! request.toURLRequest()
+                let urlRequest = try! request.toURLRequest()
 
-                expect(URLRequest.allHTTPHeaderFields?["If-None-Match"]).to(equal(etag))
+                expect(urlRequest.allHTTPHeaderFields?["If-None-Match"]).to(equal(etag))
               }
             }
 
             context("when we do not have ETag stored") {
               it("does not add If-None-Match header") {
-                let URLRequest = try! request.toURLRequest()
-                expect(URLRequest.allHTTPHeaderFields?["If-None-Match"]).to(beNil())
+                let urlRequest = try! request.toURLRequest()
+                expect(urlRequest.allHTTPHeaderFields?["If-None-Match"]).to(beNil())
               }
             }
           }
@@ -109,17 +109,16 @@ class RequestableSpec: QuickSpec {
 
                 storage.add(etag, forKey: request.etagKey())
 
-                let URLRequest = try! request.toURLRequest()
+                let urlRequest = try! request.toURLRequest()
 
-
-                expect(URLRequest.allHTTPHeaderFields?["If-None-Match"]).to(beNil())
+                expect(urlRequest.allHTTPHeaderFields?["If-None-Match"]).to(beNil())
               }
             }
 
             context("when we do not have ETag stored") {
               it("does not add If-None-Match header") {
-                let URLRequest = try! request.toURLRequest()
-                expect(URLRequest.allHTTPHeaderFields?["If-None-Match"]).to(beNil())
+                let urlRequest = try! request.toURLRequest()
+                expect(urlRequest.allHTTPHeaderFields?["If-None-Match"]).to(beNil())
               }
             }
           }
@@ -130,13 +129,13 @@ class RequestableSpec: QuickSpec {
             }
 
             it("does not set Content-Type header") {
-              expect{ URLRequest = try request.toURLRequest() }.toNot(throwError())
-              expect(URLRequest.allHTTPHeaderFields?["Content-Type"]).to(beNil())
+              expect{ urlRequest = try request.toURLRequest() }.toNot(throwError())
+              expect(urlRequest.allHTTPHeaderFields?["Content-Type"]).to(beNil())
             }
 
             it("does not set body") {
-              expect{ URLRequest = try request.toURLRequest() }.toNot(throwError())
-              expect(URLRequest.HTTPBody).to(beNil())
+              expect{ urlRequest = try request.toURLRequest() }.toNot(throwError())
+              expect(urlRequest.httpBody).to(beNil())
             }
           }
 
@@ -147,16 +146,16 @@ class RequestableSpec: QuickSpec {
             }
 
             it("sets Content-Type header") {
-              expect{ URLRequest = try request.toURLRequest() }.toNot(throwError())
-              expect(URLRequest.allHTTPHeaderFields?["Content-Type"]).to(
+              expect{ urlRequest = try request.toURLRequest() }.toNot(throwError())
+              expect(urlRequest.allHTTPHeaderFields?["Content-Type"]).to(
                 equal("multipart/form-data; boundary=\(boundary)")
               )
             }
 
             it("sets Content-Length header") {
-              expect{ URLRequest = try request.toURLRequest() }.toNot(throwError())
-              expect(URLRequest.allHTTPHeaderFields?["Content-Length"]).to(
-                equal("\(URLRequest.HTTPBody!.length)")
+              expect{ urlRequest = try request.toURLRequest() }.toNot(throwError())
+              expect(urlRequest.allHTTPHeaderFields?["Content-Length"]).to(
+                equal("\(urlRequest.httpBody!.count)")
               )
             }
           }
@@ -175,9 +174,9 @@ class RequestableSpec: QuickSpec {
             }
 
             it("returns URL") {
-              let URLString = "http://hyper.no"
-              let result = NSURL(string: URLString)
-              expect(try! request.buildURL(URLString)).to(equal(result))
+              let urlString = "http://hyper.no"
+              let result = URL(string: urLString)
+              expect(try! request.buildURL(urLString)).to(equal(result))
             }
           }
 
@@ -188,9 +187,9 @@ class RequestableSpec: QuickSpec {
 
             it("returns URL") {
               let URLString = "http://hyper.no"
-              let result = NSURL(string: URLString)
+              let result = URL(string: urLString)
 
-              expect(try! request.buildURL(URLString)).to(equal(result))
+              expect(try! request.buildURL(urLString)).to(equal(result))
             }
           }
 
@@ -201,10 +200,10 @@ class RequestableSpec: QuickSpec {
 
             it("returns URL") {
               let URLString = "http://hyper.no"
-              let result1 = NSURL(string: "http://hyper.no?key=value&number=1")
-              let result2 = NSURL(string: "http://hyper.no?number=1&key=value")
+              let result1 = URL(string: "http://hyper.no?key=value&number=1")
+              let result2 = URL(string: "http://hyper.no?number=1&key=value")
 
-              let URL = try! request.buildURL(URLString)
+              let URL = try! request.buildURL(urlRequest)
 
               expect(URL == result1 || URL == result2).to(beTrue())
             }

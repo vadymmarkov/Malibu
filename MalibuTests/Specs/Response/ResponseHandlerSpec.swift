@@ -16,7 +16,7 @@ class ResponseHandlerSpec: QuickSpec {
       describe("#handle") {
         context("when response is nil") {
           it("rejects promise with an error") {
-            let expectation = self.expectationWithDescription("No response failure")
+            let expectation = self.expectation(withDescription: "No response failure")
 
             handler.ride.fail({ error in
               expect(error as! Error == Error.NoResponseReceived).to(beTrue())
@@ -25,13 +25,13 @@ class ResponseHandlerSpec: QuickSpec {
 
             handler.handle(handler.data, response: nil, error: nil)
 
-            self.waitForExpectationsWithTimeout(4.0, handler:nil)
+            self.waitForExpectations(withTimeout: 4.0, handler:nil)
           }
         }
 
         context("when there is an error") {
           it("rejects promise with an error") {
-            let expectation = self.expectationWithDescription("Error failure")
+            let expectation = self.expectation(withDescription: "Error failure")
 
             handler.ride.fail({ error in
               expect(error as! Error == Error.JSONDictionarySerializationFailed).to(beTrue())
@@ -40,13 +40,13 @@ class ResponseHandlerSpec: QuickSpec {
 
             handler.handle(handler.data, response: handler.response, error: Error.JSONDictionarySerializationFailed)
 
-            self.waitForExpectationsWithTimeout(4.0, handler:nil)
+            self.waitForExpectations(withTimeout: 4.0, handler:nil)
           }
         }
 
         context("when there is no data") {
           it("rejects promise with an error") {
-            let expectation = self.expectationWithDescription("No data failure")
+            let expectation = self.expectation(withDescription: "No data failure")
 
             handler.ride.fail({ error in
               expect(error as! Error == Error.NoDataInResponse).to(beTrue())
@@ -55,13 +55,13 @@ class ResponseHandlerSpec: QuickSpec {
 
             handler.handle(nil, response: handler.response, error: nil)
 
-            self.waitForExpectationsWithTimeout(4.0, handler:nil)
+            self.waitForExpectations(withTimeout: 4.0, handler:nil)
           }
         }
 
         context("when validation succeeded") {
           it("resolves promise with a result") {
-            let expectation = self.expectationWithDescription("Validation succeeded")
+            let expectation = self.expectation(withDescription: "Validation succeeded")
 
             handler.ride.done({ result in
               expect(result.data).to(equal(handler.data))
@@ -73,7 +73,7 @@ class ResponseHandlerSpec: QuickSpec {
 
             handler.handle(handler.data, response: handler.response, error: nil)
 
-            self.waitForExpectationsWithTimeout(4.0, handler:nil)
+            self.waitForExpectations(withTimeout: 4.0, handler:nil)
           }
         }
       }

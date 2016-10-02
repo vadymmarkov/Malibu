@@ -12,11 +12,11 @@ public extension GETRequestable {
   }
 
   var contentType: ContentType {
-    return .Query
+    return .query
   }
 
   var etagPolicy: ETagPolicy {
-    return .Enabled
+    return .enabled
   }
 }
 
@@ -27,11 +27,11 @@ public extension POSTRequestable {
   }
 
   var contentType: ContentType {
-    return .JSON
+    return .json
   }
 
   var etagPolicy: ETagPolicy {
-    return .Disabled
+    return .disabled
   }
 }
 
@@ -42,11 +42,11 @@ public extension PUTRequestable {
   }
 
   var contentType: ContentType {
-    return .JSON
+    return .json
   }
 
   var etagPolicy: ETagPolicy {
-    return .Enabled
+    return .enabled
   }
 }
 
@@ -57,11 +57,11 @@ public extension PATCHRequestable {
   }
 
   var contentType: ContentType {
-    return .JSON
+    return .json
   }
 
   var etagPolicy: ETagPolicy {
-    return .Enabled
+    return .enabled
   }
 }
 
@@ -72,11 +72,11 @@ public extension DELETERequestable {
   }
 
   var contentType: ContentType {
-    return .Query
+    return .query
   }
 
   var etagPolicy: ETagPolicy {
-    return .Disabled
+    return .disabled
   }
 }
 
@@ -87,10 +87,10 @@ public extension HEADRequestable {
   }
 
   var contentType: ContentType {
-    return .Query
+    return .query
   }
 
   var etagPolicy: ETagPolicy {
-    return .Disabled
+    return .disabled
   }
 }

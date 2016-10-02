@@ -78,7 +78,7 @@ class ErrorSpec: QuickSpec {
         beforeEach {
           offlineError = NSError(
             domain: "no.hyper.Malibu",
-            code: Int(CFNetworkErrors.CFURLErrorNotConnectedToInternet.rawValue),
+            code: Int(CFNetworkErrors.cfurlErrorNotConnectedToInternet.rawValue),
             userInfo: nil
           )
         }

@@ -6,22 +6,22 @@ import Nimble
 class WaveValidationSpec: QuickSpec, NetworkPromiseSpec {
 
   var networkPromise: Ride!
-  var request: NSURLRequest!
-  var data: NSData!
+  var request: URLRequest!
+  var data: Data!
 
   override func spec() {
     describe("WaveValidation") {
-      let URL = NSURL(string: "http://hyper.no")!
-      let response = NSHTTPURLResponse(URL: URL, statusCode: 200, HTTPVersion: "HTTP/2.0", headerFields: nil)!
-      let failedResponse = NSHTTPURLResponse(URL: URL, statusCode: 404, HTTPVersion: "HTTP/2.0", headerFields: nil)!
+      let URL = Foundation.URL(string: "http://hyper.no")!
+      let response = HTTPURLResponse(url: URL, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!
+      let failedResponse = HTTPURLResponse(url: URL, statusCode: 404, httpVersion: "HTTP/2.0", headerFields: nil)!
 
       // MARK: - Specs
 
       beforeEach {
         self.networkPromise = Ride()
-        self.request = NSURLRequest(URL: NSURL(string: "http://hyper.no")!)
-        self.data = try! NSJSONSerialization.dataWithJSONObject([["name": "Taylor"]],
-          options: NSJSONWritingOptions())
+        self.request = URLRequest(url: Foundation.URL(string: "http://hyper.no")!)
+        self.data = try! JSONSerialization.data(withJSONObject: [["name": "Taylor"]],
+          options: JSONSerialization.WritingOptions())
       }
 
       describe("#validate:validator") {
@@ -94,7 +94,7 @@ class WaveValidationSpec: QuickSpec, NetworkPromiseSpec {
 
         context("when response is resolved and validation fails") {
           it("rejects promise with an error") {
-            let response = NSHTTPURLResponse(URL: URL, MIMEType: "text/html; charset=utf-8",
+            let response = HTTPURLResponse(url: URL, mimeType: "text/html; charset=utf-8",
               expectedContentLength: 100, textEncodingName: nil)
 
             self.testFailedPromise(promise,
@@ -105,7 +105,7 @@ class WaveValidationSpec: QuickSpec, NetworkPromiseSpec {
 
         context("when response is resolved and validation succeeded") {
           it("resolves promise with a result") {
-            let response = NSHTTPURLResponse(URL: URL, MIMEType: "application/json; charset=utf-8",
+            let response = HTTPURLResponse(url: URL, mimeType: "application/json; charset=utf-8",
               expectedContentLength: 100, textEncodingName: nil)
             self.testSucceededPromise(promise, response: response)
           }
@@ -144,7 +144,7 @@ class WaveValidationSpec: QuickSpec, NetworkPromiseSpec {
           var promise: Promise<Wave>!
 
           beforeEach {
-            let request = NSMutableURLRequest(URL: URL)
+            let request = NSMutableURLRequest(url: URL)
             request.addValue("text/html; charset=utf-8", forHTTPHeaderField: "Accept")
             promise = self.networkPromise.validate()
           }
@@ -164,8 +164,8 @@ class WaveValidationSpec: QuickSpec, NetworkPromiseSpec {
 
           context("when response is resolved and validation succeeded") {
             it("resolves promise with a result") {
-              let HTTPResponse = NSHTTPURLResponse(URL: URL, statusCode: 200,
-                HTTPVersion: "HTTP/2.0", headerFields: nil)!
+              let HTTPResponse = HTTPURLResponse(url: URL, statusCode: 200,
+                httpVersion: "HTTP/2.0", headerFields: nil)!
               HTTPResponse.setValue("text/html; charset=utf-8", forKey: "MIMEType")
 
               self.testSucceededPromise(promise, response: response)

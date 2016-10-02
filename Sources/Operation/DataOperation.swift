@@ -2,23 +2,23 @@ import Foundation
 
 class DataOperation: ConcurrentOperation, ResponseHandler {
 
-  let session: NSURLSession
-  let URLRequest: NSURLRequest
+  let session: URLSession
+  let urlRequest: URLRequest
   var ride: Ride
-  private var task: NSURLSessionDataTask?
+  fileprivate var task: URLSessionDataTask?
 
   // MARK: - Initialization
 
-  init(session: NSURLSession, URLRequest: NSURLRequest, ride: Ride) {
+  init(session: URLSession, urlRequest: URLRequest, ride: Ride) {
     self.session = session
-    self.URLRequest = URLRequest
+    self.urlRequest = urlRequest
     self.ride = ride
   }
 
   // MARK: - Operation
 
   override func execute() {
-    task = session.dataTaskWithRequest(URLRequest) { [weak self] (data, response, error) in
+    task = session.dataTask(with: urlRequest, completionHandler: { [weak self] (data, response, error) in
       guard let weakSelf = self else {
         return
       }
@@ -26,7 +26,7 @@ class DataOperation: ConcurrentOperation, ResponseHandler {
       weakSelf.handle(data, response: response, error: error)
 
       self?.state = .Finished
-    }
+    }) 
 
     task?.resume()
   }

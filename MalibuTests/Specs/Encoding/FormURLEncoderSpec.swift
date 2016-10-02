@@ -16,7 +16,7 @@ class FormURLEncoderSpec: QuickSpec {
         it("encodes a dictionary of parameters to NSData object") {
           let parameters = ["firstname": "John", "lastname": "Hyperseed"]
           let string = QueryBuilder().buildQuery(parameters)
-          let data = string.dataUsingEncoding(NSUTF8StringEncoding,
+          let data = string.dataUsingEncoding(String.Encoding.utf8,
             allowLossyConversion: false)
 
           expect{ try encoder.encode(parameters) }.to(equal(data))

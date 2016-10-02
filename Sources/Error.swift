@@ -1,46 +1,46 @@
 import Foundation
 
-public enum Error: ErrorType {
-  case NoMockProvided
-  case InvalidRequestURL
-  case MissingContentType
-  case InvalidParameter
-  case InvalidUploadFilePath
-  case NoDataInResponse
-  case NoResponseReceived
-  case UnacceptableStatusCode(Int)
-  case UnacceptableContentType(String)
-  case JSONArraySerializationFailed
-  case JSONDictionarySerializationFailed
-  case StringSerializationFailed(UInt)
+public enum NetworkError: Error {
+  case noMockProvided
+  case invalidRequestURL
+  case missingContentType
+  case invalidParameter
+  case invalidUploadFilePath
+  case noDataInResponse
+  case noResponseReceived
+  case unacceptableStatusCode(Int)
+  case unacceptableContentType(String)
+  case jsonArraySerializationFailed
+  case jsonDictionarySerializationFailed
+  case stringSerializationFailed(UInt)
 
   public var reason: String {
     var text: String
 
     switch self {
-    case .NoMockProvided:
+    case .noMockProvided:
       text = "No mock provided for the current request and method"
-    case .InvalidRequestURL:
+    case .invalidRequestURL:
       text = "Invalid request URL"
-    case .MissingContentType:
+    case .missingContentType:
       text = "Response content type was missing"
-    case .InvalidParameter:
+    case .invalidParameter:
       text = "Parameter is not convertible to NSData"
-    case .InvalidUploadFilePath:
+    case .invalidUploadFilePath:
       text = "Invalid upload file path"
-    case .NoDataInResponse:
+    case .noDataInResponse:
       text = "No data in response"
-    case .NoResponseReceived:
+    case .noResponseReceived:
       text = "No response received"
-    case .UnacceptableStatusCode(let statusCode):
+    case .unacceptableStatusCode(let statusCode):
       text = "Response status code \(statusCode) was unacceptable"
-    case .UnacceptableContentType(let contentType):
+    case .unacceptableContentType(let contentType):
       text = "Response content type \(contentType) was unacceptable"
-    case .JSONArraySerializationFailed:
+    case .jsonArraySerializationFailed:
       text = "No JSON array in response data"
-    case .JSONDictionarySerializationFailed:
+    case .jsonDictionarySerializationFailed:
       text = "No JSON dictionary in response data"
-    case .StringSerializationFailed(let encoding):
+    case .stringSerializationFailed(let encoding):
       text = "String could not be serialized with encoding: \(encoding)"
     }
 
@@ -50,7 +50,7 @@ public enum Error: ErrorType {
 
 // MARK: - Hashable
 
-extension Error: Hashable {
+extension NetworkError: Hashable {
 
   public var hashValue: Int {
     return reason.hashValue
@@ -59,7 +59,7 @@ extension Error: Hashable {
 
 // MARK: - Equatable
 
-public func ==(lhs: Error, rhs: Error) -> Bool {
+public func ==(lhs: NetworkError, rhs: NetworkError) -> Bool {
   return lhs.reason == rhs.reason
 }
 
@@ -68,6 +68,6 @@ public func ==(lhs: Error, rhs: Error) -> Bool {
 extension NSError {
 
   var isOffline: Bool {
-    return Int32(code) == CFNetworkErrors.CFURLErrorNotConnectedToInternet.rawValue
+    return Int32(code) == CFNetworkErrors.cfurlErrorNotConnectedToInternet.rawValue
   }
 }

@@ -1,35 +1,35 @@
 import Foundation
 
 public enum ContentType {
-  case Query
-  case FormURLEncoded
-  case JSON
-  case MultipartFormData
-  case Custom(String)
+  case query
+  case formURLEncoded
+  case json
+  case multipartFormData
+  case custom(String)
 
   enum Header: String {
-    case JSON = "application/json"
-    case FormURLEncoded = "application/x-www-form-urlencoded"
-    case MultipartFormData = "multipart/form-data; boundary="
+    case json = "application/json"
+    case formURLEncoded = "application/x-www-form-urlencoded"
+    case multipartFormData = "multipart/form-data; boundary="
   }
 
   init(header: String?) {
     guard let header = header else {
-      self = .Query
+      self = .query
       return
     }
 
     let result: ContentType
 
     switch header {
-    case Header.JSON.rawValue:
-      result = .JSON
-    case Header.FormURLEncoded.rawValue:
-      result = .FormURLEncoded
-    case "\(Header.MultipartFormData.rawValue)\(boundary)":
-      result = .MultipartFormData
+    case Header.json.rawValue:
+      result = .json
+    case Header.formURLEncoded.rawValue:
+      result = .formURLEncoded
+    case "\(Header.multipartFormData.rawValue)\(boundary)":
+      result = .multipartFormData
     default:
-      result = .Custom(header)
+      result = .custom(header)
     }
 
     self = result
@@ -39,15 +39,15 @@ public enum ContentType {
     let string: String?
 
     switch self {
-    case .Query:
+    case .query:
       string = nil
-    case .JSON:
-      string = Header.JSON.rawValue
-    case .FormURLEncoded:
-      string = Header.FormURLEncoded.rawValue
-    case .MultipartFormData:
-      string = "\(Header.MultipartFormData.rawValue)\(boundary)"
-    case .Custom(let value):
+    case .json:
+      string = Header.json.rawValue
+    case .formURLEncoded:
+      string = Header.formURLEncoded.rawValue
+    case .multipartFormData:
+      string = "\(Header.multipartFormData.rawValue)\(boundary)"
+    case .custom(let value):
       string = value
     }
 
@@ -58,11 +58,11 @@ public enum ContentType {
     var encoder: ParameterEncoding?
 
     switch self {
-    case .JSON:
+    case .json:
       encoder = JSONEncoder()
-    case .FormURLEncoded:
+    case .formURLEncoded:
       encoder = FormURLEncoder()
-    case .MultipartFormData:
+    case .multipartFormData:
       encoder = MultipartFormEncoder()
     default:
       break

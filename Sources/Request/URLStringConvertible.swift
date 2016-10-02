@@ -1,23 +1,23 @@
 import Foundation
 
 public protocol URLStringConvertible {
-  var URLString: String { get }
+  var urlString: String { get }
 }
 
 // MARK: - String
 
 extension String: URLStringConvertible {
 
-  public var URLString: String {
+  public var urlString: String {
     return self
   }
 }
 
 // MARK: - NSURL
 
-extension NSURL: URLStringConvertible {
+extension URL: URLStringConvertible {
 
-  public var URLString: String {
+  public var urlString: String {
     return absoluteString
   }
 }

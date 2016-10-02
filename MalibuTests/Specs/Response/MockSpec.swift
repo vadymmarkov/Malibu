@@ -9,9 +9,9 @@ class MockSpec: QuickSpec {
     describe("Mock") {
       var mock: Mock!
       let request = GETRequest()
-      var response = NSHTTPURLResponse(URL: NSURL(string: "http://hyper.no")!,
-                                       statusCode: 200, HTTPVersion: "HTTP/2.0", headerFields: nil)!
-      let data = "test".dataUsingEncoding(NSUTF32StringEncoding)
+      var response = HTTPURLResponse(url: URL(string: "http://hyper.no")!,
+                                       statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!
+      let data = "test".data(using: String.Encoding.utf32)
       let error = Error.NoDataInResponse
 
       describe("#init:request:response:data:error") {
@@ -33,9 +33,9 @@ class MockSpec: QuickSpec {
         var wave: Wave!
 
         beforeEach {
-          mock = Mock(request: request, fileName: fileName, bundle: NSBundle(forClass: MockSpec.self))
-          response = NSHTTPURLResponse(URL: NSURL(string: fileName)!, statusCode: 200,
-            HTTPVersion: "HTTP/2.0", headerFields: nil)!
+          mock = Mock(request: request, fileName: fileName, bundle: Bundle(forClass: MockSpec.self))
+          response = HTTPURLResponse(url: URL(string: fileName)!, statusCode: 200,
+            httpVersion: "HTTP/2.0", headerFields: nil)!
           wave = Wave(data: mock.data!, request: try! mock.request.toURLRequest(), response: mock.response!)
         }
 
@@ -67,8 +67,8 @@ class MockSpec: QuickSpec {
 
         beforeEach {
           mock = Mock(request: request, JSON: JSON)
-          response = NSHTTPURLResponse(URL: NSURL(string: "mock://JSON")!, statusCode: 200,
-            HTTPVersion: "HTTP/2.0", headerFields: nil)!
+          response = HTTPURLResponse(url: URL(string: "mock://JSON")!, statusCode: 200,
+            httpVersion: "HTTP/2.0", headerFields: nil)!
           wave = Wave(data: mock.data!, request: try! mock.request.toURLRequest(), response: mock.response!)
         }
 

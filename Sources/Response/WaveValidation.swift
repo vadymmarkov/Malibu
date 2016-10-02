@@ -5,18 +5,18 @@ import When
 
 public extension Promise where T: Wave {
 
-  public func validate(validator: Validating) -> Promise<Wave> {
+  public func validate(_ validator: Validating) -> Promise<Wave> {
     return then({ result -> Wave in
       try validator.validate(result)
       return result
     })
   }
 
-  public func validate<T: SequenceType where T.Generator.Element == Int>(statusCodes statusCodes: T) -> Promise<Wave> {
+  public func validate<T: Sequence>(statusCodes: T) -> Promise<Wave> where T.Iterator.Element == Int {
     return validate(StatusCodeValidator(statusCodes: statusCodes))
   }
 
-  public func validate<T : SequenceType where T.Generator.Element == String>(contentTypes contentTypes: T) -> Promise<Wave> {
+  public func validate<T : Sequence>(contentTypes: T) -> Promise<Wave> where T.Iterator.Element == String {
     return validate(ContentTypeValidator(contentTypes: contentTypes))
   }
 
@@ -24,8 +24,8 @@ public extension Promise where T: Wave {
     return validate(statusCodes: 200..<300).then({ result -> Wave in
       let contentTypes: [String]
 
-      if let accept = result.request.valueForHTTPHeaderField("Accept") {
-        contentTypes = accept.componentsSeparatedByString(",")
+      if let accept = result.request.value(forHTTPHeaderField: "Accept") {
+        contentTypes = accept.components(separatedBy: ",")
       } else {
         contentTypes = ["*/*"]
       }

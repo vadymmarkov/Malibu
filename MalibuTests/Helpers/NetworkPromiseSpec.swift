@@ -5,14 +5,14 @@ import Nimble
 
 protocol NetworkPromiseSpec {
   var networkPromise: Ride! { get }
-  var request: NSURLRequest! { get }
-  var data: NSData! { get }
+  var request: URLRequest! { get }
+  var data: Data! { get }
 }
 
 extension NetworkPromiseSpec where Self: QuickSpec {
 
-  func testFailedResponse<T>(promise: Promise<T>) {
-    let expectation = self.expectationWithDescription("Validation response failure")
+  func testFailedResponse<T>(_ promise: Promise<T>) {
+    let expectation = self.expectation(withDescription: "Validation response failure")
 
     promise.fail({ error in
       expect(error as! Error == Error.NoDataInResponse).to(beTrue())
@@ -21,11 +21,11 @@ extension NetworkPromiseSpec where Self: QuickSpec {
 
     networkPromise.reject(Error.NoDataInResponse)
 
-    self.waitForExpectationsWithTimeout(4.0, handler:nil)
+    self.waitForExpectations(withTimeout: 4.0, handler:nil)
   }
 
-  func testFailedPromise<T>(promise: Promise<T>, error: Error, response: NSHTTPURLResponse) {
-    let expectation = self.expectationWithDescription("Validation response failure")
+  func testFailedPromise<T>(_ promise: Promise<T>, error: Error, response: HTTPURLResponse) {
+    let expectation = self.expectation(withDescription: "Validation response failure")
 
     promise.fail({ validationError in
       expect(validationError as! Error == error).to(beTrue())
@@ -34,11 +34,11 @@ extension NetworkPromiseSpec where Self: QuickSpec {
 
     networkPromise.resolve(Wave(data: data, request: request, response: response))
 
-    self.waitForExpectationsWithTimeout(4.0, handler:nil)
+    self.waitForExpectations(withTimeout: 4.0, handler:nil)
   }
 
-  func testSucceededPromise<T>(promise: Promise<T>, response: NSHTTPURLResponse, validation: ((T) -> Void)? = nil) {
-    let expectation = self.expectationWithDescription("Validation response success")
+  func testSucceededPromise<T>(_ promise: Promise<T>, response: HTTPURLResponse, validation: ((T) -> Void)? = nil) {
+    let expectation = self.expectation(withDescription: "Validation response success")
     let wave = Wave(data: data, request: request, response: response)
 
     promise.done({ result in
@@ -48,6 +48,6 @@ extension NetworkPromiseSpec where Self: QuickSpec {
 
     networkPromise.resolve(wave)
 
-    self.waitForExpectationsWithTimeout(4.0, handler:nil)
+    self.waitForExpectations(withTimeout: 4.0, handler:nil)
   }
 }

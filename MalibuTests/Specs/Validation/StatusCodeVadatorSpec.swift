@@ -6,9 +6,9 @@ class StatusCodeValidatorSpec: QuickSpec {
 
   override func spec() {
     describe("StatusCodeValidator") {
-      let URL = NSURL(string: "http://hyper.no")!
-      let request = NSURLRequest(URL: URL)
-      let data = NSData()
+      let url = Foundation.URL(string: "http://hyper.no")!
+      let request = URLRequest(url: url)
+      let data = Data()
       var validator: StatusCodeValidator<[Int]>!
 
       describe("#validate") {
@@ -18,8 +18,8 @@ class StatusCodeValidatorSpec: QuickSpec {
 
         context("when response has expected status code") {
           it("does not throw an error") {
-            let HTTPResponse = NSHTTPURLResponse(URL: URL, statusCode: 200,
-              HTTPVersion: "HTTP/2.0", headerFields: nil)!
+            let HTTPResponse = HTTPURLResponse(url: url, statusCode: 200,
+              httpVersion: "HTTP/2.0", headerFields: nil)!
             let result = Wave(data: data, request: request, response: HTTPResponse)
 
             expect{ try validator.validate(result) }.toNot(throwError())
@@ -28,8 +28,8 @@ class StatusCodeValidatorSpec: QuickSpec {
 
         context("when response has not expected status code") {
           it("throws an error") {
-            let HTTPResponse = NSHTTPURLResponse(URL: URL, statusCode: 404,
-              HTTPVersion: "HTTP/2.0", headerFields: nil)!
+            let HTTPResponse = HTTPURLResponse(url: url, statusCode: 404,
+              httpVersion: "HTTP/2.0", headerFields: nil)!
             let result = Wave(data: data, request: request, response: HTTPResponse)
 
             expect{ try validator.validate(result) }.to(throwError())

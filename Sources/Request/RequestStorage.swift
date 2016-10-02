@@ -8,8 +8,8 @@ final class RequestStorage {
 
   var requests = [String: RequestCapsule]()
 
-  private var userDefaults: NSUserDefaults {
-    return NSUserDefaults.standardUserDefaults()
+  fileprivate var userDefaults: UserDefaults {
+    return UserDefaults.standard
   }
 
   // MARK: - Initialization
@@ -21,45 +21,45 @@ final class RequestStorage {
 
   // MARK: - Save
 
-  func save(capsule: RequestCapsule) {
+  func save(_ capsule: RequestCapsule) {
     requests[capsule.id] = capsule
     saveAll()
   }
 
   func saveAll() {
-    let data = NSKeyedArchiver.archivedDataWithRootObject(requests)
-    userDefaults.setObject(data, forKey: key)
+    let data = NSKeyedArchiver.archivedData(withRootObject: requests)
+    userDefaults.set(data, forKey: key)
     userDefaults.synchronize()
   }
 
   // MARK: - Remove
 
-  func remove(capsule: RequestCapsule) {
-    requests.removeValueForKey(capsule.id)
+  func remove(_ capsule: RequestCapsule) {
+    requests.removeValue(forKey: capsule.id)
     saveAll()
   }
 
   func clear() {
     requests.removeAll()
-    userDefaults.removeObjectForKey(key)
+    userDefaults.removeObject(forKey: key)
     userDefaults.synchronize()
   }
 
   static func clearAll() {
-    let userDefaults = NSUserDefaults.standardUserDefaults()
+    let userDefaults = UserDefaults.standard
     let keys = userDefaults.dictionaryRepresentation().keys
-    let storageKeys = keys.filter { $0.containsString(domain) }
+    let storageKeys = keys.filter { $0.contains(domain) }
 
     for key in storageKeys {
-      userDefaults.removeObjectForKey(key)
+      userDefaults.removeObject(forKey: key)
     }
   }
 
   // MARK: - Load
 
   func load() -> [String: RequestCapsule] {
-    guard let data = userDefaults.objectForKey(key) as? NSData,
-      dictionary = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [String: RequestCapsule]
+    guard let data = userDefaults.object(forKey: key) as? Data,
+      let dictionary = NSKeyedUnarchiver.unarchiveObject(with: data) as? [String: RequestCapsule]
       else { return [:] }
 
     return dictionary

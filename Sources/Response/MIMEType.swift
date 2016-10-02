@@ -2,10 +2,10 @@ import Foundation
 
 struct MIMEType {
 
-  static func components(string: String) -> (type: String?, subtype: String?) {
-    let trimmed = string.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-    let splitted = trimmed.substringToIndex(trimmed.rangeOfString(";")?.startIndex ?? trimmed.endIndex)
-    let array = splitted.componentsSeparatedByString("/")
+  static func components(_ string: String) -> (type: String?, subtype: String?) {
+    let trimmed = string.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+    let splitted = trimmed.substring(to: trimmed.range(of: ";")?.lowerBound ?? trimmed.endIndex)
+    let array = splitted.components(separatedBy: "/")
 
     return (type: array.first, subtype: array.last)
   }
@@ -18,7 +18,7 @@ struct MIMEType {
   init?(contentType: String) {
     let components = MIMEType.components(contentType)
 
-    guard let type = components.type, subtype = components.subtype else {
+    guard let type = components.type, let subtype = components.subtype else {
       return nil
     }
 
@@ -28,11 +28,11 @@ struct MIMEType {
 
   // MARK: - Matches
 
-  func matches(MIME: MIMEType) -> Bool {
+  func matches(_ mime: MIMEType) -> Bool {
     var result: Bool
 
     switch (type, subtype) {
-    case (MIME.type, MIME.subtype), (MIME.type, "*"), ("*", MIME.subtype), ("*", "*"):
+    case (mime.type, mime.subtype), (mime.type, "*"), ("*", mime.subtype), ("*", "*"):
       result = true
     default:
       result = false

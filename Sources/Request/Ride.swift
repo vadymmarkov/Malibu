@@ -1,11 +1,11 @@
 import Foundation
 import When
 
-public class Ride: Promise<Wave> {
+public final class Ride: Promise<Wave> {
 
-  public var operation: NSOperation?
+  public var operation: Operation?
 
-  public init(operation: NSOperation? = nil) {
+  public init(operation: Operation? = nil) {
     self.operation = operation
     super.init()
   }

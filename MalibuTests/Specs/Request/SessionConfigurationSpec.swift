@@ -16,7 +16,7 @@ class SessionConfigurationSpec: QuickSpec {
         describe("#value") {
           it("returns a correct NSURLSessionConfiguration") {
             let value = sessionConfiguration.value
-            let expected = NSURLSessionConfiguration.defaultSessionConfiguration()
+            let expected = URLSessionConfiguration.default
             expected.HTTPAdditionalHeaders = Header.defaultHeaders
 
             expect(value).to(equal(expected))
@@ -49,10 +49,10 @@ class SessionConfigurationSpec: QuickSpec {
       }
 
       context("when it is Custom configuration") {
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let configuration = URLSessionConfiguration.default
 
         beforeEach {
-          configuration.requestCachePolicy = .ReturnCacheDataDontLoad
+          configuration.requestCachePolicy = .returnCacheDataDontLoad
           sessionConfiguration = .Custom(configuration)
         }
 

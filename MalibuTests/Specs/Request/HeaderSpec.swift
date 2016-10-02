@@ -15,10 +15,10 @@ class HeaderSpec: QuickSpec {
 
       describe(".acceptLanguage") {
         it("returns a correct value") {
-          let expected = NSLocale.preferredLanguages().prefix(6).enumerate().map { index, languageCode in
+          let expected = Locale.preferredLanguages.prefix(6).enumerated().map { index, languageCode in
             let quality = 1.0 - (Double(index) * 0.1)
             return "\(languageCode);q=\(quality)"
-            }.joinWithSeparator(", ")
+            }.joined(separator: ", ")
 
           expect(Header.acceptLanguage).to(equal(expected))
         }
@@ -28,7 +28,7 @@ class HeaderSpec: QuickSpec {
         it("returns a correct value") {
           var expected = "Malibu"
 
-          if let info = NSBundle.mainBundle().infoDictionary {
+          if let info = Bundle.main.infoDictionary {
             let executable: AnyObject = info[kCFBundleExecutableKey as String] ?? "Unknown"
             let bundle: AnyObject = info[kCFBundleIdentifierKey as String] ?? "Unknown"
             let version: AnyObject = info[kCFBundleVersionKey as String] ?? "Unknown"
@@ -61,8 +61,8 @@ class HeaderSpec: QuickSpec {
         it("returns a correct value") {
           let username = "username"
           let password = "password"
-          let credentialsData = "\(username):\(password)".dataUsingEncoding(NSUTF8StringEncoding)!
-          let base64Credentials = credentialsData.base64EncodedStringWithOptions([])
+          let credentialsData = "\(username):\(password)".data(using: String.Encoding.utf8)!
+          let base64Credentials = credentialsData.base64EncodedString(options: [])
           let expected = "Basic \(base64Credentials)"
 
           expect(expected).to(equal(Header.authentication(username: username, password: password)))

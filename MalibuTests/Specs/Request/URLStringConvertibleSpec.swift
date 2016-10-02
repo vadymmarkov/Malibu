@@ -20,10 +20,10 @@ class URLStringConvertibleSpec: QuickSpec {
         }
 
         context("when it is NSURL") {
-          let URL = NSURL(string: "http://hyper.no")!
+          let url = URL(string: "http://hyper.no")!
 
           beforeEach {
-            value = URL
+            value = url
           }
 
           it("returns self") {

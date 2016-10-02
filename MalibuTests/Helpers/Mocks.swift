@@ -49,16 +49,16 @@ struct HEADRequest: HEADRequestable {
 // MARK: - Tasks
 
 class TestResponseHandler: ResponseHandler {
-  let URLRequest: NSURLRequest
+  let urlRequest: URLRequest
   let ride: Ride
-  let data = "test".dataUsingEncoding(NSUTF32StringEncoding)
-  let response: NSHTTPURLResponse
+  let data = "test".data(using: String.Encoding.utf32)
+  let response: HTTPURLResponse
 
   // MARK: - Initialization
 
   init() {
-    URLRequest = try! GETRequest().toURLRequest()
+    urlRequest = try! GETRequest().toURLRequest()
     ride = Ride()
-    response = NSHTTPURLResponse(URL: URLRequest.URL!, statusCode: 200, HTTPVersion: "HTTP/2.0", headerFields: nil)!
+    response = HTTPURLResponse(url: urlRequest.url!, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!
   }
 }

@@ -16,7 +16,7 @@ class MultipartFormEncoderSpec: QuickSpec {
       describe("#encode") {
         it("encodes a dictionary of parameters to NSData object") {
           let string = MultipartBuilder().buildMultipartString(parameters)
-          let data = string.dataUsingEncoding(NSUTF8StringEncoding,
+          let data = string.dataUsingEncoding(String.Encoding.utf8,
                                               allowLossyConversion: true)
 
           expect{ try encoder.encode(parameters) }.to(equal(data))
