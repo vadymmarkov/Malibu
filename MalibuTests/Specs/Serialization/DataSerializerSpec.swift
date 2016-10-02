@@ -14,11 +14,13 @@ class DataSerializerSpec: QuickSpec {
         serializer = DataSerializer()
       }
 
-      describe("#serialize") {
+      describe("#serialize:data") {
         context("when there is no data in response") {
           it("throws an error") {
             let data = Data()
-            expect{ try serializer.serialize(data, response: response) }.to(throwError(Error.NoDataInResponse))
+            expect {
+              try serializer.serialize(data: data, response: response)
+            }.to(throwError(NetworkError.noDataInResponse))
           }
         }
 
@@ -29,7 +31,9 @@ class DataSerializerSpec: QuickSpec {
             let data = Data()
             var result: Data?
 
-            expect{ result = try serializer.serialize(data, response: response) }.toNot(throwError())
+            expect {
+              result = try serializer.serialize(data: data, response: response)
+            }.toNot(throwError())
             expect(result).to(equal(Data()))
           }
         }
@@ -41,7 +45,9 @@ class DataSerializerSpec: QuickSpec {
               options: JSONSerialization.WritingOptions())
             var result: Data?
 
-            expect{ result = try serializer.serialize(data, response: response) }.toNot(throwError())
+            expect {
+              result = try serializer.serialize(data: data, response: response)
+            }.toNot(throwError())
             expect(result).to(equal(data))
           }
         }

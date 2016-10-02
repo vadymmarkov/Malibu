@@ -25,11 +25,13 @@ class StringSerializerSpec: QuickSpec {
         }
       }
 
-      describe("#serialize") {
+      describe("#serialize:data") {
         context("when there is no data in response") {
           it("throws an error") {
             let data = Data()
-            expect{ try serializer.serialize(data, response: response) }.to(throwError(Error.NoDataInResponse))
+            expect {
+              try serializer.serialize(data: data, response: response)
+              }.to(throwError(NetworkError.noDataInResponse))
           }
         }
 
@@ -39,8 +41,9 @@ class StringSerializerSpec: QuickSpec {
             let string = "string"
             let data = string.data(using: String.Encoding.utf32)!
 
-            expect{ try serializer.serialize(data, response: response) }.to(
-              throwError(Error.StringSerializationFailed(String.Encoding.utf8)))
+            expect {
+              try serializer.serialize(data: data, response: response)
+              }.to(throwError(NetworkError.stringSerializationFailed(String.Encoding.utf8.rawValue)))
           }
         }
 
@@ -50,8 +53,9 @@ class StringSerializerSpec: QuickSpec {
             let string = "string"
             let data = string.data(using: String.Encoding.utf16BigEndian)!
 
-            expect{ try serializer.serialize(data, response: response) }.to(
-              throwError(Error.StringSerializationFailed(String.Encoding.utf32)))
+            expect {
+              try serializer.serialize(data: data, response: response)
+              }.to(throwError(NetworkError.stringSerializationFailed(String.Encoding.utf32.rawValue)))
           }
         }
 
@@ -62,7 +66,7 @@ class StringSerializerSpec: QuickSpec {
             let data = Data()
             var result: String?
 
-            expect{ result = try serializer.serialize(data, response: response) }.toNot(throwError())
+            expect{ result = try serializer.serialize(data: data, response: response) }.toNot(throwError())
             expect(result).to(equal(""))
           }
         }
@@ -73,7 +77,7 @@ class StringSerializerSpec: QuickSpec {
             let data = string.data(using: String.Encoding.utf8)!
             var result: String?
 
-            expect{ result = try serializer.serialize(data, response: response) }.toNot(throwError())
+            expect{ result = try serializer.serialize(data: data, response: response) }.toNot(throwError())
             expect(result).to(equal(string))
           }
         }

@@ -25,14 +25,12 @@ public func register(_ name: String, networking: Networking) {
   networkings[name] = networking
 }
 
-@discardableResult public func unregister(_ name: String) -> Bool {
+public func unregister(_ name: String) {
   guard let networking = networkings.removeValue(forKey: name) else {
-    return false
+    return
   }
 
   networking.requestStorage.clear()
-
-  return true
 }
 
 public func networking(_ name: String) -> Networking {

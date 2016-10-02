@@ -2,29 +2,29 @@
 import Quick
 import Nimble
 
-class ETagStorageSpec: QuickSpec {
+class EtagStorageSpec: QuickSpec {
 
   override func spec() {
-    describe("ETagStorage") {
-      let filePath = ETagStorage.path
+    describe("EtagStorage") {
+      let filePath = EtagStorage.path
       let value = "value", key = "key"
-      var storage: ETagStorage!
+      var storage: EtagStorage!
 
       let fileManager = FileManager.default
 
       beforeEach {
-        storage = ETagStorage()
+        storage = EtagStorage()
       }
 
       afterEach {
         do {
-          try fileManager.removeItemAtPath(filePath)
+          try fileManager.removeItem(atPath: filePath)
         } catch {}
       }
 
       describe("#addValue:forKey:save") {
         it("adds value to the dictionary") {
-          storage.add(value, forKey: key)
+          storage.add(value: value, forKey: key)
           expect(storage.get(key)).to(equal(value))
 
           storage.reload()
@@ -35,7 +35,7 @@ class ETagStorageSpec: QuickSpec {
       describe("#get") {
         context("key exists") {
           it("returns a value") {
-            storage.add(value, forKey: key)
+            storage.add(value: value, forKey: key)
             expect(storage.get(key)).to(equal(value))
           }
         }
@@ -49,10 +49,10 @@ class ETagStorageSpec: QuickSpec {
 
       describe("#save") {
         it("saves dictionary to the file") {
-          storage.add("value", forKey: "key")
+          storage.add(value: "value", forKey: "key")
           storage.save()
 
-          let exists = FileManager.defaultManager().fileExistsAtPath(filePath)
+          let exists = FileManager.default.fileExists(atPath: filePath)
 
           expect(exists).to(beTrue())
         }
@@ -60,7 +60,7 @@ class ETagStorageSpec: QuickSpec {
 
       describe("#reload") {
         it("reloads values") {
-          storage.add(value, forKey: key)
+          storage.add(value: value, forKey: key)
           storage.reload()
 
           expect(storage.get(key)).to(equal(value))

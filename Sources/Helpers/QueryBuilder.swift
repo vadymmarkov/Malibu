@@ -15,7 +15,11 @@ public struct QueryBuilder {
   public func buildComponents(from parameters: [String: Any]) -> [Component] {
     var components: [Component] = []
 
-    parameters.forEach { key, value in
+    for key in parameters.keys.sorted(by: <) {
+      guard let value = parameters[key] else {
+        continue
+      }
+      
       components += buildComponents(key: key, value: value)
     }
 
@@ -33,6 +37,8 @@ public struct QueryBuilder {
       array.forEach { value in
         components += buildComponents(key: "\(key)[]", value: value)
       }
+    } else if let bool = value as? Bool {
+      components.append((escape(key), escape((bool ? "1" : "0"))))
     } else {
       components.append((escape(key), escape("\(value)")))
     }

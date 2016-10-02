@@ -12,33 +12,33 @@ protocol NetworkPromiseSpec {
 extension NetworkPromiseSpec where Self: QuickSpec {
 
   func testFailedResponse<T>(_ promise: Promise<T>) {
-    let expectation = self.expectation(withDescription: "Validation response failure")
+    let expectation = self.expectation(description: "Validation response failure")
 
     promise.fail({ error in
-      expect(error as! Error == Error.NoDataInResponse).to(beTrue())
+      expect(error as! NetworkError == NetworkError.noDataInResponse).to(beTrue())
       expectation.fulfill()
     })
 
-    networkPromise.reject(Error.NoDataInResponse)
+    networkPromise.reject(NetworkError.noDataInResponse)
 
-    self.waitForExpectations(withTimeout: 4.0, handler:nil)
+    self.waitForExpectations(timeout: 4.0, handler:nil)
   }
 
-  func testFailedPromise<T>(_ promise: Promise<T>, error: Error, response: HTTPURLResponse) {
-    let expectation = self.expectation(withDescription: "Validation response failure")
+  func testFailedPromise<T>(_ promise: Promise<T>, error: NetworkError, response: HTTPURLResponse) {
+    let expectation = self.expectation(description: "Validation response failure")
 
     promise.fail({ validationError in
-      expect(validationError as! Error == error).to(beTrue())
+      expect(validationError as! NetworkError == error).to(beTrue())
       expectation.fulfill()
     })
 
     networkPromise.resolve(Wave(data: data, request: request, response: response))
 
-    self.waitForExpectations(withTimeout: 4.0, handler:nil)
+    self.waitForExpectations(timeout: 4.0, handler:nil)
   }
 
   func testSucceededPromise<T>(_ promise: Promise<T>, response: HTTPURLResponse, validation: ((T) -> Void)? = nil) {
-    let expectation = self.expectation(withDescription: "Validation response success")
+    let expectation = self.expectation(description: "Validation response success")
     let wave = Wave(data: data, request: request, response: response)
 
     promise.done({ result in
@@ -48,6 +48,6 @@ extension NetworkPromiseSpec where Self: QuickSpec {
 
     networkPromise.resolve(wave)
 
-    self.waitForExpectations(withTimeout: 4.0, handler:nil)
+    self.waitForExpectations(timeout: 4.0, handler:nil)
   }
 }

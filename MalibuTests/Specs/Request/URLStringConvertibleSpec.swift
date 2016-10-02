@@ -15,7 +15,7 @@ class URLStringConvertibleSpec: QuickSpec {
           }
 
           it("returns self") {
-            expect(value.URLString).to(equal(String(value)))
+            expect(value.urlString).to(equal("http://hyper.no"))
           }
         }
 
@@ -27,7 +27,7 @@ class URLStringConvertibleSpec: QuickSpec {
           }
 
           it("returns self") {
-            expect(value.URLString).to(equal(URL.absoluteString))
+            expect(value.urlString).to(equal(url.absoluteString))
           }
         }
       }

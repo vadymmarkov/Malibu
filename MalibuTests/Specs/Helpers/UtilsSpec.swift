@@ -10,7 +10,7 @@ class UtilsSpec: QuickSpec {
 
       afterSuite {
         do {
-          try fileManager.removeItemAtPath(Utils.storageDirectory)
+          try fileManager.removeItem(atPath: Utils.storageDirectory)
         } catch {}
       }
 
@@ -29,7 +29,7 @@ class UtilsSpec: QuickSpec {
           var isDir: ObjCBool = true
 
           expect(Utils.storageDirectory).to(equal(directory))
-          expect(fileManager.fileExistsAtPath(Utils.storageDirectory, isDirectory: &isDir)).to(beTrue())
+          expect(fileManager.fileExists(atPath: Utils.storageDirectory, isDirectory: &isDir)).to(beTrue())
         }
       }
 

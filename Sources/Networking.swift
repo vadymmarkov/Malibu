@@ -19,7 +19,7 @@ public final class Networking: NSObject {
     promise.resolve()
   }
 
-  var baseUrlString: URLStringConvertible?
+  var baseUrl: URLStringConvertible?
   let sessionConfiguration: SessionConfiguration
   var customHeaders = [String: String]()
   var mocks = [String: Mock]()
@@ -53,11 +53,11 @@ public final class Networking: NSObject {
 
   // MARK: - Initialization
 
-  public init(baseUrlString: URLStringConvertible? = nil,
+  public init(baseUrl: URLStringConvertible? = nil,
               mode: Mode = .async,
               sessionConfiguration: SessionConfiguration = .default,
               sessionDelegate: URLSessionDelegate? = nil) {
-    self.baseUrlString = baseUrlString
+    self.baseUrl = baseUrl
     self.sessionConfiguration = sessionConfiguration
     self.sessionDelegate = sessionDelegate
 
@@ -89,7 +89,7 @@ public final class Networking: NSObject {
 
     do {
       let request = beforeEach?(request) ?? request
-      urlRequest = try request.toUrlRequest(baseUrl: baseUrlString, additionalHeaders: requestHeaders)
+      urlRequest = try request.toUrlRequest(baseUrl: baseUrl, additionalHeaders: requestHeaders)
     } catch {
       ride.reject(error)
       return ride
@@ -206,7 +206,7 @@ public final class Networking: NSObject {
       return
     }
 
-    let prefix = baseUrlString?.urlString ?? ""
+    let prefix = baseUrl?.urlString ?? ""
 
     EtagStorage().add(value: etag, forKey: request.etagKey(prefix: prefix))
   }
@@ -299,8 +299,8 @@ extension Networking {
 extension Networking: URLSessionDelegate {
 
   public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-    guard let baseUrlString = baseUrlString,
-      let baseURL = NSURL(string: baseUrlString.urlString),
+    guard let baseUrl = baseUrl,
+      let baseURL = NSURL(string: baseUrl.urlString),
       let serverTrust = challenge.protectionSpace.serverTrust
       else { return }
 

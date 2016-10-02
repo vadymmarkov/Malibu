@@ -16,7 +16,7 @@ class RequestCapsule: NSObject, Requestable, NSCoding {
   let method: Method
   var message: Message
   let contentType: ContentType
-  let etagPolicy: ETagPolicy
+  let etagPolicy: EtagPolicy
   let storePolicy: StorePolicy
   let cachePolicy: NSURLRequest.CachePolicy
 
@@ -42,7 +42,7 @@ class RequestCapsule: NSObject, Requestable, NSCoding {
       let resource = aDecoder.decodeObject(forKey: Key.resource.rawValue) as? String,
       let parameters = aDecoder.decodeObject(forKey: Key.parameters.rawValue) as? [String: Any],
       let headers = aDecoder.decodeObject(forKey: Key.headers.rawValue) as? [String: String],
-      let etagPolicy = ETagPolicy(rawValue: aDecoder.decodeCInt(forKey: Key.etagPolicy.rawValue)),
+      let etagPolicy = EtagPolicy(rawValue: aDecoder.decodeCInt(forKey: Key.etagPolicy.rawValue)),
       let storePolicy = StorePolicy(rawValue: aDecoder.decodeCInt(forKey: Key.storePolicy.rawValue)),
       let cachePolicy = NSURLRequest.CachePolicy(rawValue: UInt(aDecoder.decodeCInt(forKey: Key.cachePolicy.rawValue)))
     else {

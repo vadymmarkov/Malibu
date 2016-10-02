@@ -1,4 +1,4 @@
-public enum ETagPolicy: Int32 {
+public enum EtagPolicy: Int32 {
   case enabled
   case disabled
 }

@@ -13,7 +13,7 @@ class WaveSpec: QuickSpec {
       var data: Data!
 
       beforeEach {
-        request = URLRequest(url: Foundation.URL(string: "http://hyper.no")!)
+        request = URLRequest(url: URL(string: "http://hyper.no")!)
         data = try! JSONSerialization.data(withJSONObject: [["name": "Taylor"]],
           options: JSONSerialization.WritingOptions())
       }

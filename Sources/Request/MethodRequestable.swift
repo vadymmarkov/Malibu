@@ -15,7 +15,7 @@ public extension GETRequestable {
     return .query
   }
 
-  var etagPolicy: ETagPolicy {
+  var etagPolicy: EtagPolicy {
     return .enabled
   }
 }
@@ -30,7 +30,7 @@ public extension POSTRequestable {
     return .json
   }
 
-  var etagPolicy: ETagPolicy {
+  var etagPolicy: EtagPolicy {
     return .disabled
   }
 }
@@ -45,7 +45,7 @@ public extension PUTRequestable {
     return .json
   }
 
-  var etagPolicy: ETagPolicy {
+  var etagPolicy: EtagPolicy {
     return .enabled
   }
 }
@@ -60,7 +60,7 @@ public extension PATCHRequestable {
     return .json
   }
 
-  var etagPolicy: ETagPolicy {
+  var etagPolicy: EtagPolicy {
     return .enabled
   }
 }
@@ -75,7 +75,7 @@ public extension DELETERequestable {
     return .query
   }
 
-  var etagPolicy: ETagPolicy {
+  var etagPolicy: EtagPolicy {
     return .disabled
   }
 }
@@ -90,7 +90,7 @@ public extension HEADRequestable {
     return .query
   }
 
-  var etagPolicy: ETagPolicy {
+  var etagPolicy: EtagPolicy {
     return .disabled
   }
 }

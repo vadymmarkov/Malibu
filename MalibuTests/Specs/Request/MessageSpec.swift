@@ -17,7 +17,7 @@ class MessageSpec: QuickSpec {
         it("sets parameter values") {
           message = Message(resource: resource, parameters: ["key": "value"], headers: ["key": "value"])
 
-          expect(message.resource.URLString).to(equal(resource.URLString))
+          expect(message.resource.urlString).to(equal(resource.urlString))
           expect(message.parameters.count).to(equal(1))
           expect(message.headers).to(equal(["key": "value"]))
         }

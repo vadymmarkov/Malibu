@@ -15,11 +15,11 @@ class FormURLEncoderSpec: QuickSpec {
       describe("#encode") {
         it("encodes a dictionary of parameters to NSData object") {
           let parameters = ["firstname": "John", "lastname": "Hyperseed"]
-          let string = QueryBuilder().buildQuery(parameters)
-          let data = string.dataUsingEncoding(String.Encoding.utf8,
-            allowLossyConversion: false)
+          let string = QueryBuilder().buildQuery(from: parameters)
+          let data = string.data(using: String.Encoding.utf8,
+                                 allowLossyConversion: false)
 
-          expect{ try encoder.encode(parameters) }.to(equal(data))
+          expect{ try encoder.encode(parameters: parameters) }.to(equal(data))
         }
       }
     }

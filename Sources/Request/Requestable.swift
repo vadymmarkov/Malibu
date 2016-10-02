@@ -4,7 +4,7 @@ public protocol Requestable {
   var method: Method { get }
   var message: Message { get set }
   var contentType: ContentType { get }
-  var etagPolicy: ETagPolicy { get }
+  var etagPolicy: EtagPolicy { get }
   var storePolicy: StorePolicy { get }
   var cachePolicy: NSURLRequest.CachePolicy { get }
 
@@ -95,10 +95,10 @@ public extension Requestable {
   }
 
   func etagKey(prefix: String = "") -> String {
-    return "\(method)\(prefix)\(message.resource.urlString)\(message.parameters.description)"
+    return "\(method.rawValue)\(prefix)\(message.resource.urlString)\(message.parameters.description)"
   }
 
   var key: String {
-    return "\(method) \(message.resource.urlString)"
+    return "\(method.rawValue) \(message.resource.urlString)"
   }
 }

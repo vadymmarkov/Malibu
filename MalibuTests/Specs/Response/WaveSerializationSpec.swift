@@ -11,16 +11,16 @@ class WaveSerializationSpec: QuickSpec, NetworkPromiseSpec {
 
   override func spec() {
     describe("WaveSerialization") {
-
-      let URL = Foundation.URL(string: "http://hyper.no")!
-      let response = HTTPURLResponse(url: URL, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!
+      let url = URL(string: "http://hyper.no")!
+      let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!
 
       // MARK: - Specs
 
       beforeEach {
         self.networkPromise = Ride()
-        self.request = URLRequest(url: Foundation.URL(string: "http://hyper.no")!)
-        self.data = try! JSONSerialization.data(withJSONObject: [["name": "Taylor"]],
+        self.request = URLRequest(url: URL(string: "http://hyper.no")!)
+        self.data = try! JSONSerialization.data(
+          withJSONObject: [["name": "Taylor"]],
           options: JSONSerialization.WritingOptions())
       }
 
@@ -61,7 +61,9 @@ class WaveSerializationSpec: QuickSpec, NetworkPromiseSpec {
           context("when response status code is 204 No Content") {
             it("resolves promise with an empty string") {
               self.data = Data()
-              let response = HTTPURLResponse(url: URL, statusCode: 204, httpVersion: "HTTP/2.0", headerFields: nil)!
+              let response = HTTPURLResponse(url: url, statusCode: 204,
+                                             httpVersion: "HTTP/2.0",
+                                             headerFields: nil)!
 
               self.testSucceededPromise(promise, response: response) { result in
                 expect(result.isEmpty).to(beTrue())
@@ -82,11 +84,11 @@ class WaveSerializationSpec: QuickSpec, NetworkPromiseSpec {
         }
       }
 
-      describe("#toJSONArray") {
+      describe("#toJsonArray") {
         var promise: Promise<[[String: Any]]>!
 
         beforeEach {
-          promise = self.networkPromise.toJSONArray()
+          promise = self.networkPromise.toJsonArray()
         }
 
         context("when response is rejected") {
@@ -118,33 +120,36 @@ class WaveSerializationSpec: QuickSpec, NetworkPromiseSpec {
           context("when response status code is 204 No Content") {
             it("resolves promise with an empty array") {
               self.data = Data()
-              let response = HTTPURLResponse(url: URL, statusCode: 204, httpVersion: "HTTP/2.0", headerFields: nil)!
+              let response = HTTPURLResponse(url: url, statusCode: 204,
+                                             httpVersion: "HTTP/2.0", headerFields: nil)!
 
-              self.testSucceededPromise(promise, response: response) { result in
-                expect(result).to(equal([]))
+              self.testSucceededPromise(promise, response: response) { (result: [[String: Any]]) in
+                expect(result.isEmpty).to(beTrue())
               }
             }
           }
 
           context("when serialization succeeded") {
             it("resolves promise with a result") {
-              let array = [["name": "Taylor"]]
+              let array: [[String: Any]] = [["name": "Taylor"]]
               self.data = try! JSONSerialization.data(withJSONObject: array,
                 options: JSONSerialization.WritingOptions())
 
-              self.testSucceededPromise(promise, response: response) { result in
-                expect(result).to(equal(array))
+              self.testSucceededPromise(promise, response: response) { (result: [[String: Any]]) in
+                expect(result.count).to(equal(1))
+                expect(result[0].count).to(equal(1))
+                expect(result[0]["name"] as? String).to(equal("Taylor"))
               }
             }
           }
         }
       }
 
-      describe("#toJSONDictionary") {
+      describe("#toJsonDictionary") {
         var promise: Promise<[String: Any]>!
 
         beforeEach {
-          promise = self.networkPromise.toJSONDictionary()
+          promise = self.networkPromise.toJsonDictionary()
         }
 
         context("when response is rejected") {
@@ -178,7 +183,9 @@ class WaveSerializationSpec: QuickSpec, NetworkPromiseSpec {
           context("when response status code is 204 No Content") {
             it("resolves promise with an empty dictionary") {
               self.data = Data()
-              let response = HTTPURLResponse(url: URL, statusCode: 204, httpVersion: "HTTP/2.0", headerFields: nil)!
+              let response = HTTPURLResponse(url: url, statusCode: 204,
+                                             httpVersion: "HTTP/2.0",
+                                             headerFields: nil)!
 
               self.testSucceededPromise(promise, response: response) { result in
                 if let stringDictionary = result as? [String: String] {

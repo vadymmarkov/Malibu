@@ -2,14 +2,14 @@
 import Quick
 import Nimble
 
-class JSONParameterEncoderSpec: QuickSpec {
+class JsonEncoderSpec: QuickSpec {
 
   override func spec() {
-    describe("JSONParameterEncoder") {
-      var encoder: JSONEncoder!
+    describe("JsonEncoder") {
+      var encoder: JsonEncoder!
 
       beforeEach {
-        encoder = JSONEncoder()
+        encoder = JsonEncoder()
       }
 
       describe("#encode") {
@@ -18,7 +18,7 @@ class JSONParameterEncoderSpec: QuickSpec {
           let data = try! JSONSerialization.data(withJSONObject: parameters,
             options: JSONSerialization.WritingOptions())
 
-          expect{ try encoder.encode(parameters) }.to(equal(data))
+          expect{ try encoder.encode(parameters: parameters) }.to(equal(data))
         }
       }
     }

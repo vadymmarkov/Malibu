@@ -9,7 +9,7 @@ class DataOperationSpec: QuickSpec {
     describe("DataOperation") {
       var operation: DataOperation!
       let session = URLSession()
-      let urlRequest = try! GETRequest().toURLRequest()
+      let urlRequest = try! GETRequest().toUrlRequest() as URLRequest
       let ride = Ride()
 
       describe("#init") {
@@ -19,7 +19,7 @@ class DataOperationSpec: QuickSpec {
 
         it("sets properties") {
           expect(operation.session).to(equal(session))
-          expect(operation.URLRequest).to(equal(URLRequest))
+          expect(operation.urlRequest).to(equal(urlRequest))
           expect(operation.ride === ride).to(beTrue())
         }
       }
