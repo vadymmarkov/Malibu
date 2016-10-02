@@ -18,7 +18,7 @@ class MockOperationSpec: QuickSpec {
 
       beforeEach {
         request = GETRequest()
-        urlRequest = try! request.toUrlRequest() as URLRequest
+        urlRequest = try! request.toUrlRequest()
         response = HTTPURLResponse(url: URL(string: "http://hyper.no")!,
           statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!
         ride = Ride()

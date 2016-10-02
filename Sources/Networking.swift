@@ -13,7 +13,7 @@ public final class Networking: NSObject {
 
   public var additionalHeaders: (() -> [String: String])?
   public var beforeEach: ((Requestable) -> Requestable)?
-  public var preProcessRequest: ((NSMutableURLRequest) -> Void)?
+  public var preProcessRequest: ((URLRequest) -> URLRequest)?
 
   public var middleware: (Promise<Void>) -> Void = { promise in
     promise.resolve()
@@ -85,7 +85,7 @@ public final class Networking: NSObject {
 
   func start(_ request: Requestable) -> Ride {
     let ride = Ride()
-    let urlRequest: NSMutableURLRequest
+    var urlRequest: URLRequest
 
     do {
       let request = beforeEach?(request) ?? request
@@ -95,9 +95,11 @@ public final class Networking: NSObject {
       return ride
     }
 
-    preProcessRequest?(urlRequest)
+    if let preProcessRequest = preProcessRequest {
+      urlRequest = preProcessRequest(urlRequest)
+    }
 
-    guard let operation = buildOperation(ride: ride, request: request, urlRequest: urlRequest as URLRequest)
+    guard let operation = buildOperation(ride: ride, request: request, urlRequest: urlRequest)
       else {
         return ride
     }

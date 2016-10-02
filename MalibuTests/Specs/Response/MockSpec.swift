@@ -38,7 +38,7 @@ class MockSpec: QuickSpec {
             httpVersion: "HTTP/2.0", headerFields: nil)!
           wave = Wave(
             data: mock.data!,
-            request: try! mock.request.toUrlRequest() as URLRequest,
+            request: try! mock.request.toUrlRequest(),
             response: mock.response!)
         }
 
@@ -74,7 +74,7 @@ class MockSpec: QuickSpec {
             httpVersion: "HTTP/2.0", headerFields: nil)!
           wave = Wave(
             data: mock.data!,
-            request: try! mock.request.toUrlRequest() as URLRequest,
+            request: try! mock.request.toUrlRequest(),
             response: mock.response!)
         }
 

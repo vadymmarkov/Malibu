@@ -9,7 +9,7 @@ public protocol Requestable {
   var cachePolicy: NSURLRequest.CachePolicy { get }
 
   func toUrlRequest(baseUrl: URLStringConvertible?,
-                    additionalHeaders: [String: String]) throws -> NSMutableURLRequest
+                    additionalHeaders: [String: String]) throws -> URLRequest
 }
 
 public extension Requestable {
@@ -25,11 +25,11 @@ public extension Requestable {
   }
 
   func toUrlRequest(baseUrl: URLStringConvertible? = nil,
-                    additionalHeaders: [String: String] = [:]) throws -> NSMutableURLRequest {
+                    additionalHeaders: [String: String] = [:]) throws -> URLRequest {
     let prefix = baseUrl?.urlString ?? ""
     let resourceString = "\(prefix)\(message.resource.urlString)"
     let url = try buildUrl(from: resourceString)
-    let request = NSMutableURLRequest(url: url)
+    var request = URLRequest(url: url)
 
     request.httpMethod = method.rawValue
     request.cachePolicy = cachePolicy

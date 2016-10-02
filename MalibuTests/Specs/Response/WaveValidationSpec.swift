@@ -145,7 +145,7 @@ class WaveValidationSpec: QuickSpec, NetworkPromiseSpec {
           var promise: Promise<Wave>!
 
           beforeEach {
-            let request = NSMutableURLRequest(url: url)
+            var request = URLRequest(url: url)
             request.addValue("text/html; charset=utf-8", forHTTPHeaderField: "Accept")
             promise = self.networkPromise.validate()
           }

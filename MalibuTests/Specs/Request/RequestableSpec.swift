@@ -42,8 +42,8 @@ class RequestableSpec: QuickSpec {
 
         context("when there are no errors") {
           context("without base URL") {
-            it("does not throw an error and returns created NSMutableURLRequest") {
-              expect { urlRequest = try request.toUrlRequest() as URLRequest }.toNot(throwError())
+            it("does not throw an error and returns created URLRequest") {
+              expect { urlRequest = try request.toUrlRequest() }.toNot(throwError())
               expect(urlRequest.url).to(equal(URL(string: request.message.resource.urlString)))
               expect(urlRequest.httpMethod).to(equal(Method.post.rawValue))
               expect(urlRequest.cachePolicy).to(equal(request.cachePolicy))
@@ -55,25 +55,25 @@ class RequestableSpec: QuickSpec {
           }
 
           context("with base URL") {
-            it("does not throw an error and returns created NSMutableURLRequest") {
+            it("does not throw an error and returns created URLRequest") {
               request.message.resource = "/about"
 
               expect {
-                urlRequest = try request.toUrlRequest(baseUrl: "http://hyper.no") as URLRequest
+                urlRequest = try request.toUrlRequest(baseUrl: "http://hyper.no")
               }.toNot(throwError())
               expect(urlRequest.url?.absoluteString).to(equal("http://hyper.no/about"))
             }
           }
 
           context("with additional headers") {
-            it("returns created NSMutableURLRequest with new header added") {
+            it("returns created URLRequest with new header added") {
               let headers = ["foo": "bar", "key": "bar"]
               request.message.resource = "/about"
 
               expect {
                 urlRequest = try request.toUrlRequest(
                 baseUrl: "http://hyper.no",
-                additionalHeaders: headers) as URLRequest
+                additionalHeaders: headers)
               }.toNot(throwError())
 
               expect(urlRequest.allHTTPHeaderFields?["foo"]).to(equal("bar"))
@@ -135,12 +135,12 @@ class RequestableSpec: QuickSpec {
             }
 
             it("does not set Content-Type header") {
-              expect{ urlRequest = try request.toUrlRequest() as URLRequest }.toNot(throwError())
+              expect{ urlRequest = try request.toUrlRequest() }.toNot(throwError())
               expect(urlRequest.allHTTPHeaderFields?["Content-Type"]).to(beNil())
             }
 
             it("does not set body") {
-              expect{ urlRequest = try request.toUrlRequest() as URLRequest }.toNot(throwError())
+              expect{ urlRequest = try request.toUrlRequest() }.toNot(throwError())
               expect(urlRequest.httpBody).to(beNil())
             }
           }
@@ -152,14 +152,14 @@ class RequestableSpec: QuickSpec {
             }
 
             it("sets Content-Type header") {
-              expect{ urlRequest = try request.toUrlRequest() as URLRequest }.toNot(throwError())
+              expect{ urlRequest = try request.toUrlRequest() }.toNot(throwError())
               expect(urlRequest.allHTTPHeaderFields?["Content-Type"]).to(
                 equal("multipart/form-data; boundary=\(boundary)")
               )
             }
 
             it("sets Content-Length header") {
-              expect{ urlRequest = try request.toUrlRequest() as URLRequest! }.toNot(throwError())
+              expect{ urlRequest = try request.toUrlRequest() }.toNot(throwError())
               expect(urlRequest.allHTTPHeaderFields?["Content-Length"]).to(
                 equal("\(urlRequest.httpBody!.count)")
               )

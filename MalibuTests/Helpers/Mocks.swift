@@ -57,7 +57,7 @@ class TestResponseHandler: ResponseHandler {
   // MARK: - Initialization
 
   init() {
-    urlRequest = try! GETRequest().toUrlRequest() as URLRequest
+    urlRequest = try! GETRequest().toUrlRequest()
     ride = Ride()
     response = HTTPURLResponse(url: urlRequest.url!, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!
   }
