@@ -1,6 +1,6 @@
 import Foundation
 
-public struct ContentTypeValidator<T : SequenceType where T.Generator.Element == String>: Validating {
+public struct ContentTypeValidator<T : Sequence>: Validating where T.Iterator.Element == String {
 
   public var contentTypes: T
 
@@ -12,30 +12,30 @@ public struct ContentTypeValidator<T : SequenceType where T.Generator.Element ==
 
   // MARK: - Validation
 
-  public func validate(result: Wave) throws {
+  public func validate(_ result: Wave) throws {
     let response = result.response
 
-    if let responseContentType = response.MIMEType,
-      responseMIMEType = MIMEType(contentType: responseContentType) {
+    if let responseContentType = response.mimeType,
+      let responseMimeType = MimeType(contentType: responseContentType) {
       for contentType in contentTypes {
-        if MIMEType(contentType: contentType)?.matches(responseMIMEType) == true {
+        if MimeType(contentType: contentType)?.matches(to: responseMimeType) == true {
           return
         }
       }
     } else {
       for contentType in contentTypes {
-        let expectedMIMEType = MIMEType(contentType: contentType)
+        let expectedMimeType = MimeType(contentType: contentType)
 
-        if expectedMIMEType?.type == "*" && expectedMIMEType?.subtype == "*" {
+        if expectedMimeType?.type == "*" && expectedMimeType?.subtype == "*" {
           return
         }
       }
     }
 
-    var error = Error.MissingContentType
+    var error = NetworkError.missingContentType
 
-    if let responseContentType = response.MIMEType {
-      error = Error.UnacceptableContentType(responseContentType)
+    if let responseContentType = response.mimeType {
+      error = NetworkError.unacceptableContentType(responseContentType)
     }
 
     throw error

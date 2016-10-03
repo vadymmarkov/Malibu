@@ -8,30 +8,30 @@ class SessionConfigurationSpec: QuickSpec {
     describe("SessionConfiguration") {
       var sessionConfiguration: SessionConfiguration!
 
-      context("when it is Default configuration") {
+      context("when it is a default configuration") {
         beforeEach {
-          sessionConfiguration = .Default
+          sessionConfiguration = .default
         }
 
         describe("#value") {
           it("returns a correct NSURLSessionConfiguration") {
             let value = sessionConfiguration.value
-            let expected = NSURLSessionConfiguration.defaultSessionConfiguration()
-            expected.HTTPAdditionalHeaders = Header.defaultHeaders
+            let expected = URLSessionConfiguration.default
+            expected.httpAdditionalHeaders = Header.defaultHeaders
 
             expect(value).to(equal(expected))
           }
 
           it("sets additional HTTP headers") {
-            let headers = sessionConfiguration.value.HTTPAdditionalHeaders as? [String: String]
+            let headers = sessionConfiguration.value.httpAdditionalHeaders as? [String: String]
             expect(headers).to(equal(Header.defaultHeaders))
           }
         }
       }
 
-      context("when it is Background configuration") {
+      context("when it is a background configuration") {
         beforeEach {
-          sessionConfiguration = .Background
+          sessionConfiguration = .background
         }
 
         describe("#value") {
@@ -42,18 +42,18 @@ class SessionConfigurationSpec: QuickSpec {
           }
 
           it("sets additional HTTP headers") {
-            let headers = sessionConfiguration.value.HTTPAdditionalHeaders as? [String: String]
+            let headers = sessionConfiguration.value.httpAdditionalHeaders as? [String: String]
             expect(headers).to(equal(Header.defaultHeaders))
           }
         }
       }
 
-      context("when it is Custom configuration") {
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+      context("when it is a custom configuration") {
+        let configuration = URLSessionConfiguration.default
 
         beforeEach {
-          configuration.requestCachePolicy = .ReturnCacheDataDontLoad
-          sessionConfiguration = .Custom(configuration)
+          configuration.requestCachePolicy = .returnCacheDataDontLoad
+          sessionConfiguration = .custom(configuration)
         }
 
         describe("#value") {
@@ -65,7 +65,7 @@ class SessionConfigurationSpec: QuickSpec {
           }
 
           it("sets additional HTTP headers") {
-            let headers = sessionConfiguration.value.HTTPAdditionalHeaders as? [String: String]
+            let headers = sessionConfiguration.value.httpAdditionalHeaders as? [String: String]
             expect(headers).to(equal(Header.defaultHeaders))
           }
         }

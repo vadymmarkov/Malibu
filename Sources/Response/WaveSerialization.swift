@@ -5,49 +5,56 @@ import When
 
 public extension Promise where T: Wave {
 
-  public func toData() -> Promise<NSData> {
-    return then({ result -> NSData in
-      return try DataSerializer().serialize(result.data, response: result.response)
+  public func toData() -> Promise<Data> {
+    return then({ result -> Data in
+      return try DataSerializer().serialize(data: result.data, response: result.response)
     })
   }
 
-  public func toString(encoding: NSStringEncoding? = nil) -> Promise<String> {
+  public func toString(_ encoding: String.Encoding? = nil) -> Promise<String> {
     return then({ result -> String in
-      return try StringSerializer(encoding: encoding).serialize(result.data, response: result.response)
+      return try StringSerializer(encoding: encoding).serialize(
+        data: result.data,
+        response: result.response
+      )
     })
   }
 
-  public func toJSONArray(options: NSJSONReadingOptions = .AllowFragments) -> Promise<[[String: AnyObject]]> {
-    return then({ result -> [[String: AnyObject]] in
-      let serializer = JSONSerializer(options: options)
+  public func toJsonArray(_ options: JSONSerialization.ReadingOptions = .allowFragments) -> Promise<[[String: Any]]> {
+    return then({ result -> [[String: Any]] in
+      let serializer = JsonSerializer(options: options)
 
-      let data = try serializer.serialize(result.data,
-        response: result.response)
+      let data = try serializer.serialize(
+        data: result.data,
+        response: result.response
+      )
 
       guard !(data is NSNull) else {
         return []
       }
 
-      guard let array = data as? [[String : AnyObject]]
-        else { throw Error.JSONArraySerializationFailed }
+      guard let array = data as? [[String : Any]]
+        else { throw NetworkError.jsonArraySerializationFailed }
 
       return array
     })
   }
 
-  public func toJSONDictionary(options: NSJSONReadingOptions = .AllowFragments) -> Promise<[String: AnyObject]> {
-    return then({ result -> [String: AnyObject] in
-      let serializer = JSONSerializer(options: options)
+  public func toJsonDictionary(_ options: JSONSerialization.ReadingOptions = .allowFragments) -> Promise<[String: Any]> {
+    return then({ result -> [String: Any] in
+      let serializer = JsonSerializer(options: options)
 
-      let data = try serializer.serialize(result.data,
-        response: result.response)
+      let data = try serializer.serialize(
+        data: result.data,
+        response: result.response
+      )
 
       guard !(data is NSNull) else {
         return [:]
       }
 
-      guard let dictionary = data as? [String : AnyObject]
-        else { throw Error.JSONDictionarySerializationFailed }
+      guard let dictionary = data as? [String : Any]
+        else { throw NetworkError.jsonDictionarySerializationFailed }
 
       return dictionary
     })

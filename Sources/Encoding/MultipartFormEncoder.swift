@@ -4,11 +4,11 @@ struct MultipartFormEncoder: ParameterEncoding {
 
   // MARK: - ParameterEncoding
 
-  func encode(parameters: [String: AnyObject]) throws -> NSData? {
-    let string = MultipartBuilder().buildMultipartString(parameters)
+  func encode(parameters: [String: Any]) throws -> Data? {
+    let string = MultipartBuilder().buildMultipartString(from: parameters)
 
-    guard let data = string.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true) else {
-      throw Error.InvalidParameter
+    guard let data = string.data(using: String.Encoding.utf8, allowLossyConversion: true) else {
+      throw NetworkError.invalidParameter
     }
 
     return data

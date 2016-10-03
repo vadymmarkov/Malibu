@@ -21,8 +21,8 @@ class QueryBuilderSpec: QuickSpec {
       describe("#buildQuery") {
         context("with empty dictionary") {
           it("builds encoded query string") {
-            let parameters = [String: AnyObject]()
-            expect(builder.buildQuery(parameters)).to(equal(""))
+            let parameters = [String: Any]()
+            expect(builder.buildQuery(from: parameters)).to(equal(""))
           }
         }
 
@@ -31,7 +31,7 @@ class QueryBuilderSpec: QuickSpec {
             let parameters = ["firstname": "Taylor"]
             let string = "firstname=Taylor"
 
-            expect(builder.buildQuery(parameters)).to(equal(string))
+            expect(builder.buildQuery(from: parameters)).to(equal(string))
           }
         }
 
@@ -40,7 +40,7 @@ class QueryBuilderSpec: QuickSpec {
             let parameters = ["firstname": "Taylor", "lastname": "Hyperseed"]
             let string = "firstname=Taylor&lastname=Hyperseed"
 
-            expect(builder.buildQuery(parameters)).to(equal(string))
+            expect(builder.buildQuery(from: parameters)).to(equal(string))
           }
         }
 
@@ -49,7 +49,7 @@ class QueryBuilderSpec: QuickSpec {
             let parameters = ["value": 11]
             let string = "value=11"
 
-            expect(builder.buildQuery(parameters)).to(equal(string))
+            expect(builder.buildQuery(from: parameters)).to(equal(string))
           }
         }
 
@@ -58,7 +58,7 @@ class QueryBuilderSpec: QuickSpec {
             let parameters = ["value": 11.1]
             let string = "value=11.1"
 
-            expect(builder.buildQuery(parameters)).to(equal(string))
+            expect(builder.buildQuery(from: parameters)).to(equal(string))
           }
         }
 
@@ -67,7 +67,7 @@ class QueryBuilderSpec: QuickSpec {
             let parameters = ["value": true]
             let string = "value=1"
 
-            expect(builder.buildQuery(parameters)).to(equal(string))
+            expect(builder.buildQuery(from: parameters)).to(equal(string))
           }
         }
 
@@ -76,7 +76,7 @@ class QueryBuilderSpec: QuickSpec {
             let parameters = ["array": ["string", 11, true]]
             let string = "array%5B%5D=string&array%5B%5D=11&array%5B%5D=1"
 
-            expect(builder.buildQuery(parameters)).to(equal(string))
+            expect(builder.buildQuery(from: parameters)).to(equal(string))
           }
         }
 
@@ -85,7 +85,7 @@ class QueryBuilderSpec: QuickSpec {
             let parameters = ["dictionary": ["value": 12]]
             let string = "dictionary%5Bvalue%5D=12"
 
-            expect(builder.buildQuery(parameters)).to(equal(string))
+            expect(builder.buildQuery(from: parameters)).to(equal(string))
           }
         }
 
@@ -94,7 +94,7 @@ class QueryBuilderSpec: QuickSpec {
             let parameters = ["dictionary": ["nested": ["value": 7.1]]]
             let string = "dictionary%5Bnested%5D%5Bvalue%5D=7.1"
 
-            expect(builder.buildQuery(parameters)).to(equal(string))
+            expect(builder.buildQuery(from: parameters)).to(equal(string))
           }
         }
 
@@ -103,15 +103,15 @@ class QueryBuilderSpec: QuickSpec {
             let parameters = ["dictionary": ["nested": ["key": ["value", 8, true]]]]
             let string = "dictionary%5Bnested%5D%5Bkey%5D%5B%5D=value&dictionary%5Bnested%5D%5Bkey%5D%5B%5D=8&dictionary%5Bnested%5D%5Bkey%5D%5B%5D=1"
 
-            expect(builder.buildQuery(parameters)).to(equal(string))
+            expect(builder.buildQuery(from: parameters)).to(equal(string))
           }
         }
       }
 
       describe("#buildComponents:parameters") {
         it("builds a query component based on key and value") {
-          let parameters: [String: AnyObject] = ["firstname": "Taylor"]
-          let components = builder.buildComponents(parameters: parameters)
+          let parameters: [String: Any] = ["firstname": "Taylor"]
+          let components = builder.buildComponents(from: parameters)
 
           expect(components[0].0).to(equal("firstname"))
           expect(components[0].1).to(equal("Taylor"))

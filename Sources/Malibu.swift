@@ -2,7 +2,7 @@ import Foundation
 import When
 
 public enum Mode {
-  case Regular, Partial, Fake
+  case regular, partial, fake
 }
 
 // MARK: - Helpers
@@ -11,7 +11,7 @@ var networkings = [String: Networking]()
 
 // MARK: - Vars
 
-public var mode: Mode = .Regular
+public var mode: Mode = .regular
 public var backfootSurfer = Networking()
 public var parameterEncoders = [ContentType: ParameterEncoding]()
 public let logger = Logger()
@@ -20,60 +20,58 @@ public let boundary = String(format: "Malibu%08x%08x", arc4random(), arc4random(
 
 // MARK: - Networkings
 
-public func register(name: String, networking: Networking) {
+public func register(_ name: String, networking: Networking) {
   networking.requestStorage = RequestStorage(name: name)
   networkings[name] = networking
 }
 
-public func unregister(name: String) -> Bool {
-  guard let networking = networkings.removeValueForKey(name) else {
-    return false
+public func unregister(_ name: String) {
+  guard let networking = networkings.removeValue(forKey: name) else {
+    return
   }
 
   networking.requestStorage.clear()
-
-  return true
 }
 
-public func networking(name: String) -> Networking {
+public func networking(_ name: String) -> Networking {
   return networkings[name] ?? backfootSurfer
 }
 
 // MARK: - Storages
 
 public func clearStorages() {
-  ETagStorage().clear()
+  EtagStorage().clear()
   RequestStorage.clearAll()
 }
 
 // MARK: - Mocks
 
-public func register(mock mock: Mock) {
+public func register(mock: Mock) {
   backfootSurfer.register(mock: mock)
 }
 
 // MARK: - Requests
 
-public func GET(request: GETRequestable) -> Ride {
+public func GET(_ request: GETRequestable) -> Ride {
   return backfootSurfer.GET(request)
 }
 
-public func POST(request: POSTRequestable) -> Ride {
+public func POST(_ request: POSTRequestable) -> Ride {
   return backfootSurfer.POST(request)
 }
 
-public func PUT(request: PUTRequestable) -> Ride {
+public func PUT(_ request: PUTRequestable) -> Ride {
   return backfootSurfer.PUT(request)
 }
 
-public func PATCH(request: PATCHRequestable) -> Ride {
+public func PATCH(_ request: PATCHRequestable) -> Ride {
   return backfootSurfer.PATCH(request)
 }
 
-public func DELETE(request: DELETERequestable) -> Ride {
+public func DELETE(_ request: DELETERequestable) -> Ride {
   return backfootSurfer.DELETE(request)
 }
 
-public func HEAD(request: HEADRequestable) -> Ride {
+public func HEAD(_ request: HEADRequestable) -> Ride {
   return backfootSurfer.HEAD(request)
 }

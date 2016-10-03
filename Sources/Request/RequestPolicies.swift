@@ -1,9 +1,9 @@
-public enum ETagPolicy: Int32 {
-  case Enabled
-  case Disabled
+public enum EtagPolicy: Int32 {
+  case enabled
+  case disabled
 }
 
 public enum StorePolicy: Int32 {
-  case Unspecified
-  case Offline
+  case unspecified
+  case offline
 }

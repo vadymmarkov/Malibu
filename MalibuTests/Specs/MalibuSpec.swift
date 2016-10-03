@@ -6,8 +6,8 @@ class MalibuSpec: QuickSpec {
 
   override func spec() {
     describe("Malibu") {
-      let baseURLString = "http://hyper.no"
-      let surferNetworking = Networking(baseURLString: baseURLString)
+      let baseUrlString = "http://hyper.no"
+      let surferNetworking = Networking(baseUrl: baseUrlString)
 
       beforeEach {
         Malibu.networkings.removeAll()
@@ -16,14 +16,14 @@ class MalibuSpec: QuickSpec {
 
       describe(".mode") {
         it("is regular by default") {
-          expect(Malibu.mode).to(equal(Malibu.Mode.Regular))
+          expect(Malibu.mode).to(equal(Malibu.Mode.regular))
         }
       }
 
       describe(".register:networking") {
         it("adds new networking instance with a name") {
           expect(Malibu.networkings.count).to(equal(1))
-          expect(Malibu.networkings["surfer"]?.baseURLString?.URLString).to(equal(baseURLString.URLString))
+          expect(Malibu.networkings["surfer"]?.baseUrl?.urlString).to(equal(baseUrlString.urlString))
           expect(Malibu.networkings["surfer"]?.requestStorage.key).to(equal("\(RequestStorage.domain).surfer"))
         }
       }

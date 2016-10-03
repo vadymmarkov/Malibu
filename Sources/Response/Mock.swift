@@ -1,17 +1,17 @@
 import Foundation
 
-public class Mock {
+public final class Mock {
 
   public var request: Requestable
-  public var response: NSHTTPURLResponse?
-  public var data: NSData?
-  public var error: ErrorType?
+  public var response: HTTPURLResponse?
+  public var data: Data?
+  public var error: Error?
   public var delay: Double
 
   // MARK: - Initialization
 
-  public init(request: Requestable, response: NSHTTPURLResponse?,
-              data: NSData?, error: ErrorType? = nil, delay: Double = 0.0) {
+  public init(request: Requestable, response: HTTPURLResponse?,
+              data: Data?, error: Error? = nil, delay: Double = 0.0) {
     self.request = request
     self.data = data
     self.response = response
@@ -20,14 +20,17 @@ public class Mock {
   }
 
   public convenience init(request: Requestable, fileName: String,
-                          bundle: NSBundle = NSBundle.mainBundle(), delay: Double = 0.0) {
-    guard let fileURL = NSURL(string: fileName),
-      resource = fileURL.URLByDeletingPathExtension?.absoluteString,
-      filePath = bundle.pathForResource(resource, ofType: fileURL.pathExtension),
-      data = NSData(contentsOfFile: filePath),
-      response = NSHTTPURLResponse(URL: fileURL, statusCode: 200, HTTPVersion: "HTTP/2.0", headerFields: nil)
+                          bundle: Bundle = Bundle.main, delay: Double = 0.0) {
+    let url = URL(string: fileName)
+
+    guard let fileURL = url,
+      let resource = url?.deletingPathExtension().absoluteString,
+      let filePath = bundle.path(forResource: resource, ofType: fileURL.pathExtension),
+      let data = try? Data(contentsOf: URL(fileURLWithPath: filePath)),
+      let response = HTTPURLResponse(url: fileURL, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)
       else {
-        self.init(request: request, response: nil, data: nil, error: Error.NoResponseReceived, delay: delay)
+        self.init(request: request, response: nil, data: nil,
+                  error: NetworkError.noResponseReceived, delay: delay)
         return
     }
 
@@ -36,17 +39,18 @@ public class Mock {
     self.init(request: request, response: response, data: data, error: nil, delay: delay)
   }
 
-  public convenience init(request: Requestable, JSON: [String: AnyObject], delay: Double = 0.0) {
-    var JSONData: NSData?
+  public convenience init(request: Requestable, json: [String: Any], delay: Double = 0.0) {
+    var jsonData: Data?
 
     do {
-      JSONData = try NSJSONSerialization.dataWithJSONObject(JSON, options: NSJSONWritingOptions())
+      jsonData = try JSONSerialization.data(withJSONObject: json, options: JSONSerialization.WritingOptions())
     } catch {}
 
-    guard let URL = NSURL(string: "mock://JSON"), data = JSONData,
-      response = NSHTTPURLResponse(URL: URL, statusCode: 200, HTTPVersion: "HTTP/2.0", headerFields: nil)
+    guard let url = URL(string: "mock://JSON"), let data = jsonData,
+      let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)
       else {
-        self.init(request: request, response: nil, data: nil, error: Error.NoResponseReceived, delay: delay)
+        self.init(request: request, response: nil, data: nil,
+                  error: NetworkError.noResponseReceived, delay: delay)
         return
     }
 

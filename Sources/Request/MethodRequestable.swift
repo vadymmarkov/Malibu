@@ -8,89 +8,89 @@ public protocol HEADRequestable: Requestable {}
 public extension GETRequestable {
 
   var method: Method {
-    return .GET
+    return .get
   }
 
   var contentType: ContentType {
-    return .Query
+    return .query
   }
 
-  var etagPolicy: ETagPolicy {
-    return .Enabled
+  var etagPolicy: EtagPolicy {
+    return .enabled
   }
 }
 
 public extension POSTRequestable {
 
   var method: Method {
-    return .POST
+    return .post
   }
 
   var contentType: ContentType {
-    return .JSON
+    return .json
   }
 
-  var etagPolicy: ETagPolicy {
-    return .Disabled
+  var etagPolicy: EtagPolicy {
+    return .disabled
   }
 }
 
 public extension PUTRequestable {
 
   var method: Method {
-    return .PUT
+    return .put
   }
 
   var contentType: ContentType {
-    return .JSON
+    return .json
   }
 
-  var etagPolicy: ETagPolicy {
-    return .Enabled
+  var etagPolicy: EtagPolicy {
+    return .enabled
   }
 }
 
 public extension PATCHRequestable {
 
   var method: Method {
-    return .PATCH
+    return .patch
   }
 
   var contentType: ContentType {
-    return .JSON
+    return .json
   }
 
-  var etagPolicy: ETagPolicy {
-    return .Enabled
+  var etagPolicy: EtagPolicy {
+    return .enabled
   }
 }
 
 public extension DELETERequestable {
 
   var method: Method {
-    return .DELETE
+    return .delete
   }
 
   var contentType: ContentType {
-    return .Query
+    return .query
   }
 
-  var etagPolicy: ETagPolicy {
-    return .Disabled
+  var etagPolicy: EtagPolicy {
+    return .disabled
   }
 }
 
 public extension HEADRequestable {
 
   var method: Method {
-    return .HEAD
+    return .head
   }
 
   var contentType: ContentType {
-    return .Query
+    return .query
   }
 
-  var etagPolicy: ETagPolicy {
-    return .Disabled
+  var etagPolicy: EtagPolicy {
+    return .disabled
   }
 }

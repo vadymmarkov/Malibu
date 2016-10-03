@@ -1,24 +1,27 @@
 import Foundation
 
 public enum SessionConfiguration {
-  case Default, Ephemeral, Background, Custom(NSURLSessionConfiguration)
+  case `default`
+  case ephemeral
+  case background
+  case custom(URLSessionConfiguration)
 
-  var value: NSURLSessionConfiguration {
-    var value: NSURLSessionConfiguration
+  var value: URLSessionConfiguration {
+    var value: URLSessionConfiguration
 
     switch self {
-    case .Default:
-      value = NSURLSessionConfiguration.defaultSessionConfiguration()
-    case .Ephemeral:
-      value = NSURLSessionConfiguration.ephemeralSessionConfiguration()
-    case .Background:
-      value =  NSURLSessionConfiguration.backgroundSessionConfigurationWithIdentifier(
-        "MalibuBackgroundConfiguration")
-    case .Custom(let sessionConfiguration):
+    case .default:
+      value = URLSessionConfiguration.default
+    case .ephemeral:
+      value = URLSessionConfiguration.ephemeral
+    case .background:
+      value =  URLSessionConfiguration.background(
+        withIdentifier: "MalibuBackgroundConfiguration")
+    case .custom(let sessionConfiguration):
       value = sessionConfiguration
     }
 
-    value.HTTPAdditionalHeaders = Header.defaultHeaders
+    value.httpAdditionalHeaders = Header.defaultHeaders
 
     return value
   }

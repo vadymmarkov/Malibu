@@ -15,19 +15,19 @@ class URLStringConvertibleSpec: QuickSpec {
           }
 
           it("returns self") {
-            expect(value.URLString).to(equal(String(value)))
+            expect(value.urlString).to(equal("http://hyper.no"))
           }
         }
 
         context("when it is NSURL") {
-          let URL = NSURL(string: "http://hyper.no")!
+          let url = URL(string: "http://hyper.no")!
 
           beforeEach {
-            value = URL
+            value = url
           }
 
           it("returns self") {
-            expect(value.URLString).to(equal(URL.absoluteString))
+            expect(value.urlString).to(equal(url.absoluteString))
           }
         }
       }

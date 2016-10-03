@@ -11,7 +11,7 @@
 
 Palm trees, coral reefs and breaking waves. Welcome to the surf club **Malibu**,
 a networking library built on ***promises***. It's more than just a wrapper
-around `NSURLSession`, but a powerful framework that helps to chain your
+around `URLSession`, but a powerful framework that helps to chain your
 requests, validations and request processing.
 
 Using [When](https://github.com/vadymmarkov/When) under the hood, **Malibu**
@@ -126,11 +126,11 @@ There are 6 protocols corresponding to HTTP methods: `GETRequestable`,
 
 ```swift
 struct BoardsRequest: GETRequestable {
-  // Message is a container for request URL, parameters and headers
+  // Message is a container for request url, parameters and headers
   var message = Message(resource: "boards")
 
   // Enables or disables automatic ETags handling
-  var etagPolicy = .Disabled
+  var etagPolicy = .disabled
 
   init() {
     message.headers = ["custom": "header"]
@@ -141,7 +141,7 @@ struct BoardCreateRequest: POSTRequestable {
   var message = Message(resource: "boards")
 
   // Content type is set to `.JSON` by default for POST
-  var contentType: ContentType = .FormURLEncoded
+  var contentType: ContentType = .formURLEncoded
 
   init(kind: Int, title: String) {
     message.parameters = ["type" : kind, "title" : title]
@@ -159,19 +159,19 @@ struct BoardDeleteRequest: DELETERequestable {
 
 ### Content types
 
-* `Query` - creates a query string to be appended to any existing URL.
-* `FormURLEncoded` - uses `application/x-www-form-urlencoded` as a
+* `query` - creates a query string to be appended to any existing url.
+* `formURLEncoded` - uses `application/x-www-form-urlencoded` as a
 `Content-Type` and formats your parameters with percent-encoding.
-* `JSON` - sets the `Content-Type` to `application/json` and sends a JSON
+* `json` - sets the `Content-Type` to `application/json` and sends a JSON
 representation of the parameters as the body of the request.
-* `MultipartFormData` - sends parameters encoded as `multipart/form-data`.
-* `Custom(String)` - uses given `Content-Type` string as a header.
+* `multipartFormData` - sends parameters encoded as `multipart/form-data`.
+* `custom(String)` - uses given `Content-Type` string as a header.
 
 ### Encoding
 
 **Malibu** comes with 3 parameter encoding implementations:
 * `FormURLEncoder` - a percent-escaped encoding following RFC 3986.
-* `JSONEncoder` - `NSJSONSerialization` based encoding.
+* `JsonEncoder` - `JSONSerialization` based encoding.
 * `MultipartFormEncoder` - multipart data builder.
 
 You can extend default functionality by adding a custom parameter encoder
@@ -179,10 +179,10 @@ that conforms to `ParameterEncoding` protocol:
 
 ```swift
 // Override default JSON encoder
-Malibu.parameterEncoders[.JSON] = CustomJSONEncoder()
+Malibu.parameterEncoders[.json] = CustomJsonEncoder()
 
 // Register encoder for the custom encoding type
-Malibu.parameterEncoders[.Custom("application/xml")] = CustomXMLEncoder()
+Malibu.parameterEncoders[.custom("application/xml")] = CustomXMLEncoder()
 ```
 
 ### ETags
@@ -196,7 +196,7 @@ specifically.
 
 ```swift
 struct BoardsRequest: GETRequestable {
-  var etagPolicy = .Disabled
+  var etagPolicy = .disabled
 }
 ```
 
@@ -208,47 +208,47 @@ pre-process and executes actual HTTP requests.
 ### Session configuration
 
 `Networking` is created with `SessionConfiguration` which is a wrapper around
-`NSURLSessionConfiguration` and could represent 3 standard session types + 1
+`URLSessionConfiguration` and could represent 3 standard session types + 1
 custom type:
-* `Default` - configuration that uses the global singleton credential, cache and
+* `default` - configuration that uses the global singleton credential, cache and
 cookie storage objects.
-* `Ephemeral` - configuration with no persistent disk storage for cookies, cache
+* `ephemeral` - configuration with no persistent disk storage for cookies, cache
 or credentials.
-* `Background` - session configuration that can be used to perform networking
+* `background` - session configuration that can be used to perform networking
 operations on behalf of a suspended application, within certain constraints.
-* `Custom(NSURLSessionConfiguration)` - if you're not satisfied with standard
-types, your custom `NSURLSessionConfiguration` goes here.
+* `custom(URLSessionConfiguration)` - if you're not satisfied with standard
+types, your custom `URLSessionConfiguration` goes here.
 
 ### Initialization
 
 It's pretty straightforward to create a new `Networking` instance:
 
 ```swift
-// Simple networking with `Default` configuration and no base URL
+// Simple networking with `Default` configuration and no base url
 let simpleNetworking = Networking()
 
 // More advanced networking
 let networking = Networking(
-  // Every request made on this networking will be scoped by the base URL
-  baseURLString: "http://sharkywaters.com/api/",
+  // Every request made on this networking will be scoped by the base url
+  baseUrl: "http://sharkywaters.com/api/",
   // `Background` session configuration
-  sessionConfiguration: .Background,
-  // Custom `NSURLSessionDelegate` could set if needed
+  sessionConfiguration: .background,
+  // Custom `URLSessionDelegate` could set if needed
   sessionDelegate: self
 )
 ```
 
 ### Mode
 
-**Malibu** uses `NSOperationQueue` to execute/cancel requests. It makes it
+**Malibu** uses `OperationQueue` to execute/cancel requests. It makes it
 easier to manage request lifetime and concurrency.
 
 When you create a new networking instance there is an optional argument to
 specify **mode** which will be used:
 
-- `Sync`
-- `Async`
-- `Limited(maxConcurrentOperationCount)`
+- `sync`
+- `async`
+- `limited(maxConcurrentOperationCount)`
 
 ### Additional headers
 
@@ -266,7 +266,7 @@ included automatically.
 ### Pre-processing
 
 ```swift
-// Use this closure to modify your `Requestable` value before `NSURLRequest`
+// Use this closure to modify your `Requestable` value before `URLRequest`
 // is created on base of it
 networking.beforeEach = { request in
   var request = request
@@ -275,10 +275,12 @@ networking.beforeEach = { request in
   return request
 }
 
-// Use this closure to modify generated `NSMutableURLRequest` object
+// Use this closure to modify generated `URLRequest` object
 // before the request is made
-networking.preProcessRequest = { (request: NSMutableURLRequest) in
+networking.preProcessRequest = { (request: URLRequest) in
+  var request = request
   request.addValue("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9", forHTTPHeaderField: "token")
+  return request
 }
 ```
 
@@ -314,7 +316,7 @@ networking.middleware = { promise in
 // Valid access token will be set to headers before the each request.
 networking.GET(request)
   .validate()
-  .toJSONDictionary()
+  .toJsonDictionary()
 ```
 
 ### Authentication
@@ -337,18 +339,18 @@ a request by calling `GET`, `POST`, `PUT`, `PATCH`, `DELETE` or
 `HEAD` functions with the corresponding request as an argument.
 
 ```swift
-let networking = Networking(baseURLString: "http://sharkywaters.com/api/")
+let networking = Networking(baseUrl: "http://sharkywaters.com/api/")
 
 networking.GET(BoardsRequest())
   .validate()
-  .toJSONDictionary()
+  .toJsonDictionary()
   .done({ data in
     print(data)
   })
 
 networking.POST(BoardCreateRequest(kind: 2, title: "Balsa Fish"))
   .validate()
-  .toJSONDictionary()
+  .toJsonDictionary()
   .done({ data in
     print(data)
   })
@@ -361,11 +363,11 @@ networking.DELETE(BoardDeleteRequest(id: 11))
 
 ### Wave and Ride
 
-`Wave` object consists of `NSData`, `NSURLRequest` and `NSHTTPURLResponse`
+`Wave` object consists of `Data`, `URLRequest` and `HTTPURLResponse`
 properties.
 
 `Ride` is returned by every request method. It extends `Promise<Wave>` by
-adding `NSURLSessionTask` that you might want to cancel when it's needed. You
+adding `URLSessionTask` that you might want to cancel when it's needed. You
 may use `Ride` object to add different callbacks and build chains of tasks. It
 has a range of useful helpers, such as validations and serialization.
 
@@ -399,13 +401,13 @@ In order to start mocking you have to do the following:
 
 ```swift
 // A mode for real HTTP request only
-Malibu.mode = .Regular
+Malibu.mode = .regular
 
 // A mode for mocks only
-Malibu.mode = .Fake
+Malibu.mode = .fake
 
 // Both real and fake requests can be used in a mix
-Malibu.mode = .Partial
+Malibu.mode = .partial
 ```
 
 **Register the mock**
@@ -447,7 +449,7 @@ Want to **store request** when there is no network connection?
 ```swift
 struct BoardDeleteRequest: DELETERequestable {
   var message: Message
-  var storePolicy: StorePolicy = .Offline // Set store policy
+  var storePolicy: StorePolicy = .offline // Set store policy
 
   init(id: Int) {
     message = Message(resource: "boards:\(id)")
@@ -477,10 +479,10 @@ automatically removed from the storage when it's completed.
 ```swift
 let ride = networking.GET(BoardsRequest())
 
-ride.toData() // -> Promise<NSData>
+ride.toData() // -> Promise<Data>
 ride.toString() // -> Promise<String>
-ride.toJSONArray() // -> Promise<[[String: AnyObject]]>
-ride.toJSONDictionary() // -> Promise<[String: AnyObject]>
+ride.toJsonArray() // -> Promise<[[String: Any]]>
+ride.toJsonDictionary() // -> Promise<[String: Any]>
 ```
 
 ### Validation
@@ -501,7 +503,7 @@ networking.GET(BoardsRequest()).validate(
 networking.GET(BoardsRequest()).validate(statusCodes: [200])
 
 // Validates with custom validator conforming to `Validating` protocol
-networking.GET(BoardsRequest()).validate(validator: CustomValidator())
+networking.GET(BoardsRequest()).validate(using: CustomValidator())
 ```
 
 ## Core
@@ -513,7 +515,7 @@ the container. Doing that, it's super easy to support several APIs and
 configurations in your app.
 
 ```swift
-let networking = Networking(baseURLString: "http://sharkywaters.com/api/")
+let networking = Networking(baseUrl: "http://sharkywaters.com/api/")
 networking.additionalHeaders = {
   ["Accept" : "application/json"]
 }
@@ -544,12 +546,12 @@ Malibu.GET(BoardsRequest())
 If you want to see some request, response and error info in the console, you
 get this for free. Just choose one of the available log levels:
 
-* `None` - logging is disabled, so your console is not littered with networking
+* `none` - logging is disabled, so your console is not littered with networking
 stuff.
-* `Error` - prints only errors that occur during the request execution.
-* `Info` - prints incoming request method + URL, response status code and errors.
-* `Verbose` - prints incoming request headers and parameters in addition to
-everything printed in the `Info` level.
+* `error` - prints only errors that occur during the request execution.
+* `info` - prints incoming request method + url, response status code and errors.
+* `verbose` - prints incoming request headers and parameters in addition to
+everything printed in the `info` level.
 
 Optionally you can set your own loggers and adjust the logging to your needs:
 

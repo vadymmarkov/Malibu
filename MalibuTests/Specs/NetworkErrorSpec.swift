@@ -2,15 +2,15 @@
 import Quick
 import Nimble
 
-class ErrorSpec: QuickSpec {
+class NetworkErrorSpec: QuickSpec {
 
   override func spec() {
-    describe("Error") {
-      var error: Error!
+    describe("NetworkError") {
+      var error: NetworkError!
 
-      context("when it's NoDataInResponse") {
+      context("when it's noDataInResponse") {
         beforeEach {
-          error = .NoDataInResponse
+          error = .noDataInResponse
         }
 
         describe("#reason") {
@@ -20,9 +20,9 @@ class ErrorSpec: QuickSpec {
         }
       }
 
-      context("when it's NoDataInResponse") {
+      context("when it's noDataInResponse") {
         beforeEach {
-          error = .NoResponseReceived
+          error = .noResponseReceived
         }
 
         describe("#reason") {
@@ -32,11 +32,11 @@ class ErrorSpec: QuickSpec {
         }
       }
 
-      context("when it's UnacceptableStatusCode") {
+      context("when it's unacceptableStatusCode") {
         let statusCode = 401
 
         beforeEach {
-          error = .UnacceptableStatusCode(statusCode)
+          error = .unacceptableStatusCode(statusCode)
         }
 
         describe("#reason") {
@@ -46,11 +46,11 @@ class ErrorSpec: QuickSpec {
         }
       }
 
-      context("when it's UnacceptableStatusCode") {
+      context("when it's unacceptableStatusCode") {
         let contentType = "application/weirdo"
 
         beforeEach {
-          error = .UnacceptableContentType(contentType)
+          error = .unacceptableContentType(contentType)
         }
 
         describe("#reason") {
@@ -60,9 +60,9 @@ class ErrorSpec: QuickSpec {
         }
       }
 
-      context("when it's NoDataInResponse") {
+      context("when it's noDataInResponse") {
         beforeEach {
-          error = .MissingContentType
+          error = .missingContentType
         }
 
         describe("#reason") {
@@ -78,7 +78,7 @@ class ErrorSpec: QuickSpec {
         beforeEach {
           offlineError = NSError(
             domain: "no.hyper.Malibu",
-            code: Int(CFNetworkErrors.CFURLErrorNotConnectedToInternet.rawValue),
+            code: Int(CFNetworkErrors.cfurlErrorNotConnectedToInternet.rawValue),
             userInfo: nil
           )
         }

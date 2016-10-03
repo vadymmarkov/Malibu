@@ -1,6 +1,6 @@
 import Foundation
 
-public struct StatusCodeValidator<T: SequenceType where T.Generator.Element == Int>: Validating {
+public struct StatusCodeValidator<T: Sequence>: Validating where T.Iterator.Element == Int {
 
   public var statusCodes: T
 
@@ -12,9 +12,9 @@ public struct StatusCodeValidator<T: SequenceType where T.Generator.Element == I
 
   // MARK: - Validation
 
-  public func validate(result: Wave) throws {
+  public func validate(_ result: Wave) throws {
     guard statusCodes.contains(result.response.statusCode) else {
-      throw Error.UnacceptableStatusCode(result.response.statusCode)
+      throw NetworkError.unacceptableStatusCode(result.response.statusCode)
     }
   }
 }

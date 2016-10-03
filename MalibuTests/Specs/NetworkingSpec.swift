@@ -16,11 +16,11 @@ class NetworkingSpec: QuickSpec {
         it("sets default configuration to the session") {
           networking = Networking()
 
-          expect(networking.session.configuration).to(equal(SessionConfiguration.Default.value))
+          expect(networking.session.configuration).to(equal(SessionConfiguration.default.value))
         }
 
         it("sets custom configuration to the session") {
-          networking = Networking(sessionConfiguration: .Background)
+          networking = Networking(sessionConfiguration: .background)
 
           expect(networking.session.configuration.identifier).to(equal("MalibuBackgroundConfiguration"))
         }
@@ -50,7 +50,7 @@ class NetworkingSpec: QuickSpec {
             return request
           }
 
-          let result = networking.prepareMock(request)
+          let result = networking.prepareMock(for: request)
 
           expect(result).toNot(beNil())
           expect(result?.request.message.parameters["test"] as? Bool).to(beTrue())

@@ -2,33 +2,33 @@ import Foundation
 
 public struct StringSerializer: Serializing {
 
-  var encoding: NSStringEncoding?
+  var encoding: String.Encoding?
 
-  public init(encoding: NSStringEncoding? = nil) {
+  public init(encoding: String.Encoding? = nil) {
     self.encoding = encoding
   }
 
-  public func serialize(data: NSData, response: NSHTTPURLResponse) throws -> String {
+  public func serialize(data: Data, response: HTTPURLResponse) throws -> String {
     if response.statusCode == 204 { return "" }
 
-    guard data.length > 0 else {
-      throw Error.NoDataInResponse
+    guard data.count > 0 else {
+      throw NetworkError.noDataInResponse
     }
 
     var stringEncoding: UInt
 
     if let encoding = encoding {
-      stringEncoding = encoding
+      stringEncoding = encoding.rawValue
     } else if let encodingName = response.textEncodingName {
       stringEncoding = CFStringConvertEncodingToNSStringEncoding(
-        CFStringConvertIANACharSetNameToEncoding(encodingName)
+        CFStringConvertIANACharSetNameToEncoding(encodingName as CFString)
       )
     } else {
-      stringEncoding = NSISOLatin1StringEncoding
+      stringEncoding = String.Encoding.isoLatin1.rawValue
     }
 
-    guard let string = String(data: data, encoding: stringEncoding) else {
-      throw Error.StringSerializationFailed(stringEncoding)
+    guard let string = String(data: data, encoding: String.Encoding(rawValue: stringEncoding)) else {
+      throw NetworkError.stringSerializationFailed(stringEncoding)
     }
 
     return string

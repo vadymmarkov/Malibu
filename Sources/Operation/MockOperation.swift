@@ -1,27 +1,26 @@
 import Foundation
 
-class MockOperation: ConcurrentOperation, ResponseHandler {
+final class MockOperation: ConcurrentOperation, ResponseHandler {
 
   let mock: Mock
-  let URLRequest: NSURLRequest
+  let urlRequest: URLRequest
   var ride: Ride
 
   // MARK: - Initialization
 
-  init(mock: Mock, URLRequest: NSURLRequest, ride: Ride) {
+  init(mock: Mock, urlRequest: URLRequest, ride: Ride) {
     self.mock = mock
-    self.URLRequest = URLRequest
+    self.urlRequest = urlRequest
     self.ride = ride
   }
 
   // MARK: - Operation
 
   override func execute() {
-    dispatch_after(
-      dispatch_time(DISPATCH_TIME_NOW, Int64(mock.delay * Double(NSEC_PER_SEC))),
-      dispatch_get_main_queue()) { [weak self] in
-        self?.handle(self?.mock.data, response: self?.mock.response, error: self?.mock.error)
-        self?.state = .Finished
+    let when = DispatchTime.now() + mock.delay
+    DispatchQueue.main.asyncAfter(deadline: when) { [weak self] in
+      self?.handle(data: self?.mock.data, response: self?.mock.response, error: self?.mock.error)
+      self?.state = .Finished
     }
   }
 

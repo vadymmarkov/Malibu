@@ -7,15 +7,15 @@ class WaveSpec: QuickSpec {
 
   override func spec() {
     describe("Wave") {
-      let URL = NSURL(string: "http://hyper.no")!
-      let response = NSHTTPURLResponse(URL: URL, statusCode: 200, HTTPVersion: "HTTP/2.0", headerFields: nil)!
-      var request: NSURLRequest!
-      var data: NSData!
+      let url = URL(string: "http://hyper.no")!
+      let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!
+      var request: URLRequest!
+      var data: Data!
 
       beforeEach {
-        request = NSURLRequest(URL: NSURL(string: "http://hyper.no")!)
-        data = try! NSJSONSerialization.dataWithJSONObject([["name": "Taylor"]],
-          options: NSJSONWritingOptions())
+        request = URLRequest(url: URL(string: "http://hyper.no")!)
+        data = try! JSONSerialization.data(withJSONObject: [["name": "Taylor"]],
+          options: JSONSerialization.WritingOptions())
       }
 
       describe("#init") {

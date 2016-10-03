@@ -2,22 +2,21 @@
 import Quick
 import Nimble
 
-class FormURLEncoderSpec: QuickSpec {
+class JsonEncoderSpec: QuickSpec {
 
   override func spec() {
-    describe("FormURLEncoder") {
-      var encoder: FormURLEncoder!
+    describe("JsonEncoder") {
+      var encoder: JsonEncoder!
 
       beforeEach {
-        encoder = FormURLEncoder()
+        encoder = JsonEncoder()
       }
 
       describe("#encode:parameters") {
         it("encodes a dictionary of parameters to NSData object") {
           let parameters = ["firstname": "John", "lastname": "Hyperseed"]
-          let string = QueryBuilder().buildQuery(from: parameters)
-          let data = string.data(using: String.Encoding.utf8,
-                                 allowLossyConversion: false)
+          let data = try! JSONSerialization.data(withJSONObject: parameters,
+            options: JSONSerialization.WritingOptions())
 
           expect{ try encoder.encode(parameters: parameters) }.to(equal(data))
         }

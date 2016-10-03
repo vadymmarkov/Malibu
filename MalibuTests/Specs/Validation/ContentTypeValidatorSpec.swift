@@ -6,9 +6,9 @@ class ContentTypeValidatorSpec: QuickSpec {
 
   override func spec() {
     describe("ContentTypeValidator") {
-      let URL = NSURL(string: "http://hyper.no")!
-      let request = NSURLRequest(URL: URL)
-      let data = NSData()
+      let url = URL(string: "http://hyper.no")!
+      let request = URLRequest(url: url)
+      let data = Data()
       let contentType = "application/json; charset=utf-8"
       var validator: ContentTypeValidator<[String]>!
 
@@ -19,7 +19,7 @@ class ContentTypeValidatorSpec: QuickSpec {
 
         context("when response has expected content type") {
           it("does not throw an error") {
-            let HTTPResponse = NSHTTPURLResponse(URL: URL, MIMEType: contentType,
+            let HTTPResponse = HTTPURLResponse(url: url, mimeType: contentType,
               expectedContentLength: 10, textEncodingName: nil)
             let result = Wave(data: data, request: request, response: HTTPResponse)
 
@@ -29,7 +29,7 @@ class ContentTypeValidatorSpec: QuickSpec {
 
         context("when response has not expected content type") {
           it("throws an error") {
-            let HTTPResponse = NSHTTPURLResponse(URL: URL, MIMEType: "text/html; charset=utf-8",
+            let HTTPResponse = HTTPURLResponse(url: url, mimeType: "text/html; charset=utf-8",
               expectedContentLength: 100, textEncodingName: nil)
             let result = Wave(data: data, request: request, response: HTTPResponse)
 

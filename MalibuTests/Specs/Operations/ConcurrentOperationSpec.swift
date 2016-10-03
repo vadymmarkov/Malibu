@@ -23,49 +23,49 @@ class ConcurrentOperationSpec: QuickSpec {
         context("Ready") {
           it("changes isReady property") {
             operation.state = .Ready
-            expect(operation.valueForKey("isReady") as? Bool).to(beTrue())
+            expect(operation.value(forKey: "isReady") as? Bool).to(beTrue())
           }
         }
 
         context("Executing") {
           it("changes isExecuting property") {
             operation.state = .Executing
-            expect(operation.valueForKey("isExecuting") as? Bool).to(beTrue())
+            expect(operation.value(forKey: "isExecuting") as? Bool).to(beTrue())
           }
         }
 
         context("Finished") {
           it("changes isFinished property") {
             operation.state = .Finished
-            expect(operation.valueForKey("isFinished") as? Bool).to(beTrue())
+            expect(operation.value(forKey: "isFinished") as? Bool).to(beTrue())
           }
         }
       }
 
-      describe("#asynchronous") {
+      describe("#isAsynchronous") {
         it("is set to true") {
-          expect(operation.asynchronous).to(beTrue())
+          expect(operation.isAsynchronous).to(beTrue())
         }
       }
 
-      describe("#ready") {
+      describe("#isReady") {
         it("changes to true when state is set to .Ready") {
           operation.state = .Ready
-          expect(operation.ready).to(beTrue())
+          expect(operation.isReady).to(beTrue())
         }
       }
 
-      describe("#executing") {
+      describe("#isExecuting") {
         it("changes to true when state is set to .Ready") {
           operation.state = .Executing
-          expect(operation.executing).to(beTrue())
+          expect(operation.isExecuting).to(beTrue())
         }
       }
 
-      describe("#finished") {
+      describe("#isFinished") {
         it("changes to true when state is set to .Finished") {
           operation.state = .Finished
-          expect(operation.finished).to(beTrue())
+          expect(operation.isFinished).to(beTrue())
         }
       }
 
@@ -73,7 +73,7 @@ class ConcurrentOperationSpec: QuickSpec {
         context("when it's ready") {
           it("starts operation") {
             operation.start()
-            expect(operation.executing).to(beTrue())
+            expect(operation.isExecuting).to(beTrue())
           }
         }
 
@@ -81,8 +81,8 @@ class ConcurrentOperationSpec: QuickSpec {
           it("doesn't start operation") {
             operation.cancel()
             operation.start()
-            expect(operation.executing).to(beFalse())
-            expect(operation.finished).to(beTrue())
+            expect(operation.isExecuting).to(beFalse())
+            expect(operation.isFinished).to(beTrue())
           }
         }
       }
@@ -90,7 +90,7 @@ class ConcurrentOperationSpec: QuickSpec {
       describe("#execute") {
         it("changes a state") {
           operation.execute()
-          expect(operation.executing).to(beTrue())
+          expect(operation.isExecuting).to(beTrue())
         }
       }
     }

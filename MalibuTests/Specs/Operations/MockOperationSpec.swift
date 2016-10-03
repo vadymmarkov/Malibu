@@ -10,29 +10,29 @@ class MockOperationSpec: QuickSpec {
       var operation: MockOperation!
       var mock: Mock!
       var request: Requestable!
-      var URLRequest: NSURLRequest!
-      var response: NSHTTPURLResponse!
+      var urlRequest: URLRequest!
+      var response: HTTPURLResponse!
       var ride: Ride!
-      let data = "test".dataUsingEncoding(NSUTF32StringEncoding)
-      let error = Error.JSONArraySerializationFailed
+      let data = "test".data(using: String.Encoding.utf32)
+      let error = NetworkError.jsonArraySerializationFailed
 
       beforeEach {
         request = GETRequest()
-        URLRequest = try! request.toURLRequest()
-        response = NSHTTPURLResponse(URL: NSURL(string: "http://hyper.no")!,
-          statusCode: 200, HTTPVersion: "HTTP/2.0", headerFields: nil)!
+        urlRequest = try! request.toUrlRequest()
+        response = HTTPURLResponse(url: URL(string: "http://hyper.no")!,
+          statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!
         ride = Ride()
       }
 
       describe("#init") {
         beforeEach {
           mock = Mock(request: request, response: response, data: data, error: error)
-          operation = MockOperation(mock: mock, URLRequest: URLRequest, ride: ride)
+          operation = MockOperation(mock: mock, urlRequest: urlRequest, ride: ride)
         }
 
         it("sets properties") {
           expect(operation.mock === mock).to(beTrue())
-          expect(operation.URLRequest).to(equal(URLRequest))
+          expect(operation.urlRequest).to(equal(urlRequest))
           expect(operation.ride === ride).to(beTrue())
         }
       }
@@ -40,68 +40,68 @@ class MockOperationSpec: QuickSpec {
       describe("#execute") {
         context("when response is nil") {
           it("rejects promise with an error") {
-            let expectation = self.expectationWithDescription("No response failure")
+            let expectation = self.expectation(description: "No response failure")
 
             mock = Mock(request: request, response: nil, data: data, error: nil)
-            operation = MockOperation(mock: mock, URLRequest: URLRequest, ride: ride)
+            operation = MockOperation(mock: mock, urlRequest: urlRequest, ride: ride)
 
             operation.ride.fail({ error in
-              expect(error as! Error == Error.NoResponseReceived).to(beTrue())
+              expect(error as! NetworkError == NetworkError.noResponseReceived).to(beTrue())
               expectation.fulfill()
             })
 
             operation.execute()
 
-            self.waitForExpectationsWithTimeout(4.0, handler:nil)
+            self.waitForExpectations(timeout: 4.0, handler:nil)
           }
         }
 
         context("when there is an error") {
           it("rejects promise with an error") {
-            let expectation = self.expectationWithDescription("Error failure")
+            let expectation = self.expectation(description: "Error failure")
 
             mock = Mock(request: request, response: response, data: data, error: error)
-            operation = MockOperation(mock: mock, URLRequest: URLRequest, ride: ride)
+            operation = MockOperation(mock: mock, urlRequest: urlRequest, ride: ride)
 
             operation.ride.fail({ error in
-              expect(error as! Error == Error.JSONArraySerializationFailed).to(beTrue())
+              expect(error as! NetworkError == NetworkError.jsonArraySerializationFailed).to(beTrue())
               expectation.fulfill()
             })
 
             operation.execute()
 
-            self.waitForExpectationsWithTimeout(4.0, handler:nil)
+            self.waitForExpectations(timeout: 4.0, handler:nil)
           }
         }
 
         context("when there is no data") {
           it("rejects promise with an error") {
-            let expectation = self.expectationWithDescription("No data failure")
+            let expectation = self.expectation(description: "No data failure")
 
             mock = Mock(request: request, response: response, data: nil, error: nil)
-            operation = MockOperation(mock: mock, URLRequest: URLRequest, ride: ride)
+            operation = MockOperation(mock: mock, urlRequest: urlRequest, ride: ride)
 
             operation.ride.fail({ error in
-              expect(error as! Error == Error.NoDataInResponse).to(beTrue())
+              expect(error as! NetworkError == NetworkError.noDataInResponse).to(beTrue())
               expectation.fulfill()
             })
 
             operation.execute()
 
-            self.waitForExpectationsWithTimeout(4.0, handler:nil)
+            self.waitForExpectations(timeout: 4.0, handler:nil)
           }
         }
 
         context("when validation succeeded") {
           it("resolves promise with a result") {
-            let expectation = self.expectationWithDescription("Validation succeeded")
+            let expectation = self.expectation(description: "Validation succeeded")
 
             mock = Mock(request: request, response: response, data: data, error: nil)
-            operation = MockOperation(mock: mock, URLRequest: URLRequest, ride: ride)
+            operation = MockOperation(mock: mock, urlRequest: urlRequest, ride: ride)
 
             operation.ride.done({ result in
               expect(result.data).to(equal(operation.mock.data))
-              expect(result.request).to(equal(operation.URLRequest))
+              expect(result.request).to(equal(operation.urlRequest))
               expect(result.response).to(equal(operation.mock.response))
 
               expectation.fulfill()
@@ -109,7 +109,7 @@ class MockOperationSpec: QuickSpec {
 
             operation.execute()
 
-            self.waitForExpectationsWithTimeout(4.0, handler:nil)
+            self.waitForExpectations(timeout: 4.0, handler:nil)
           }
         }
       }

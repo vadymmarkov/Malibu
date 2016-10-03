@@ -15,7 +15,7 @@ class MultipartBuilderSpec: QuickSpec {
 
       describe("buildMultipartString") {
         it("builds multipart string from parameters and boundary value") {
-          let components = QueryBuilder().buildComponents(parameters: parameters)
+          let components = QueryBuilder().buildComponents(from: parameters)
           var string = ""
 
           for (key, value) in components {
@@ -26,7 +26,7 @@ class MultipartBuilderSpec: QuickSpec {
 
           string += "--\(boundary)--\r\n"
 
-          expect(builder.buildMultipartString(parameters)).to(equal(string))
+          expect(builder.buildMultipartString(from: parameters)).to(equal(string))
         }
       }
     }

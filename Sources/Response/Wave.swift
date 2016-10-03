@@ -1,13 +1,13 @@
 import Foundation
 import When
 
-public class Wave: Equatable {
+public final class Wave: Equatable {
 
-  public let data: NSData
-  public let request: NSURLRequest
-  public let response: NSHTTPURLResponse
+  public let data: Data
+  public let request: URLRequest
+  public let response: HTTPURLResponse
 
-  public init(data: NSData, request: NSURLRequest, response: NSHTTPURLResponse) {
+  public init(data: Data, request: URLRequest, response: HTTPURLResponse) {
     self.data = data
     self.request = request
     self.response = response
@@ -16,7 +16,7 @@ public class Wave: Equatable {
 
 // MARK: - Equatable
 
-public func ==(lhs: Wave, rhs: Wave) -> Bool {
+public func == (lhs: Wave, rhs: Wave) -> Bool {
   return lhs.data == rhs.data
     && lhs.request == rhs.request
     && lhs.response == rhs.response

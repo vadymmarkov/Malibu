@@ -6,18 +6,18 @@ class UtilsSpec: QuickSpec {
 
   override func spec() {
     describe("Utils") {
-      let fileManager = NSFileManager.defaultManager()
+      let fileManager = FileManager.default
 
       afterSuite {
         do {
-          try fileManager.removeItemAtPath(Utils.storageDirectory)
+          try fileManager.removeItem(atPath: Utils.storageDirectory)
         } catch {}
       }
 
       describe(".documentDirectory") {
         it("returns document directory") {
-          let documentDirectory =  NSSearchPathForDirectoriesInDomains(.DocumentDirectory,
-            .UserDomainMask, true).first!
+          let documentDirectory =  NSSearchPathForDirectoriesInDomains(.documentDirectory,
+            .userDomainMask, true).first!
 
           expect(Utils.documentDirectory).to(equal(documentDirectory))
         }
@@ -29,7 +29,7 @@ class UtilsSpec: QuickSpec {
           var isDir: ObjCBool = true
 
           expect(Utils.storageDirectory).to(equal(directory))
-          expect(fileManager.fileExistsAtPath(Utils.storageDirectory, isDirectory: &isDir)).to(beTrue())
+          expect(fileManager.fileExists(atPath: Utils.storageDirectory, isDirectory: &isDir)).to(beTrue())
         }
       }
 

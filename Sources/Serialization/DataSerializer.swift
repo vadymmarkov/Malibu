@@ -2,11 +2,11 @@ import Foundation
 
 public struct DataSerializer: Serializing {
 
-  public func serialize(data: NSData, response: NSHTTPURLResponse) throws -> NSData {
-    if response.statusCode == 204 { return NSData() }
+  public func serialize(data: Data, response: HTTPURLResponse) throws -> Data {
+    if response.statusCode == 204 { return Data() }
 
-    guard data.length > 0 else {
-      throw Error.NoDataInResponse
+    guard data.count > 0 else {
+      throw NetworkError.noDataInResponse
     }
 
     return data

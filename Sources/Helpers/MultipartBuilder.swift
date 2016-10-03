@@ -4,9 +4,9 @@ public struct MultipartBuilder {
 
   public init() {}
 
-  public func buildMultipartString(parameters: [String: AnyObject]) -> String {
+  public func buildMultipartString(from parameters: [String: Any]) -> String {
     var string = ""
-    let components = QueryBuilder().buildComponents(parameters: parameters)
+    let components = QueryBuilder().buildComponents(from: parameters)
 
     for (key, value) in components {
       string += "--\(boundary)\r\n"

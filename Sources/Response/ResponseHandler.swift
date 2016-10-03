@@ -2,29 +2,29 @@ import Foundation
 import When
 
 protocol ResponseHandler {
-  var URLRequest: NSURLRequest { get }
+  var urlRequest: URLRequest { get }
   var ride: Ride { get }
 }
 
 extension ResponseHandler {
 
-  func handle(data: NSData?, response: NSURLResponse?, error: ErrorType?) {
+  func handle(data: Data?, response: URLResponse?, error: Error?) {
     if let error = error {
       ride.reject(error)
       return
     }
 
-    guard let response = response as? NSHTTPURLResponse else {
-      ride.reject(Error.NoResponseReceived)
+    guard let response = response as? HTTPURLResponse else {
+      ride.reject(NetworkError.noResponseReceived)
       return
     }
 
     guard let data = data else {
-      ride.reject(Error.NoDataInResponse)
+      ride.reject(NetworkError.noDataInResponse)
       return
     }
 
-    let result = Wave(data: data, request: URLRequest, response: response)
+    let result = Wave(data: data, request: urlRequest, response: response)
     ride.resolve(result)
   }
 }

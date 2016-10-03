@@ -1,40 +1,41 @@
 import Foundation
 import When
 
-public class Networking: NSObject {
+public final class Networking: NSObject {
 
   enum SessionTaskKind {
-    case Data, Upload, Download
+    case data, upload, download
   }
 
   public enum Mode {
-    case Sync, Async, Limited(Int)
+    case sync, async, limited(Int)
   }
 
   public var additionalHeaders: (() -> [String: String])?
-  public var beforeEach: (Requestable -> Requestable)?
-  public var preProcessRequest: (NSMutableURLRequest -> Void)?
+  public var beforeEach: ((Requestable) -> Requestable)?
+  public var preProcessRequest: ((URLRequest) -> URLRequest)?
 
   public var middleware: (Promise<Void>) -> Void = { promise in
     promise.resolve()
   }
 
-  var baseURLString: URLStringConvertible?
+  var baseUrl: URLStringConvertible?
   let sessionConfiguration: SessionConfiguration
   var customHeaders = [String: String]()
   var mocks = [String: Mock]()
   var requestStorage = RequestStorage()
-  var mode: Mode = .Async
-  let queue: NSOperationQueue
+  var mode: Mode = .async
+  let queue: OperationQueue
 
-  weak var sessionDelegate: NSURLSessionDelegate?
+  weak var sessionDelegate: URLSessionDelegate?
 
-  lazy var session: NSURLSession = { [unowned self] in
-    return NSURLSession(
+  lazy var session: URLSession = { [unowned self] in
+    let session = URLSession(
       configuration: self.sessionConfiguration.value,
       delegate: self.sessionDelegate ?? self,
       delegateQueue: nil)
-    }()
+    return session
+  }()
 
   var requestHeaders: [String: String] {
     var headers = customHeaders
@@ -52,72 +53,60 @@ public class Networking: NSObject {
 
   // MARK: - Initialization
 
-  public init(baseURLString: URLStringConvertible? = nil,
-              mode: Mode = .Async,
-              sessionConfiguration: SessionConfiguration = .Default,
-              sessionDelegate: NSURLSessionDelegate? = nil) {
-    self.baseURLString = baseURLString
+  public init(baseUrl: URLStringConvertible? = nil,
+              mode: Mode = .async,
+              sessionConfiguration: SessionConfiguration = .default,
+              sessionDelegate: URLSessionDelegate? = nil) {
+    self.baseUrl = baseUrl
     self.sessionConfiguration = sessionConfiguration
     self.sessionDelegate = sessionDelegate
 
-    queue = NSOperationQueue()
+    queue = OperationQueue()
     super.init()
-    resetMode(mode)
+    reset(mode: mode)
   }
 
   // MARK: - Mode
 
-  func resetMode(mode: Mode) {
+  func reset(mode: Mode) {
     self.mode = mode
 
     switch mode {
-    case .Sync:
+    case .sync:
       queue.maxConcurrentOperationCount = 1
-    case .Async:
+    case .async:
       queue.maxConcurrentOperationCount = -1
-    case .Limited(let count):
+    case .limited(let count):
       queue.maxConcurrentOperationCount = count
     }
   }
 
   // MARK: - Networking
 
-  func start(request: Requestable) -> Ride {
+  func start(_ request: Requestable) -> Ride {
     let ride = Ride()
-    let URLRequest: NSMutableURLRequest
+    var urlRequest: URLRequest
 
     do {
       let request = beforeEach?(request) ?? request
-      URLRequest = try request.toURLRequest(baseURLString, additionalHeaders: requestHeaders)
+      urlRequest = try request.toUrlRequest(baseUrl: baseUrl, additionalHeaders: requestHeaders)
     } catch {
       ride.reject(error)
       return ride
     }
 
-    preProcessRequest?(URLRequest)
-
-    let operation: ConcurrentOperation
-
-    switch Malibu.mode {
-    case .Regular:
-      operation = DataOperation(session: session, URLRequest: URLRequest, ride: ride)
-    case .Partial:
-      if let mock = prepareMock(request) {
-        operation = MockOperation(mock: mock, URLRequest: URLRequest, ride: ride)
-      } else {
-        operation = DataOperation(session: session, URLRequest: URLRequest, ride: ride)
-      }
-    case .Fake:
-      guard let mock = prepareMock(request) else {
-        ride.reject(Error.NoMockProvided)
-        return ride
-      }
-
-      operation = MockOperation(mock: mock, URLRequest: URLRequest, ride: ride)
+    if let preProcessRequest = preProcessRequest {
+      urlRequest = preProcessRequest(urlRequest)
     }
 
+    guard let operation = buildOperation(ride: ride, request: request, urlRequest: urlRequest)
+      else {
+        return ride
+    }
+
+
     let etagPromise = ride.then { [weak self] result -> Wave in
-      self?.saveEtag(request, response: result.response)
+      self?.saveEtag(request: request, response: result.response)
       return result
     }
 
@@ -126,17 +115,18 @@ public class Networking: NSObject {
     etagPromise
       .done({ value in
         if logger.enabled {
-          logger.requestLogger.init(level: logger.level).logRequest(request, URLRequest: value.request)
-          logger.responseLogger.init(level: logger.level).logResponse(value.response)
+          logger.requestLogger.init(level: logger.level).log(request: request, urlRequest: value.request)
+          logger.responseLogger.init(level: logger.level).log(response: value.response)
         }
+
         nextRide.resolve(value)
       })
       .fail({ [weak self] error in
         if logger.enabled {
-          logger.errorLogger.init(level: logger.level).logError(error)
+          logger.errorLogger.init(level: logger.level).log(error: error)
         }
 
-        self?.handleError(error, on: request)
+        self?.handle(error: error, on: request)
         nextRide.reject(error)
       })
 
@@ -145,7 +135,7 @@ public class Networking: NSObject {
     return nextRide
   }
 
-  func execute(request: Requestable) -> Ride {
+  func execute(_ request: Requestable) -> Ride {
     let ride = Ride()
     let beforePromise = Promise<Void>()
 
@@ -165,9 +155,33 @@ public class Networking: NSObject {
     return ride
   }
 
+  func buildOperation(ride: Ride, request: Requestable, urlRequest: URLRequest) -> ConcurrentOperation? {
+    var operation: ConcurrentOperation?
+
+    switch Malibu.mode {
+    case .regular:
+      operation = DataOperation(session: session, urlRequest: urlRequest, ride: ride)
+    case .partial:
+      if let mock = prepareMock(for: request) {
+        operation = MockOperation(mock: mock, urlRequest: urlRequest, ride: ride)
+      } else {
+        operation = DataOperation(session: session, urlRequest: urlRequest, ride: ride)
+      }
+    case .fake:
+      guard let mock = prepareMock(for: request) else {
+        ride.reject(NetworkError.noMockProvided)
+        break
+      }
+
+      operation = MockOperation(mock: mock, urlRequest: urlRequest, ride: ride)
+    }
+
+    return operation
+  }
+
   // MARK: - Authentication
 
-  public func authenticate(username username: String, password: String) {
+  public func authenticate(username: String, password: String) {
     guard let header = Header.authentication(username: username, password: password) else {
       return
     }
@@ -175,21 +189,21 @@ public class Networking: NSObject {
     customHeaders["Authorization"] = header
   }
 
-  public func authenticate(authorizationHeader authorizationHeader: String) {
+  public func authenticate(authorizationHeader: String) {
     customHeaders["Authorization"] = authorizationHeader
   }
 
-  public func authenticate(bearerToken bearerToken: String) {
+  public func authenticate(bearerToken: String) {
     customHeaders["Authorization"] = "Bearer \(bearerToken)"
   }
 
   // MARK: - Mocks
 
-  public func register(mock mock: Mock) {
+  public func register(mock: Mock) {
     mocks[mock.request.key] = mock
   }
 
-  func prepareMock(request: Requestable) -> Mock? {
+  func prepareMock(for request: Requestable) -> Mock? {
     guard let mock = mocks[request.key] else { return nil }
 
     mock.request = beforeEach?(mock.request) ?? mock.request
@@ -199,18 +213,18 @@ public class Networking: NSObject {
 
   // MARK: - Helpers
 
-  func saveEtag(request: Requestable, response: NSHTTPURLResponse) {
+  func saveEtag(request: Requestable, response: HTTPURLResponse) {
     guard let etag = response.allHeaderFields["ETag"] as? String else {
       return
     }
 
-    let prefix = baseURLString?.URLString ?? ""
+    let prefix = baseUrl?.urlString ?? ""
 
-    ETagStorage().add(etag, forKey: request.etagKey(prefix))
+    EtagStorage().add(value: etag, forKey: request.etagKey(prefix: prefix))
   }
 
-  func handleError(error: ErrorType, on request: Requestable) {
-    guard request.storePolicy == StorePolicy.Offline && (error as NSError).isOffline else {
+  func handle(error: Error, on request: Requestable) {
+    guard request.storePolicy == StorePolicy.offline && (error as NSError).isOffline else {
       return
     }
 
@@ -222,27 +236,27 @@ public class Networking: NSObject {
 
 public extension Networking {
 
-  func GET(request: GETRequestable) -> Ride {
+  func GET(_ request: GETRequestable) -> Ride {
     return execute(request)
   }
 
-  func POST(request: POSTRequestable) -> Ride {
+  func POST(_ request: POSTRequestable) -> Ride {
     return execute(request)
   }
 
-  func PUT(request: PUTRequestable) -> Ride {
+  func PUT(_ request: PUTRequestable) -> Ride {
     return execute(request)
   }
 
-  func PATCH(request: PATCHRequestable) -> Ride {
+  func PATCH(_ request: PATCHRequestable) -> Ride {
     return execute(request)
   }
 
-  func DELETE(request: DELETERequestable) -> Ride {
+  func DELETE(_ request: DELETERequestable) -> Ride {
     return execute(request)
   }
 
-  func HEAD(request: HEADRequestable) -> Ride {
+  func HEAD(_ request: HEADRequestable) -> Ride {
     return execute(request)
   }
 
@@ -259,11 +273,11 @@ extension Networking {
     let requests = requestStorage.requests.values
     let currentMode = mode
 
-    resetMode(.Sync)
+    reset(mode: .sync)
 
     let lastRide = Ride()
 
-    for (index, request) in requests.enumerate() {
+    for (index, request) in requests.enumerated() {
       let isLast = index == requests.count - 1
 
       execute(request)
@@ -277,10 +291,10 @@ extension Networking {
         })
         .always({ [weak self] result in
           if isLast {
-            self?.resetMode(currentMode)
+            self?.reset(mode: currentMode)
           }
 
-          if let error = result.error where (error as NSError).isOffline {
+          if let error = result.error, (error as NSError).isOffline {
             return
           }
 
@@ -294,18 +308,18 @@ extension Networking {
 
 // MARK: - NSURLSessionDelegate
 
-extension Networking: NSURLSessionDelegate {
+extension Networking: URLSessionDelegate {
 
-  public func URLSession(session: NSURLSession, didReceiveChallenge challenge: NSURLAuthenticationChallenge, completionHandler: (NSURLSessionAuthChallengeDisposition, NSURLCredential?) -> Void) {
-    guard let baseURLString = baseURLString,
-      baseURL = NSURL(string: baseURLString.URLString),
-      serverTrust = challenge.protectionSpace.serverTrust
+  public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+    guard let baseUrl = baseUrl,
+      let baseURL = NSURL(string: baseUrl.urlString),
+      let serverTrust = challenge.protectionSpace.serverTrust
       else { return }
 
     if challenge.protectionSpace.host == baseURL.host {
       completionHandler(
-        NSURLSessionAuthChallengeDisposition.UseCredential,
-        NSURLCredential(forTrust: serverTrust))
+        URLSession.AuthChallengeDisposition.useCredential,
+        URLCredential(trust: serverTrust))
     }
   }
 }
