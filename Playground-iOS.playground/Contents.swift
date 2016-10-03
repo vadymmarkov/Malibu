@@ -1,12 +1,12 @@
 // Malibu iOS Playground
 
-import XCPlayground
+import PlaygroundSupport
 import Malibu
 
 // Declare custom types.
 
-enum Error: ErrorType {
-  case InvalidJSON
+enum ParseError: Error {
+  case InvalidJson
 }
 
 struct User: CustomStringConvertible {
@@ -19,12 +19,14 @@ struct User: CustomStringConvertible {
     return "Id: \(id)\nName: \(name)\nUsername:\(username)\nEmail: \(email)\n"
   }
 
-  init(dictionary: [String: AnyObject]) throws {
-    guard let id = dictionary["id"] as? Int,
-      name = dictionary["name"] as? String,
-      username = dictionary["username"] as? String,
-      email = dictionary["email"] as? String else {
-        throw Error.InvalidJSON
+  init(dictionary: [String: Any]) throws {
+    guard
+      let id = dictionary["id"] as? Int,
+      let name = dictionary["name"] as? String,
+      let username = dictionary["username"] as? String,
+      let email = dictionary["email"] as? String
+      else {
+        throw ParseError.InvalidJson
     }
 
     self.id = id
@@ -37,8 +39,8 @@ struct User: CustomStringConvertible {
 // Create and configure Networking.
 
 let networking = Networking(
-  // Every request made on this networking will be scoped by the base URL.
-  baseURLString: "http://jsonplaceholder.typicode.com/"
+  // Every request made on this networking will be scoped by the base url.
+  baseUrl: "http://jsonplaceholder.typicode.com/"
 )
 
 // Additional headers will be used in the each request made on the networking.
@@ -51,13 +53,13 @@ Malibu.register("placeholder", networking: networking)
 
 // GET request
 struct UsersRequest: GETRequestable {
-  var etagPolicy: ETagPolicy = .Disabled
+  var etagPolicy: EtagPolicy = .disabled
   var message = Message(resource: "users")
 }
 
 Malibu.networking("placeholder").GET(UsersRequest())
   .validate()
-  .toJSONArray()
+  .toJsonArray()
   .then({ data -> [User] in
     return try data.map({ try User(dictionary: $0) })
   })
@@ -93,7 +95,7 @@ let request = CreateUserRequest(id: 11,
 
 Malibu.networking("placeholder").POST(request)
   .validate()
-  .toJSONDictionary()
+  .toJsonDictionary()
   .then({ data -> User in
     return try User(dictionary: data)
   })
@@ -108,4 +110,4 @@ Malibu.networking("placeholder").POST(request)
     /// ...
   })
 
-XCPlaygroundPage.currentPage.needsIndefiniteExecution = true
+PlaygroundPage.current.needsIndefiniteExecution = true
