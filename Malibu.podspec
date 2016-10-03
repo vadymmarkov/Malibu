@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name             = "Malibu"
   s.summary          = "A networking library built on promises."
-  s.version          = "1.3.0"
+  s.version          = "2.0.0"
   s.homepage         = "https://github.com/hyperoslo/Malibu"
   s.license          = 'MIT'
   s.author           = { "Hyper Interaktiv AS" => "ios@hyper.no" }
@@ -19,5 +19,5 @@ Pod::Spec.new do |s|
   s.source_files = 'Sources/**/*'
 
   s.frameworks = 'Foundation'
-  s.dependency 'When', '1.0.4'
+  s.dependency 'When', '~> 2.0'
 end
