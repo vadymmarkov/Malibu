@@ -94,7 +94,7 @@ let request = BoardsRequest(kind: 1, text: "classic")
 
 Malibu.GET(request)
   .validate()
-  .toJSONDictionary()
+  .toJsonDictionary()
   .then({ dictionary -> [Board] in
     // Let's say we use https://github.com/zenangst/Tailor for mapping
     return try dictionary.relationsOrThrow("boards") as [Board]
@@ -140,7 +140,7 @@ struct BoardsRequest: GETRequestable {
 struct BoardCreateRequest: POSTRequestable {
   var message = Message(resource: "boards")
 
-  // Content type is set to `.JSON` by default for POST
+  // Content type is set to `.json` by default for POST
   var contentType: ContentType = .formURLEncoded
 
   init(kind: Int, title: String) {
@@ -426,7 +426,7 @@ networking.register(mock: Mock(
   // Request to be mocked
   request: BoardsRequest(),
   // JSON dictionary
-  JSON: ["boards": [["id": 1, "title": "Balsa Fish"]]]
+  json: ["boards": [["id": 1, "title": "Balsa Fish"]]]
 ))
 
 // NSData mock
