@@ -36,8 +36,8 @@ class RequestCapsule: NSObject, Requestable, NSCoding {
   }
 
   required init?(coder aDecoder: NSCoder) {
-    guard let
-      methodString = aDecoder.decodeObject(forKey: Key.method.rawValue) as? String,
+    guard
+      let methodString = aDecoder.decodeObject(forKey: Key.method.rawValue) as? String,
       let method = Method(rawValue: methodString),
       let resource = aDecoder.decodeObject(forKey: Key.resource.rawValue) as? String,
       let parameters = aDecoder.decodeObject(forKey: Key.parameters.rawValue) as? [String: Any],
