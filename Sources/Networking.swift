@@ -135,7 +135,7 @@ public final class Networking: NSObject {
     return nextRide
   }
 
-  func execute(_ request: Requestable) -> Ride {
+  public func execute(_ request: Requestable) -> Ride {
     let ride = Ride()
     let beforePromise = Promise<Void>()
 
