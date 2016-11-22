@@ -104,7 +104,6 @@ public final class Networking: NSObject {
         return ride
     }
 
-
     let etagPromise = ride.then { [weak self] result -> Wave in
       self?.saveEtag(request: request, response: result.response)
       return result
