@@ -62,16 +62,14 @@ public struct QueryBuilder {
       var index = string.startIndex
 
       while index != string.endIndex {
-        guard let endIndex = string.index(index, offsetBy: 50, limitedBy: string.endIndex) else {
-          break
-        }
-
+        let endIndex = string.index(index, offsetBy: 50, limitedBy: string.endIndex) ?? string.endIndex
         let range = Range(index..<endIndex)
         let substring = string.substring(with: range)
 
-        index = endIndex
         escapedString += substring.addingPercentEncoding(
           withAllowedCharacters: allowedCharacters as CharacterSet) ?? substring
+
+        index = endIndex
       }
     }
 
