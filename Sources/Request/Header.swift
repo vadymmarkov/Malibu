@@ -1,17 +1,17 @@
 import Foundation
 
-struct Header {
+public struct Header {
 
-  static let acceptEncoding: String = "gzip;q=1.0, compress;q=0.5"
+  public static let acceptEncoding: String = "gzip;q=1.0, compress;q=0.5"
 
-  static var acceptLanguage: String {
+  public static var acceptLanguage: String {
     return Locale.preferredLanguages.prefix(6).enumerated().map { index, languageCode in
       let quality = 1.0 - (Double(index) * 0.1)
       return "\(languageCode);q=\(quality)"
       }.joined(separator: ", ")
   }
 
-  static let userAgent: String = {
+  public static let userAgent: String = {
     var string = "Malibu"
 
     if let info = Bundle.main.infoDictionary {
@@ -26,14 +26,15 @@ struct Header {
     return string
   }()
 
-  static let defaultHeaders: [String: String] = {
+  public static let defaultHeaders: [String: String] = {
     return [
       "Accept-Encoding": acceptEncoding,
+      "Accept-Language": acceptLanguage,
       "User-Agent": userAgent
     ]
   }()
 
-  static func authentication(username: String, password: String) -> String? {
+  public static func authentication(username: String, password: String) -> String? {
     let credentials = "\(username):\(password)"
 
     guard let credentialsData = credentials.data(using: String.Encoding.utf8) else {
