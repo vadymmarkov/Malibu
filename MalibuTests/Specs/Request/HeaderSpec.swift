@@ -44,6 +44,7 @@ class HeaderSpec: QuickSpec {
       describe(".defaultHeaders") {
         it("returns a correct value") {
           let expected = [
+            "Accept-Language": Header.acceptLanguage,
             "Accept-Encoding": Header.acceptEncoding,
             "User-Agent": Header.userAgent
           ]

@@ -1,6 +1,6 @@
 import Foundation
 
-struct Header {
+public struct Header {
 
   static let acceptEncoding: String = "gzip;q=1.0, compress;q=0.5"
 
@@ -26,9 +26,10 @@ struct Header {
     return string
   }()
 
-  static let defaultHeaders: [String: String] = {
+  public static let defaultHeaders: [String: String] = {
     return [
       "Accept-Encoding": acceptEncoding,
+      "Accept-Language": acceptLanguage,
       "User-Agent": userAgent
     ]
   }()
