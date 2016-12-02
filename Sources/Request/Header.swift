@@ -17,7 +17,7 @@ public struct Header {
     if let info = Bundle.main.infoDictionary {
       let executable = info[kCFBundleExecutableKey as String] as? String ?? "Unknown"
       let bundle = info[kCFBundleIdentifierKey as String] as? String ?? "Unknown"
-      let version = info[kCFBundleVersionKey as String] as? String ?? "Unknown"
+      let version = info["CFBundleShortVersionString"] as? String ?? "Unknown"
       let build = info[kCFBundleVersionKey as String] as? String ?? "Unknown"
 
       string = "\(executable)/\(version) (\(bundle); build:\(build); \(Utils.osInfo)) \(Utils.frameworkInfo)"
