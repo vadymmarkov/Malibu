@@ -56,7 +56,7 @@ class RequestableSpec: QuickSpec {
 
           context("with base URL") {
             it("does not throw an error and returns created URLRequest") {
-              request.message.resource = "about"
+              request.message.resource = "/about"
 
               expect {
                 urlRequest = try request.toUrlRequest(baseUrl: "http://hyper.no")
