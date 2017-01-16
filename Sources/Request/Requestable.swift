@@ -27,25 +27,10 @@ public extension Requestable {
   func toUrlRequest(baseUrl: URLStringConvertible? = nil,
                     additionalHeaders: [String: String] = [:]) throws -> URLRequest {
     let prefix = baseUrl?.urlString ?? ""
-    let url: URL?
+    let url = try concatURL(baseUrl: baseUrl?.urlString)
 
-    if let baseUrl = baseUrl {
-      var path = message.resource.urlString
-      if path.hasPrefix("/") {
-        path.remove(at: path.startIndex)
-      }
-
-      url = URL(string: baseUrl.urlString)?.appendingPathComponent(path)
-    } else {
-      url = URL(string: message.resource.urlString)
-    }
-
-    guard let fullUrl = url else {
-      throw NetworkError.invalidRequestURL
-    }
-
-    let builtUrl = try buildUrl(from: fullUrl)
-    var request = URLRequest(url: builtUrl)
+    let requestUrl = try buildUrl(from: url)
+    var request = URLRequest(url: requestUrl)
 
     request.httpMethod = method.rawValue
     request.cachePolicy = cachePolicy
@@ -120,5 +105,26 @@ public extension Requestable {
 
   var key: String {
     return "\(method.rawValue) \(message.resource.urlString)"
+  }
+
+  func concatURL(baseUrl: URLStringConvertible?) throws -> URL {
+    let url: URL?
+
+    if let baseUrl = baseUrl {
+      var path = message.resource.urlString
+      if path.hasPrefix("/") {
+        path.remove(at: path.startIndex)
+      }
+
+      url = URL(string: baseUrl.urlString)?.appendingPathComponent(path)
+    } else {
+      url = URL(string: message.resource.urlString)
+    }
+
+    guard let fullUrl = url else {
+      throw NetworkError.invalidRequestURL
+    }
+
+    return fullUrl
   }
 }
