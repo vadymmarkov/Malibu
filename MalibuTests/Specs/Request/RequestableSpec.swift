@@ -65,6 +65,28 @@ class RequestableSpec: QuickSpec {
             }
           }
 
+          context("with base URL with slash") {
+            it("does not throw an error and returns created URLRequest") {
+              request.message.resource = "/about"
+
+              expect {
+                urlRequest = try request.toUrlRequest(baseUrl: "http://hyper.no/")
+                }.toNot(throwError())
+              expect(urlRequest.url?.absoluteString).to(equal("http://hyper.no/about"))
+            }
+          }
+
+          context("with base URL without slash") {
+            it("does not throw an error and returns created URLRequest") {
+              request.message.resource = "about"
+
+              expect {
+                urlRequest = try request.toUrlRequest(baseUrl: "http://hyper.no")
+                }.toNot(throwError())
+              expect(urlRequest.url?.absoluteString).to(equal("http://hyper.no/about"))
+            }
+          }
+
           context("with additional headers") {
             it("returns created URLRequest with new header added") {
               let headers = ["foo": "bar", "key": "bar"]

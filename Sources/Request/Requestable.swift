@@ -27,9 +27,10 @@ public extension Requestable {
   func toUrlRequest(baseUrl: URLStringConvertible? = nil,
                     additionalHeaders: [String: String] = [:]) throws -> URLRequest {
     let prefix = baseUrl?.urlString ?? ""
-    let resourceString = "\(prefix)\(message.resource.urlString)"
-    let url = try buildUrl(from: resourceString)
-    var request = URLRequest(url: url)
+    let url = try concatURL(baseUrl: baseUrl?.urlString)
+
+    let requestUrl = try buildUrl(from: url)
+    var request = URLRequest(url: requestUrl)
 
     request.httpMethod = method.rawValue
     request.cachePolicy = cachePolicy
@@ -74,6 +75,10 @@ public extension Requestable {
       throw NetworkError.invalidRequestURL
     }
 
+    return try buildUrl(from: url)
+  }
+
+  func buildUrl(from url: URL) throws -> URL {
     guard contentType == .query && !message.parameters.isEmpty else {
       return url
     }
@@ -100,5 +105,26 @@ public extension Requestable {
 
   var key: String {
     return "\(method.rawValue) \(message.resource.urlString)"
+  }
+
+  func concatURL(baseUrl: URLStringConvertible?) throws -> URL {
+    let url: URL?
+
+    if let baseUrl = baseUrl {
+      var path = message.resource.urlString
+      if path.hasPrefix("/") {
+        path.remove(at: path.startIndex)
+      }
+
+      url = URL(string: baseUrl.urlString)?.appendingPathComponent(path)
+    } else {
+      url = URL(string: message.resource.urlString)
+    }
+
+    guard let fullUrl = url else {
+      throw NetworkError.invalidRequestURL
+    }
+
+    return fullUrl
   }
 }
