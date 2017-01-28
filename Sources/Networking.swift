@@ -3,10 +3,6 @@ import When
 
 public final class Networking: NSObject {
 
-  enum SessionTaskKind {
-    case data, upload, download
-  }
-
   public enum Mode {
     case sync, async, limited(Int)
   }
