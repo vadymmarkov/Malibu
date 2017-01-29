@@ -18,17 +18,19 @@ public final class Networking<E: Endpoint>: NSObject, URLSessionDelegate {
     promise.resolve()
   }
 
+  let sessionConfiguration: SessionConfiguration
+  let mockBehavior: MockBehavior
+  let queue: OperationQueue
+
   var customHeaders = [String: String]()
   var requestStorage = RequestStorage()
   var mode: NetworkingMode = .async
-  let mockBehavior: MockBehavior
-  let queue: OperationQueue
 
   weak var sessionDelegate: URLSessionDelegate?
 
   lazy var session: URLSession = { [unowned self] in
     let session = URLSession(
-      configuration: E.sessionConfiguration.value,
+      configuration: self.sessionConfiguration.value,
       delegate: self.sessionDelegate ?? self,
       delegateQueue: nil)
     return session
@@ -50,8 +52,10 @@ public final class Networking<E: Endpoint>: NSObject, URLSessionDelegate {
 
   public init(mode: NetworkingMode = .async,
               mockBehavior: MockBehavior = .never,
+              sessionConfiguration: SessionConfiguration = SessionConfiguration.default,
               sessionDelegate: URLSessionDelegate? = nil) {
     self.mockBehavior = mockBehavior
+    self.sessionConfiguration = sessionConfiguration
     self.sessionDelegate = sessionDelegate
     queue = OperationQueue()
     super.init()

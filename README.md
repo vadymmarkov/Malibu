@@ -130,8 +130,6 @@ enum SharkywatersService: Endpoint {
   static var headers: [String: String] = [
     "Accept" : "application/json"
   ]
-  // `default`, `ephemeral`, `background` or `custom`
-  static var sessionConfiguration: SessionConfiguration = .default
 
   // Build requests
   var request: Request {
@@ -164,19 +162,6 @@ networking.additionalHeaders = {
 
 **Note** that `Accept-Language`, `Accept-Encoding` and `User-Agent` headers are
 included automatically.
-
-### Session configuration
-
-`SessionConfiguration` is a wrapper around `URLSessionConfiguration` and could
-represent 3 standard session types + 1 custom type:
-* `default` - configuration that uses the global singleton credential, cache and
-cookie storage objects.
-* `ephemeral` - configuration with no persistent disk storage for cookies, cache
-or credentials.
-* `background` - session configuration that can be used to perform networking
-operations on behalf of a suspended application, within certain constraints.
-* `custom(URLSessionConfiguration)` - if you're not satisfied with standard
-types, your custom `URLSessionConfiguration` goes here.
 
 ### Mocks
 
@@ -349,10 +334,25 @@ let networking = Networking(
   mode: .async,
   // Mock behavior (never, partial, always)
   mockBehavior: .never,
+  // `default`, `ephemeral`, `background` or `custom`
+  sessionConfiguration: .default,
   // Custom `URLSessionDelegate` could set if needed
   sessionDelegate: self
 )
 ```
+
+### Session configuration
+
+`SessionConfiguration` is a wrapper around `URLSessionConfiguration` and could
+represent 3 standard session types + 1 custom type:
+* `default` - configuration that uses the global singleton credential, cache and
+cookie storage objects.
+* `ephemeral` - configuration with no persistent disk storage for cookies, cache
+or credentials.
+* `background` - session configuration that can be used to perform networking
+operations on behalf of a suspended application, within certain constraints.
+* `custom(URLSessionConfiguration)` - if you're not satisfied with standard
+types, your custom `URLSessionConfiguration` goes here.
 
 ### Mode
 

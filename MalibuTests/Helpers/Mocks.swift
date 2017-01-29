@@ -15,7 +15,6 @@ enum TestService: Endpoint {
 
   static var baseUrl: URLStringConvertible = "http://api.loc"
   static var headers: [String: String] = [:]
-  static var sessionConfiguration: SessionConfiguration = .default
 
   var request: Request {
     switch self {
