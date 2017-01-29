@@ -34,7 +34,7 @@ public final class Mock {
     self.init(response: response, data: data, error: nil, delay: delay)
   }
 
-  public convenience init(request: Request, json: [String: Any], delay: Double = 0.0) {
+  public convenience init(json: [String: Any], delay: Double = 0.0) {
     var jsonData: Data?
 
     do {
