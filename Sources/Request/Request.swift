@@ -1,6 +1,8 @@
 import Foundation
 
-public struct Request {
+// MARK: - Request
+
+public struct Request: Equatable {
   public let method: Method
   public let resource: URLStringConvertible
   public let parameters: [String: Any]
@@ -31,6 +33,8 @@ public struct Request {
     self.cachePolicy = cachePolicy
   }
 }
+
+// MARK: - Method helpers
 
 public extension Request {
 
@@ -159,7 +163,7 @@ public extension Request {
   }
 }
 
-// MARK: - Helpers
+// MARK: - Url helpers
 
 public extension Request {
 
@@ -264,4 +268,17 @@ public extension Request {
 
     return fullUrl
   }
+}
+
+// MARK: - Equatable
+
+public func == (lhs: Request, rhs: Request) -> Bool {
+  return lhs.method == rhs.method
+    && lhs.resource.urlString == rhs.resource.urlString
+    && (lhs.parameters as NSDictionary).isEqual(to: rhs.parameters)
+    && lhs.headers == rhs.headers
+    && lhs.contentType == rhs.contentType
+    && lhs.etagPolicy == rhs.etagPolicy
+    && lhs.storePolicy == rhs.storePolicy
+    && lhs.cachePolicy == rhs.cachePolicy
 }
