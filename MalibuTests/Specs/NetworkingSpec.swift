@@ -6,7 +6,7 @@ class NetworkingSpec: QuickSpec {
 
   override func spec() {
     describe("Networking") {
-      var networking: Networking<TestEndpoint>!
+      var networking: Networking<TestService>!
 
       beforeEach {
         networking = Networking(mockBehavior: .partial)

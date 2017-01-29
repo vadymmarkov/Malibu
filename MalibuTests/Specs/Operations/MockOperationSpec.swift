@@ -17,7 +17,7 @@ class MockOperationSpec: QuickSpec {
       let error = NetworkError.jsonArraySerializationFailed
 
       beforeEach {
-        request = TestEndpoint.fetchPosts.request
+        request = TestService.fetchPosts.request
         urlRequest = try! request.toUrlRequest()
         response = HTTPURLResponse(url: URL(string: "http://api.loc")!,
           statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!

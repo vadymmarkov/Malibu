@@ -8,8 +8,8 @@ class MockSpec: QuickSpec {
   override func spec() {
     describe("Mock") {
       var mock: Mock!
-      let request = TestEndpoint.fetchPosts.request
-      var response = HTTPURLResponse(url: URL(string: TestEndpoint.baseUrl.urlString)!,
+      let request = TestService.fetchPosts.request
+      var response = HTTPURLResponse(url: URL(string: TestService.baseUrl.urlString)!,
                                      statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!
       let data = "test".data(using: String.Encoding.utf32)
       let error = NetworkError.noDataInResponse

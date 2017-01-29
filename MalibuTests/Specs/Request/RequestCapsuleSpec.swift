@@ -10,7 +10,7 @@ class RequestCapsuleSpec: QuickSpec {
       var capsule: RequestCapsule!
 
       beforeEach {
-        request = TestEndpoint.fetchPosts.request
+        request = TestService.fetchPosts.request
         capsule = RequestCapsule(request: request)
       }
 
