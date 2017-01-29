@@ -49,7 +49,7 @@ public struct ErrorLogger: ErrorLogging {
 // MARK: - Request
 
 public protocol RequestLogging: Logging {
-  func log(request: Requestable, urlRequest: URLRequest)
+  func log(request: Request, urlRequest: URLRequest)
 }
 
 public struct RequestLogger: RequestLogging {
@@ -60,7 +60,7 @@ public struct RequestLogger: RequestLogging {
     self.level = level
   }
 
-  public func log(request: Requestable, urlRequest: URLRequest) {
+  public func log(request: Request, urlRequest: URLRequest) {
     guard let urlString = urlRequest.url?.absoluteString else {
       return
     }
@@ -81,9 +81,9 @@ public struct RequestLogger: RequestLogging {
       print(headers)
     }
 
-    if !request.message.parameters.isEmpty && request.contentType != .query {
+    if !request.parameters.isEmpty && request.contentType != .query {
       print("Parameters:")
-      print(request.message.parameters)
+      print(request.parameters)
     }
   }
 }
