@@ -36,9 +36,9 @@ struct User: CustomStringConvertible {
   }
 }
 
-// Endpoint
+// Service
 
-enum APIEndpoint: Endpoint {
+enum PlaceholderService: Endpoint {
   case fetchUsers
   case createUser(id: Int, name: String, username: String, email: String)
 
@@ -65,7 +65,7 @@ enum APIEndpoint: Endpoint {
 }
 
 // Create and configure Networking.
-let networking = Networking<APIEndpoint>()
+let networking = Networking<PlaceholderService>()
 
 // Make GET request
 networking.request(.fetchUsers)

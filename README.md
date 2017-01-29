@@ -46,21 +46,21 @@ past. Enjoy the ride!
 ## Table of Contents
 
 * [Catching the wave](#catching-the-wave)
+* [Endpoint](#endpoint)
+  * [Session configuration](#session-configuration)
+  * [Mocks](#mocks)
 * [Request](#request)
   * [Content types](#content-types)
   * [Encoding](#encoding)
   * [ETags](#etags)
 * [Networking](#networking)
-  * [Session configuration](#session-configuration)
   * [Initialization](#initialization)
   * [Mode](#mode)
-  * [Additional headers](#additional-headers)
   * [Pre-processing](#pre-processing)
   * [Middleware](#middleware)
   * [Authentication](#authentication)
   * [Making a request](#making-a-request)
   * [Wave and Ride](#wave-and-ride)
-  * [Mocks](#mocks)
   * [Offline storage](#offline-storage)
 * [Response](#response)
   * [Serialization](#serialization)
@@ -80,18 +80,13 @@ past. Enjoy the ride!
 You can start your ride straight away, not thinking about configurations:
 
 ```swift
-// Declare your request
-struct BoardsRequest: GETRequestable {
-  var message = Message(resource: "http://sharkywaters.com/api/boards")
-
-  init(kind: Int, text: String) {
-    message.parameters = ["type": kind, "text": text]
-  }
-}
+// Create your request
+let request = Request.get(
+  "http://sharkywaters.com/api/boards",
+  parameters: ["type": 1]
+)
 
 // Make a call
-let request = BoardsRequest(kind: 1, text: "classic")
-
 Malibu.GET(request)
   .validate()
   .toJsonDictionary()
@@ -113,48 +108,185 @@ Malibu.GET(request)
 If you still don't see any benefits, keep scrolling down and be ready for even
 more magic 😉...
 
-## Request
+## Endpoint
 
-You can love it or you can hate it, but either way you have to create a `struct`
-or a `class` representing your request. This decision has been made to separate
-concerns into well-defined layers, so request with all it's properties is
-described in one place, out from the actual usage.
-
-There are 6 protocols corresponding to HTTP methods: `GETRequestable`,
-`POSTRequestable`, `PATCHRequestable`, `PUTRequestable`, `DELETERequestable`,
-`HEADRequestable`. Just conform to one of them and you're ready to surf.
+Most of the time we need separate network stacks to work with multiple API
+services. It's super easy to archive with **Malibu**. First, create an
+`enum` that conforms to **Endpoint** protocol and describe your requests with
+all the properties:
 
 ```swift
-struct BoardsRequest: GETRequestable {
-  // Message is a container for request url, parameters and headers
-  var message = Message(resource: "boards")
+enum SharkywatersService: Endpoint {
+  // Describe requests
+  case fetchBoards
+  case showBoard(id: Int)
+  case createBoard(type: Int, title: String)
+  case updateBoard(id: Int, type: Int, title: String)
+  case deleteBoard(id: Int)
 
+  // Every request will be scoped by the base url
+  static var baseUrl: URLStringConvertible = "http://sharkywaters.com/api/"
+  // Additional headers for every request
+  static var headers: [String: String] = [
+    "Accept" : "application/json"
+  ]
+  // `default`, `ephemeral`, `background` or `custom`
+  static var sessionConfiguration: SessionConfiguration = .default
+
+  // Build requests
+  var request: Request {
+    switch self {
+    case .fetchBoards:
+      return Request.get("boards")
+    case .showBoard(let id):
+      // Let's use JSON dictionary as a mock data
+      return Request.get("boards:\(id)", mock: Mock(json: ["type": 1, "title": "Classic"]))
+    case .createBoard(let type, let title):
+      return Request.post("boards", parameters: ["type": type, "title": title])
+    case .updateBoard(let id, let title):
+      return Request.patch("boards\(id)", parameters: ["title": title])
+    case .deleteBoard(let id):
+      return Request.delete("boards\(id)")
+    }
+  }
+}
+```
+
+### Additional headers
+
+Additional headers will be used in the each request made on the networking:
+
+```swift
+networking.additionalHeaders = {
+  ["Accept" : "application/json"]
+}
+```
+
+**Note** that `Accept-Language`, `Accept-Encoding` and `User-Agent` headers are
+included automatically.
+
+### Session configuration
+
+`SessionConfiguration` is a wrapper around `URLSessionConfiguration` and could
+represent 3 standard session types + 1 custom type:
+* `default` - configuration that uses the global singleton credential, cache and
+cookie storage objects.
+* `ephemeral` - configuration with no persistent disk storage for cookies, cache
+or credentials.
+* `background` - session configuration that can be used to perform networking
+operations on behalf of a suspended application, within certain constraints.
+* `custom(URLSessionConfiguration)` - if you're not satisfied with standard
+types, your custom `URLSessionConfiguration` goes here.
+
+### Mocks
+
+Mocking is great when it comes to writing your tests. But it also could speed
+up your development while the backend developers are working really hardly
+on API implementation.
+
+In order to start mocking you have to do the following:
+
+**Change the `mode`**
+
+A mode for real HTTP request only:
+
+```swift
+let networking = Networking<SharkywatersService>(mockBehavior: .never)
+```
+
+A mode for mocks only:
+```swift
+let networking = Networking<SharkywatersService>(mockBehavior: .always)
+```
+
+Both real and fake requests can be used in a mix:
+```swift
+let networking = Networking<SharkywatersService>(mockBehavior: .partial)
+```
+
+**Create a mock**
+
+With response data from file:
+
+```swift
+let request = Request.get(
+  "boards",
+  mock: Mock(fileName: "boards.json")
+)
+```
+
+With response from JSON dictionary:
+
+```swift
+let request = Request.get(
+  "boards",
+  mock: Mock(json: ["data": ["id": 1, "title": "Balsa Fish"]])
+)
+```
+
+NSData mock:
+
+```swift
+let request = Request.get(
+  "boards:\(id)",
+  mock: Mock(
+    // Needed response
+    response: mockedResponse,
+    // Response data
+    data: responseData,
+    // Custom error, `nil` by default
+    error: customError
+  )
+)
+```
+
+## Request
+
+Request is described with a struct in **Malibu**:
+
+```swift
+let request = Request(
+  // HTTP method
+  method: .get,
+  // Request url or path
+  resource: "boards",
+  // Content type
+  contentType: .query,
+  // Parameters
+  parameters: ["type": 1, "text": "classic"],
+  // Headers
+  headers: ["custom": "header"],
+  // Optional mock (file, dictionary, data)
+  mock: Mock(fileName: "boards.json"),
   // Enables or disables automatic ETags handling
-  var etagPolicy = .disabled
+  etagPolicy: .disabled,
+  // Offline storage configuration
+  storePolicy: .unspecified,
+  // Cache policy
+  cachePolicy: .useProtocolCachePolicy)
+```
 
-  init() {
-    message.headers = ["custom": "header"]
-  }
-}
+There are also 6 helper methods with default values for every HTTP method:
 
-struct BoardCreateRequest: POSTRequestable {
-  var message = Message(resource: "boards")
+```swift
+// GET request
+let getRequest = Request.get("boards")
 
+// POST request
+let postRequest = Request.post(
+  "boards",
   // Content type is set to `.json` by default for POST
-  var contentType: ContentType = .formURLEncoded
+  contentType: .formURLEncoded,
+  parameters: ["type" : kind, "title" : title])
 
-  init(kind: Int, title: String) {
-    message.parameters = ["type" : kind, "title" : title]
-  }
-}
+// PUT request
+let postRequest = Request.put("boards/1", parameters: ["type" : kind, "title" : title])
 
-struct BoardDeleteRequest: DELETERequestable {
-  var message: Message
+// PATCH request
+let postRequest = Request.patch("boards/1", parameters: ["title" : title])
 
-  init(id: Int) {
-    message = Message(resource: "boards:\(id)")
-  }
-}
+// DELETE request
+let deleteRequest = Request.delete("boards/1")
 ```
 
 ### Content types
@@ -195,44 +327,28 @@ the same request. Automatic ETags handling is enabled by default for `GET`,
 specifically.
 
 ```swift
-struct BoardsRequest: GETRequestable {
-  var etagPolicy = .disabled
-}
+let getRequest = Request.get("boards". etagPolicy: .disabled)
 ```
 
 ## Networking
 
-`Networking` class is a core component of **Malibu** that sets shared headers,
-pre-process and executes actual HTTP requests.
-
-### Session configuration
-
-`Networking` is created with `SessionConfiguration` which is a wrapper around
-`URLSessionConfiguration` and could represent 3 standard session types + 1
-custom type:
-* `default` - configuration that uses the global singleton credential, cache and
-cookie storage objects.
-* `ephemeral` - configuration with no persistent disk storage for cookies, cache
-or credentials.
-* `background` - session configuration that can be used to perform networking
-operations on behalf of a suspended application, within certain constraints.
-* `custom(URLSessionConfiguration)` - if you're not satisfied with standard
-types, your custom `URLSessionConfiguration` goes here.
+`Networking` class is a core component of **Malibu** that pre-process and
+executes actual HTTP requests on a specified API service.
 
 ### Initialization
 
 It's pretty straightforward to create a new `Networking` instance:
 
 ```swift
-// Simple networking with `Default` configuration and no base url
-let simpleNetworking = Networking()
+// Simple networking that works with `SharkywatersService` requests.
+let simpleNetworking = Networking<SharkywatersService>()
 
 // More advanced networking
 let networking = Networking(
-  // Every request made on this networking will be scoped by the base url
-  baseUrl: "http://sharkywaters.com/api/",
-  // `Background` session configuration
-  sessionConfiguration: .background,
+  // `OperationQueue` Mode
+  mode: .async,
+  // Mock behavior (never, partial, always)
+  mockBehavior: .never,
   // Custom `URLSessionDelegate` could set if needed
   sessionDelegate: self
 )
@@ -249,19 +365,6 @@ specify **mode** which will be used:
 - `sync`
 - `async`
 - `limited(maxConcurrentOperationCount)`
-
-### Additional headers
-
-Additional headers will be used in the each request made on the networking:
-
-```swift
-networking.additionalHeaders = {
-  ["Accept" : "application/json"]
-}
-```
-
-**Note** that `Accept-Language`, `Accept-Encoding` and `User-Agent` headers are
-included automatically.
 
 ### Pre-processing
 
@@ -335,27 +438,27 @@ networking.authenticate(authorizationHeader: "Malibu-Header")
 ### Making a request
 
 `Networking` is set up and ready, so it's time to fire some requests. Make
-a request by calling `GET`, `POST`, `PUT`, `PATCH`, `DELETE` or
-`HEAD` functions with the corresponding request as an argument.
+a request by calling `request` functions with the corresponding endpoint as an
+argument.
 
 ```swift
-let networking = Networking(baseUrl: "http://sharkywaters.com/api/")
+let networking = Networking<SharkywatersService>()
 
-networking.GET(BoardsRequest())
+networking.request(.fetchBoards)
   .validate()
   .toJsonDictionary()
   .done({ data in
     print(data)
   })
 
-networking.POST(BoardCreateRequest(kind: 2, title: "Balsa Fish"))
+networking.request(.createBoard(kind: 2, title: "Balsa Fish"))
   .validate()
   .toJsonDictionary()
   .done({ data in
     print(data)
   })
 
-networking.DELETE(BoardDeleteRequest(id: 11))
+networking.request(.deleteBoard(id: 11))
   .fail({ error in
     print(error)
   })
@@ -372,7 +475,7 @@ may use `Ride` object to add different callbacks and build chains of tasks. It
 has a range of useful helpers, such as validations and serialization.
 
 ```swift
-let ride = networking.GET(BoardsRequest())
+let ride = networking.request(.fetchBoards)
 
 // Cancel the task
 ride.cancel()
@@ -387,59 +490,6 @@ ride
   .done({ _ in
     // ...
   })
-```
-
-### Mocks
-
-Mocking is great when it comes to writing your tests. But it also could speed
-up your development while the backend developers are working really hardly
-on API implementation.
-
-In order to start mocking you have to do the following:
-
-**Change the `mode`**
-
-```swift
-// A mode for real HTTP request only
-Malibu.mode = .regular
-
-// A mode for mocks only
-Malibu.mode = .fake
-
-// Both real and fake requests can be used in a mix
-Malibu.mode = .partial
-```
-
-**Register the mock**
-
-```swift
-// With response data from file
-networking.register(mock: Mock(
-  // Request to be mocked
-  request: BoardsRequest(),
-  // Name of the file
-  fileName: "boards.json"
-))
-
-// With response from JSON dictionary
-networking.register(mock: Mock(
-  // Request to be mocked
-  request: BoardsRequest(),
-  // JSON dictionary
-  json: ["boards": [["id": 1, "title": "Balsa Fish"]]]
-))
-
-// NSData mock
-networking.register(mock: Mock(
-  // Request to be mocked
-  request: BoardsRequest(),
-  // Needed response
-  response: mockedResponse,
-  // Response data
-  data: responseData,
-  // Custom error, `nil` by default
-  error: customError
-))
 ```
 
 ### Offline storage
@@ -492,53 +542,32 @@ ride.toJsonDictionary() // -> Promise<[String: Any]>
 ```swift
 // Validates a status code to be within 200..<300
 // Validates a response content type based on a request's "Accept" header
-networking.GET(BoardsRequest()).validate()
+networking.request(.fetchBoards).validate()
 
 // Validates a response content type
-networking.GET(BoardsRequest()).validate(
+networking.request(.fetchBoards).validate(
   contentTypes: ["application/json; charset=utf-8"]
 )
 
 // Validates a status code
-networking.GET(BoardsRequest()).validate(statusCodes: [200])
+networking.request(.fetchBoards).validate(statusCodes: [200])
 
 // Validates with custom validator conforming to `Validating` protocol
-networking.GET(BoardsRequest()).validate(using: CustomValidator())
+networking.request(.fetchBoards).validate(using: CustomValidator())
 ```
 
 ## Core
 
-### Multiple networkings
-
-**Malibu** handles multiple networkings which you can register and resolve from
-the container. Doing that, it's super easy to support several APIs and
-configurations in your app.
-
-```swift
-let networking = Networking(baseUrl: "http://sharkywaters.com/api/")
-networking.additionalHeaders = {
-  ["Accept" : "application/json"]
-}
-
-// Register
-Malibu.register("base", networking: networking)
-
-// Perform request using specified networking configuration
-Malibu.networking("base").GET(BoardsRequest(kind: 1, text: "classic"))
-
-// Unregister
-Malibu.unregister("base")
-```
 
 ### Backfoot surfer
 
 **Malibu** has a shared networking object with default configurations for the
 case when you need just something simple to catch the wave. It's not necessary
-to invoke it directly, just call the same `GET`, `POST`, `PUT`, `PATCH`,
-`DELETE` methods right on `Malibu`:
+to create a custom `Endpoint` type, just call the same `request` method right
+on `Malibu`:
 
 ```swift
-Malibu.GET(BoardsRequest())
+Malibu.request(Request.get("http://sharkywaters.com/api/boards")
 ```
 
 ## Logging
