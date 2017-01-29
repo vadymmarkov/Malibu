@@ -2,7 +2,7 @@ import Foundation
 
 public final class Mock {
 
-  public var request: Requestable
+  public var request: Request
   public var response: HTTPURLResponse?
   public var data: Data?
   public var error: Error?
@@ -10,7 +10,7 @@ public final class Mock {
 
   // MARK: - Initialization
 
-  public init(request: Requestable, response: HTTPURLResponse?,
+  public init(request: Request, response: HTTPURLResponse?,
               data: Data?, error: Error? = nil, delay: Double = 0.0) {
     self.request = request
     self.data = data
@@ -19,7 +19,7 @@ public final class Mock {
     self.delay = delay
   }
 
-  public convenience init(request: Requestable, fileName: String,
+  public convenience init(request: Request, fileName: String,
                           bundle: Bundle = Bundle.main, delay: Double = 0.0) {
     let url = URL(string: fileName)
 
@@ -39,7 +39,7 @@ public final class Mock {
     self.init(request: request, response: response, data: data, error: nil, delay: delay)
   }
 
-  public convenience init(request: Requestable, json: [String: Any], delay: Double = 0.0) {
+  public convenience init(request: Request, json: [String: Any], delay: Double = 0.0) {
     var jsonData: Data?
 
     do {
