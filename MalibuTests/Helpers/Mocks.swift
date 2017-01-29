@@ -2,9 +2,9 @@ import Foundation
 import When
 @testable import Malibu
 
-// MARK: - Endpoint
+// MARK: - Service
 
-enum TestEndpoint: Endpoint {
+enum TestService: Endpoint {
   case fetchPosts
   case showPost(id: Int)
   case createPost(title: String)
@@ -49,7 +49,7 @@ class TestResponseHandler: ResponseHandler {
   // MARK: - Initialization
 
   init() {
-    urlRequest = try! TestEndpoint.showPost(id: 1).request.toUrlRequest()
+    urlRequest = try! TestService.showPost(id: 1).request.toUrlRequest()
     ride = Ride()
     response = HTTPURLResponse(url: urlRequest.url!, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!
   }
