@@ -1,30 +1,19 @@
-public protocol Schema {
-
-  associatedtype EndpointType: Endpoint
-
-  var baseUrl: URLStringConvertible { get }
-  var headers: [String: String] { get }
-  var sessionConfiguration: SessionConfiguration { get }
-}
-
 public protocol Endpoint {
+
+  static var baseUrl: URLStringConvertible { get }
+  static var headers: [String: String] { get }
+  static var sessionConfiguration: SessionConfiguration { get }
 
   var request: Request { get }
 }
 
 // MARK: - Defaults
 
-extension Request: Endpoint {
+struct AnyEndpoint: Endpoint {
 
-  public var request: Request {
-    return self
-  }
-}
+  static let baseUrl: URLStringConvertible = ""
+  static let headers: [String: String] = [:]
+  static let sessionConfiguration: SessionConfiguration = SessionConfiguration.default
 
-public struct DefaultSchema: Schema {
-
-  public typealias EndpointType = Request
-  public let baseUrl: URLStringConvertible = ""
-  public let headers: [String: String] = [:]
-  public let sessionConfiguration: SessionConfiguration = SessionConfiguration.default
+  public let request: Request
 }

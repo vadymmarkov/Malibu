@@ -5,7 +5,7 @@ public enum NetworkingMode {
   case sync, async, limited(Int)
 }
 
-public final class Networking<S: Schema>: NSObject, URLSessionDelegate {
+public final class Networking<E: Endpoint>: NSObject, URLSessionDelegate {
 
   public var beforeEach: ((Request) -> Request)?
   public var preProcessRequest: ((URLRequest) -> URLRequest)?
@@ -14,7 +14,6 @@ public final class Networking<S: Schema>: NSObject, URLSessionDelegate {
     promise.resolve()
   }
 
-  var schema: S
   var customHeaders = [String: String]()
   var mocks = [String: Mock]()
   var requestStorage = RequestStorage()
@@ -25,7 +24,7 @@ public final class Networking<S: Schema>: NSObject, URLSessionDelegate {
 
   lazy var session: URLSession = { [unowned self] in
     let session = URLSession(
-      configuration: self.schema.sessionConfiguration.value,
+      configuration: E.sessionConfiguration.value,
       delegate: self.sessionDelegate ?? self,
       delegateQueue: nil)
     return session
@@ -34,7 +33,7 @@ public final class Networking<S: Schema>: NSObject, URLSessionDelegate {
   var requestHeaders: [String: String] {
     var headers = customHeaders
     headers["Accept-Language"] = Header.acceptLanguage
-    let extraHeaders = schema.headers
+    let extraHeaders = E.headers
 
     extraHeaders.forEach { key, value in
       headers[key] = value
@@ -45,13 +44,10 @@ public final class Networking<S: Schema>: NSObject, URLSessionDelegate {
 
   // MARK: - Initialization
 
-  public init(schema: S,
-              mode: NetworkingMode = .async,
+  public init(mode: NetworkingMode = .async,
               sessionConfiguration: SessionConfiguration = .default,
               sessionDelegate: URLSessionDelegate? = nil) {
-    self.schema = schema
     self.sessionDelegate = sessionDelegate
-
     queue = OperationQueue()
     super.init()
     reset(mode: mode)
@@ -80,7 +76,7 @@ public final class Networking<S: Schema>: NSObject, URLSessionDelegate {
 
     do {
       let request = beforeEach?(request) ?? request
-      urlRequest = try request.toUrlRequest(baseUrl: schema.baseUrl, additionalHeaders: requestHeaders)
+      urlRequest = try request.toUrlRequest(baseUrl: E.baseUrl, additionalHeaders: requestHeaders)
     } catch {
       ride.reject(error)
       return ride
@@ -125,7 +121,7 @@ public final class Networking<S: Schema>: NSObject, URLSessionDelegate {
     return nextRide
   }
 
-  public func request(_ endpoint: S.EndpointType) -> Ride {
+  public func request(_ endpoint: E) -> Ride {
     return execute(endpoint.request)
   }
 
@@ -212,7 +208,7 @@ public final class Networking<S: Schema>: NSObject, URLSessionDelegate {
       return
     }
 
-    let prefix = schema.baseUrl.urlString
+    let prefix = E.baseUrl.urlString
 
     EtagStorage().add(value: etag, forKey: request.etagKey(prefix: prefix))
   }
@@ -227,7 +223,7 @@ public final class Networking<S: Schema>: NSObject, URLSessionDelegate {
 
   public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
     guard
-      let baseURL = NSURL(string: schema.baseUrl.urlString),
+      let baseURL = NSURL(string: E.baseUrl.urlString),
       let serverTrust = challenge.protectionSpace.serverTrust
       else { return }
 
