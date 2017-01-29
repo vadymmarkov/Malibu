@@ -60,8 +60,8 @@
 		D5B2E8AA1C3A780C00C0327D /* Malibu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5B2E89F1C3A780C00C0327D /* Malibu.framework */; };
 		D5B964EE1C916CBF0099D2F9 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964ED1C916CBF0099D2F9 /* Mocks.swift */; };
 		D5B964EF1C916CBF0099D2F9 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964ED1C916CBF0099D2F9 /* Mocks.swift */; };
-		D5B964F51C92125E0099D2F9 /* Requestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964F41C92125E0099D2F9 /* Requestable.swift */; };
-		D5B964F61C92125E0099D2F9 /* Requestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964F41C92125E0099D2F9 /* Requestable.swift */; };
+		D5B964F51C92125E0099D2F9 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964F41C92125E0099D2F9 /* Request.swift */; };
+		D5B964F61C92125E0099D2F9 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964F41C92125E0099D2F9 /* Request.swift */; };
 		D5B964F91C9216FD0099D2F9 /* MessageSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964F81C9216FD0099D2F9 /* MessageSpec.swift */; };
 		D5B964FA1C9216FD0099D2F9 /* MessageSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964F81C9216FD0099D2F9 /* MessageSpec.swift */; };
 		D5B964FC1C9217140099D2F9 /* RequestableSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964FB1C9217140099D2F9 /* RequestableSpec.swift */; };
@@ -216,7 +216,7 @@
 		D5B2E89F1C3A780C00C0327D /* Malibu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Malibu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5B2E8A91C3A780C00C0327D /* Malibu-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Malibu-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5B964ED1C916CBF0099D2F9 /* Mocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
-		D5B964F41C92125E0099D2F9 /* Requestable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Requestable.swift; sourceTree = "<group>"; };
+		D5B964F41C92125E0099D2F9 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		D5B964F81C9216FD0099D2F9 /* MessageSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageSpec.swift; sourceTree = "<group>"; };
 		D5B964FB1C9217140099D2F9 /* RequestableSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestableSpec.swift; sourceTree = "<group>"; };
 		D5B965031C9225720099D2F9 /* EtagStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EtagStorage.swift; sourceTree = "<group>"; };
@@ -419,7 +419,7 @@
 				DAA50FF01C97738400D01F78 /* Header.swift */,
 				D5B9650B1C922BCF0099D2F9 /* SessionConfiguration.swift */,
 				D5B9650C1C922BCF0099D2F9 /* URLStringConvertible.swift */,
-				D5B964F41C92125E0099D2F9 /* Requestable.swift */,
+				D5B964F41C92125E0099D2F9 /* Request.swift */,
 				D5EB7C5F1CB01E73003A3BA9 /* RequestPolicies.swift */,
 				D5C1D06E1CB3D49F00A076D6 /* Ride.swift */,
 				D5339AF51D9C6C5900E8A7AD /* RequestStorage.swift */,
@@ -885,7 +885,7 @@
 				D5779BC51D991C8F00123D98 /* Mock.swift in Sources */,
 				D5B9651C1C922BDC0099D2F9 /* Wave.swift in Sources */,
 				D503D38D1C8DA7730009BDAD /* Serializing.swift in Sources */,
-				D5B964F51C92125E0099D2F9 /* Requestable.swift in Sources */,
+				D5B964F51C92125E0099D2F9 /* Request.swift in Sources */,
 				D5B965111C922BCF0099D2F9 /* SessionConfiguration.swift in Sources */,
 				D5B965041C9225720099D2F9 /* EtagStorage.swift in Sources */,
 				D5B9650F1C922BCF0099D2F9 /* Method.swift in Sources */,
@@ -973,7 +973,7 @@
 				D5779BC61D991C8F00123D98 /* Mock.swift in Sources */,
 				D5B9651D1C922BDC0099D2F9 /* Wave.swift in Sources */,
 				D503D38E1C8DA7730009BDAD /* Serializing.swift in Sources */,
-				D5B964F61C92125E0099D2F9 /* Requestable.swift in Sources */,
+				D5B964F61C92125E0099D2F9 /* Request.swift in Sources */,
 				D5B965121C922BCF0099D2F9 /* SessionConfiguration.swift in Sources */,
 				D5B965051C9225720099D2F9 /* EtagStorage.swift in Sources */,
 				D5B965101C922BCF0099D2F9 /* Method.swift in Sources */,
