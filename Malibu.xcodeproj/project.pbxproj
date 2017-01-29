@@ -60,8 +60,6 @@
 		D5B2E8AA1C3A780C00C0327D /* Malibu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5B2E89F1C3A780C00C0327D /* Malibu.framework */; };
 		D5B964EE1C916CBF0099D2F9 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964ED1C916CBF0099D2F9 /* Mocks.swift */; };
 		D5B964EF1C916CBF0099D2F9 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964ED1C916CBF0099D2F9 /* Mocks.swift */; };
-		D5B964F21C9211AF0099D2F9 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964F11C9211AF0099D2F9 /* Message.swift */; };
-		D5B964F31C9211AF0099D2F9 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964F11C9211AF0099D2F9 /* Message.swift */; };
 		D5B964F51C92125E0099D2F9 /* Requestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964F41C92125E0099D2F9 /* Requestable.swift */; };
 		D5B964F61C92125E0099D2F9 /* Requestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964F41C92125E0099D2F9 /* Requestable.swift */; };
 		D5B964F91C9216FD0099D2F9 /* MessageSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964F81C9216FD0099D2F9 /* MessageSpec.swift */; };
@@ -121,8 +119,6 @@
 		D5E8EDC41D9D865B0087690A /* RequestCapsule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E8EDC21D9D865B0087690A /* RequestCapsule.swift */; };
 		D5EB7C601CB01E73003A3BA9 /* RequestPolicies.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EB7C5F1CB01E73003A3BA9 /* RequestPolicies.swift */; };
 		D5EB7C611CB01E73003A3BA9 /* RequestPolicies.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EB7C5F1CB01E73003A3BA9 /* RequestPolicies.swift */; };
-		D5EB7C631CB02323003A3BA9 /* MethodRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EB7C621CB02323003A3BA9 /* MethodRequestable.swift */; };
-		D5EB7C641CB02323003A3BA9 /* MethodRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EB7C621CB02323003A3BA9 /* MethodRequestable.swift */; };
 		D5EB7C691CB039DC003A3BA9 /* QueryBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EB7C681CB039DC003A3BA9 /* QueryBuilder.swift */; };
 		D5EB7C6A1CB039DC003A3BA9 /* QueryBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EB7C681CB039DC003A3BA9 /* QueryBuilder.swift */; };
 		D5EB7C6C1CB03AA0003A3BA9 /* QueryBuilderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EB7C6B1CB03AA0003A3BA9 /* QueryBuilderSpec.swift */; };
@@ -220,7 +216,6 @@
 		D5B2E89F1C3A780C00C0327D /* Malibu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Malibu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5B2E8A91C3A780C00C0327D /* Malibu-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Malibu-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5B964ED1C916CBF0099D2F9 /* Mocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
-		D5B964F11C9211AF0099D2F9 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		D5B964F41C92125E0099D2F9 /* Requestable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Requestable.swift; sourceTree = "<group>"; };
 		D5B964F81C9216FD0099D2F9 /* MessageSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageSpec.swift; sourceTree = "<group>"; };
 		D5B964FB1C9217140099D2F9 /* RequestableSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestableSpec.swift; sourceTree = "<group>"; };
@@ -258,7 +253,6 @@
 		D5E061DB1D06E5EF009740F2 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/Mac/Nimble.framework; sourceTree = "<group>"; };
 		D5E8EDC21D9D865B0087690A /* RequestCapsule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestCapsule.swift; sourceTree = "<group>"; };
 		D5EB7C5F1CB01E73003A3BA9 /* RequestPolicies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestPolicies.swift; sourceTree = "<group>"; };
-		D5EB7C621CB02323003A3BA9 /* MethodRequestable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MethodRequestable.swift; sourceTree = "<group>"; };
 		D5EB7C681CB039DC003A3BA9 /* QueryBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryBuilder.swift; sourceTree = "<group>"; };
 		D5EB7C6B1CB03AA0003A3BA9 /* QueryBuilderSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryBuilderSpec.swift; sourceTree = "<group>"; };
 		D5EB7C6E1CB04543003A3BA9 /* MethodRequestableSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MethodRequestableSpec.swift; sourceTree = "<group>"; };
@@ -425,9 +419,7 @@
 				DAA50FF01C97738400D01F78 /* Header.swift */,
 				D5B9650B1C922BCF0099D2F9 /* SessionConfiguration.swift */,
 				D5B9650C1C922BCF0099D2F9 /* URLStringConvertible.swift */,
-				D5B964F11C9211AF0099D2F9 /* Message.swift */,
 				D5B964F41C92125E0099D2F9 /* Requestable.swift */,
-				D5EB7C621CB02323003A3BA9 /* MethodRequestable.swift */,
 				D5EB7C5F1CB01E73003A3BA9 /* RequestPolicies.swift */,
 				D5C1D06E1CB3D49F00A076D6 /* Ride.swift */,
 				D5339AF51D9C6C5900E8A7AD /* RequestStorage.swift */,
@@ -878,7 +870,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5EB7C631CB02323003A3BA9 /* MethodRequestable.swift in Sources */,
 				D5779BC81D991CA400123D98 /* MockOperation.swift in Sources */,
 				DA5B4CEC1C8E51A0004E21ED /* DataSerializer.swift in Sources */,
 				DAC92A3C1C87C00C00F01940 /* ContentTypeValidator.swift in Sources */,
@@ -910,7 +901,6 @@
 				D5EB7C691CB039DC003A3BA9 /* QueryBuilder.swift in Sources */,
 				D5779BCB1D991D4B00123D98 /* ResponseHandler.swift in Sources */,
 				DA5B4CEF1C8E5553004E21ED /* StringSerializer.swift in Sources */,
-				D5B964F21C9211AF0099D2F9 /* Message.swift in Sources */,
 				D5B9651E1C922BDC0099D2F9 /* WaveSerialization.swift in Sources */,
 				D5EB7C601CB01E73003A3BA9 /* RequestPolicies.swift in Sources */,
 				DA5B4CF81C8E5936004E21ED /* NetworkError.swift in Sources */,
@@ -968,7 +958,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5EB7C641CB02323003A3BA9 /* MethodRequestable.swift in Sources */,
 				D5779BC91D991CA400123D98 /* MockOperation.swift in Sources */,
 				DA5B4CED1C8E51A0004E21ED /* DataSerializer.swift in Sources */,
 				DAC92A3D1C87C00C00F01940 /* ContentTypeValidator.swift in Sources */,
@@ -1000,7 +989,6 @@
 				D5EB7C6A1CB039DC003A3BA9 /* QueryBuilder.swift in Sources */,
 				D5779BCC1D991D4B00123D98 /* ResponseHandler.swift in Sources */,
 				DA5B4CF01C8E5553004E21ED /* StringSerializer.swift in Sources */,
-				D5B964F31C9211AF0099D2F9 /* Message.swift in Sources */,
 				D5B9651F1C922BDC0099D2F9 /* WaveSerialization.swift in Sources */,
 				D5EB7C611CB01E73003A3BA9 /* RequestPolicies.swift in Sources */,
 				DA5B4CF91C8E5936004E21ED /* NetworkError.swift in Sources */,
