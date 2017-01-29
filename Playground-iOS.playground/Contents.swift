@@ -53,9 +53,9 @@ enum APIEndpoint: Endpoint {
   var request: Request {
     switch self {
     case .fetchUsers:
-      return Request.get(resource: "users", etagPolicy: .disabled)
+      return Request.get("users", etagPolicy: .disabled)
     case .createUser(let id, let name, let username, let email):
-      return Request.post(resource: "users", parameters: [
+      return Request.post("users", parameters: [
         "id": id,
         "name": name,
         "username": username,

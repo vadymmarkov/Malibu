@@ -9,7 +9,7 @@ class MethodRequestSpec: QuickSpec {
 
     describe("GET request") {
       beforeEach {
-        request = Request.get(resource: "posts")
+        request = Request.get("posts")
       }
 
       describe("#method") {
@@ -33,7 +33,7 @@ class MethodRequestSpec: QuickSpec {
 
     describe("POST request") {
       beforeEach {
-        request = Request.post(resource: "posts")
+        request = Request.post("posts")
       }
 
       describe("#method") {
@@ -57,7 +57,7 @@ class MethodRequestSpec: QuickSpec {
 
     describe("PUT request") {
       beforeEach {
-        request = Request.put(resource: "posts/1")
+        request = Request.put("posts/1")
       }
 
       describe("#method") {
@@ -81,7 +81,7 @@ class MethodRequestSpec: QuickSpec {
 
     describe("PATCH request") {
       beforeEach {
-        request = Request.patch(resource: "posts/1")
+        request = Request.patch("posts/1")
       }
 
       describe("#method") {
@@ -105,7 +105,7 @@ class MethodRequestSpec: QuickSpec {
 
     describe("DELETE request") {
       beforeEach {
-        request = Request.delete(resource: "posts/1")
+        request = Request.delete("posts/1")
       }
 
       describe("#method") {
@@ -129,7 +129,7 @@ class MethodRequestSpec: QuickSpec {
 
     describe("HEAD request") {
       beforeEach {
-        request = Request.head(resource: "posts")
+        request = Request.head("posts")
       }
 
       describe("#method") {

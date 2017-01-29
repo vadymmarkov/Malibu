@@ -38,7 +38,7 @@ public struct Request: Equatable {
 
 public extension Request {
 
-  public static func get(resource: URLStringConvertible,
+  public static func get(_ resource: URLStringConvertible,
                          parameters: [String: Any] = [:],
                          headers: [String: String] = [:],
                          mock: Mock? = nil,
@@ -58,7 +58,7 @@ public extension Request {
     )
   }
 
-  public static func post(resource: URLStringConvertible,
+  public static func post(_ resource: URLStringConvertible,
                           contentType: ContentType = .json,
                           parameters: [String: Any] = [:],
                           headers: [String: String] = [:],
@@ -78,7 +78,7 @@ public extension Request {
     )
   }
 
-  public static func put(resource: URLStringConvertible,
+  public static func put(_ resource: URLStringConvertible,
                          contentType: ContentType = .json,
                          parameters: [String: Any] = [:],
                          headers: [String: String] = [:],
@@ -99,7 +99,7 @@ public extension Request {
     )
   }
 
-  public static func patch(resource: URLStringConvertible,
+  public static func patch(_ resource: URLStringConvertible,
                            contentType: ContentType = .json,
                            parameters: [String: Any] = [:],
                            headers: [String: String] = [:],
@@ -120,7 +120,7 @@ public extension Request {
     )
   }
 
-  public static func delete(resource: URLStringConvertible,
+  public static func delete(_ resource: URLStringConvertible,
                             contentType: ContentType = .query,
                             parameters: [String: Any] = [:],
                             headers: [String: String] = [:],
@@ -141,7 +141,7 @@ public extension Request {
     )
   }
 
-  public static func head(resource: URLStringConvertible,
+  public static func head(_ resource: URLStringConvertible,
                           contentType: ContentType = .query,
                           parameters: [String: Any] = [:],
                           headers: [String: String] = [:],

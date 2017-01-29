@@ -20,19 +20,19 @@ enum TestEndpoint: Endpoint {
   var request: Request {
     switch self {
     case .fetchPosts:
-      return Request.get(resource: "posts")
+      return Request.get("posts")
     case .showPost(let id):
-      return Request.get(resource: "posts:\(id)", mock: Mock(json: ["title": "Test"]))
+      return Request.get("posts:\(id)", mock: Mock(json: ["title": "Test"]))
     case .createPost(let title):
-      return Request.post(resource: "posts", parameters: ["title": title])
+      return Request.post("posts", parameters: ["title": title])
     case .replacePost(let id, let title):
-      return Request.put(resource: "posts\(id)", parameters: ["title": title])
+      return Request.put("posts\(id)", parameters: ["title": title])
     case .updatePost(let id, let title):
-      return Request.patch(resource: "posts\(id)", parameters: ["title": title])
+      return Request.patch("posts\(id)", parameters: ["title": title])
     case .deletePost(let id):
-      return Request.delete(resource: "posts\(id)")
+      return Request.delete("posts\(id)")
     case .head:
-      return Request.head(resource: "posts")
+      return Request.head("posts")
     }
   }
 }

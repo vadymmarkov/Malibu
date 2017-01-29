@@ -11,7 +11,7 @@ class RequestableSpec: QuickSpec {
 
       beforeEach {
         request = Request.post(
-          resource: "http://api.loc/posts",
+          "http://api.loc/posts",
           parameters: ["key": "value"],
           headers: ["key": "value"])
 
@@ -39,7 +39,7 @@ class RequestableSpec: QuickSpec {
       describe("#toURLRequest") {
         context("when request URL is invalid") {
           it("throws an error") {
-            request = Request.post(resource: "not an URL")
+            request = Request.post("not an URL")
             expect{ try request.toUrlRequest() }.to(throwError(NetworkError.invalidRequestURL))
           }
         }
@@ -47,7 +47,7 @@ class RequestableSpec: QuickSpec {
         context("when there are no errors") {
           beforeEach {
             request = Request.post(
-              resource: "http://api.loc/posts",
+              "http://api.loc/posts",
               parameters: ["key": "value"],
               headers: ["key": "value"])
           }
@@ -67,7 +67,7 @@ class RequestableSpec: QuickSpec {
 
           context("with base URL") {
             it("does not throw an error and returns created URLRequest") {
-              request = Request.post(resource: "/about")
+              request = Request.post("/about")
 
               expect {
                 urlRequest = try request.toUrlRequest(baseUrl: "http://api.loc")
@@ -78,7 +78,7 @@ class RequestableSpec: QuickSpec {
 
           context("with base URL with slash") {
             it("does not throw an error and returns created URLRequest") {
-              request = Request.post(resource: "/about")
+              request = Request.post("/about")
 
               expect {
                 urlRequest = try request.toUrlRequest(baseUrl: "http://api.loc/")
@@ -89,7 +89,7 @@ class RequestableSpec: QuickSpec {
 
           context("with base URL without slash") {
             it("does not throw an error and returns created URLRequest") {
-              request = Request.post(resource: "about")
+              request = Request.post("about")
 
               expect {
                 urlRequest = try request.toUrlRequest(baseUrl: "http://api.loc")
@@ -101,7 +101,7 @@ class RequestableSpec: QuickSpec {
           context("with additional headers") {
             it("returns created URLRequest with new header added") {
               let headers = ["foo": "bar", "key": "bar"]
-              request = Request.post(resource: "/about", headers: ["key": "value"])
+              request = Request.post("/about", headers: ["key": "value"])
 
               expect {
                 urlRequest = try request.toUrlRequest(
@@ -117,7 +117,7 @@ class RequestableSpec: QuickSpec {
           context("with ETagPolicy enabled") {
             beforeEach {
               request = Request.get(
-                resource: "http:/api.loc/posts",
+                "http:/api.loc/posts",
                 parameters: ["key": "value"],
                 headers: ["key": "value"])
             }
@@ -146,7 +146,7 @@ class RequestableSpec: QuickSpec {
           context("with ETagPolicy disabled") {
             beforeEach {
               request = Request.post(
-                resource: "http:/api.loc/posts",
+                "http:/api.loc/posts",
                 parameters: ["key": "value"],
                 headers: ["key": "value"])
             }
@@ -175,7 +175,7 @@ class RequestableSpec: QuickSpec {
           context("with Query content type") {
             beforeEach {
               request = Request.get(
-                resource: "http:/api.loc/posts",
+                "http:/api.loc/posts",
                 parameters: ["key": "value", "number": 1])
             }
 
@@ -193,7 +193,7 @@ class RequestableSpec: QuickSpec {
           context("with MultipartFormData content type") {
             beforeEach {
               request = Request.post(
-                resource: "http:/api.loc/posts",
+                "http:/api.loc/posts",
                 contentType: .multipartFormData,
                 parameters: ["key": "value", "number": 1])
             }
@@ -226,7 +226,7 @@ class RequestableSpec: QuickSpec {
           context("when content type is not Query") {
             beforeEach {
               request = Request.post(
-                resource: "http:/api.loc/posts",
+                "http:/api.loc/posts",
                 parameters: ["key": "value"])
             }
 
@@ -239,7 +239,7 @@ class RequestableSpec: QuickSpec {
 
           context("when content type is Query but there are no parameters") {
             beforeEach {
-              request = Request.get(resource: "http:/api.loc/posts")
+              request = Request.get("http:/api.loc/posts")
             }
 
             it("returns URL") {
@@ -253,7 +253,7 @@ class RequestableSpec: QuickSpec {
           context("when content type is Query and request has parameters") {
             beforeEach {
               request = Request.get(
-                resource: "http:/api.loc/posts",
+                "http:/api.loc/posts",
                 parameters: ["key": "value", "number": 1])
             }
 
