@@ -36,28 +36,39 @@ struct User: CustomStringConvertible {
   }
 }
 
+// Endpoint
+
+enum APIEndpoint: Endpoint {
+  case fetchUsers
+  case createUser(id: Int, name: String, username: String, email: String)
+
+  static let baseUrl: URLStringConvertible = "http://jsonplaceholder.typicode.com/"
+  static let sessionConfiguration: SessionConfiguration = .default
+
+  // Additional headers will be used in the each request.
+  static var headers: [String : String] {
+    return ["Accept" : "application/json"]
+  }
+
+  var request: Request {
+    switch self {
+    case .fetchUsers:
+      return Request.get(resource: "users", etagPolicy: .disabled)
+    case .createUser(let id, let name, let username, let email):
+      return Request.post(resource: "users", parameters: [
+        "id": id,
+        "name": name,
+        "username": username,
+        "email": email])
+    }
+  }
+}
+
 // Create and configure Networking.
+let networking = Networking<APIEndpoint>()
 
-let networking = Networking(
-  // Every request made on this networking will be scoped by the base url.
-  baseUrl: "http://jsonplaceholder.typicode.com/"
-)
-
-// Additional headers will be used in the each request made on the networking.
-networking.additionalHeaders = {
-  ["Accept" : "application/json"]
-}
-
-// Register networking
-Malibu.register("placeholder", networking: networking)
-
-// GET request
-struct UsersRequest: GETRequestable {
-  var etagPolicy: EtagPolicy = .disabled
-  var message = Message(resource: "users")
-}
-
-Malibu.networking("placeholder").GET(UsersRequest())
+// Make GET request
+networking.request(.fetchUsers)
   .validate()
   .toJsonArray()
   .then({ data -> [User] in
@@ -74,26 +85,12 @@ Malibu.networking("placeholder").GET(UsersRequest())
     /// ...
   })
 
-// POST request
-struct CreateUserRequest: POSTRequestable {
-  var message = Message(resource: "users")
+// Make POST request
 
-  init(id: Int, name: String, username: String, email: String) {
-    message.parameters = [
-      "id": id,
-      "name": name,
-      "username": username,
-      "email": email
-    ]
-  }
-}
-
-let request = CreateUserRequest(id: 11,
-                                name: "Malibu",
-                                username: "malibu",
-                                email: "malibu@example.org")
-
-Malibu.networking("placeholder").POST(request)
+networking.request(.createUser(id: 11,
+                               name: "Malibu",
+                               username: "malibu",
+                               email: "malibu@example.org"))
   .validate()
   .toJsonDictionary()
   .then({ data -> User in
