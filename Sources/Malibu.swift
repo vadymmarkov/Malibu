@@ -1,13 +1,8 @@
 import Foundation
 import When
 
-public enum Mode {
-  case regular, partial, fake
-}
-
 // MARK: - Vars
 
-public var mode: Mode = .regular
 public var parameterEncoders = [ContentType: ParameterEncoding]()
 public let logger = Logger()
 public let boundary = String(format: "Malibu%08x%08x", arc4random(), arc4random())

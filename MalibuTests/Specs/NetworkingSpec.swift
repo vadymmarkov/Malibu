@@ -9,12 +9,7 @@ class NetworkingSpec: QuickSpec {
       var networking: Networking<TestEndpoint>!
 
       beforeEach {
-        networking = Networking()
-        Malibu.mode = .partial
-      }
-
-      afterEach {
-        Malibu.mode = .regular
+        networking = Networking(mockBehavior: .partial)
       }
 
       describe("#init") {

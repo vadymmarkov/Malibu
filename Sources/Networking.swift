@@ -5,6 +5,10 @@ public enum NetworkingMode {
   case sync, async, limited(Int)
 }
 
+public enum MockBehavior {
+  case never, partial, always
+}
+
 public final class Networking<E: Endpoint>: NSObject, URLSessionDelegate {
 
   public var beforeEach: ((Request) -> Request)?
@@ -17,6 +21,7 @@ public final class Networking<E: Endpoint>: NSObject, URLSessionDelegate {
   var customHeaders = [String: String]()
   var requestStorage = RequestStorage()
   var mode: NetworkingMode = .async
+  let mockBehavior: MockBehavior
   let queue: OperationQueue
 
   weak var sessionDelegate: URLSessionDelegate?
@@ -43,7 +48,10 @@ public final class Networking<E: Endpoint>: NSObject, URLSessionDelegate {
 
   // MARK: - Initialization
 
-  public init(mode: NetworkingMode = .async, sessionDelegate: URLSessionDelegate? = nil) {
+  public init(mode: NetworkingMode = .async,
+              mockBehavior: MockBehavior = .never,
+              sessionDelegate: URLSessionDelegate? = nil) {
+    self.mockBehavior = mockBehavior
     self.sessionDelegate = sessionDelegate
     queue = OperationQueue()
     super.init()
@@ -163,8 +171,8 @@ extension Networking {
   func buildOperation(ride: Ride, request: Request, urlRequest: URLRequest) -> ConcurrentOperation? {
     var operation: ConcurrentOperation?
 
-    switch Malibu.mode {
-    case .regular:
+    switch mockBehavior {
+    case .never:
       operation = DataOperation(session: session, urlRequest: urlRequest, ride: ride)
     case .partial:
       if let mock = request.mock {
@@ -172,7 +180,7 @@ extension Networking {
       } else {
         operation = DataOperation(session: session, urlRequest: urlRequest, ride: ride)
       }
-    case .fake:
+    case .always:
       guard let mock = request.mock else {
         ride.reject(NetworkError.noMockProvided)
         break
