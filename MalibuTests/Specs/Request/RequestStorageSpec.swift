@@ -25,7 +25,7 @@ class RequestStorageSpec: QuickSpec {
 
       describe("#save") {
         it("saves a capsule") {
-          let capsule = RequestCapsule(request: GETRequest())
+          let capsule = RequestCapsule(request: TestEndpoint.fetchPosts.request)
           storage.save(capsule)
 
           expect(storage.requests.count).to(equal(1))
@@ -37,8 +37,8 @@ class RequestStorageSpec: QuickSpec {
 
       describe("#saveAll") {
         it("saves all capsules") {
-          let capsule1 = RequestCapsule(request: GETRequest())
-          let capsule2 = RequestCapsule(request: POSTRequest())
+          let capsule1 = RequestCapsule(request: TestEndpoint.fetchPosts.request)
+          let capsule2 = RequestCapsule(request: TestEndpoint.showPost(id: 1).request)
           storage.requests["id1"] = capsule1
           storage.requests["id2"] = capsule2
 
@@ -51,7 +51,7 @@ class RequestStorageSpec: QuickSpec {
 
       describe("#remove") {
         it("removes a capsule") {
-          let capsule = RequestCapsule(request: GETRequest())
+          let capsule = RequestCapsule(request: TestEndpoint.fetchPosts.request)
           storage.save(capsule)
 
           expect(storage.requests.count).to(equal(1))
@@ -66,7 +66,7 @@ class RequestStorageSpec: QuickSpec {
 
       describe("#clear") {
         it("removes all capsules") {
-          let capsule = RequestCapsule(request: GETRequest())
+          let capsule = RequestCapsule(request: TestEndpoint.fetchPosts.request)
           storage.save(capsule)
 
           expect(storage.requests.count).to(equal(1))
@@ -82,7 +82,7 @@ class RequestStorageSpec: QuickSpec {
       describe("#clearAll") {
         it("removes all capsules from every storage") {
           var storage2 = RequestStorage()
-          let capsule = RequestCapsule(request: GETRequest())
+          let capsule = RequestCapsule(request: TestEndpoint.fetchPosts.request)
 
           storage.save(capsule)
           storage2.save(capsule)
@@ -106,7 +106,7 @@ class RequestStorageSpec: QuickSpec {
 
       describe("#load") {
         it("loads capsules") {
-          let capsule = RequestCapsule(request: GETRequest())
+          let capsule = RequestCapsule(request: TestEndpoint.fetchPosts.request)
           storage.save(capsule)
 
           expect(storage.requests.count).to(equal(1))

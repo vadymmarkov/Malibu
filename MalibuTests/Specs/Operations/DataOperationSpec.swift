@@ -9,7 +9,7 @@ class DataOperationSpec: QuickSpec {
     describe("DataOperation") {
       var operation: DataOperation!
       let session = URLSession()
-      let urlRequest = try! GETRequest().toUrlRequest()
+      let urlRequest = try! TestEndpoint.fetchPosts.request.toUrlRequest()
       let ride = Ride()
 
       describe("#init") {

@@ -2,14 +2,14 @@
 import Quick
 import Nimble
 
-class MethodRequestableSpec: QuickSpec {
+class MethodRequestSpec: QuickSpec {
 
   override func spec() {
-    describe("GETRequestable") {
-      var request: GETRequestable!
+    var request: Request!
 
+    describe("GET request") {
       beforeEach {
-        request = GETRequest()
+        request = Request.get(resource: "posts")
       }
 
       describe("#method") {
@@ -31,11 +31,9 @@ class MethodRequestableSpec: QuickSpec {
       }
     }
 
-    describe("POSTRequestable") {
-      var request: POSTRequestable!
-
+    describe("POST request") {
       beforeEach {
-        request = POSTRequest()
+        request = Request.post(resource: "posts")
       }
 
       describe("#method") {
@@ -57,11 +55,9 @@ class MethodRequestableSpec: QuickSpec {
       }
     }
 
-    describe("PUTRequestable") {
-      var request: PUTRequestable!
-
+    describe("PUT request") {
       beforeEach {
-        request = PUTRequest()
+        request = Request.put(resource: "posts/1")
       }
 
       describe("#method") {
@@ -83,11 +79,9 @@ class MethodRequestableSpec: QuickSpec {
       }
     }
 
-    describe("PATCHRequestable") {
-      var request: PATCHRequestable!
-
+    describe("PATCH request") {
       beforeEach {
-        request = PATCHRequest()
+        request = Request.patch(resource: "posts/1")
       }
 
       describe("#method") {
@@ -109,11 +103,9 @@ class MethodRequestableSpec: QuickSpec {
       }
     }
 
-    describe("DELETERequestable") {
-      var request: DELETERequestable!
-
+    describe("DELETE request") {
       beforeEach {
-        request = DELETERequest()
+        request = Request.delete(resource: "posts/1")
       }
 
       describe("#method") {
@@ -135,11 +127,9 @@ class MethodRequestableSpec: QuickSpec {
       }
     }
 
-    describe("HEADRequestable") {
-      var request: HEADRequestable!
-
+    describe("HEAD request") {
       beforeEach {
-        request = HEADRequest()
+        request = Request.head(resource: "posts")
       }
 
       describe("#method") {
