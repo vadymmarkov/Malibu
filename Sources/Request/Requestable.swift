@@ -1,28 +1,152 @@
 import Foundation
 
-public protocol Requestable {
-  var method: Method { get }
-  var message: Message { get set }
-  var contentType: ContentType { get }
-  var etagPolicy: EtagPolicy { get }
-  var storePolicy: StorePolicy { get }
-  var cachePolicy: NSURLRequest.CachePolicy { get }
+public struct Request {
+  public let method: Method
+  public let resource: URLStringConvertible
+  public let parameters: [String: Any]
+  public let headers: [String: String]
+  public let contentType: ContentType
+  public let etagPolicy: EtagPolicy
+  public let storePolicy: StorePolicy
+  public let cachePolicy: NSURLRequest.CachePolicy
 
-  func toUrlRequest(baseUrl: URLStringConvertible?,
-                    additionalHeaders: [String: String]) throws -> URLRequest
+  public init(method: Method,
+              resource: URLStringConvertible,
+              contentType: ContentType,
+              parameters: [String: Any] = [:],
+              headers: [String: String] = [:],
+              etagPolicy: EtagPolicy = .disabled,
+              storePolicy: StorePolicy = .unspecified,
+              cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) {
+    self.method = method
+    self.resource = resource
+    self.contentType = contentType
+    self.parameters = parameters
+    self.headers = headers
+    self.etagPolicy = etagPolicy
+    self.storePolicy = storePolicy
+    self.cachePolicy = cachePolicy
+  }
 }
 
-public extension Requestable {
+public extension Request {
 
-  // MARK: - Default implementations
-
-  var storePolicy: StorePolicy {
-    return .unspecified
+  public static func get(resource: URLStringConvertible,
+                         parameters: [String: Any] = [:],
+                         headers: [String: String] = [:],
+                         etagPolicy: EtagPolicy = .enabled,
+                         storePolicy: StorePolicy = .unspecified,
+                         cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
+    return Request(
+      method: .get,
+      resource: resource,
+      contentType: .query,
+      parameters: parameters,
+      headers: headers,
+      etagPolicy: .enabled,
+      storePolicy: storePolicy,
+      cachePolicy: cachePolicy
+    )
   }
 
-  var cachePolicy: NSURLRequest.CachePolicy {
-    return .useProtocolCachePolicy
+  public static func post(resource: URLStringConvertible,
+                          contentType: ContentType = .json,
+                          parameters: [String: Any] = [:],
+                          headers: [String: String] = [:],
+                          storePolicy: StorePolicy = .unspecified,
+                          cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
+    return Request(
+      method: .post,
+      resource: resource,
+      contentType: contentType,
+      parameters: parameters,
+      headers: headers,
+      etagPolicy: .disabled,
+      storePolicy: storePolicy,
+      cachePolicy: cachePolicy
+    )
   }
+
+  public static func put(resource: URLStringConvertible,
+                         contentType: ContentType = .json,
+                         parameters: [String: Any] = [:],
+                         headers: [String: String] = [:],
+                         etagPolicy: EtagPolicy = .enabled,
+                         storePolicy: StorePolicy = .unspecified,
+                         cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
+    return Request(
+      method: .put,
+      resource: resource,
+      contentType: contentType,
+      parameters: parameters,
+      headers: headers,
+      etagPolicy: etagPolicy,
+      storePolicy: storePolicy,
+      cachePolicy: cachePolicy
+    )
+  }
+
+  public static func patch(resource: URLStringConvertible,
+                           contentType: ContentType = .json,
+                           parameters: [String: Any] = [:],
+                           headers: [String: String] = [:],
+                           etagPolicy: EtagPolicy = .enabled,
+                           storePolicy: StorePolicy = .unspecified,
+                           cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
+    return Request(
+      method: .patch,
+      resource: resource,
+      contentType: contentType,
+      parameters: parameters,
+      headers: headers,
+      etagPolicy: etagPolicy,
+      storePolicy: storePolicy,
+      cachePolicy: cachePolicy
+    )
+  }
+
+  public static func delete(resource: URLStringConvertible,
+                            contentType: ContentType = .query,
+                            parameters: [String: Any] = [:],
+                            headers: [String: String] = [:],
+                            etagPolicy: EtagPolicy = .disabled,
+                            storePolicy: StorePolicy = .unspecified,
+                            cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
+    return Request(
+      method: .delete,
+      resource: resource,
+      contentType: contentType,
+      parameters: parameters,
+      headers: headers,
+      etagPolicy: etagPolicy,
+      storePolicy: storePolicy,
+      cachePolicy: cachePolicy
+    )
+  }
+
+  public static func head(resource: URLStringConvertible,
+                          contentType: ContentType = .query,
+                          parameters: [String: Any] = [:],
+                          headers: [String: String] = [:],
+                          etagPolicy: EtagPolicy = .disabled,
+                          storePolicy: StorePolicy = .unspecified,
+                          cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
+    return Request(
+      method: .head,
+      resource: resource,
+      contentType: contentType,
+      parameters: parameters,
+      headers: headers,
+      etagPolicy: etagPolicy,
+      storePolicy: storePolicy,
+      cachePolicy: cachePolicy
+    )
+  }
+}
+
+// MARK: - Helpers
+
+public extension Request {
 
   func toUrlRequest(baseUrl: URLStringConvertible? = nil,
                     additionalHeaders: [String: String] = [:]) throws -> URLRequest {
@@ -42,9 +166,9 @@ public extension Requestable {
     var data: Data?
 
     if let encoder = parameterEncoders[contentType] {
-      data = try encoder.encode(parameters: message.parameters)
+      data = try encoder.encode(parameters: parameters)
     } else if let encoder = contentType.encoder {
-      data = try encoder.encode(parameters: message.parameters)
+      data = try encoder.encode(parameters: parameters)
     }
 
     request.httpBody = data
@@ -53,7 +177,7 @@ public extension Requestable {
       request.setValue("\(body.count)", forHTTPHeaderField: "Content-Length")
     }
 
-    [additionalHeaders, message.headers].forEach {
+    [additionalHeaders, headers].forEach {
       $0.forEach { key, value in
         request.setValue(value, forHTTPHeaderField: key)
       }
@@ -68,8 +192,6 @@ public extension Requestable {
     return request
   }
 
-  // MARK: - Helpers
-
   func buildUrl(from string: String) throws -> URL {
     guard let url = URL(string: string) else {
       throw NetworkError.invalidRequestURL
@@ -79,7 +201,7 @@ public extension Requestable {
   }
 
   func buildUrl(from url: URL) throws -> URL {
-    guard contentType == .query && !message.parameters.isEmpty else {
+    guard contentType == .query && !parameters.isEmpty else {
       return url
     }
 
@@ -88,7 +210,7 @@ public extension Requestable {
     }
 
     let percentEncodedQuery = (urlComponents.percentEncodedQuery.map { $0 + "&" } ?? "")
-      + QueryBuilder().buildQuery(from: message.parameters)
+      + QueryBuilder().buildQuery(from: parameters)
 
     urlComponents.percentEncodedQuery = percentEncodedQuery
 
@@ -100,25 +222,25 @@ public extension Requestable {
   }
 
   func etagKey(prefix: String = "") -> String {
-    return "\(method.rawValue)\(prefix)\(message.resource.urlString)\(message.parameters.description)"
+    return "\(method.rawValue)\(prefix)\(resource.urlString)\(parameters.description)"
   }
 
   var key: String {
-    return "\(method.rawValue) \(message.resource.urlString)"
+    return "\(method.rawValue) \(resource.urlString)"
   }
 
   func concatURL(baseUrl: URLStringConvertible?) throws -> URL {
     let url: URL?
 
     if let baseUrl = baseUrl {
-      var path = message.resource.urlString
+      var path = resource.urlString
       if path.hasPrefix("/") {
         path.remove(at: path.startIndex)
       }
 
       url = URL(string: baseUrl.urlString)?.appendingPathComponent(path)
     } else {
-      url = URL(string: message.resource.urlString)
+      url = URL(string: resource.urlString)
     }
 
     guard let fullUrl = url else {
