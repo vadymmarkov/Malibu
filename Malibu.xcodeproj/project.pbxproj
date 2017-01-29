@@ -17,8 +17,8 @@
 		D5339AF71D9C6C5900E8A7AD /* RequestStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5339AF51D9C6C5900E8A7AD /* RequestStorage.swift */; };
 		D53FBEAA1D9922BB0014AE4A /* ConcurrentOperationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53FBEA91D9922BB0014AE4A /* ConcurrentOperationSpec.swift */; };
 		D53FBEAB1D9922BB0014AE4A /* ConcurrentOperationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53FBEA91D9922BB0014AE4A /* ConcurrentOperationSpec.swift */; };
-		D5445A0A1E3CE16F00445406 /* Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5445A091E3CE16F00445406 /* Schema.swift */; };
-		D5445A0B1E3CE16F00445406 /* Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5445A091E3CE16F00445406 /* Schema.swift */; };
+		D5445A0A1E3CE16F00445406 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5445A091E3CE16F00445406 /* Endpoint.swift */; };
+		D5445A0B1E3CE16F00445406 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5445A091E3CE16F00445406 /* Endpoint.swift */; };
 		D549C8561C8F661E00588A0C /* JsonSerializerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549C8551C8F661E00588A0C /* JsonSerializerSpec.swift */; };
 		D549C8571C8F661E00588A0C /* JsonSerializerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549C8551C8F661E00588A0C /* JsonSerializerSpec.swift */; };
 		D549C8591C8F6BB500588A0C /* DataSerializerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549C8581C8F6BB500588A0C /* DataSerializerSpec.swift */; };
@@ -62,8 +62,6 @@
 		D5B964EF1C916CBF0099D2F9 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964ED1C916CBF0099D2F9 /* Mocks.swift */; };
 		D5B964F51C92125E0099D2F9 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964F41C92125E0099D2F9 /* Request.swift */; };
 		D5B964F61C92125E0099D2F9 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964F41C92125E0099D2F9 /* Request.swift */; };
-		D5B964F91C9216FD0099D2F9 /* EndpointSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964F81C9216FD0099D2F9 /* EndpointSpec.swift */; };
-		D5B964FA1C9216FD0099D2F9 /* EndpointSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964F81C9216FD0099D2F9 /* EndpointSpec.swift */; };
 		D5B964FC1C9217140099D2F9 /* RequestableSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964FB1C9217140099D2F9 /* RequestableSpec.swift */; };
 		D5B964FD1C9217140099D2F9 /* RequestableSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964FB1C9217140099D2F9 /* RequestableSpec.swift */; };
 		D5B965041C9225720099D2F9 /* EtagStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965031C9225720099D2F9 /* EtagStorage.swift */; };
@@ -193,7 +191,7 @@
 		D503D3A41C8EC7550009BDAD /* NetworkPromiseSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkPromiseSpec.swift; sourceTree = "<group>"; };
 		D5339AF51D9C6C5900E8A7AD /* RequestStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestStorage.swift; sourceTree = "<group>"; };
 		D53FBEA91D9922BB0014AE4A /* ConcurrentOperationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcurrentOperationSpec.swift; sourceTree = "<group>"; };
-		D5445A091E3CE16F00445406 /* Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.swift; sourceTree = "<group>"; };
+		D5445A091E3CE16F00445406 /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		D549C8551C8F661E00588A0C /* JsonSerializerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonSerializerSpec.swift; sourceTree = "<group>"; };
 		D549C8581C8F6BB500588A0C /* DataSerializerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSerializerSpec.swift; sourceTree = "<group>"; };
 		D549C85B1C8F6C8800588A0C /* StringSerializerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringSerializerSpec.swift; sourceTree = "<group>"; };
@@ -217,7 +215,6 @@
 		D5B2E8A91C3A780C00C0327D /* Malibu-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Malibu-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5B964ED1C916CBF0099D2F9 /* Mocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
 		D5B964F41C92125E0099D2F9 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
-		D5B964F81C9216FD0099D2F9 /* EndpointSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndpointSpec.swift; sourceTree = "<group>"; };
 		D5B964FB1C9217140099D2F9 /* RequestableSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestableSpec.swift; sourceTree = "<group>"; };
 		D5B965031C9225720099D2F9 /* EtagStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EtagStorage.swift; sourceTree = "<group>"; };
 		D5B965061C9225B50099D2F9 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -424,7 +421,7 @@
 				D5C1D06E1CB3D49F00A076D6 /* Ride.swift */,
 				D5339AF51D9C6C5900E8A7AD /* RequestStorage.swift */,
 				D5E8EDC21D9D865B0087690A /* RequestCapsule.swift */,
-				D5445A091E3CE16F00445406 /* Schema.swift */,
+				D5445A091E3CE16F00445406 /* Endpoint.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -436,7 +433,6 @@
 				DAA50FF31C9786BE00D01F78 /* HeaderSpec.swift */,
 				D5B965331C922C500099D2F9 /* SessionConfigurationSpec.swift */,
 				D5B965341C922C500099D2F9 /* URLStringConvertibleSpec.swift */,
-				D5B964F81C9216FD0099D2F9 /* EndpointSpec.swift */,
 				D5B964FB1C9217140099D2F9 /* RequestableSpec.swift */,
 				D5EB7C6E1CB04543003A3BA9 /* MethodRequestableSpec.swift */,
 				D5C000C11D9D9D3E00744A12 /* RequestCapsuleSpec.swift */,
@@ -905,7 +901,7 @@
 				D5EB7C601CB01E73003A3BA9 /* RequestPolicies.swift in Sources */,
 				DA5B4CF81C8E5936004E21ED /* NetworkError.swift in Sources */,
 				D5A3DC881CD164750084F451 /* Logging.swift in Sources */,
-				D5445A0A1E3CE16F00445406 /* Schema.swift in Sources */,
+				D5445A0A1E3CE16F00445406 /* Endpoint.swift in Sources */,
 				D5B9650D1C922BCF0099D2F9 /* ContentType.swift in Sources */,
 				D5C1D06F1CB3D49F00A076D6 /* Ride.swift in Sources */,
 				D5B9651A1C922BDC0099D2F9 /* MimeType.swift in Sources */,
@@ -925,7 +921,6 @@
 				D5B965391C922C500099D2F9 /* URLStringConvertibleSpec.swift in Sources */,
 				D5B9652A1C922C420099D2F9 /* MimeTypeSpec.swift in Sources */,
 				D598662F1D9DA42C00D4D90F /* RequestStorageSpec.swift in Sources */,
-				D5B964F91C9216FD0099D2F9 /* EndpointSpec.swift in Sources */,
 				D5B9653C1C92340C0099D2F9 /* UtilsSpec.swift in Sources */,
 				DAEE2BB71C7F8C5D0000FB12 /* JsonEncoderSpec.swift in Sources */,
 				DAC92A131C7FCF9400F01940 /* MalibuSpec.swift in Sources */,
@@ -993,7 +988,7 @@
 				D5EB7C611CB01E73003A3BA9 /* RequestPolicies.swift in Sources */,
 				DA5B4CF91C8E5936004E21ED /* NetworkError.swift in Sources */,
 				D5A3DC891CD164750084F451 /* Logging.swift in Sources */,
-				D5445A0B1E3CE16F00445406 /* Schema.swift in Sources */,
+				D5445A0B1E3CE16F00445406 /* Endpoint.swift in Sources */,
 				D5B9650E1C922BCF0099D2F9 /* ContentType.swift in Sources */,
 				D5C1D0701CB3D49F00A076D6 /* Ride.swift in Sources */,
 				D5B9651B1C922BDC0099D2F9 /* MimeType.swift in Sources */,
@@ -1013,7 +1008,6 @@
 				D5B9653A1C922C500099D2F9 /* URLStringConvertibleSpec.swift in Sources */,
 				D5B9652B1C922C420099D2F9 /* MimeTypeSpec.swift in Sources */,
 				D59866301D9DA42C00D4D90F /* RequestStorageSpec.swift in Sources */,
-				D5B964FA1C9216FD0099D2F9 /* EndpointSpec.swift in Sources */,
 				D5B9653D1C92340C0099D2F9 /* UtilsSpec.swift in Sources */,
 				DAEE2BB81C7F8C5E0000FB12 /* JsonEncoderSpec.swift in Sources */,
 				DAC92A141C7FCF9500F01940 /* MalibuSpec.swift in Sources */,

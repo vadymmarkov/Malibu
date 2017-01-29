@@ -50,7 +50,18 @@ public final class Networking<E: Endpoint>: NSObject, URLSessionDelegate {
     reset(mode: mode)
   }
 
-  // MARK: - Mode
+  public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+    guard
+      let baseURL = NSURL(string: E.baseUrl.urlString),
+      let serverTrust = challenge.protectionSpace.serverTrust
+      else { return }
+
+    if challenge.protectionSpace.host == baseURL.host {
+      completionHandler(
+        URLSession.AuthChallengeDisposition.useCredential,
+        URLCredential(trust: serverTrust))
+    }
+  }
 
   func reset(mode: NetworkingMode) {
     self.mode = mode
@@ -64,8 +75,39 @@ public final class Networking<E: Endpoint>: NSObject, URLSessionDelegate {
       queue.maxConcurrentOperationCount = count
     }
   }
+}
 
-  // MARK: - Networking
+// MARK: - Request
+
+extension Networking {
+
+  public func request(_ endpoint: E) -> Ride {
+    return execute(endpoint.request)
+  }
+
+  public func cancelAllRequests() {
+    queue.cancelAllOperations()
+  }
+
+  func execute(_ request: Request) -> Ride {
+    let ride = Ride()
+    let beforePromise = Promise<Void>()
+
+    beforePromise
+      .then({
+        return self.start(request)
+      })
+      .done({ wave in
+        ride.resolve(wave)
+      })
+      .fail({ error in
+        ride.reject(error)
+      })
+
+    middleware(beforePromise)
+
+    return ride
+  }
 
   func start(_ request: Request) -> Ride {
     let ride = Ride()
@@ -118,30 +160,6 @@ public final class Networking<E: Endpoint>: NSObject, URLSessionDelegate {
     return nextRide
   }
 
-  public func request(_ endpoint: E) -> Ride {
-    return execute(endpoint.request)
-  }
-
-  func execute(_ request: Request) -> Ride {
-    let ride = Ride()
-    let beforePromise = Promise<Void>()
-
-    beforePromise
-      .then({
-        return self.start(request)
-      })
-      .done({ wave in
-        ride.resolve(wave)
-      })
-      .fail({ error in
-        ride.reject(error)
-      })
-
-    middleware(beforePromise)
-
-    return ride
-  }
-
   func buildOperation(ride: Ride, request: Request, urlRequest: URLRequest) -> ConcurrentOperation? {
     var operation: ConcurrentOperation?
 
@@ -165,8 +183,11 @@ public final class Networking<E: Endpoint>: NSObject, URLSessionDelegate {
 
     return operation
   }
+}
 
-  // MARK: - Authentication
+// MARK: - Authentication
+
+extension Networking {
 
   public func authenticate(username: String, password: String) {
     guard let header = Header.authentication(username: username, password: password) else {
@@ -183,8 +204,11 @@ public final class Networking<E: Endpoint>: NSObject, URLSessionDelegate {
   public func authenticate(bearerToken: String) {
     customHeaders["Authorization"] = "Bearer \(bearerToken)"
   }
+}
 
-  // MARK: - Helpers
+// MARK: - Helpers
+
+extension Networking {
 
   func saveEtag(request: Request, response: HTTPURLResponse) {
     guard let etag = response.allHeaderFields["ETag"] as? String else {
@@ -202,28 +226,6 @@ public final class Networking<E: Endpoint>: NSObject, URLSessionDelegate {
     }
 
     requestStorage.save(RequestCapsule(request: request))
-  }
-
-  public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-    guard
-      let baseURL = NSURL(string: E.baseUrl.urlString),
-      let serverTrust = challenge.protectionSpace.serverTrust
-      else { return }
-
-    if challenge.protectionSpace.host == baseURL.host {
-      completionHandler(
-        URLSession.AuthChallengeDisposition.useCredential,
-        URLCredential(trust: serverTrust))
-    }
-  }
-}
-
-// MARK: - Requests
-
-public extension Networking {
-
-  func cancelAllRequests() {
-    queue.cancelAllOperations()
   }
 }
 

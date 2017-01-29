@@ -45,6 +45,13 @@ class RequestableSpec: QuickSpec {
         }
 
         context("when there are no errors") {
+          beforeEach {
+            request = Request.post(
+              resource: "http://api.loc/posts",
+              parameters: ["key": "value"],
+              headers: ["key": "value"])
+          }
+
           context("without base URL") {
             it("does not throw an error and returns created URLRequest") {
               expect { urlRequest = try request.toUrlRequest() }.toNot(throwError())
