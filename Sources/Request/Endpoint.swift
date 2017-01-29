@@ -7,6 +7,13 @@ public protocol Endpoint {
   var request: Request { get }
 }
 
+public extension Endpoint {
+
+  static var sessionConfiguration: SessionConfiguration {
+    return .default
+  }
+}
+
 // MARK: - Defaults
 
 struct AnyEndpoint: Endpoint {
