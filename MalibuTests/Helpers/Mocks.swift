@@ -22,7 +22,7 @@ enum TestEndpoint: Endpoint {
     case .fetchPosts:
       return Request.get(resource: "posts")
     case .showPost(let id):
-      return Request.get(resource: "posts:\(id)")
+      return Request.get(resource: "posts:\(id)", mock: Mock(json: ["title": "Test"]))
     case .createPost(let title):
       return Request.post(resource: "posts", parameters: ["title": title])
     case .replacePost(let id, let title):
