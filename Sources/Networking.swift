@@ -15,7 +15,6 @@ public final class Networking<E: Endpoint>: NSObject, URLSessionDelegate {
   }
 
   var customHeaders = [String: String]()
-  var mocks = [String: Mock]()
   var requestStorage = RequestStorage()
   var mode: NetworkingMode = .async
   let queue: OperationQueue
@@ -152,13 +151,13 @@ public final class Networking<E: Endpoint>: NSObject, URLSessionDelegate {
     case .regular:
       operation = DataOperation(session: session, urlRequest: urlRequest, ride: ride)
     case .partial:
-      if let mock = prepareMock(for: request) {
+      if let mock = request.mock {
         operation = MockOperation(mock: mock, urlRequest: urlRequest, ride: ride)
       } else {
         operation = DataOperation(session: session, urlRequest: urlRequest, ride: ride)
       }
     case .fake:
-      guard let mock = prepareMock(for: request) else {
+      guard let mock = request.mock else {
         ride.reject(NetworkError.noMockProvided)
         break
       }
@@ -185,20 +184,6 @@ public final class Networking<E: Endpoint>: NSObject, URLSessionDelegate {
 
   public func authenticate(bearerToken: String) {
     customHeaders["Authorization"] = "Bearer \(bearerToken)"
-  }
-
-  // MARK: - Mocks
-
-  public func register(mock: Mock) {
-    mocks[mock.request.key] = mock
-  }
-
-  func prepareMock(for request: Request) -> Mock? {
-    guard let mock = mocks[request.key] else { return nil }
-
-    mock.request = beforeEach?(mock.request) ?? mock.request
-
-    return mock
   }
 
   // MARK: - Helpers
