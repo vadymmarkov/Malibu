@@ -43,9 +43,7 @@ public final class Networking<E: Endpoint>: NSObject, URLSessionDelegate {
 
   // MARK: - Initialization
 
-  public init(mode: NetworkingMode = .async,
-              sessionConfiguration: SessionConfiguration = .default,
-              sessionDelegate: URLSessionDelegate? = nil) {
+  public init(mode: NetworkingMode = .async, sessionDelegate: URLSessionDelegate? = nil) {
     self.sessionDelegate = sessionDelegate
     queue = OperationQueue()
     super.init()
