@@ -6,7 +6,7 @@ class ContentTypeValidatorSpec: QuickSpec {
 
   override func spec() {
     describe("ContentTypeValidator") {
-      let url = URL(string: "http://hyper.no")!
+      let url = URL(string: "http://api.loc")!
       let request = URLRequest(url: url)
       let data = Data()
       let contentType = "application/json; charset=utf-8"

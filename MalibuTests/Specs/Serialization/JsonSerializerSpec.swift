@@ -7,7 +7,7 @@ class JsonSerializerSpec: QuickSpec {
   override func spec() {
     describe("JsonSerializer") {
       var serializer: JsonSerializer!
-      let url = URL(string: "http://hyper.no")!
+      let url = URL(string: "http://api.loc")!
       let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!
 
       beforeEach {

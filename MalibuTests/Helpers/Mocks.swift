@@ -13,7 +13,7 @@ enum TestEndpoint: Endpoint {
   case deletePost(id: Int)
   case head
 
-  static var baseUrl: URLStringConvertible = "http://myrestservice.com"
+  static var baseUrl: URLStringConvertible = "http://api.loc"
   static var headers: [String: String] = [:]
   static var sessionConfiguration: SessionConfiguration = .default
 
@@ -22,13 +22,13 @@ enum TestEndpoint: Endpoint {
     case .fetchPosts:
       return Request.get(resource: "posts")
     case .showPost(let id):
-      return Request.get(resource: "posts:\(id)", headers: ["key": "value"])
+      return Request.get(resource: "posts:\(id)")
     case .createPost(let title):
-      return Request.post(resource: "posts", parameters: ["title": title], headers: ["key": "value"])
+      return Request.post(resource: "posts", parameters: ["title": title])
     case .replacePost(let id, let title):
-      return Request.put(resource: "posts\(id)", parameters: ["title": title], headers: ["key": "value"])
+      return Request.put(resource: "posts\(id)", parameters: ["title": title])
     case .updatePost(let id, let title):
-      return Request.patch(resource: "posts\(id)", parameters: ["title": title], headers: ["key": "value"])
+      return Request.patch(resource: "posts\(id)", parameters: ["title": title])
     case .deletePost(let id):
       return Request.delete(resource: "posts\(id)")
     case .head:

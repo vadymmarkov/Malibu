@@ -105,7 +105,7 @@ class RequestableSpec: QuickSpec {
 
               expect {
                 urlRequest = try request.toUrlRequest(
-                baseUrl: "http://hyper.no",
+                baseUrl: "http://api.loc",
                 additionalHeaders: headers)
               }.toNot(throwError())
 
@@ -231,7 +231,7 @@ class RequestableSpec: QuickSpec {
             }
 
             it("returns URL") {
-              let urlString = "http://hyper.no"
+              let urlString = "http://api.loc"
               let result = URL(string: urlString)
               expect(try! request.buildUrl(from: urlString)).to(equal(result))
             }
@@ -243,7 +243,7 @@ class RequestableSpec: QuickSpec {
             }
 
             it("returns URL") {
-              let urlString = "http://hyper.no"
+              let urlString = "http://api.loc"
               let result = URL(string: urlString)
 
               expect(try! request.buildUrl(from: urlString)).to(equal(result))
@@ -258,9 +258,9 @@ class RequestableSpec: QuickSpec {
             }
 
             it("returns URL") {
-              let urlString = "http://hyper.no"
-              let result1 = URL(string: "http://hyper.no?key=value&number=1")
-              let result2 = URL(string: "http://hyper.no?number=1&key=value")
+              let urlString = "http://api.loc/posts"
+              let result1 = URL(string: "http://api.loc/posts?key=value&number=1")
+              let result2 = URL(string: "http://api.loc/posts?number=1&key=value")
               let url = try! request.buildUrl(from: urlString)
 
               expect(url == result1 || url == result2).to(beTrue())

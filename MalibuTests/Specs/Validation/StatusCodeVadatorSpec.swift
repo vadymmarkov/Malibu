@@ -6,7 +6,7 @@ class StatusCodeValidatorSpec: QuickSpec {
 
   override func spec() {
     describe("StatusCodeValidator") {
-      let url = Foundation.URL(string: "http://hyper.no")!
+      let url = Foundation.URL(string: "http://api.loc")!
       let request = URLRequest(url: url)
       let data = Data()
       var validator: StatusCodeValidator<[Int]>!

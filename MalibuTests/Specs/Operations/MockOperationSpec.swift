@@ -19,7 +19,7 @@ class MockOperationSpec: QuickSpec {
       beforeEach {
         request = TestEndpoint.fetchPosts.request
         urlRequest = try! request.toUrlRequest()
-        response = HTTPURLResponse(url: URL(string: "http://hyper.no")!,
+        response = HTTPURLResponse(url: URL(string: "http://api.loc")!,
           statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!
         ride = Ride()
       }

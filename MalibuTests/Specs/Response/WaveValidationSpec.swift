@@ -11,7 +11,7 @@ class WaveValidationSpec: QuickSpec, NetworkPromiseSpec {
 
   override func spec() {
     describe("WaveValidation") {
-      let url = URL(string: "http://hyper.no")!
+      let url = URL(string: "http://api.loc")!
       let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!
       let failedResponse = HTTPURLResponse(url: url, statusCode: 404,
                                            httpVersion: "HTTP/2.0", headerFields: nil)!
@@ -20,7 +20,7 @@ class WaveValidationSpec: QuickSpec, NetworkPromiseSpec {
 
       beforeEach {
         self.networkPromise = Ride()
-        self.request = URLRequest(url: URL(string: "http://hyper.no")!)
+        self.request = URLRequest(url: URL(string: "http://api.loc")!)
         self.data = try! JSONSerialization.data(withJSONObject: [["name": "Taylor"]],
           options: JSONSerialization.WritingOptions())
       }
