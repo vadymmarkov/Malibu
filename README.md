@@ -62,12 +62,10 @@ past. Enjoy the ride!
   * [Making a request](#making-a-request)
   * [Wave and Ride](#wave-and-ride)
   * [Offline storage](#offline-storage)
+  * [Backfoot surfer](#backfoot-surfer)
 * [Response](#response)
   * [Serialization](#serialization)
-  * [Validation](#validation)
-* [Core](#core)
-  * [Multiple networkings](#multiple-networkings)
-  * [Backfoot surfer](#backfoot-surfer)
+  * [Validation](#validation)  
 * [Logging](#logging)
 * [Installation](#installation)
 * [Author](#author)
@@ -255,7 +253,7 @@ It's pretty straightforward to create a new `Networking` instance:
 let simpleNetworking = Networking<SharkywatersService>()
 
 // More advanced networking
-let networking = Networking(
+let networking = Networking<SharkywatersService>(
   // `OperationQueue` Mode
   mode: .async,
   // Mock behavior (never, delayed)
@@ -493,6 +491,17 @@ it will be set to `Sync` mode. Cached request will go through normal request
 lifecycle, with applied middleware and pre-process operations. Request will be
 automatically removed from the storage when it's completed.
 
+### Backfoot surfer
+
+**Malibu** has a shared networking object with default configurations for the
+case when you need just something simple to catch the wave. It's not necessary
+to create a custom `Endpoint` type, just call the same `request` method right
+on `Malibu`:
+
+```swift
+Malibu.request(Request.get("http://sharkywaters.com/api/boards")
+```
+
 ## Response
 
 ### Serialization
@@ -527,20 +536,6 @@ networking.request(.fetchBoards).validate(statusCodes: [200])
 
 // Validates with custom validator conforming to `Validating` protocol
 networking.request(.fetchBoards).validate(using: CustomValidator())
-```
-
-## Core
-
-
-### Backfoot surfer
-
-**Malibu** has a shared networking object with default configurations for the
-case when you need just something simple to catch the wave. It's not necessary
-to create a custom `Endpoint` type, just call the same `request` method right
-on `Malibu`:
-
-```swift
-Malibu.request(Request.get("http://sharkywaters.com/api/boards")
 ```
 
 ## Logging
