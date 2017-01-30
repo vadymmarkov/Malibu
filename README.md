@@ -258,7 +258,7 @@ let simpleNetworking = Networking<SharkywatersService>()
 let networking = Networking(
   // `OperationQueue` Mode
   mode: .async,
-  // Mock behavior (never, partial, always)
+  // Mock behavior (never, delayed)
   mockBehavior: .never,
   // `default`, `ephemeral`, `background` or `custom`
   sessionConfiguration: .default,
@@ -294,14 +294,9 @@ A mode for real HTTP request only:
 let networking = Networking<SharkywatersService>(mockBehavior: .never)
 ```
 
-A mode for mocks only:
-```swift
-let networking = Networking<SharkywatersService>(mockBehavior: .always)
-```
-
 Both real and fake requests can be used in a mix:
 ```swift
-let networking = Networking<SharkywatersService>(mockBehavior: .partial)
+let networking = Networking<SharkywatersService>(mockBehavior: .delayed(0.5))
 ```
 
 **Create a mock**
