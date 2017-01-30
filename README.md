@@ -47,8 +47,6 @@ past. Enjoy the ride!
 
 * [Catching the wave](#catching-the-wave)
 * [Endpoint](#endpoint)
-  * [Session configuration](#session-configuration)
-  * [Mocks](#mocks)
 * [Request](#request)
   * [Content types](#content-types)
   * [Encoding](#encoding)
@@ -56,6 +54,8 @@ past. Enjoy the ride!
 * [Networking](#networking)
   * [Initialization](#initialization)
   * [Mode](#mode)
+  * [Mocks](#mocks)
+  * [Session configuration](#session-configuration)
   * [Pre-processing](#pre-processing)
   * [Middleware](#middleware)
   * [Authentication](#authentication)
@@ -80,14 +80,11 @@ past. Enjoy the ride!
 You can start your ride straight away, not thinking about configurations:
 
 ```swift
-// Create your request
-let request = Request.get(
-  "http://sharkywaters.com/api/boards",
-  parameters: ["type": 1]
-)
+// Create your request => GET http://sharkywaters.com/api/boards?type=1
+let request = Request.get("http://sharkywaters.com/api/boards", parameters: ["type": 1])
 
 // Make a call
-Malibu.GET(request)
+Malibu.request(request)
   .validate()
   .toJsonDictionary()
   .then({ dictionary -> [Board] in
@@ -111,7 +108,7 @@ more magic 😉...
 ## Endpoint
 
 Most of the time we need separate network stacks to work with multiple API
-services. It's super easy to archive with **Malibu**. First, create an
+services. It's super easy to archive with **Malibu**. Create an
 `enum` that conforms to **Endpoint** protocol and describe your requests with
 all the properties:
 
@@ -126,6 +123,7 @@ enum SharkywatersService: Endpoint {
 
   // Every request will be scoped by the base url
   static var baseUrl: URLStringConvertible = "http://sharkywaters.com/api/"
+
   // Additional headers for every request
   static var headers: [String: String] = [
     "Accept" : "application/json"
@@ -150,80 +148,8 @@ enum SharkywatersService: Endpoint {
 }
 ```
 
-### Additional headers
-
-Additional headers will be used in the each request made on the networking:
-
-```swift
-networking.additionalHeaders = {
-  ["Accept" : "application/json"]
-}
-```
-
 **Note** that `Accept-Language`, `Accept-Encoding` and `User-Agent` headers are
 included automatically.
-
-### Mocks
-
-Mocking is great when it comes to writing your tests. But it also could speed
-up your development while the backend developers are working really hardly
-on API implementation.
-
-In order to start mocking you have to do the following:
-
-**Change the `mode`**
-
-A mode for real HTTP request only:
-
-```swift
-let networking = Networking<SharkywatersService>(mockBehavior: .never)
-```
-
-A mode for mocks only:
-```swift
-let networking = Networking<SharkywatersService>(mockBehavior: .always)
-```
-
-Both real and fake requests can be used in a mix:
-```swift
-let networking = Networking<SharkywatersService>(mockBehavior: .partial)
-```
-
-**Create a mock**
-
-With response data from file:
-
-```swift
-let request = Request.get(
-  "boards",
-  mock: Mock(fileName: "boards.json")
-)
-```
-
-With response from JSON dictionary:
-
-```swift
-let request = Request.get(
-  "boards",
-  mock: Mock(json: ["data": ["id": 1, "title": "Balsa Fish"]])
-)
-```
-
-NSData mock:
-
-```swift
-let request = Request.get(
-  "boards:\(id)",
-  mock: Mock(
-    // Needed response
-    response: mockedResponse,
-    // Response data
-    data: responseData,
-    // Custom error, `nil` by default
-    error: customError
-  )
-)
-```
 
 ## Request
 
@@ -237,7 +163,7 @@ let request = Request(
   resource: "boards",
   // Content type
   contentType: .query,
-  // Parameters
+  // Request parameters
   parameters: ["type": 1, "text": "classic"],
   // Headers
   headers: ["custom": "header"],
@@ -265,10 +191,10 @@ let postRequest = Request.post(
   parameters: ["type" : kind, "title" : title])
 
 // PUT request
-let postRequest = Request.put("boards/1", parameters: ["type" : kind, "title" : title])
+let putRequest = Request.put("boards/1", parameters: ["type" : kind, "title" : title])
 
 // PATCH request
-let postRequest = Request.patch("boards/1", parameters: ["title" : title])
+let patchRequest = Request.patch("boards/1", parameters: ["title" : title])
 
 // DELETE request
 let deleteRequest = Request.delete("boards/1")
@@ -317,8 +243,8 @@ let getRequest = Request.get("boards". etagPolicy: .disabled)
 
 ## Networking
 
-`Networking` class is a core component of **Malibu** that pre-process and
-executes actual HTTP requests on a specified API service.
+`Networking` class is a core component of **Malibu** that executes actual HTTP
+requests on a specified API service.
 
 ### Initialization
 
@@ -341,6 +267,76 @@ let networking = Networking(
 )
 ```
 
+### Mode
+
+**Malibu** uses `OperationQueue` to execute/cancel requests. It makes it
+easier to manage request lifetime and concurrency.
+
+When you create a new networking instance there is an optional argument to
+specify **mode** which will be used:
+
+- `sync`
+- `async`
+- `limited(maxConcurrentOperationCount)`
+
+### Mocks
+
+Mocking is great when it comes to writing your tests. But it also could speed
+up your development while the backend developers are working really hardly
+on API implementation.
+
+In order to start mocking you have to do the following:
+
+**Change the `mode`**
+
+A mode for real HTTP request only:
+```swift
+let networking = Networking<SharkywatersService>(mockBehavior: .never)
+```
+
+A mode for mocks only:
+```swift
+let networking = Networking<SharkywatersService>(mockBehavior: .always)
+```
+
+Both real and fake requests can be used in a mix:
+```swift
+let networking = Networking<SharkywatersService>(mockBehavior: .partial)
+```
+
+**Create a mock**
+
+With response data from file:
+```swift
+let request = Request.get(
+  "boards",
+  mock: Mock(fileName: "boards.json")
+)
+```
+
+With response from JSON dictionary:
+```swift
+let request = Request.get(
+  "boards",
+  mock: Mock(json: ["data": ["id": 1, "title": "Balsa Fish"]])
+)
+```
+
+`Data` mock:
+```swift
+let request = Request.get(
+  "boards:\(id)",
+  mock: Mock(
+    // Needed response
+    response: mockedResponse,
+    // Response data
+    data: responseData,
+    // Custom error, `nil` by default
+    error: customError
+  )
+)
+```
+
 ### Session configuration
 
 `SessionConfiguration` is a wrapper around `URLSessionConfiguration` and could
@@ -354,22 +350,10 @@ operations on behalf of a suspended application, within certain constraints.
 * `custom(URLSessionConfiguration)` - if you're not satisfied with standard
 types, your custom `URLSessionConfiguration` goes here.
 
-### Mode
-
-**Malibu** uses `OperationQueue` to execute/cancel requests. It makes it
-easier to manage request lifetime and concurrency.
-
-When you create a new networking instance there is an optional argument to
-specify **mode** which will be used:
-
-- `sync`
-- `async`
-- `limited(maxConcurrentOperationCount)`
-
 ### Pre-processing
 
 ```swift
-// Use this closure to modify your `Requestable` value before `URLRequest`
+// Use this closure to modify your `Request` value before `URLRequest`
 // is created on base of it
 networking.beforeEach = { request in
   var request = request
@@ -417,7 +401,7 @@ networking.middleware = { promise in
 
 // Send your request like you usually do.
 // Valid access token will be set to headers before the each request.
-networking.GET(request)
+networking.request(request)
   .validate()
   .toJsonDictionary()
 ```
@@ -437,9 +421,7 @@ networking.authenticate(authorizationHeader: "Malibu-Header")
 
 ### Making a request
 
-`Networking` is set up and ready, so it's time to fire some requests. Make
-a request by calling `request` functions with the corresponding endpoint as an
-argument.
+`Networking` is set up and ready, so it's time to fire some requests.
 
 ```swift
 let networking = Networking<SharkywatersService>()
@@ -497,14 +479,10 @@ ride
 Want to **store request** when there is no network connection?
 
 ```swift
-struct BoardDeleteRequest: DELETERequestable {
-  var message: Message
-  var storePolicy: StorePolicy = .offline // Set store policy
-
-  init(id: Int) {
-    message = Message(resource: "boards:\(id)")
-  }
-}
+let request = Request.delete(
+  "boards/1",
+  storePolicy: .offline // Set store policy
+)
 ```
 
 Want to **replay** cached requests?
@@ -527,7 +505,7 @@ automatically removed from the storage when it's completed.
 **Malibu** gives you a bunch of methods to serialize response data:
 
 ```swift
-let ride = networking.GET(BoardsRequest())
+let ride = networking.request(.fetchBoards)
 
 ride.toData() // -> Promise<Data>
 ride.toString() // -> Promise<String>
