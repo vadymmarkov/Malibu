@@ -134,13 +134,13 @@ enum SharkywatersService: Endpoint {
       return Request.get("boards")
     case .showBoard(let id):
       // Let's use JSON dictionary as a mock data
-      return Request.get("boards:\(id)", mock: Mock(json: ["type": 1, "title": "Classic"]))
+      return Request.get("boards/\(id)", mock: Mock(json: ["type": 1, "title": "Classic"]))
     case .createBoard(let type, let title):
       return Request.post("boards", parameters: ["type": type, "title": title])
     case .updateBoard(let id, let title):
-      return Request.patch("boards\(id)", parameters: ["title": title])
+      return Request.patch("boards/\(id)", parameters: ["title": title])
     case .deleteBoard(let id):
-      return Request.delete("boards\(id)")
+      return Request.delete("boards/\(id)")
     }
   }
 }
@@ -318,7 +318,7 @@ let request = Request.get(
 `Data` mock:
 ```swift
 let request = Request.get(
-  "boards:\(id)",
+  "boards/\(id)",
   mock: Mock(
     // Needed response
     response: mockedResponse,
