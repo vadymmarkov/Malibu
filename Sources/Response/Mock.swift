@@ -5,18 +5,16 @@ public final class Mock {
   public var response: HTTPURLResponse?
   public var data: Data?
   public var error: Error?
-  public var delay: Double
 
   // MARK: - Initialization
 
-  public init(response: HTTPURLResponse?, data: Data?, error: Error? = nil, delay: Double = 0.0) {
+  public init(response: HTTPURLResponse?, data: Data?, error: Error? = nil) {
     self.data = data
     self.response = response
     self.error = error
-    self.delay = delay
   }
 
-  public convenience init(fileName: String, bundle: Bundle = Bundle.main, delay: Double = 0.0) {
+  public convenience init(fileName: String, bundle: Bundle = Bundle.main) {
     let url = URL(string: fileName)
 
     guard let fileURL = url,
@@ -25,16 +23,16 @@ public final class Mock {
       let data = try? Data(contentsOf: URL(fileURLWithPath: filePath)),
       let response = HTTPURLResponse(url: fileURL, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)
       else {
-        self.init(response: nil, data: nil, error: NetworkError.noResponseReceived, delay: delay)
+        self.init(response: nil, data: nil, error: NetworkError.noResponseReceived)
         return
     }
 
     response.setValue("application/json; charset=utf-8", forKey: "MIMEType")
 
-    self.init(response: response, data: data, error: nil, delay: delay)
+    self.init(response: response, data: data, error: nil)
   }
 
-  public convenience init(json: [String: Any], delay: Double = 0.0) {
+  public convenience init(json: [String: Any]) {
     var jsonData: Data?
 
     do {
@@ -44,12 +42,12 @@ public final class Mock {
     guard let url = URL(string: "mock://JSON"), let data = jsonData,
       let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)
       else {
-        self.init(response: nil, data: nil, error: NetworkError.noResponseReceived, delay: delay)
+        self.init(response: nil, data: nil, error: NetworkError.noResponseReceived)
         return
     }
 
     response.setValue("application/json; charset=utf-8", forKey: "MIMEType")
 
-    self.init(response: response, data: data, error: nil, delay: delay)
+    self.init(response: response, data: data, error: nil)
   }
 }

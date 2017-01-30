@@ -6,7 +6,7 @@ public enum NetworkingMode {
 }
 
 public enum MockBehavior {
-  case never, partial, always
+  case never, delayed(seconds: TimeInterval)
 }
 
 public final class Networking<E: Endpoint>: NSObject, URLSessionDelegate {
@@ -178,19 +178,12 @@ extension Networking {
     switch mockBehavior {
     case .never:
       operation = DataOperation(session: session, urlRequest: urlRequest, ride: ride)
-    case .partial:
+    case .delayed(let seconds):
       if let mock = request.mock {
-        operation = MockOperation(mock: mock, urlRequest: urlRequest, ride: ride)
+        operation = MockOperation(mock: mock, urlRequest: urlRequest, delay: seconds, ride: ride)
       } else {
         operation = DataOperation(session: session, urlRequest: urlRequest, ride: ride)
       }
-    case .always:
-      guard let mock = request.mock else {
-        ride.reject(NetworkError.noMockProvided)
-        break
-      }
-
-      operation = MockOperation(mock: mock, urlRequest: urlRequest, ride: ride)
     }
 
     return operation

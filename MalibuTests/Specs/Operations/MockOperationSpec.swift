@@ -27,12 +27,13 @@ class MockOperationSpec: QuickSpec {
       describe("#init") {
         beforeEach {
           mock = Mock(response: response, data: data, error: error)
-          operation = MockOperation(mock: mock, urlRequest: urlRequest, ride: ride)
+          operation = MockOperation(mock: mock, urlRequest: urlRequest, delay: 0.1, ride: ride)
         }
 
         it("sets properties") {
           expect(operation.mock === mock).to(beTrue())
           expect(operation.urlRequest).to(equal(urlRequest))
+          expect(operation.delay).to(equal(0.1))
           expect(operation.ride === ride).to(beTrue())
         }
       }

@@ -9,7 +9,7 @@ class NetworkingSpec: QuickSpec {
       var networking: Networking<TestService>!
 
       beforeEach {
-        networking = Networking(mockBehavior: .partial)
+        networking = Networking(mockBehavior: .delayed(seconds: 0))
       }
 
       describe("#init") {
