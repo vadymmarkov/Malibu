@@ -1,6 +1,6 @@
 import Foundation
 
-class RequestCapsule: NSObject, Requestable, NSCoding {
+class RequestCapsule: NSObject, NSCoding {
 
   enum Key: String {
     case method
@@ -13,26 +13,16 @@ class RequestCapsule: NSObject, Requestable, NSCoding {
     case cachePolicy
   }
 
-  let method: Method
-  var message: Message
-  let contentType: ContentType
-  let etagPolicy: EtagPolicy
-  let storePolicy: StorePolicy
-  let cachePolicy: NSURLRequest.CachePolicy
+  var request: Request
 
   var id: String {
-    return message.resource.urlString
+    return request.resource.urlString
   }
 
   // MARK: - Initialization
 
-  init(request: Requestable) {
-    method = request.method
-    message = request.message
-    contentType = request.contentType
-    etagPolicy = request.etagPolicy
-    storePolicy = request.storePolicy
-    cachePolicy = request.cachePolicy
+  init(request: Request) {
+    self.request = request
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -49,24 +39,27 @@ class RequestCapsule: NSObject, Requestable, NSCoding {
       return nil
     }
 
-    self.method = method
-    self.message = Message(resource: resource, parameters: parameters, headers: headers)
-    self.contentType = ContentType(header: aDecoder.decodeObject(forKey: Key.contentType.rawValue) as? String)
-    self.etagPolicy = etagPolicy
-    self.storePolicy = storePolicy
-    self.cachePolicy = cachePolicy
+    self.request = Request(
+      method: method,
+      resource: resource,
+      contentType: ContentType(header: aDecoder.decodeObject(forKey: Key.contentType.rawValue) as? String),
+      parameters: parameters,
+      headers: headers,
+      etagPolicy: etagPolicy,
+      storePolicy: storePolicy,
+      cachePolicy: cachePolicy)
   }
 
   // MARK: - Encoding
 
   func encode(with aCoder: NSCoder) {
-    aCoder.encode(method.rawValue, forKey: Key.method.rawValue)
-    aCoder.encode(message.resource.urlString, forKey: Key.resource.rawValue)
-    aCoder.encode(message.parameters, forKey: Key.parameters.rawValue)
-    aCoder.encode(message.headers, forKey: Key.headers.rawValue)
-    aCoder.encode(contentType.header, forKey: Key.contentType.rawValue)
-    aCoder.encodeCInt(etagPolicy.rawValue, forKey: Key.etagPolicy.rawValue)
-    aCoder.encodeCInt(storePolicy.rawValue, forKey: Key.storePolicy.rawValue)
-    aCoder.encodeCInt(Int32(cachePolicy.rawValue), forKey: Key.cachePolicy.rawValue)
+    aCoder.encode(request.method.rawValue, forKey: Key.method.rawValue)
+    aCoder.encode(request.resource.urlString, forKey: Key.resource.rawValue)
+    aCoder.encode(request.parameters, forKey: Key.parameters.rawValue)
+    aCoder.encode(request.headers, forKey: Key.headers.rawValue)
+    aCoder.encode(request.contentType.header, forKey: Key.contentType.rawValue)
+    aCoder.encodeCInt(request.etagPolicy.rawValue, forKey: Key.etagPolicy.rawValue)
+    aCoder.encodeCInt(request.storePolicy.rawValue, forKey: Key.storePolicy.rawValue)
+    aCoder.encodeCInt(Int32(request.cachePolicy.rawValue), forKey: Key.cachePolicy.rawValue)
   }
 }

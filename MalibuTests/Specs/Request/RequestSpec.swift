@@ -2,15 +2,19 @@
 import Quick
 import Nimble
 
-class RequestableSpec: QuickSpec {
+class RequestSpec: QuickSpec {
 
   override func spec() {
-    describe("Requestable") {
-      var request: Requestable!
+    describe("Request") {
+      var request: Request!
       var urlRequest: URLRequest!
 
       beforeEach {
-        request = POSTRequest(parameters: ["key": "value"], headers: ["key": "value"])
+        request = Request.post(
+          "http://api.loc/posts",
+          parameters: ["key": "value"],
+          headers: ["key": "value"])
+
         EtagStorage().clear()
       }
 
@@ -35,66 +39,73 @@ class RequestableSpec: QuickSpec {
       describe("#toURLRequest") {
         context("when request URL is invalid") {
           it("throws an error") {
-            request.message.resource = "not an URL"
+            request = Request.post("not an URL")
             expect{ try request.toUrlRequest() }.to(throwError(NetworkError.invalidRequestURL))
           }
         }
 
         context("when there are no errors") {
+          beforeEach {
+            request = Request.post(
+              "http://api.loc/posts",
+              parameters: ["key": "value"],
+              headers: ["key": "value"])
+          }
+
           context("without base URL") {
             it("does not throw an error and returns created URLRequest") {
               expect { urlRequest = try request.toUrlRequest() }.toNot(throwError())
-              expect(urlRequest.url).to(equal(URL(string: request.message.resource.urlString)))
+              expect(urlRequest.url).to(equal(URL(string: request.resource.urlString)))
               expect(urlRequest.httpMethod).to(equal(Method.post.rawValue))
               expect(urlRequest.cachePolicy).to(equal(request.cachePolicy))
               expect(urlRequest.allHTTPHeaderFields?["Content-Type"]).to(equal(request.contentType.header))
               expect(urlRequest.httpBody).to(
-                equal(try! request.contentType.encoder?.encode(parameters: request.message.parameters)))
+                equal(try! request.contentType.encoder?.encode(parameters: request.parameters)))
               expect(urlRequest.allHTTPHeaderFields?["key"]).to(equal("value"))
             }
           }
 
           context("with base URL") {
             it("does not throw an error and returns created URLRequest") {
-              request.message.resource = "/about"
+              request = Request.post("/about")
 
               expect {
-                urlRequest = try request.toUrlRequest(baseUrl: "http://hyper.no")
+                urlRequest = try request.toUrlRequest(baseUrl: "http://api.loc")
               }.toNot(throwError())
-              expect(urlRequest.url?.absoluteString).to(equal("http://hyper.no/about"))
+              expect(urlRequest.url?.absoluteString).to(equal("http://api.loc/about"))
             }
           }
 
           context("with base URL with slash") {
             it("does not throw an error and returns created URLRequest") {
-              request.message.resource = "/about"
+              request = Request.post("/about")
 
               expect {
-                urlRequest = try request.toUrlRequest(baseUrl: "http://hyper.no/")
+                urlRequest = try request.toUrlRequest(baseUrl: "http://api.loc/")
                 }.toNot(throwError())
-              expect(urlRequest.url?.absoluteString).to(equal("http://hyper.no/about"))
+              expect(urlRequest.url?.absoluteString).to(equal("http://api.loc/about"))
             }
           }
 
           context("with base URL without slash") {
             it("does not throw an error and returns created URLRequest") {
-              request.message.resource = "about"
+              request = Request.post("about")
 
               expect {
-                urlRequest = try request.toUrlRequest(baseUrl: "http://hyper.no")
+                urlRequest = try request.toUrlRequest(baseUrl: "http://api.loc")
                 }.toNot(throwError())
-              expect(urlRequest.url?.absoluteString).to(equal("http://hyper.no/about"))
+              expect(urlRequest.url?.absoluteString).to(equal("http://api.loc/about"))
             }
           }
 
           context("with additional headers") {
             it("returns created URLRequest with new header added") {
               let headers = ["foo": "bar", "key": "bar"]
-              request.message.resource = "/about"
+              request = Request.post("/about", headers: ["key": "value"])
 
               expect {
                 urlRequest = try request.toUrlRequest(
-                baseUrl: "http://hyper.no",
+                baseUrl: "http://api.loc",
                 additionalHeaders: headers)
               }.toNot(throwError())
 
@@ -105,7 +116,10 @@ class RequestableSpec: QuickSpec {
 
           context("with ETagPolicy enabled") {
             beforeEach {
-              request = GETRequest(parameters: ["key": "value"], headers: ["key": "value"])
+              request = Request.get(
+                "http:/api.loc/posts",
+                parameters: ["key": "value"],
+                headers: ["key": "value"])
             }
 
             context("when we have ETag stored") {
@@ -130,6 +144,13 @@ class RequestableSpec: QuickSpec {
           }
 
           context("with ETagPolicy disabled") {
+            beforeEach {
+              request = Request.post(
+                "http:/api.loc/posts",
+                parameters: ["key": "value"],
+                headers: ["key": "value"])
+            }
+
             context("when we have ETag stored") {
               it("does not add If-None-Match header") {
                 let storage = EtagStorage()
@@ -153,7 +174,9 @@ class RequestableSpec: QuickSpec {
 
           context("with Query content type") {
             beforeEach {
-              request = GETRequest(parameters: ["key": "value", "number": 1])
+              request = Request.get(
+                "http:/api.loc/posts",
+                parameters: ["key": "value", "number": 1])
             }
 
             it("does not set Content-Type header") {
@@ -169,8 +192,10 @@ class RequestableSpec: QuickSpec {
 
           context("with MultipartFormData content type") {
             beforeEach {
-              request = POSTRequest(parameters: ["key": "value", "number": 1],
-                contentType: .multipartFormData)
+              request = Request.post(
+                "http:/api.loc/posts",
+                contentType: .multipartFormData,
+                parameters: ["key": "value", "number": 1])
             }
 
             it("sets Content-Type header") {
@@ -200,11 +225,13 @@ class RequestableSpec: QuickSpec {
 
           context("when content type is not Query") {
             beforeEach {
-              request = POSTRequest(parameters: ["key": "value"])
+              request = Request.post(
+                "http:/api.loc/posts",
+                parameters: ["key": "value"])
             }
 
             it("returns URL") {
-              let urlString = "http://hyper.no"
+              let urlString = "http://api.loc"
               let result = URL(string: urlString)
               expect(try! request.buildUrl(from: urlString)).to(equal(result))
             }
@@ -212,11 +239,11 @@ class RequestableSpec: QuickSpec {
 
           context("when content type is Query but there are no parameters") {
             beforeEach {
-              request = POSTRequest(parameters: [:])
+              request = Request.get("http:/api.loc/posts")
             }
 
             it("returns URL") {
-              let urlString = "http://hyper.no"
+              let urlString = "http://api.loc"
               let result = URL(string: urlString)
 
               expect(try! request.buildUrl(from: urlString)).to(equal(result))
@@ -225,13 +252,15 @@ class RequestableSpec: QuickSpec {
 
           context("when content type is Query and request has parameters") {
             beforeEach {
-              request = GETRequest(parameters: ["key": "value", "number": 1])
+              request = Request.get(
+                "http:/api.loc/posts",
+                parameters: ["key": "value", "number": 1])
             }
 
             it("returns URL") {
-              let urlString = "http://hyper.no"
-              let result1 = URL(string: "http://hyper.no?key=value&number=1")
-              let result2 = URL(string: "http://hyper.no?number=1&key=value")
+              let urlString = "http://api.loc/posts"
+              let result1 = URL(string: "http://api.loc/posts?key=value&number=1")
+              let result2 = URL(string: "http://api.loc/posts?number=1&key=value")
               let url = try! request.buildUrl(from: urlString)
 
               expect(url == result1 || url == result2).to(beTrue())
@@ -241,14 +270,14 @@ class RequestableSpec: QuickSpec {
 
         describe("#etagKey") {
           it("returns ETag key built from method, prefix, resource and parameters") {
-            let result = "\(request.method.rawValue)\(request.message.resource.urlString)\(request.message.parameters.description)"
+            let result = "\(request.method.rawValue)\(request.resource.urlString)\(request.parameters.description)"
             expect(request.etagKey()).to(equal(result))
           }
         }
 
         describe("#key") {
           it("bulds a description based on rmethod and request URL") {
-            expect(request.key).to(equal("POST http://hyper.no"))
+            expect(request.key).to(equal("POST http://api.loc/posts"))
           }
         }
       }

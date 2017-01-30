@@ -9,7 +9,7 @@ class MockOperationSpec: QuickSpec {
     describe("MockOperation") {
       var operation: MockOperation!
       var mock: Mock!
-      var request: Requestable!
+      var request: Request!
       var urlRequest: URLRequest!
       var response: HTTPURLResponse!
       var ride: Ride!
@@ -17,22 +17,23 @@ class MockOperationSpec: QuickSpec {
       let error = NetworkError.jsonArraySerializationFailed
 
       beforeEach {
-        request = GETRequest()
+        request = TestService.fetchPosts.request
         urlRequest = try! request.toUrlRequest()
-        response = HTTPURLResponse(url: URL(string: "http://hyper.no")!,
+        response = HTTPURLResponse(url: URL(string: "http://api.loc")!,
           statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!
         ride = Ride()
       }
 
       describe("#init") {
         beforeEach {
-          mock = Mock(request: request, response: response, data: data, error: error)
-          operation = MockOperation(mock: mock, urlRequest: urlRequest, ride: ride)
+          mock = Mock(response: response, data: data, error: error)
+          operation = MockOperation(mock: mock, urlRequest: urlRequest, delay: 0.1, ride: ride)
         }
 
         it("sets properties") {
           expect(operation.mock === mock).to(beTrue())
           expect(operation.urlRequest).to(equal(urlRequest))
+          expect(operation.delay).to(equal(0.1))
           expect(operation.ride === ride).to(beTrue())
         }
       }
@@ -42,7 +43,7 @@ class MockOperationSpec: QuickSpec {
           it("rejects promise with an error") {
             let expectation = self.expectation(description: "No response failure")
 
-            mock = Mock(request: request, response: nil, data: data, error: nil)
+            mock = Mock(response: nil, data: data, error: nil)
             operation = MockOperation(mock: mock, urlRequest: urlRequest, ride: ride)
 
             operation.ride.fail({ error in
@@ -60,7 +61,7 @@ class MockOperationSpec: QuickSpec {
           it("rejects promise with an error") {
             let expectation = self.expectation(description: "Error failure")
 
-            mock = Mock(request: request, response: response, data: data, error: error)
+            mock = Mock(response: response, data: data, error: error)
             operation = MockOperation(mock: mock, urlRequest: urlRequest, ride: ride)
 
             operation.ride.fail({ error in
@@ -78,7 +79,7 @@ class MockOperationSpec: QuickSpec {
           it("rejects promise with an error") {
             let expectation = self.expectation(description: "No data failure")
 
-            mock = Mock(request: request, response: response, data: nil, error: nil)
+            mock = Mock(response: response, data: nil, error: nil)
             operation = MockOperation(mock: mock, urlRequest: urlRequest, ride: ride)
 
             operation.ride.fail({ error in
@@ -96,7 +97,7 @@ class MockOperationSpec: QuickSpec {
           it("resolves promise with a result") {
             let expectation = self.expectation(description: "Validation succeeded")
 
-            mock = Mock(request: request, response: response, data: data, error: nil)
+            mock = Mock(response: response, data: data, error: nil)
             operation = MockOperation(mock: mock, urlRequest: urlRequest, ride: ride)
 
             operation.ride.done({ result in

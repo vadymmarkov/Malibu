@@ -6,54 +6,30 @@ class NetworkingSpec: QuickSpec {
 
   override func spec() {
     describe("Networking") {
-      var networking: Networking!
+      var networking: Networking<TestService>!
 
       beforeEach {
-        networking = Networking()
+        networking = Networking(mockBehavior: .delayed(seconds: 0))
       }
 
       describe("#init") {
         it("sets default configuration to the session") {
-          networking = Networking()
-
           expect(networking.session.configuration).to(equal(SessionConfiguration.default.value))
         }
-
-        it("sets custom configuration to the session") {
-          networking = Networking(sessionConfiguration: .background)
-
-          expect(networking.session.configuration.identifier).to(equal("MalibuBackgroundConfiguration"))
-        }
       }
 
-      describe("#register:mock") {
-        it("registers mock for the provided method") {
-          let request = GETRequest()
-          let mock = Mock(request: request, response: nil, data: nil, error: nil)
+      describe("#request") {
+        context("when request has a mock") {
+          it("returns a mock data") {
+            let expectation = self.expectation(description: "Request")
 
-          networking.register(mock: mock)
+            networking.request(.showPost(id: 1)).toJsonDictionary().done({ json in
+              expect(json["title"] as? String).to(equal("Test"))
+              expectation.fulfill()
+            })
 
-          expect(networking.mocks["GET http://hyper.no"] === mock).to(beTrue())
-        }
-      }
-
-      describe("#prepareMock") {
-        it("runs beforeEach closure on mocked request and returns registered mock") {
-          let request = GETRequest()
-          let mock = Mock(request: request, response: nil, data: nil, error: nil)
-
-          networking.register(mock: mock)
-          networking.beforeEach = { (request: Requestable) in
-            var request = request
-            request.message.parameters["test"] = true
-
-            return request
+            self.waitForExpectations(timeout: 1.0, handler: nil)
           }
-
-          let result = networking.prepareMock(for: request)
-
-          expect(result).toNot(beNil())
-          expect(result?.request.message.parameters["test"] as? Bool).to(beTrue())
         }
       }
     }

@@ -51,7 +51,7 @@ struct Utils {
 
   static let frameworkInfo: String = {
     guard
-      let info = Bundle(for: Networking.self).infoDictionary,
+      let info = Bundle(for: Ride.self).infoDictionary,
       let build = info["CFBundleShortVersionString"]
       else { return "Unknown" }
 

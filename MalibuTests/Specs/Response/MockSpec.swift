@@ -8,37 +8,35 @@ class MockSpec: QuickSpec {
   override func spec() {
     describe("Mock") {
       var mock: Mock!
-      let request = GETRequest()
-      var response = HTTPURLResponse(url: URL(string: "http://hyper.no")!,
-                                       statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!
+      let request = TestService.fetchPosts.request
+      var response = HTTPURLResponse(url: URL(string: TestService.baseUrl.urlString)!,
+                                     statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!
       let data = "test".data(using: String.Encoding.utf32)
       let error = NetworkError.noDataInResponse
 
-      describe("#init:request:response:data:error") {
+      describe("#init:response:data:error") {
         beforeEach {
-          mock = Mock(request: request, response: response, data: data, error: error, delay: 0.1)
+          mock = Mock(response: response, data: data, error: error)
         }
 
         it("sets properties") {
-          expect(mock.request.message).to(equal(request.message))
           expect(mock.response).to(equal(response))
           expect(mock.data).to(equal(data))
           expect(mock.error as! NetworkError == error).to(beTrue())
-          expect(mock.delay).to(equal(0.1))
         }
       }
 
-      describe("#init:request:fileName:bundle") {
+      describe("#init:fileName:bundle") {
         let fileName = "mock.json"
         var wave: Wave!
 
         beforeEach {
-          mock = Mock(request: request, fileName: fileName, bundle: Bundle(for: MockSpec.self))
+          mock = Mock(fileName: fileName, bundle: Bundle(for: MockSpec.self))
           response = HTTPURLResponse(url: URL(string: fileName)!, statusCode: 200,
             httpVersion: "HTTP/2.0", headerFields: nil)!
           wave = Wave(
             data: mock.data!,
-            request: try! mock.request.toUrlRequest(),
+            request: try! request.toUrlRequest(),
             response: mock.response!)
         }
 
@@ -48,7 +46,6 @@ class MockSpec: QuickSpec {
           let serializer = JsonSerializer()
           let dictionary = try! serializer.serialize(data: mock.data!, response: response) as! [String: String]
 
-          expect(mock.request.message).to(equal(request.message))
           expect(mock.response?.statusCode).to(equal(response.statusCode))
           expect(mock.error).to(beNil())
           expect{ try contentTypeValidator.validate(wave) }.toNot(throwError())
@@ -59,7 +56,7 @@ class MockSpec: QuickSpec {
         }
       }
 
-      describe("#init:request:JSON") {
+      describe("#init:json") {
         let json = [
           "first_name" : "John",
           "last_name" : "Hyperseed",
@@ -69,12 +66,12 @@ class MockSpec: QuickSpec {
         var wave: Wave!
 
         beforeEach {
-          mock = Mock(request: request, json: json)
+          mock = Mock(json: json)
           response = HTTPURLResponse(url: URL(string: "mock://JSON")!, statusCode: 200,
             httpVersion: "HTTP/2.0", headerFields: nil)!
           wave = Wave(
             data: mock.data!,
-            request: try! mock.request.toUrlRequest(),
+            request: try! request.toUrlRequest(),
             response: mock.response!)
         }
 
@@ -84,7 +81,6 @@ class MockSpec: QuickSpec {
           let serializer = JsonSerializer()
           let dictionary = try! serializer.serialize(data: mock.data!, response: response) as! [String: String]
 
-          expect(mock.request.message).to(equal(request.message))
           expect(mock.response?.statusCode).to(equal(response.statusCode))
           expect(mock.error).to(beNil())
           expect{ try contentTypeValidator.validate(wave) }.toNot(throwError())

@@ -7,13 +7,13 @@ class WaveSpec: QuickSpec {
 
   override func spec() {
     describe("Wave") {
-      let url = URL(string: "http://hyper.no")!
+      let url = URL(string: "http://api.loc")!
       let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!
       var request: URLRequest!
       var data: Data!
 
       beforeEach {
-        request = URLRequest(url: URL(string: "http://hyper.no")!)
+        request = URLRequest(url: URL(string: "http://api.loc")!)
         data = try! JSONSerialization.data(withJSONObject: [["name": "Taylor"]],
           options: JSONSerialization.WritingOptions())
       }
