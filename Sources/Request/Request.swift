@@ -7,7 +7,7 @@ public struct Request: Equatable {
   public let resource: URLStringConvertible
   public let parameters: [String: Any]
   public let headers: [String: String]
-  public let mock: Mock?
+  public var mock: Mock?
   public let contentType: ContentType
   public let etagPolicy: EtagPolicy
   public let storePolicy: StorePolicy

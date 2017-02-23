@@ -1,13 +1,30 @@
 import Foundation
 import When
 
+// MARK: - Mode
+
 public enum NetworkingMode {
   case sync, async, limited(Int)
 }
 
-public enum MockBehavior {
-  case never, delayed(seconds: TimeInterval)
+// MARK: - Mocks
+
+public struct MockProvider<E: Endpoint> {
+  let resolve: (E) -> Mock?
+  let delay: TimeInterval
+
+  public init(resolve: @escaping (E) -> Mock?, delay: TimeInterval) {
+    self.resolve = resolve
+    self.delay = delay
+  }
 }
+
+struct MockBehavior {
+  let mock: Mock
+  let delay: TimeInterval
+}
+
+// MARK: - Networking
 
 public final class Networking<E: Endpoint>: NSObject, URLSessionDelegate {
 
@@ -19,7 +36,7 @@ public final class Networking<E: Endpoint>: NSObject, URLSessionDelegate {
   }
 
   let sessionConfiguration: SessionConfiguration
-  let mockBehavior: MockBehavior
+  let mockProvider: MockProvider<E>?
   let queue: OperationQueue
 
   var customHeaders = [String: String]()
@@ -51,10 +68,10 @@ public final class Networking<E: Endpoint>: NSObject, URLSessionDelegate {
   // MARK: - Initialization
 
   public init(mode: NetworkingMode = .async,
-              mockBehavior: MockBehavior = .never,
+              mockProvider: MockProvider<E>? = nil,
               sessionConfiguration: SessionConfiguration = SessionConfiguration.default,
               sessionDelegate: URLSessionDelegate? = nil) {
-    self.mockBehavior = mockBehavior
+    self.mockProvider = mockProvider
     self.sessionConfiguration = sessionConfiguration
     self.sessionDelegate = sessionDelegate
     queue = OperationQueue()
@@ -94,20 +111,26 @@ public final class Networking<E: Endpoint>: NSObject, URLSessionDelegate {
 extension Networking {
 
   public func request(_ endpoint: E) -> Ride {
-    return execute(endpoint.request)
+    var mockBehavior: MockBehavior?
+
+    if let mockProvider = mockProvider, let mock = mockProvider.resolve(endpoint) {
+      mockBehavior = MockBehavior(mock: mock, delay: mockProvider.delay)
+    }
+
+    return execute(endpoint.request, mockBehavior: mockBehavior)
   }
 
   public func cancelAllRequests() {
     queue.cancelAllOperations()
   }
 
-  func execute(_ request: Request) -> Ride {
+  func execute(_ request: Request, mockBehavior: MockBehavior? = nil) -> Ride {
     let ride = Ride()
     let beforePromise = Promise<Void>()
 
     beforePromise
       .then({
-        return self.start(request)
+        return self.start(request, mockBehavior: mockBehavior)
       })
       .done({ wave in
         ride.resolve(wave)
@@ -121,7 +144,7 @@ extension Networking {
     return ride
   }
 
-  func start(_ request: Request) -> Ride {
+  func start(_ request: Request, mockBehavior: MockBehavior? = nil) -> Ride {
     let ride = Ride()
     var urlRequest: URLRequest
 
@@ -137,9 +160,16 @@ extension Networking {
       urlRequest = preProcessRequest(urlRequest)
     }
 
-    guard let operation = buildOperation(ride: ride, request: request, urlRequest: urlRequest)
-      else {
-        return ride
+    let operation: ConcurrentOperation
+
+    if let mockBehavior = mockBehavior {
+      operation = MockOperation(
+        mock: mockBehavior.mock,
+        urlRequest: urlRequest,
+        delay: mockBehavior.delay,
+        ride: ride)
+    } else {
+      operation = DataOperation(session: session, urlRequest: urlRequest, ride: ride)
     }
 
     let etagPromise = ride.then { [weak self] result -> Wave in
@@ -170,23 +200,6 @@ extension Networking {
     queue.addOperation(operation)
 
     return nextRide
-  }
-
-  func buildOperation(ride: Ride, request: Request, urlRequest: URLRequest) -> ConcurrentOperation? {
-    var operation: ConcurrentOperation?
-
-    switch mockBehavior {
-    case .never:
-      operation = DataOperation(session: session, urlRequest: urlRequest, ride: ride)
-    case .delayed(let seconds):
-      if let mock = request.mock {
-        operation = MockOperation(mock: mock, urlRequest: urlRequest, delay: seconds, ride: ride)
-      } else {
-        operation = DataOperation(session: session, urlRequest: urlRequest, ride: ride)
-      }
-    }
-
-    return operation
   }
 }
 
