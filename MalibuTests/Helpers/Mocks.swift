@@ -4,7 +4,7 @@ import When
 
 // MARK: - Service
 
-enum TestService: Endpoint {
+enum TestService: RequestConvertible {
   case fetchPosts
   case showPost(id: Int)
   case createPost(title: String)

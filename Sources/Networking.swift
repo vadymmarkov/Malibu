@@ -9,11 +9,11 @@ public enum NetworkingMode {
 
 // MARK: - Mocks
 
-public struct MockProvider<E: Endpoint> {
-  let resolveMock: (E) -> Mock?
+public struct MockProvider<R: RequestConvertible> {
+  let resolveMock: (R) -> Mock?
   let delay: TimeInterval
 
-  public init(delay: TimeInterval = 0, resolveMock: @escaping (E) -> Mock?) {
+  public init(delay: TimeInterval = 0, resolveMock: @escaping (R) -> Mock?) {
     self.resolveMock = resolveMock
     self.delay = delay
   }
@@ -26,7 +26,7 @@ struct MockBehavior {
 
 // MARK: - Networking
 
-public final class Networking<E: Endpoint>: NSObject, URLSessionDelegate {
+public final class Networking<R: RequestConvertible>: NSObject, URLSessionDelegate {
 
   public var beforeEach: ((Request) -> Request)?
   public var preProcessRequest: ((URLRequest) -> URLRequest)?
@@ -36,7 +36,7 @@ public final class Networking<E: Endpoint>: NSObject, URLSessionDelegate {
   }
 
   let sessionConfiguration: SessionConfiguration
-  let mockProvider: MockProvider<E>?
+  let mockProvider: MockProvider<R>?
   let queue: OperationQueue
 
   var customHeaders = [String: String]()
@@ -56,7 +56,7 @@ public final class Networking<E: Endpoint>: NSObject, URLSessionDelegate {
   var requestHeaders: [String: String] {
     var headers = customHeaders
     headers["Accept-Language"] = Header.acceptLanguage
-    let extraHeaders = E.headers
+    let extraHeaders = R.headers
 
     extraHeaders.forEach { key, value in
       headers[key] = value
@@ -68,7 +68,7 @@ public final class Networking<E: Endpoint>: NSObject, URLSessionDelegate {
   // MARK: - Initialization
 
   public init(mode: NetworkingMode = .async,
-              mockProvider: MockProvider<E>? = nil,
+              mockProvider: MockProvider<R>? = nil,
               sessionConfiguration: SessionConfiguration = SessionConfiguration.default,
               sessionDelegate: URLSessionDelegate? = nil) {
     self.mockProvider = mockProvider
@@ -81,7 +81,7 @@ public final class Networking<E: Endpoint>: NSObject, URLSessionDelegate {
 
   public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
     guard
-      let baseURL = NSURL(string: E.baseUrl.urlString),
+      let baseURL = NSURL(string: R.baseUrl.urlString),
       let serverTrust = challenge.protectionSpace.serverTrust
       else { return }
 
@@ -110,14 +110,14 @@ public final class Networking<E: Endpoint>: NSObject, URLSessionDelegate {
 
 extension Networking {
 
-  public func request(_ endpoint: E) -> Ride {
+  public func request(_ requestConvertible: R) -> Ride {
     var mockBehavior: MockBehavior?
 
-    if let mockProvider = mockProvider, let mock = mockProvider.resolveMock(endpoint) {
+    if let mockProvider = mockProvider, let mock = mockProvider.resolveMock(requestConvertible) {
       mockBehavior = MockBehavior(mock: mock, delay: mockProvider.delay)
     }
 
-    return execute(endpoint.request, mockBehavior: mockBehavior)
+    return execute(requestConvertible.request, mockBehavior: mockBehavior)
   }
 
   public func cancelAllRequests() {
@@ -150,7 +150,7 @@ extension Networking {
 
     do {
       let request = beforeEach?(request) ?? request
-      urlRequest = try request.toUrlRequest(baseUrl: E.baseUrl, additionalHeaders: requestHeaders)
+      urlRequest = try request.toUrlRequest(baseUrl: R.baseUrl, additionalHeaders: requestHeaders)
     } catch {
       ride.reject(error)
       return ride
@@ -160,17 +160,7 @@ extension Networking {
       urlRequest = preProcessRequest(urlRequest)
     }
 
-    let operation: ConcurrentOperation
-
-    if let mockBehavior = mockBehavior {
-      operation = MockOperation(
-        mock: mockBehavior.mock,
-        urlRequest: urlRequest,
-        delay: mockBehavior.delay,
-        ride: ride)
-    } else {
-      operation = DataOperation(session: session, urlRequest: urlRequest, ride: ride)
-    }
+    let operation = createOperation(ride: ride, urlRequest: urlRequest, mockBehavior: mockBehavior)
 
     let etagPromise = ride.then { [weak self] result -> Wave in
       self?.saveEtag(request: request, response: result.response)
@@ -200,6 +190,18 @@ extension Networking {
     queue.addOperation(operation)
 
     return nextRide
+  }
+
+  func createOperation(ride: Ride, urlRequest: URLRequest, mockBehavior: MockBehavior?) -> ConcurrentOperation {
+    guard let mockBehavior = mockBehavior else {
+      return DataOperation(session: session, urlRequest: urlRequest, ride: ride)
+    }
+
+    return MockOperation(
+      mock: mockBehavior.mock,
+      urlRequest: urlRequest,
+      delay: mockBehavior.delay,
+      ride: ride)
   }
 }
 
@@ -233,7 +235,7 @@ extension Networking {
       return
     }
 
-    let prefix = E.baseUrl.urlString
+    let prefix = R.baseUrl.urlString
 
     EtagStorage().add(value: etag, forKey: request.etagKey(prefix: prefix))
   }
