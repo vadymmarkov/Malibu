@@ -1,6 +1,6 @@
-// MARK: - Endpoint
+// MARK: - RequestConvertible
 
-public protocol Endpoint {
+public protocol RequestConvertible {
 
   static var baseUrl: URLStringConvertible { get }
   static var headers: [String: String] { get }
@@ -10,7 +10,7 @@ public protocol Endpoint {
 
 // MARK: - Defaults
 
-struct AnyEndpoint: Endpoint {
+struct AnyEndpoint: RequestConvertible {
 
   static let baseUrl: URLStringConvertible = ""
   static let headers: [String: String] = [:]

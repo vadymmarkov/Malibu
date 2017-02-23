@@ -4,7 +4,7 @@ import When
 
 // MARK: - Service
 
-enum TestService: Endpoint {
+enum TestService: RequestConvertible {
   case fetchPosts
   case showPost(id: Int)
   case createPost(title: String)
@@ -21,7 +21,7 @@ enum TestService: Endpoint {
     case .fetchPosts:
       return Request.get("posts")
     case .showPost(let id):
-      return Request.get("posts/\(id)", mock: Mock(json: ["title": "Test"]))
+      return Request.get("posts/\(id)")
     case .createPost(let title):
       return Request.post("posts", parameters: ["title": title])
     case .replacePost(let id, let title):

@@ -46,7 +46,7 @@ past. Enjoy the ride!
 ## Table of Contents
 
 * [Catching the wave](#catching-the-wave)
-* [Endpoint](#endpoint)
+* [RequestConvertible](#request-convertible)
 * [Request](#request)
   * [Content types](#content-types)
   * [Encoding](#encoding)
@@ -103,15 +103,15 @@ Malibu.request(request)
 If you still don't see any benefits, keep scrolling down and be ready for even
 more magic 😉...
 
-## Endpoint
+## RequestConvertible
 
 Most of the time we need separate network stacks to work with multiple API
 services. It's super easy to archive with **Malibu**. Create an
-`enum` that conforms to **Endpoint** protocol and describe your requests with
-all the properties:
+`enum` that conforms to **RequestConvertible** protocol and describe your
+requests with all the properties:
 
 ```swift
-enum SharkywatersService: Endpoint {
+enum SharkywatersEndpoint: RequestConvertible {
   // Describe requests
   case fetchBoards
   case showBoard(id: Int)
@@ -133,8 +133,7 @@ enum SharkywatersService: Endpoint {
     case .fetchBoards:
       return Request.get("boards")
     case .showBoard(let id):
-      // Let's use JSON dictionary as a mock data
-      return Request.get("boards/\(id)", mock: Mock(json: ["type": 1, "title": "Classic"]))
+      return Request.get("boards/\(id)")
     case .createBoard(let type, let title):
       return Request.post("boards", parameters: ["type": type, "title": title])
     case .updateBoard(let id, let title):
@@ -165,8 +164,6 @@ let request = Request(
   parameters: ["type": 1, "text": "classic"],
   // Headers
   headers: ["custom": "header"],
-  // Optional mock (file, dictionary, data)
-  mock: Mock(fileName: "boards.json"),
   // Enables or disables automatic ETags handling
   etagPolicy: .disabled,
   // Offline storage configuration
@@ -249,15 +246,15 @@ requests on a specified API service.
 It's pretty straightforward to create a new `Networking` instance:
 
 ```swift
-// Simple networking that works with `SharkywatersService` requests.
-let simpleNetworking = Networking<SharkywatersService>()
+// Simple networking that works with `SharkywatersEndpoint` requests.
+let simpleNetworking = Networking<SharkywatersEndpoint>()
 
 // More advanced networking
-let networking = Networking<SharkywatersService>(
+let networking = Networking<SharkywatersEndpoint>(
   // `OperationQueue` Mode
   mode: .async,
-  // Mock behavior (never, delayed)
-  mockBehavior: .never,
+  // Optional mock provider
+  mockProvider: customMockProvider,
   // `default`, `ephemeral`, `background` or `custom`
   sessionConfiguration: .default,
   // Custom `URLSessionDelegate` could set if needed
@@ -285,49 +282,39 @@ on API implementation.
 
 In order to start mocking you have to do the following:
 
-**Change the `mode`**
+**Create a mock provider**
 
-A mode for real HTTP request only:
 ```swift
-let networking = Networking<SharkywatersService>(mockBehavior: .never)
+// Delay is optional, 0.0 by default.
+let mockProvider = MockProvider(delay: 1.0) { endpoint in
+  switch endpoint {
+    case .fetchBoards:
+      // With response data from a file:
+      return Mock(fileName: "boards.json")
+    case .showBoard(let id):
+      // With response from JSON dictionary:
+      return Mock(json: ["id": 1, "title": "Balsa Fish"])
+    case .updateBoard(let id, let title):
+      // `Data` mock:
+      return Mock(
+        // Needed response
+        response: mockedResponse,
+        // Response data
+        data: responseData,
+        // Custom error, `nil` by default
+        error: customError
+      )
+    default:
+      return nil
+  }
+}
 ```
+
+**Create a networking instance with your mock provider**
 
 Both real and fake requests can be used in a mix:
 ```swift
-let networking = Networking<SharkywatersService>(mockBehavior: .delayed(0.5))
-```
-
-**Create a mock**
-
-With response data from file:
-```swift
-let request = Request.get(
-  "boards",
-  mock: Mock(fileName: "boards.json")
-)
-```
-
-With response from JSON dictionary:
-```swift
-let request = Request.get(
-  "boards",
-  mock: Mock(json: ["data": ["id": 1, "title": "Balsa Fish"]])
-)
-```
-
-`Data` mock:
-```swift
-let request = Request.get(
-  "boards/\(id)",
-  mock: Mock(
-    // Needed response
-    response: mockedResponse,
-    // Response data
-    data: responseData,
-    // Custom error, `nil` by default
-    error: customError
-  )
-)
+let networking = Networking<SharkywatersEndpoint>(mockProvider: mockProvider)
 ```
 
 ### Session configuration
@@ -417,7 +404,7 @@ networking.authenticate(authorizationHeader: "Malibu-Header")
 `Networking` is set up and ready, so it's time to fire some requests.
 
 ```swift
-let networking = Networking<SharkywatersService>()
+let networking = Networking<SharkywatersEndpoint>()
 
 networking.request(.fetchBoards)
   .validate()
@@ -495,7 +482,7 @@ automatically removed from the storage when it's completed.
 
 **Malibu** has a shared networking object with default configurations for the
 case when you need just something simple to catch the wave. It's not necessary
-to create a custom `Endpoint` type, just call the same `request` method right
+to create a custom `RequestConvertible` type, just call the same `request` method right
 on `Malibu`:
 
 ```swift
