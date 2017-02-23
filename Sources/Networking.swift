@@ -10,11 +10,11 @@ public enum NetworkingMode {
 // MARK: - Mocks
 
 public struct MockProvider<E: Endpoint> {
-  let resolve: (E) -> Mock?
+  let resolveMock: (E) -> Mock?
   let delay: TimeInterval
 
-  public init(resolve: @escaping (E) -> Mock?, delay: TimeInterval) {
-    self.resolve = resolve
+  public init(delay: TimeInterval = 0, resolveMock: @escaping (E) -> Mock?) {
+    self.resolveMock = resolveMock
     self.delay = delay
   }
 }
@@ -113,7 +113,7 @@ extension Networking {
   public func request(_ endpoint: E) -> Ride {
     var mockBehavior: MockBehavior?
 
-    if let mockProvider = mockProvider, let mock = mockProvider.resolve(endpoint) {
+    if let mockProvider = mockProvider, let mock = mockProvider.resolveMock(endpoint) {
       mockBehavior = MockBehavior(mock: mock, delay: mockProvider.delay)
     }
 

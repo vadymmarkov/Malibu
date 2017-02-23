@@ -2,18 +2,15 @@
 import Quick
 import Nimble
 
+// MARK: - Specs
+
 class NetworkingSpec: QuickSpec {
 
   override func spec() {
     describe("Networking") {
-      var networking: Networking<TestService>!
-
-      beforeEach {
-        networking = Networking(mockBehavior: .delayed(seconds: 0))
-      }
-
       describe("#init") {
         it("sets default configuration to the session") {
+          let networking = Networking<TestService>()
           expect(networking.session.configuration).to(equal(SessionConfiguration.default.value))
         }
       }
@@ -21,6 +18,11 @@ class NetworkingSpec: QuickSpec {
       describe("#request") {
         context("when request has a mock") {
           it("returns a mock data") {
+            let mockProvider = MockProvider<TestService> { _ in
+              return Mock(json: ["title": "Test"])
+            }
+
+            let networking = Networking(mockProvider: mockProvider)
             let expectation = self.expectation(description: "Request")
 
             networking.request(.showPost(id: 1)).toJsonDictionary().done({ json in

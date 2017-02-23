@@ -7,7 +7,6 @@ public struct Request: Equatable {
   public let resource: URLStringConvertible
   public let parameters: [String: Any]
   public let headers: [String: String]
-  public var mock: Mock?
   public let contentType: ContentType
   public let etagPolicy: EtagPolicy
   public let storePolicy: StorePolicy
@@ -18,7 +17,6 @@ public struct Request: Equatable {
               contentType: ContentType,
               parameters: [String: Any] = [:],
               headers: [String: String] = [:],
-              mock: Mock? = nil,
               etagPolicy: EtagPolicy = .disabled,
               storePolicy: StorePolicy = .unspecified,
               cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) {
@@ -27,7 +25,6 @@ public struct Request: Equatable {
     self.contentType = contentType
     self.parameters = parameters
     self.headers = headers
-    self.mock = mock
     self.etagPolicy = etagPolicy
     self.storePolicy = storePolicy
     self.cachePolicy = cachePolicy
@@ -41,7 +38,6 @@ public extension Request {
   public static func get(_ resource: URLStringConvertible,
                          parameters: [String: Any] = [:],
                          headers: [String: String] = [:],
-                         mock: Mock? = nil,
                          etagPolicy: EtagPolicy = .enabled,
                          storePolicy: StorePolicy = .unspecified,
                          cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
@@ -51,7 +47,6 @@ public extension Request {
       contentType: .query,
       parameters: parameters,
       headers: headers,
-      mock: mock,
       etagPolicy: .enabled,
       storePolicy: storePolicy,
       cachePolicy: cachePolicy
@@ -62,7 +57,6 @@ public extension Request {
                           contentType: ContentType = .json,
                           parameters: [String: Any] = [:],
                           headers: [String: String] = [:],
-                          mock: Mock? = nil,
                           storePolicy: StorePolicy = .unspecified,
                           cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
     return Request(
@@ -71,7 +65,6 @@ public extension Request {
       contentType: contentType,
       parameters: parameters,
       headers: headers,
-      mock: mock,
       etagPolicy: .disabled,
       storePolicy: storePolicy,
       cachePolicy: cachePolicy
@@ -82,7 +75,6 @@ public extension Request {
                          contentType: ContentType = .json,
                          parameters: [String: Any] = [:],
                          headers: [String: String] = [:],
-                         mock: Mock? = nil,
                          etagPolicy: EtagPolicy = .enabled,
                          storePolicy: StorePolicy = .unspecified,
                          cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
@@ -92,7 +84,6 @@ public extension Request {
       contentType: contentType,
       parameters: parameters,
       headers: headers,
-      mock: mock,
       etagPolicy: etagPolicy,
       storePolicy: storePolicy,
       cachePolicy: cachePolicy
@@ -103,7 +94,6 @@ public extension Request {
                            contentType: ContentType = .json,
                            parameters: [String: Any] = [:],
                            headers: [String: String] = [:],
-                           mock: Mock? = nil,
                            etagPolicy: EtagPolicy = .enabled,
                            storePolicy: StorePolicy = .unspecified,
                            cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
@@ -113,7 +103,6 @@ public extension Request {
       contentType: contentType,
       parameters: parameters,
       headers: headers,
-      mock: mock,
       etagPolicy: etagPolicy,
       storePolicy: storePolicy,
       cachePolicy: cachePolicy
@@ -124,7 +113,6 @@ public extension Request {
                             contentType: ContentType = .query,
                             parameters: [String: Any] = [:],
                             headers: [String: String] = [:],
-                            mock: Mock? = nil,
                             etagPolicy: EtagPolicy = .disabled,
                             storePolicy: StorePolicy = .unspecified,
                             cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
@@ -134,7 +122,6 @@ public extension Request {
       contentType: contentType,
       parameters: parameters,
       headers: headers,
-      mock: mock,
       etagPolicy: etagPolicy,
       storePolicy: storePolicy,
       cachePolicy: cachePolicy
@@ -145,7 +132,6 @@ public extension Request {
                           contentType: ContentType = .query,
                           parameters: [String: Any] = [:],
                           headers: [String: String] = [:],
-                          mock: Mock? = nil,
                           etagPolicy: EtagPolicy = .disabled,
                           storePolicy: StorePolicy = .unspecified,
                           cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
@@ -155,7 +141,6 @@ public extension Request {
       contentType: contentType,
       parameters: parameters,
       headers: headers,
-      mock: mock,
       etagPolicy: etagPolicy,
       storePolicy: storePolicy,
       cachePolicy: cachePolicy
