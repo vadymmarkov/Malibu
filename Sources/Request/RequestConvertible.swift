@@ -2,7 +2,7 @@
 
 public protocol RequestConvertible {
 
-  static var baseUrl: URLStringConvertible { get }
+  static var baseUrl: URLStringConvertible? { get }
   static var headers: [String: String] { get }
 
   var request: Request { get }
@@ -12,7 +12,7 @@ public protocol RequestConvertible {
 
 struct AnyEndpoint: RequestConvertible {
 
-  static let baseUrl: URLStringConvertible = ""
+  static let baseUrl: URLStringConvertible? = nil
   static let headers: [String: String] = [:]
   public let request: Request
 }
