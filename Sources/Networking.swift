@@ -80,17 +80,34 @@ public final class Networking<R: RequestConvertible>: NSObject, URLSessionDelega
   }
 
   public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-    guard
-      let urlString = R.baseUrl?.urlString,
-      let baseURL = NSURL(string: urlString),
-      let serverTrust = challenge.protectionSpace.serverTrust
-      else { return }
+    var disposition: URLSession.AuthChallengeDisposition = .performDefaultHandling
+    var credential: URLCredential?
 
-    if challenge.protectionSpace.host == baseURL.host {
-      completionHandler(
-        URLSession.AuthChallengeDisposition.useCredential,
-        URLCredential(trust: serverTrust))
+    if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
+      if let serverTrust = challenge.protectionSpace.serverTrust,
+        let urlString = R.baseUrl?.urlString,
+        let baseURL = NSURL(string: urlString) {
+        if challenge.protectionSpace.host == baseURL.host {
+          disposition = .useCredential
+          credential = URLCredential(trust: serverTrust)
+        } else {
+          disposition = .cancelAuthenticationChallenge
+        }
+      }
+    } else {
+      if challenge.previousFailureCount > 0 {
+        disposition = .rejectProtectionSpace
+      } else {
+        credential = session.configuration.urlCredentialStorage?.defaultCredential(
+          for: challenge.protectionSpace)
+
+        if credential != nil {
+          disposition = .useCredential
+        }
+      }
     }
+
+    completionHandler(disposition, credential)
   }
 
   func reset(mode: NetworkingMode) {
