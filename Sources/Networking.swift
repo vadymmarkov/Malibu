@@ -82,7 +82,7 @@ public final class Networking<R: RequestConvertible>: NSObject, URLSessionDelega
   public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
     guard
       let urlString = R.baseUrl?.urlString,
-      let baseURL = NSURL(string: urlString),
+      let baseURL = URL(string: urlString),
       let serverTrust = challenge.protectionSpace.serverTrust
       else { return }
 
