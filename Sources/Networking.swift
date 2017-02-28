@@ -86,7 +86,7 @@ public final class Networking<R: RequestConvertible>: NSObject, URLSessionDelega
     if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
       if let serverTrust = challenge.protectionSpace.serverTrust,
         let urlString = R.baseUrl?.urlString,
-        let baseURL = NSURL(string: urlString) {
+        let baseURL = URL(string: urlString) {
         if challenge.protectionSpace.host == baseURL.host {
           disposition = .useCredential
           credential = URLCredential(trust: serverTrust)
