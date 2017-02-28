@@ -9,7 +9,7 @@ class MockSpec: QuickSpec {
     describe("Mock") {
       var mock: Mock!
       let request = TestService.fetchPosts.request
-      var response = HTTPURLResponse(url: URL(string: TestService.baseUrl.urlString)!,
+      var response = HTTPURLResponse(url: URL(string: TestService.baseUrl!.urlString)!,
                                      statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!
       let data = "test".data(using: String.Encoding.utf32)
       let error = NetworkError.noDataInResponse

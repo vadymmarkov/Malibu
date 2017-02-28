@@ -42,7 +42,7 @@ enum Endpoint: RequestConvertible {
   case fetchUsers
   case createUser(id: Int, name: String, username: String, email: String)
 
-  static let baseUrl: URLStringConvertible = "http://jsonplaceholder.typicode.com/"
+  static let baseUrl: URLStringConvertible? = "http://jsonplaceholder.typicode.com/"
   static let sessionConfiguration: SessionConfiguration = .default
 
   // Additional headers will be used in the each request.

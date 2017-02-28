@@ -120,7 +120,8 @@ enum SharkywatersEndpoint: RequestConvertible {
   case deleteBoard(id: Int)
 
   // Every request will be scoped by the base url
-  static var baseUrl: URLStringConvertible = "http://sharkywaters.com/api/"
+  // Base url is recommended, but optional
+  static var baseUrl: URLStringConvertible? = "http://sharkywaters.com/api/"
 
   // Additional headers for every request
   static var headers: [String: String] = [

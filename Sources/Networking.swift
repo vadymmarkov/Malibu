@@ -81,7 +81,8 @@ public final class Networking<R: RequestConvertible>: NSObject, URLSessionDelega
 
   public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
     guard
-      let baseURL = NSURL(string: R.baseUrl.urlString),
+      let urlString = R.baseUrl?.urlString,
+      let baseURL = URL(string: urlString),
       let serverTrust = challenge.protectionSpace.serverTrust
       else { return }
 
@@ -235,7 +236,7 @@ extension Networking {
       return
     }
 
-    let prefix = R.baseUrl.urlString
+    let prefix = R.baseUrl?.urlString ?? ""
 
     EtagStorage().add(value: etag, forKey: request.etagKey(prefix: prefix))
   }

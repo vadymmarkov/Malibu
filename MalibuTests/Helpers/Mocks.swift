@@ -13,7 +13,7 @@ enum TestService: RequestConvertible {
   case deletePost(id: Int)
   case head
 
-  static var baseUrl: URLStringConvertible = "http://api.loc"
+  static var baseUrl: URLStringConvertible? = "http://api.loc"
   static var headers: [String: String] = [:]
 
   var request: Request {
