@@ -5,7 +5,7 @@ import Nimble
 // MARK: - Mocks
 
 
-class ChallengeSender: NSObject, URLAuthenticationChallengeSender {
+private class ChallengeSenderMock: NSObject, URLAuthenticationChallengeSender {
 
   func use(_ credential: URLCredential, for challenge: URLAuthenticationChallenge) {}
   func continueWithoutCredential(for challenge: URLAuthenticationChallenge) {}
@@ -119,7 +119,7 @@ class NetworkingSpec: QuickSpec {
 
   private func createAuthenticationChallenge(protectionSpace: URLProtectionSpace,
                                              previousFailureCount: Int) -> URLAuthenticationChallenge {
-    let sender = ChallengeSender()
+    let sender = ChallengeSenderMock()
 
     return URLAuthenticationChallenge(
       protectionSpace: protectionSpace,
