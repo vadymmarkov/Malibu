@@ -12,7 +12,7 @@ script:
 - xcodebuild clean build -project Malibu.xcodeproj -scheme "Malibu-Mac" -sdk macosx
 - xcodebuild test -project Malibu.xcodeproj -scheme "Malibu-Mac" -sdk macosx
 - xcodebuild clean build -project Malibu.xcodeproj -scheme "Malibu-iOS" -sdk iphonesimulator
-- xcodebuild test -project Malibu.xcodeproj -scheme "Malibu-iOS" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=10.0'
+- xcodebuild test -project Malibu.xcodeproj -scheme "Malibu-iOS" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=10.0' | xcpretty
 
 notifications:
   email: false
