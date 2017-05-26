@@ -60,7 +60,7 @@ past. Enjoy the ride!
   * [Middleware](#middleware)
   * [Authentication](#authentication)
   * [Making a request](#making-a-request)
-  * [Wave and Ride](#wave-and-ride)
+  * [Response and Ride](#response-and-ride)
   * [Offline storage](#offline-storage)
   * [Backfoot surfer](#backfoot-surfer)
 * [Response](#response)
@@ -427,12 +427,12 @@ networking.request(.deleteBoard(id: 11))
   })
 ```
 
-### Wave and Ride
+### Response and Ride
 
-`Wave` object consists of `Data`, `URLRequest` and `HTTPURLResponse`
+`Response` object consists of `Data`, `URLRequest` and `HTTPURLResponse`
 properties.
 
-`Ride` is returned by every request method. It extends `Promise<Wave>` by
+`Ride` is returned by every request method. It extends `Promise<Response>` by
 adding `URLSessionTask` that you might want to cancel when it's needed. You
 may use `Ride` object to add different callbacks and build chains of tasks. It
 has a range of useful helpers, such as validations and serialization.
