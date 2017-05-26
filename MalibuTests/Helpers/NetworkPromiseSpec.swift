@@ -32,21 +32,21 @@ extension NetworkPromiseSpec where Self: QuickSpec {
       expectation.fulfill()
     })
 
-    networkPromise.resolve(Wave(data: data, request: request, response: response))
+    networkPromise.resolve(Response(data: data, request: request, response: response))
 
     self.waitForExpectations(timeout: 4.0, handler:nil)
   }
 
   func testSucceededPromise<T>(_ promise: Promise<T>, response: HTTPURLResponse, validation: ((T) -> Void)? = nil) {
     let expectation = self.expectation(description: "Validation response success")
-    let wave = Wave(data: data, request: request, response: response)
+    let response = Response(data: data, request: request, response: response)
 
     promise.done({ result in
       validation?(result)
       expectation.fulfill()
     })
 
-    networkPromise.resolve(wave)
+    networkPromise.resolve(response)
 
     self.waitForExpectations(timeout: 4.0, handler:nil)
   }

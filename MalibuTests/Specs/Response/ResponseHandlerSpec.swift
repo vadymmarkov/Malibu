@@ -23,7 +23,7 @@ class ResponseHandlerSpec: QuickSpec {
               expectation.fulfill()
             })
 
-            handler.handle(data: handler.data, response: nil, error: nil)
+            handler.handle(data: handler.data, urlResponse: nil, error: nil)
 
             self.waitForExpectations(timeout: 4.0, handler:nil)
           }
@@ -40,7 +40,7 @@ class ResponseHandlerSpec: QuickSpec {
 
             handler.handle(
               data: handler.data,
-              response: handler.response,
+              urlResponse: handler.response,
               error: NetworkError.jsonDictionarySerializationFailed)
 
             self.waitForExpectations(timeout: 4.0, handler:nil)
@@ -56,7 +56,7 @@ class ResponseHandlerSpec: QuickSpec {
               expectation.fulfill()
             })
 
-            handler.handle(data: nil, response: handler.response, error: nil)
+            handler.handle(data: nil, urlResponse: handler.response, error: nil)
 
             self.waitForExpectations(timeout: 4.0, handler:nil)
           }
@@ -74,7 +74,7 @@ class ResponseHandlerSpec: QuickSpec {
               expectation.fulfill()
             })
 
-            handler.handle(data: handler.data, response: handler.response, error: nil)
+            handler.handle(data: handler.data, urlResponse: handler.response, error: nil)
 
             self.waitForExpectations(timeout: 4.0, handler:nil)
           }

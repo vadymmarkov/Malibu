@@ -78,22 +78,22 @@
 		D5B965141C922BCF0099D2F9 /* URLStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B9650C1C922BCF0099D2F9 /* URLStringConvertible.swift */; };
 		D5B9651A1C922BDC0099D2F9 /* MimeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965161C922BDC0099D2F9 /* MimeType.swift */; };
 		D5B9651B1C922BDC0099D2F9 /* MimeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965161C922BDC0099D2F9 /* MimeType.swift */; };
-		D5B9651C1C922BDC0099D2F9 /* Wave.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965171C922BDC0099D2F9 /* Wave.swift */; };
-		D5B9651D1C922BDC0099D2F9 /* Wave.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965171C922BDC0099D2F9 /* Wave.swift */; };
-		D5B9651E1C922BDC0099D2F9 /* WaveSerialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965181C922BDC0099D2F9 /* WaveSerialization.swift */; };
-		D5B9651F1C922BDC0099D2F9 /* WaveSerialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965181C922BDC0099D2F9 /* WaveSerialization.swift */; };
-		D5B965201C922BDC0099D2F9 /* WaveValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965191C922BDC0099D2F9 /* WaveValidation.swift */; };
-		D5B965211C922BDC0099D2F9 /* WaveValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965191C922BDC0099D2F9 /* WaveValidation.swift */; };
+		D5B9651C1C922BDC0099D2F9 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965171C922BDC0099D2F9 /* Response.swift */; };
+		D5B9651D1C922BDC0099D2F9 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965171C922BDC0099D2F9 /* Response.swift */; };
+		D5B9651E1C922BDC0099D2F9 /* ResponseSerialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965181C922BDC0099D2F9 /* ResponseSerialization.swift */; };
+		D5B9651F1C922BDC0099D2F9 /* ResponseSerialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965181C922BDC0099D2F9 /* ResponseSerialization.swift */; };
+		D5B965201C922BDC0099D2F9 /* ResponseValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965191C922BDC0099D2F9 /* ResponseValidation.swift */; };
+		D5B965211C922BDC0099D2F9 /* ResponseValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965191C922BDC0099D2F9 /* ResponseValidation.swift */; };
 		D5B965241C922C1F0099D2F9 /* EtagStorageSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965231C922C1F0099D2F9 /* EtagStorageSpec.swift */; };
 		D5B965251C922C1F0099D2F9 /* EtagStorageSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965231C922C1F0099D2F9 /* EtagStorageSpec.swift */; };
 		D5B9652A1C922C420099D2F9 /* MimeTypeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965261C922C420099D2F9 /* MimeTypeSpec.swift */; };
 		D5B9652B1C922C420099D2F9 /* MimeTypeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965261C922C420099D2F9 /* MimeTypeSpec.swift */; };
-		D5B9652C1C922C420099D2F9 /* WaveSerializationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965271C922C420099D2F9 /* WaveSerializationSpec.swift */; };
-		D5B9652D1C922C420099D2F9 /* WaveSerializationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965271C922C420099D2F9 /* WaveSerializationSpec.swift */; };
-		D5B9652E1C922C420099D2F9 /* WaveSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965281C922C420099D2F9 /* WaveSpec.swift */; };
-		D5B9652F1C922C420099D2F9 /* WaveSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965281C922C420099D2F9 /* WaveSpec.swift */; };
-		D5B965301C922C420099D2F9 /* WaveValidationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965291C922C420099D2F9 /* WaveValidationSpec.swift */; };
-		D5B965311C922C420099D2F9 /* WaveValidationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965291C922C420099D2F9 /* WaveValidationSpec.swift */; };
+		D5B9652C1C922C420099D2F9 /* ResponseSerializationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965271C922C420099D2F9 /* ResponseSerializationSpec.swift */; };
+		D5B9652D1C922C420099D2F9 /* ResponseSerializationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965271C922C420099D2F9 /* ResponseSerializationSpec.swift */; };
+		D5B9652E1C922C420099D2F9 /* ResponseSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965281C922C420099D2F9 /* ResponseSpec.swift */; };
+		D5B9652F1C922C420099D2F9 /* ResponseSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965281C922C420099D2F9 /* ResponseSpec.swift */; };
+		D5B965301C922C420099D2F9 /* ResponseValidationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965291C922C420099D2F9 /* ResponseValidationSpec.swift */; };
+		D5B965311C922C420099D2F9 /* ResponseValidationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965291C922C420099D2F9 /* ResponseValidationSpec.swift */; };
 		D5B965351C922C500099D2F9 /* ContentTypeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965321C922C500099D2F9 /* ContentTypeSpec.swift */; };
 		D5B965361C922C500099D2F9 /* ContentTypeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965321C922C500099D2F9 /* ContentTypeSpec.swift */; };
 		D5B965371C922C500099D2F9 /* SessionConfigurationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965331C922C500099D2F9 /* SessionConfigurationSpec.swift */; };
@@ -221,14 +221,14 @@
 		D5B9650B1C922BCF0099D2F9 /* SessionConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionConfiguration.swift; sourceTree = "<group>"; };
 		D5B9650C1C922BCF0099D2F9 /* URLStringConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLStringConvertible.swift; sourceTree = "<group>"; };
 		D5B965161C922BDC0099D2F9 /* MimeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MimeType.swift; sourceTree = "<group>"; };
-		D5B965171C922BDC0099D2F9 /* Wave.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wave.swift; sourceTree = "<group>"; };
-		D5B965181C922BDC0099D2F9 /* WaveSerialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveSerialization.swift; sourceTree = "<group>"; };
-		D5B965191C922BDC0099D2F9 /* WaveValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveValidation.swift; sourceTree = "<group>"; };
+		D5B965171C922BDC0099D2F9 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		D5B965181C922BDC0099D2F9 /* ResponseSerialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseSerialization.swift; sourceTree = "<group>"; };
+		D5B965191C922BDC0099D2F9 /* ResponseValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseValidation.swift; sourceTree = "<group>"; };
 		D5B965231C922C1F0099D2F9 /* EtagStorageSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EtagStorageSpec.swift; sourceTree = "<group>"; };
 		D5B965261C922C420099D2F9 /* MimeTypeSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MimeTypeSpec.swift; sourceTree = "<group>"; };
-		D5B965271C922C420099D2F9 /* WaveSerializationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveSerializationSpec.swift; sourceTree = "<group>"; };
-		D5B965281C922C420099D2F9 /* WaveSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveSpec.swift; sourceTree = "<group>"; };
-		D5B965291C922C420099D2F9 /* WaveValidationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveValidationSpec.swift; sourceTree = "<group>"; };
+		D5B965271C922C420099D2F9 /* ResponseSerializationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseSerializationSpec.swift; sourceTree = "<group>"; };
+		D5B965281C922C420099D2F9 /* ResponseSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseSpec.swift; sourceTree = "<group>"; };
+		D5B965291C922C420099D2F9 /* ResponseValidationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseValidationSpec.swift; sourceTree = "<group>"; };
 		D5B965321C922C500099D2F9 /* ContentTypeSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentTypeSpec.swift; sourceTree = "<group>"; };
 		D5B965331C922C500099D2F9 /* SessionConfigurationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionConfigurationSpec.swift; sourceTree = "<group>"; };
 		D5B965341C922C500099D2F9 /* URLStringConvertibleSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLStringConvertibleSpec.swift; sourceTree = "<group>"; };
@@ -442,9 +442,9 @@
 			isa = PBXGroup;
 			children = (
 				D5B965161C922BDC0099D2F9 /* MimeType.swift */,
-				D5B965171C922BDC0099D2F9 /* Wave.swift */,
-				D5B965181C922BDC0099D2F9 /* WaveSerialization.swift */,
-				D5B965191C922BDC0099D2F9 /* WaveValidation.swift */,
+				D5B965171C922BDC0099D2F9 /* Response.swift */,
+				D5B965181C922BDC0099D2F9 /* ResponseSerialization.swift */,
+				D5B965191C922BDC0099D2F9 /* ResponseValidation.swift */,
 				D5779BC41D991C8F00123D98 /* Mock.swift */,
 				D5779BCA1D991D4B00123D98 /* ResponseHandler.swift */,
 			);
@@ -455,9 +455,9 @@
 			isa = PBXGroup;
 			children = (
 				D5B965261C922C420099D2F9 /* MimeTypeSpec.swift */,
-				D5B965281C922C420099D2F9 /* WaveSpec.swift */,
-				D5B965271C922C420099D2F9 /* WaveSerializationSpec.swift */,
-				D5B965291C922C420099D2F9 /* WaveValidationSpec.swift */,
+				D5B965281C922C420099D2F9 /* ResponseSpec.swift */,
+				D5B965271C922C420099D2F9 /* ResponseSerializationSpec.swift */,
+				D5B965291C922C420099D2F9 /* ResponseValidationSpec.swift */,
 				D5779BCD1D991EBA00123D98 /* ResponseHandlerSpec.swift */,
 				D5779BD11D99203E00123D98 /* MockSpec.swift */,
 			);
@@ -875,7 +875,7 @@
 				D5B965131C922BCF0099D2F9 /* URLStringConvertible.swift in Sources */,
 				D5779BBC1D98475B00123D98 /* ConcurrentOperation.swift in Sources */,
 				D5779BC51D991C8F00123D98 /* Mock.swift in Sources */,
-				D5B9651C1C922BDC0099D2F9 /* Wave.swift in Sources */,
+				D5B9651C1C922BDC0099D2F9 /* Response.swift in Sources */,
 				D503D38D1C8DA7730009BDAD /* Serializing.swift in Sources */,
 				D5B964F51C92125E0099D2F9 /* Request.swift in Sources */,
 				D5B965111C922BCF0099D2F9 /* SessionConfiguration.swift in Sources */,
@@ -883,7 +883,7 @@
 				D5B9650F1C922BCF0099D2F9 /* Method.swift in Sources */,
 				D5ABDDAA1CD78BC700C78B5F /* MultipartFormEncoder.swift in Sources */,
 				DAA50FF11C97738400D01F78 /* Header.swift in Sources */,
-				D5B965201C922BDC0099D2F9 /* WaveValidation.swift in Sources */,
+				D5B965201C922BDC0099D2F9 /* ResponseValidation.swift in Sources */,
 				DAC92A091C7F961900F01940 /* FormURLEncoder.swift in Sources */,
 				DAC92A061C7F90B400F01940 /* Malibu.swift in Sources */,
 				D5F357CF1D58BDE500153C41 /* MultipartBuilder.swift in Sources */,
@@ -893,7 +893,7 @@
 				D5EB7C691CB039DC003A3BA9 /* QueryBuilder.swift in Sources */,
 				D5779BCB1D991D4B00123D98 /* ResponseHandler.swift in Sources */,
 				DA5B4CEF1C8E5553004E21ED /* StringSerializer.swift in Sources */,
-				D5B9651E1C922BDC0099D2F9 /* WaveSerialization.swift in Sources */,
+				D5B9651E1C922BDC0099D2F9 /* ResponseSerialization.swift in Sources */,
 				D5EB7C601CB01E73003A3BA9 /* RequestPolicies.swift in Sources */,
 				DA5B4CF81C8E5936004E21ED /* NetworkError.swift in Sources */,
 				D5A3DC881CD164750084F451 /* Logging.swift in Sources */,
@@ -921,7 +921,7 @@
 				DAEE2BB71C7F8C5D0000FB12 /* JsonEncoderSpec.swift in Sources */,
 				D5779BD21D99203E00123D98 /* MockSpec.swift in Sources */,
 				D5779BD81D99210400123D98 /* DataOperationSpec.swift in Sources */,
-				D5B9652C1C922C420099D2F9 /* WaveSerializationSpec.swift in Sources */,
+				D5B9652C1C922C420099D2F9 /* ResponseSerializationSpec.swift in Sources */,
 				D5779BD51D99206200123D98 /* MockOperationSpec.swift in Sources */,
 				D5B964EE1C916CBF0099D2F9 /* Mocks.swift in Sources */,
 				DA5B4D131C8E5A26004E21ED /* NetworkingSpec.swift in Sources */,
@@ -937,9 +937,9 @@
 				D5C000C21D9D9D3E00744A12 /* RequestCapsuleSpec.swift in Sources */,
 				D53FBEAA1D9922BB0014AE4A /* ConcurrentOperationSpec.swift in Sources */,
 				D5ABDDAF1CD8149500C78B5F /* MultipartFormEncoderSpec.swift in Sources */,
-				D5B9652E1C922C420099D2F9 /* WaveSpec.swift in Sources */,
+				D5B9652E1C922C420099D2F9 /* ResponseSpec.swift in Sources */,
 				D549C85C1C8F6C8800588A0C /* StringSerializerSpec.swift in Sources */,
-				D5B965301C922C420099D2F9 /* WaveValidationSpec.swift in Sources */,
+				D5B965301C922C420099D2F9 /* ResponseValidationSpec.swift in Sources */,
 				D5F357D41D58BE6D00153C41 /* MultipartBuilderSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -961,7 +961,7 @@
 				D5B965141C922BCF0099D2F9 /* URLStringConvertible.swift in Sources */,
 				D5779BBD1D98475B00123D98 /* ConcurrentOperation.swift in Sources */,
 				D5779BC61D991C8F00123D98 /* Mock.swift in Sources */,
-				D5B9651D1C922BDC0099D2F9 /* Wave.swift in Sources */,
+				D5B9651D1C922BDC0099D2F9 /* Response.swift in Sources */,
 				D503D38E1C8DA7730009BDAD /* Serializing.swift in Sources */,
 				D5B964F61C92125E0099D2F9 /* Request.swift in Sources */,
 				D5B965121C922BCF0099D2F9 /* SessionConfiguration.swift in Sources */,
@@ -969,7 +969,7 @@
 				D5B965101C922BCF0099D2F9 /* Method.swift in Sources */,
 				D5ABDDAB1CD78BC700C78B5F /* MultipartFormEncoder.swift in Sources */,
 				DAA50FF21C97738400D01F78 /* Header.swift in Sources */,
-				D5B965211C922BDC0099D2F9 /* WaveValidation.swift in Sources */,
+				D5B965211C922BDC0099D2F9 /* ResponseValidation.swift in Sources */,
 				DAC92A0A1C7F961900F01940 /* FormURLEncoder.swift in Sources */,
 				DAC92A071C7F90B400F01940 /* Malibu.swift in Sources */,
 				D5F357D01D58BDE500153C41 /* MultipartBuilder.swift in Sources */,
@@ -979,7 +979,7 @@
 				D5EB7C6A1CB039DC003A3BA9 /* QueryBuilder.swift in Sources */,
 				D5779BCC1D991D4B00123D98 /* ResponseHandler.swift in Sources */,
 				DA5B4CF01C8E5553004E21ED /* StringSerializer.swift in Sources */,
-				D5B9651F1C922BDC0099D2F9 /* WaveSerialization.swift in Sources */,
+				D5B9651F1C922BDC0099D2F9 /* ResponseSerialization.swift in Sources */,
 				D5EB7C611CB01E73003A3BA9 /* RequestPolicies.swift in Sources */,
 				DA5B4CF91C8E5936004E21ED /* NetworkError.swift in Sources */,
 				D5A3DC891CD164750084F451 /* Logging.swift in Sources */,
@@ -1007,7 +1007,7 @@
 				DAEE2BB81C7F8C5E0000FB12 /* JsonEncoderSpec.swift in Sources */,
 				D5779BD31D99203E00123D98 /* MockSpec.swift in Sources */,
 				D5779BD91D99210400123D98 /* DataOperationSpec.swift in Sources */,
-				D5B9652D1C922C420099D2F9 /* WaveSerializationSpec.swift in Sources */,
+				D5B9652D1C922C420099D2F9 /* ResponseSerializationSpec.swift in Sources */,
 				D5779BD61D99206200123D98 /* MockOperationSpec.swift in Sources */,
 				D5B964EF1C916CBF0099D2F9 /* Mocks.swift in Sources */,
 				DA5B4D141C8E5A26004E21ED /* NetworkingSpec.swift in Sources */,
@@ -1023,9 +1023,9 @@
 				D5C000C31D9D9D3E00744A12 /* RequestCapsuleSpec.swift in Sources */,
 				D53FBEAB1D9922BB0014AE4A /* ConcurrentOperationSpec.swift in Sources */,
 				D5ABDDB01CD8149600C78B5F /* MultipartFormEncoderSpec.swift in Sources */,
-				D5B9652F1C922C420099D2F9 /* WaveSpec.swift in Sources */,
+				D5B9652F1C922C420099D2F9 /* ResponseSpec.swift in Sources */,
 				D549C85D1C8F6C8800588A0C /* StringSerializerSpec.swift in Sources */,
-				D5B965311C922C420099D2F9 /* WaveValidationSpec.swift in Sources */,
+				D5B965311C922C420099D2F9 /* ResponseValidationSpec.swift in Sources */,
 				D5F357D51D58BE6E00153C41 /* MultipartBuilderSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

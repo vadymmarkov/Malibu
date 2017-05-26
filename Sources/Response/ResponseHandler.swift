@@ -8,13 +8,13 @@ protocol ResponseHandler {
 
 extension ResponseHandler {
 
-  func handle(data: Data?, response: URLResponse?, error: Error?) {
+  func handle(data: Data?, urlResponse: URLResponse?, error: Error?) {
     if let error = error {
       ride.reject(error)
       return
     }
 
-    guard let response = response as? HTTPURLResponse else {
+    guard let urlResponse = urlResponse as? HTTPURLResponse else {
       ride.reject(NetworkError.noResponseReceived)
       return
     }
@@ -24,7 +24,7 @@ extension ResponseHandler {
       return
     }
 
-    let result = Wave(data: data, request: urlRequest, response: response)
+    let result = Response(data: data, request: urlRequest, response: urlResponse)
     ride.resolve(result)
   }
 }

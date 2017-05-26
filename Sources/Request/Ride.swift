@@ -1,7 +1,7 @@
 import Foundation
 import When
 
-public final class Ride: Promise<Wave> {
+public final class Ride: Promise<Response> {
 
   public var operation: Operation?
 

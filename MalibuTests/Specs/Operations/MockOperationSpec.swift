@@ -26,7 +26,7 @@ class MockOperationSpec: QuickSpec {
 
       describe("#init") {
         beforeEach {
-          mock = Mock(response: response, data: data, error: error)
+          mock = Mock(httpResponse: response, data: data, error: error)
           operation = MockOperation(mock: mock, urlRequest: urlRequest, delay: 0.1, ride: ride)
         }
 
@@ -43,7 +43,7 @@ class MockOperationSpec: QuickSpec {
           it("rejects promise with an error") {
             let expectation = self.expectation(description: "No response failure")
 
-            mock = Mock(response: nil, data: data, error: nil)
+            mock = Mock(httpResponse: nil, data: data, error: nil)
             operation = MockOperation(mock: mock, urlRequest: urlRequest, ride: ride)
 
             operation.ride.fail({ error in
@@ -61,7 +61,7 @@ class MockOperationSpec: QuickSpec {
           it("rejects promise with an error") {
             let expectation = self.expectation(description: "Error failure")
 
-            mock = Mock(response: response, data: data, error: error)
+            mock = Mock(httpResponse: response, data: data, error: error)
             operation = MockOperation(mock: mock, urlRequest: urlRequest, ride: ride)
 
             operation.ride.fail({ error in
@@ -79,7 +79,7 @@ class MockOperationSpec: QuickSpec {
           it("rejects promise with an error") {
             let expectation = self.expectation(description: "No data failure")
 
-            mock = Mock(response: response, data: nil, error: nil)
+            mock = Mock(httpResponse: response, data: nil, error: nil)
             operation = MockOperation(mock: mock, urlRequest: urlRequest, ride: ride)
 
             operation.ride.fail({ error in
@@ -97,13 +97,13 @@ class MockOperationSpec: QuickSpec {
           it("resolves promise with a result") {
             let expectation = self.expectation(description: "Validation succeeded")
 
-            mock = Mock(response: response, data: data, error: nil)
+            mock = Mock(httpResponse: response, data: data, error: nil)
             operation = MockOperation(mock: mock, urlRequest: urlRequest, ride: ride)
 
             operation.ride.done({ result in
               expect(result.data).to(equal(operation.mock.data))
               expect(result.request).to(equal(operation.urlRequest))
-              expect(result.response).to(equal(operation.mock.response))
+              expect(result.response).to(equal(operation.mock.httpResponse))
 
               expectation.fulfill()
             })

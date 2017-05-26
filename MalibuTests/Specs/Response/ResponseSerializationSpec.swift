@@ -3,14 +3,14 @@ import When
 import Quick
 import Nimble
 
-class WaveSerializationSpec: QuickSpec, NetworkPromiseSpec {
+class ResponseSerializationSpec: QuickSpec, NetworkPromiseSpec {
 
   var networkPromise: Ride!
   var request: URLRequest!
   var data: Data!
 
   override func spec() {
-    describe("WaveSerialization") {
+    describe("ResponseSerialization") {
       let url = URL(string: "http://api.loc")!
       let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!
 

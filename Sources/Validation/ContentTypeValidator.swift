@@ -1,6 +1,6 @@
 import Foundation
 
-public struct ContentTypeValidator<T : Sequence>: Validating where T.Iterator.Element == String {
+public struct ContentTypeValidator<T: Sequence>: Validating where T.Iterator.Element == String {
 
   public var contentTypes: T
 
@@ -12,7 +12,7 @@ public struct ContentTypeValidator<T : Sequence>: Validating where T.Iterator.El
 
   // MARK: - Validation
 
-  public func validate(_ result: Wave) throws {
+  public func validate(_ result: Response) throws {
     let response = result.response
 
     if let responseContentType = response.mimeType,

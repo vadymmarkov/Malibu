@@ -21,7 +21,7 @@ final class MockOperation: ConcurrentOperation, ResponseHandler {
   override func execute() {
     let when = DispatchTime.now() + delay
     DispatchQueue.main.asyncAfter(deadline: when) { [weak self] in
-      self?.handle(data: self?.mock.data, response: self?.mock.response, error: self?.mock.error)
+      self?.handle(data: self?.mock.data, urlResponse: self?.mock.httpResponse, error: self?.mock.error)
       self?.state = .Finished
     }
   }

@@ -2,15 +2,15 @@ import Foundation
 
 public final class Mock {
 
-  public var response: HTTPURLResponse?
+  public var httpResponse: HTTPURLResponse?
   public var data: Data?
   public var error: Error?
 
   // MARK: - Initialization
 
-  public init(response: HTTPURLResponse?, data: Data?, error: Error? = nil) {
+  public init(httpResponse: HTTPURLResponse?, data: Data?, error: Error? = nil) {
     self.data = data
-    self.response = response
+    self.httpResponse = httpResponse
     self.error = error
   }
 
@@ -23,13 +23,13 @@ public final class Mock {
       let data = try? Data(contentsOf: URL(fileURLWithPath: filePath)),
       let response = HTTPURLResponse(url: fileURL, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)
       else {
-        self.init(response: nil, data: nil, error: NetworkError.noResponseReceived)
+        self.init(httpResponse: nil, data: nil, error: NetworkError.noResponseReceived)
         return
     }
 
     response.setValue("application/json; charset=utf-8", forKey: "MIMEType")
 
-    self.init(response: response, data: data, error: nil)
+    self.init(httpResponse: response, data: data, error: nil)
   }
 
   public convenience init(json: [String: Any]) {
@@ -42,12 +42,12 @@ public final class Mock {
     guard let url = URL(string: "mock://JSON"), let data = jsonData,
       let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)
       else {
-        self.init(response: nil, data: nil, error: NetworkError.noResponseReceived)
+        self.init(httpResponse: nil, data: nil, error: NetworkError.noResponseReceived)
         return
     }
 
     response.setValue("application/json; charset=utf-8", forKey: "MIMEType")
 
-    self.init(response: response, data: data, error: nil)
+    self.init(httpResponse: response, data: data, error: nil)
   }
 }

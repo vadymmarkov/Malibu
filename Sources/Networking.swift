@@ -150,8 +150,8 @@ extension Networking {
       .then({
         return self.start(request, mockBehavior: mockBehavior)
       })
-      .done({ wave in
-        ride.resolve(wave)
+      .done({ response in
+        ride.resolve(response)
       })
       .fail({ error in
         ride.reject(error)
@@ -180,7 +180,7 @@ extension Networking {
 
     let operation = createOperation(ride: ride, urlRequest: urlRequest, mockBehavior: mockBehavior)
 
-    let etagPromise = ride.then { [weak self] result -> Wave in
+    let etagPromise = ride.then { [weak self] result -> Response in
       self?.saveEtag(request: request, response: result.response)
       return result
     }

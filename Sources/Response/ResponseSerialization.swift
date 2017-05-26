@@ -3,7 +3,7 @@ import When
 
 // MARK: - Serialization
 
-public extension Promise where T: Wave {
+public extension Promise where T: Response {
 
   public func toData() -> Promise<Data> {
     return then({ result -> Data in

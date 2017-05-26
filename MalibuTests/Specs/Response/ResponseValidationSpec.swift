@@ -3,14 +3,14 @@ import When
 import Quick
 import Nimble
 
-class WaveValidationSpec: QuickSpec, NetworkPromiseSpec {
+class ResponseValidationSpec: QuickSpec, NetworkPromiseSpec {
 
   var networkPromise: Ride!
   var request: URLRequest!
   var data: Data!
 
   override func spec() {
-    describe("WaveValidation") {
+    describe("ResponseValidation") {
       let url = URL(string: "http://api.loc")!
       let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!
       let failedResponse = HTTPURLResponse(url: url, statusCode: 404,
@@ -27,7 +27,7 @@ class WaveValidationSpec: QuickSpec, NetworkPromiseSpec {
 
       describe("#validate:using") {
         let validator = StatusCodeValidator(statusCodes: [200])
-        var promise: Promise<Wave>!
+        var promise: Promise<Response>!
 
         beforeEach {
           promise = self.networkPromise.validate(using: validator)
@@ -54,7 +54,7 @@ class WaveValidationSpec: QuickSpec, NetworkPromiseSpec {
       }
 
       describe("#validate:statusCodes") {
-        var promise: Promise<Wave>!
+        var promise: Promise<Response>!
 
         beforeEach {
           promise = self.networkPromise.validate(statusCodes: [200])
@@ -81,7 +81,7 @@ class WaveValidationSpec: QuickSpec, NetworkPromiseSpec {
       }
 
       describe("#validate:contentTypes") {
-        var promise: Promise<Wave>!
+        var promise: Promise<Response>!
 
         beforeEach {
           promise = self.networkPromise.validate(contentTypes: ["application/json; charset=utf-8"])
@@ -114,7 +114,7 @@ class WaveValidationSpec: QuickSpec, NetworkPromiseSpec {
       }
 
       describe("#validate") {
-        var promise: Promise<Wave>!
+        var promise: Promise<Response>!
 
         context("with no accept header in the request") {
           beforeEach {
@@ -142,7 +142,7 @@ class WaveValidationSpec: QuickSpec, NetworkPromiseSpec {
         }
 
         context("with accept header in the request") {
-          var promise: Promise<Wave>!
+          var promise: Promise<Response>!
 
           beforeEach {
             var request = URLRequest(url: url)

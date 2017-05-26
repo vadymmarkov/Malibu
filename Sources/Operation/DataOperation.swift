@@ -18,12 +18,12 @@ final class DataOperation: ConcurrentOperation, ResponseHandler {
   // MARK: - Operation
 
   override func execute() {
-    task = session.dataTask(with: urlRequest, completionHandler: { [weak self] (data, response, error) in
+    task = session.dataTask(with: urlRequest, completionHandler: { [weak self] (data, urlResponse, error) in
       guard let weakSelf = self else {
         return
       }
 
-      weakSelf.handle(data: data, response: response, error: error)
+      weakSelf.handle(data: data, urlResponse: urlResponse, error: error)
 
       self?.state = .Finished
     })

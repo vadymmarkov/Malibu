@@ -18,9 +18,9 @@ class StatusCodeValidatorSpec: QuickSpec {
 
         context("when response has expected status code") {
           it("does not throw an error") {
-            let HTTPResponse = HTTPURLResponse(url: url, statusCode: 200,
+            let httpResponse = HTTPURLResponse(url: url, statusCode: 200,
               httpVersion: "HTTP/2.0", headerFields: nil)!
-            let result = Wave(data: data, request: request, response: HTTPResponse)
+            let result = Response(data: data, request: request, response: httpResponse)
 
             expect{ try validator.validate(result) }.toNot(throwError())
           }
@@ -28,9 +28,9 @@ class StatusCodeValidatorSpec: QuickSpec {
 
         context("when response has not expected status code") {
           it("throws an error") {
-            let HTTPResponse = HTTPURLResponse(url: url, statusCode: 404,
+            let httpResponse = HTTPURLResponse(url: url, statusCode: 404,
               httpVersion: "HTTP/2.0", headerFields: nil)!
-            let result = Wave(data: data, request: request, response: HTTPResponse)
+            let result = Response(data: data, request: request, response: httpResponse)
 
             expect{ try validator.validate(result) }.to(throwError())
           }

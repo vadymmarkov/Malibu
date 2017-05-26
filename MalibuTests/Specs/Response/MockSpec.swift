@@ -9,18 +9,18 @@ class MockSpec: QuickSpec {
     describe("Mock") {
       var mock: Mock!
       let request = TestService.fetchPosts.request
-      var response = HTTPURLResponse(url: URL(string: TestService.baseUrl!.urlString)!,
+      var httpResponse = HTTPURLResponse(url: URL(string: TestService.baseUrl!.urlString)!,
                                      statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!
       let data = "test".data(using: String.Encoding.utf32)
       let error = NetworkError.noDataInResponse
 
       describe("#init:response:data:error") {
         beforeEach {
-          mock = Mock(response: response, data: data, error: error)
+          mock = Mock(httpResponse: httpResponse, data: data, error: error)
         }
 
         it("sets properties") {
-          expect(mock.response).to(equal(response))
+          expect(mock.httpResponse).to(equal(httpResponse))
           expect(mock.data).to(equal(data))
           expect(mock.error as! NetworkError == error).to(beTrue())
         }
@@ -28,28 +28,28 @@ class MockSpec: QuickSpec {
 
       describe("#init:fileName:bundle") {
         let fileName = "mock.json"
-        var wave: Wave!
+        var response: Response!
 
         beforeEach {
           mock = Mock(fileName: fileName, bundle: Bundle(for: MockSpec.self))
-          response = HTTPURLResponse(url: URL(string: fileName)!, statusCode: 200,
+          httpResponse = HTTPURLResponse(url: URL(string: fileName)!, statusCode: 200,
             httpVersion: "HTTP/2.0", headerFields: nil)!
-          wave = Wave(
+          response = Response(
             data: mock.data!,
             request: try! request.toUrlRequest(),
-            response: mock.response!)
+            response: mock.httpResponse!)
         }
 
         it("sets properties") {
           let contentTypeValidator = ContentTypeValidator(contentTypes: ["application/json"])
           let statusCodeValidator = StatusCodeValidator(statusCodes: [200])
           let serializer = JsonSerializer()
-          let dictionary = try! serializer.serialize(data: mock.data!, response: response) as! [String: String]
+          let dictionary = try! serializer.serialize(data: mock.data!, response: httpResponse) as! [String: String]
 
-          expect(mock.response?.statusCode).to(equal(response.statusCode))
+          expect(mock.httpResponse?.statusCode).to(equal(httpResponse.statusCode))
           expect(mock.error).to(beNil())
-          expect{ try contentTypeValidator.validate(wave) }.toNot(throwError())
-          expect{ try statusCodeValidator.validate(wave) }.toNot(throwError())
+          expect{ try contentTypeValidator.validate(response) }.toNot(throwError())
+          expect{ try statusCodeValidator.validate(response) }.toNot(throwError())
           expect(dictionary["first_name"]).to(equal("John"))
           expect(dictionary["last_name"]).to(equal("Hyperseed"))
           expect(dictionary["email"]).to(equal("ios@hyper.no"))
@@ -63,28 +63,28 @@ class MockSpec: QuickSpec {
           "email" : "ios@hyper.no"
         ]
 
-        var wave: Wave!
+        var response: Response!
 
         beforeEach {
           mock = Mock(json: json)
-          response = HTTPURLResponse(url: URL(string: "mock://JSON")!, statusCode: 200,
+          httpResponse = HTTPURLResponse(url: URL(string: "mock://JSON")!, statusCode: 200,
             httpVersion: "HTTP/2.0", headerFields: nil)!
-          wave = Wave(
+          response = Response(
             data: mock.data!,
             request: try! request.toUrlRequest(),
-            response: mock.response!)
+            response: mock.httpResponse!)
         }
 
         it("sets properties") {
           let contentTypeValidator = ContentTypeValidator(contentTypes: ["application/json"])
           let statusCodeValidator = StatusCodeValidator(statusCodes: [200])
           let serializer = JsonSerializer()
-          let dictionary = try! serializer.serialize(data: mock.data!, response: response) as! [String: String]
+          let dictionary = try! serializer.serialize(data: mock.data!, response: httpResponse) as! [String: String]
 
-          expect(mock.response?.statusCode).to(equal(response.statusCode))
+          expect(mock.httpResponse?.statusCode).to(equal(httpResponse.statusCode))
           expect(mock.error).to(beNil())
-          expect{ try contentTypeValidator.validate(wave) }.toNot(throwError())
-          expect{ try statusCodeValidator.validate(wave) }.toNot(throwError())
+          expect{ try contentTypeValidator.validate(response) }.toNot(throwError())
+          expect{ try statusCodeValidator.validate(response) }.toNot(throwError())
           expect(dictionary["first_name"]).to(equal("John"))
           expect(dictionary["last_name"]).to(equal("Hyperseed"))
           expect(dictionary["email"]).to(equal("ios@hyper.no"))

@@ -21,7 +21,7 @@ class ContentTypeValidatorSpec: QuickSpec {
           it("does not throw an error") {
             let HTTPResponse = HTTPURLResponse(url: url, mimeType: contentType,
               expectedContentLength: 10, textEncodingName: nil)
-            let result = Wave(data: data, request: request, response: HTTPResponse)
+            let result = Response(data: data, request: request, response: HTTPResponse)
 
             expect{ try validator.validate(result) }.toNot(throwError())
           }
@@ -31,7 +31,7 @@ class ContentTypeValidatorSpec: QuickSpec {
           it("throws an error") {
             let HTTPResponse = HTTPURLResponse(url: url, mimeType: "text/html; charset=utf-8",
               expectedContentLength: 100, textEncodingName: nil)
-            let result = Wave(data: data, request: request, response: HTTPResponse)
+            let result = Response(data: data, request: request, response: HTTPResponse)
 
             expect{ try validator.validate(result) }.to(throwError())
           }
