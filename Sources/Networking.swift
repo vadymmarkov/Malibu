@@ -110,6 +110,14 @@ public final class Networking<R: RequestConvertible>: NSObject, URLSessionDelega
     completionHandler(disposition, credential)
   }
 
+  public func resume() {
+    queue.isSuspended = false
+  }
+
+  public func suspend() {
+    queue.isSuspended = true
+  }
+
   func reset(mode: NetworkingMode) {
     self.mode = mode
 
