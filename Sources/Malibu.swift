@@ -18,6 +18,6 @@ public func clearStorages() {
 
 // MARK: - Requests
 
-public func request(_ request: Request) -> Ride {
+public func request(_ request: Request) -> NetworkPromise {
   return backfootSurfer.execute(request)
 }

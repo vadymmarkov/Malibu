@@ -13,12 +13,12 @@ class ResponseHandlerSpec: QuickSpec {
 
       beforeEach {
         let urlRequest = try! TestService.showPost(id: 1).request.toUrlRequest()
-        let ride = Ride()
+        let networkPromise = NetworkPromise()
         data = "test".data(using: String.Encoding.utf32)
         response = HTTPURLResponse(
           url: urlRequest.url!, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil
         )
-        handler = ResponseHandler(urlRequest: urlRequest, ride: ride)
+        handler = ResponseHandler(urlRequest: urlRequest, networkPromise: networkPromise)
       }
 
       describe("#handle") {
@@ -26,7 +26,7 @@ class ResponseHandlerSpec: QuickSpec {
           it("rejects promise with an error") {
             let expectation = self.expectation(description: "No response failure")
 
-            handler.ride.fail({ error in
+            handler.networkPromise.fail({ error in
               expect(error as! NetworkError == NetworkError.noResponseReceived).to(beTrue())
               expectation.fulfill()
             })
@@ -40,7 +40,7 @@ class ResponseHandlerSpec: QuickSpec {
           it("rejects promise with an error") {
             let expectation = self.expectation(description: "Error failure")
 
-            handler.ride.fail({ error in
+            handler.networkPromise.fail({ error in
               expect(error as! NetworkError == NetworkError.jsonDictionarySerializationFailed).to(beTrue())
               expectation.fulfill()
             })
@@ -58,7 +58,7 @@ class ResponseHandlerSpec: QuickSpec {
           it("rejects promise with an error") {
             let expectation = self.expectation(description: "No data failure")
 
-            handler.ride.fail({ error in
+            handler.networkPromise.fail({ error in
               expect(error as! NetworkError == NetworkError.noDataInResponse).to(beTrue())
               expectation.fulfill()
             })
@@ -72,7 +72,7 @@ class ResponseHandlerSpec: QuickSpec {
           it("resolves promise with a result") {
             let expectation = self.expectation(description: "Validation succeeded")
 
-            handler.ride.done({ result in
+            handler.networkPromise.done({ result in
               expect(result.data).to(equal(data))
               expect(result.request).to(equal(handler.urlRequest))
               expect(result.response).to(equal(response))

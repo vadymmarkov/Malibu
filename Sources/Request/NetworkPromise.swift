@@ -1,7 +1,7 @@
 import Foundation
 import When
 
-public final class Ride: Promise<Response> {
+public final class NetworkPromise: Promise<Response> {
   weak var operation: Operation?
 
   public func cancel() {

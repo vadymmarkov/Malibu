@@ -128,7 +128,7 @@ public final class Networking<R: RequestConvertible>: NSObject, URLSessionDelega
 
 extension Networking {
 
-  public func request(_ requestConvertible: R) -> Ride {
+  public func request(_ requestConvertible: R) -> NetworkPromise {
     var mockBehavior: MockBehavior?
 
     if let mockProvider = mockProvider, let mock = mockProvider.resolver(requestConvertible) {
@@ -142,8 +142,8 @@ extension Networking {
     queue.cancelAllOperations()
   }
 
-  func execute(_ request: Request, mockBehavior: MockBehavior? = nil) -> Ride {
-    let ride = Ride()
+  func execute(_ request: Request, mockBehavior: MockBehavior? = nil) -> NetworkPromise {
+    let networkPromise = NetworkPromise()
     let beforePromise = Promise<Void>()
 
     beforePromise
@@ -151,41 +151,45 @@ extension Networking {
         return self.start(request, mockBehavior: mockBehavior)
       })
       .done({ response in
-        ride.resolve(response)
+        networkPromise.resolve(response)
       })
       .fail({ error in
-        ride.reject(error)
+        networkPromise.reject(error)
       })
 
     middleware(beforePromise)
 
-    return ride
+    return networkPromise
   }
 
-  func start(_ request: Request, mockBehavior: MockBehavior? = nil) -> Ride {
-    let ride = Ride()
+  func start(_ request: Request, mockBehavior: MockBehavior? = nil) -> NetworkPromise {
+    let networkPromise = NetworkPromise()
     var urlRequest: URLRequest
 
     do {
       let request = beforeEach?(request) ?? request
       urlRequest = try request.toUrlRequest(baseUrl: R.baseUrl, additionalHeaders: requestHeaders)
     } catch {
-      ride.reject(error)
-      return ride
+      networkPromise.reject(error)
+      return networkPromise
     }
 
     if let preProcessRequest = preProcessRequest {
       urlRequest = preProcessRequest(urlRequest)
     }
 
-    let operation = createOperation(ride: ride, urlRequest: urlRequest, mockBehavior: mockBehavior)
+    let operation = createOperation(
+      networkPromise: networkPromise,
+      urlRequest: urlRequest,
+      mockBehavior: mockBehavior
+    )
 
-    let etagPromise = ride.then { [weak self] result -> Response in
+    let etagPromise = networkPromise.then { [weak self] result -> Response in
       self?.saveEtag(request: request, response: result.response)
       return result
     }
 
-    let nextRide = Ride()
+    let nextNetworkPromise = NetworkPromise()
 
     etagPromise
       .done({ value in
@@ -194,7 +198,7 @@ extension Networking {
           logger.responseLogger.init(level: logger.level).log(response: value.response)
         }
 
-        nextRide.resolve(value)
+        nextNetworkPromise.resolve(value)
       })
       .fail({ [weak self] error in
         if logger.enabled {
@@ -202,15 +206,16 @@ extension Networking {
         }
 
         self?.handle(error: error, on: request)
-        nextRide.reject(error)
+        nextNetworkPromise.reject(error)
       })
 
     queue.addOperation(operation)
 
-    return nextRide
+    return nextNetworkPromise
   }
 
-  func createOperation(ride: Ride, urlRequest: URLRequest, mockBehavior: MockBehavior?) -> ConcurrentOperation {
+  func createOperation(networkPromise: NetworkPromise, urlRequest: URLRequest,
+                       mockBehavior: MockBehavior?) -> ConcurrentOperation {
     let operation: ConcurrentOperation
 
     if let mockBehavior = mockBehavior {
@@ -223,9 +228,9 @@ extension Networking {
       operation = DataOperation(session: session, urlRequest: urlRequest)
     }
 
-    let responseHandler = ResponseHandler(urlRequest: urlRequest, ride: ride)
+    let responseHandler = ResponseHandler(urlRequest: urlRequest, networkPromise: networkPromise)
     operation.handleResponse = responseHandler.handle(data:urlResponse:error:)
-    ride.operation = operation
+    networkPromise.operation = operation
     return operation
   }
 }
@@ -278,13 +283,13 @@ extension Networking {
 
 extension Networking {
 
-  public func replay() -> Ride {
+  public func replay() -> NetworkPromise {
     let requests = requestStorage.requests.values
     let currentMode = mode
 
     reset(mode: .sync)
 
-    let lastRide = Ride()
+    let lastNetworkPromise = NetworkPromise()
 
     for (index, capsule) in requests.enumerated() {
       let isLast = index == requests.count - 1
@@ -292,11 +297,11 @@ extension Networking {
       execute(capsule.request)
         .done({ value in
           guard isLast else { return }
-          lastRide.resolve(value)
+          lastNetworkPromise.resolve(value)
         })
         .fail({ error in
           guard isLast else { return }
-          lastRide.reject(error)
+          lastNetworkPromise.reject(error)
         })
         .always({ [weak self] result in
           if isLast {
@@ -311,6 +316,6 @@ extension Networking {
         })
     }
 
-    return lastRide
+    return lastNetworkPromise
   }
 }
