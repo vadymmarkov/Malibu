@@ -60,7 +60,7 @@ past. Enjoy the ride!
   * [Middleware](#middleware)
   * [Authentication](#authentication)
   * [Making a request](#making-a-request)
-  * [Response and Ride](#response-and-ride)
+  * [Response and NetworkPromise](#response-and-networkpromise)
   * [Offline storage](#offline-storage)
   * [Backfoot surfer](#backfoot-surfer)
 * [Response](#response)
@@ -427,24 +427,24 @@ networking.request(.deleteBoard(id: 11))
   })
 ```
 
-### Response and Ride
+### Response and NetworkPromise
 
 `Response` object consists of `Data`, `URLRequest` and `HTTPURLResponse`
 properties.
 
-`Ride` is returned by every request method. It extends `Promise<Response>` by
+`NetworkPromise` is returned by every request method. It extends `Promise<Response>` by
 adding `URLSessionTask` that you might want to cancel when it's needed. You
-may use `Ride` object to add different callbacks and build chains of tasks. It
+may use `NetworkPromise` object to add different callbacks and build chains of tasks. It
 has a range of useful helpers, such as validations and serialization.
 
 ```swift
-let ride = networking.request(.fetchBoards)
+let networkPromise = networking.request(.fetchBoards)
 
 // Cancel the task
-ride.cancel()
+networkPromise.cancel()
 
 // Create chains and add callbacks on promise object
-ride
+networkPromise
   .validate()
   .toString()
   .then({ string in
@@ -497,12 +497,12 @@ Malibu.request(Request.get("http://sharkywaters.com/api/boards")
 **Malibu** gives you a bunch of methods to serialize response data:
 
 ```swift
-let ride = networking.request(.fetchBoards)
+let networkPromise = networking.request(.fetchBoards)
 
-ride.toData() // -> Promise<Data>
-ride.toString() // -> Promise<String>
-ride.toJsonArray() // -> Promise<[[String: Any]]>
-ride.toJsonDictionary() // -> Promise<[String: Any]>
+networkPromise.toData() // -> Promise<Data>
+networkPromise.toString() // -> Promise<String>
+networkPromise.toJsonArray() // -> Promise<[[String: Any]]>
+networkPromise.toJsonDictionary() // -> Promise<[String: Any]>
 ```
 
 ### Validation

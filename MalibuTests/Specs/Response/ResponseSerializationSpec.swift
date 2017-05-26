@@ -5,7 +5,7 @@ import Nimble
 
 class ResponseSerializationSpec: QuickSpec, NetworkPromiseSpec {
 
-  var networkPromise: Ride!
+  var networkPromise: NetworkPromise!
   var request: URLRequest!
   var data: Data!
 
@@ -17,7 +17,7 @@ class ResponseSerializationSpec: QuickSpec, NetworkPromiseSpec {
       // MARK: - Specs
 
       beforeEach {
-        self.networkPromise = Ride()
+        self.networkPromise = NetworkPromise()
         self.request = URLRequest(url: URL(string: "http://api.loc")!)
         self.data = try! JSONSerialization.data(
           withJSONObject: [["name": "Taylor"]],
