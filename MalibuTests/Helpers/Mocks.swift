@@ -35,21 +35,3 @@ enum TestService: RequestConvertible {
     }
   }
 }
-
-
-// MARK: - Tasks
-
-class TestResponseHandler: ResponseHandler {
-  let urlRequest: URLRequest
-  let ride: Ride
-  let data = "test".data(using: String.Encoding.utf32)
-  let response: HTTPURLResponse
-
-  // MARK: - Initialization
-
-  init() {
-    urlRequest = try! TestService.showPost(id: 1).request.toUrlRequest()
-    ride = Ride()
-    response = HTTPURLResponse(url: urlRequest.url!, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!
-  }
-}

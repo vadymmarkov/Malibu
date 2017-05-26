@@ -1,19 +1,16 @@
 import Foundation
 
-final class MockOperation: ConcurrentOperation, ResponseHandler {
-
-  let mock: Mock
-  let urlRequest: URLRequest
-  let delay: TimeInterval
-  var ride: Ride
+final class MockOperation: ConcurrentOperation {
+  private let mock: Mock
+  private let urlRequest: URLRequest
+  private let delay: TimeInterval
 
   // MARK: - Initialization
 
-  init(mock: Mock, urlRequest: URLRequest, delay: TimeInterval = 0.0, ride: Ride) {
+  init(mock: Mock, urlRequest: URLRequest, delay: TimeInterval = 0.0) {
     self.mock = mock
     self.urlRequest = urlRequest
     self.delay = delay
-    self.ride = ride
   }
 
   // MARK: - Operation
@@ -21,7 +18,7 @@ final class MockOperation: ConcurrentOperation, ResponseHandler {
   override func execute() {
     let when = DispatchTime.now() + delay
     DispatchQueue.main.asyncAfter(deadline: when) { [weak self] in
-      self?.handle(data: self?.mock.data, urlResponse: self?.mock.httpResponse, error: self?.mock.error)
+      self?.handleResponse?(self?.mock.data, self?.mock.httpResponse, self?.mock.error)
       self?.state = .Finished
     }
   }

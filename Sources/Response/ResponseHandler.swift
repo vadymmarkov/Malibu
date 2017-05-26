@@ -1,13 +1,12 @@
 import Foundation
 import When
 
-protocol ResponseHandler {
-  var urlRequest: URLRequest { get }
-  var ride: Ride { get }
+struct ResponseHandler {
+  let urlRequest: URLRequest
+  let ride: Ride
 }
 
 extension ResponseHandler {
-
   func handle(data: Data?, urlResponse: URLResponse?, error: Error?) {
     if let error = error {
       ride.reject(error)
