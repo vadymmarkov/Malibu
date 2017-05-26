@@ -19,6 +19,8 @@ class ConcurrentOperation: Operation {
     }
   }
 
+  var handleResponse: ((Data?, URLResponse?, Error?) -> Void)?
+
   override var isAsynchronous: Bool {
     return true
   }

@@ -7,10 +7,18 @@ class ResponseHandlerSpec: QuickSpec {
 
   override func spec() {
     describe("TaskRunning") {
-      var handler: TestResponseHandler!
+      var handler: ResponseHandler!
+      var data: Data!
+      var response: HTTPURLResponse!
 
       beforeEach {
-        handler = TestResponseHandler()
+        let urlRequest = try! TestService.showPost(id: 1).request.toUrlRequest()
+        let ride = Ride()
+        data = "test".data(using: String.Encoding.utf32)
+        response = HTTPURLResponse(
+          url: urlRequest.url!, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil
+        )
+        handler = ResponseHandler(urlRequest: urlRequest, ride: ride)
       }
 
       describe("#handle") {
@@ -23,8 +31,7 @@ class ResponseHandlerSpec: QuickSpec {
               expectation.fulfill()
             })
 
-            handler.handle(data: handler.data, urlResponse: nil, error: nil)
-
+            handler.handle(data: data, urlResponse: nil, error: nil)
             self.waitForExpectations(timeout: 4.0, handler:nil)
           }
         }
@@ -39,10 +46,10 @@ class ResponseHandlerSpec: QuickSpec {
             })
 
             handler.handle(
-              data: handler.data,
-              urlResponse: handler.response,
-              error: NetworkError.jsonDictionarySerializationFailed)
-
+              data: data,
+              urlResponse: response,
+              error: NetworkError.jsonDictionarySerializationFailed
+            )
             self.waitForExpectations(timeout: 4.0, handler:nil)
           }
         }
@@ -56,8 +63,7 @@ class ResponseHandlerSpec: QuickSpec {
               expectation.fulfill()
             })
 
-            handler.handle(data: nil, urlResponse: handler.response, error: nil)
-
+            handler.handle(data: nil, urlResponse: response, error: nil)
             self.waitForExpectations(timeout: 4.0, handler:nil)
           }
         }
@@ -67,15 +73,14 @@ class ResponseHandlerSpec: QuickSpec {
             let expectation = self.expectation(description: "Validation succeeded")
 
             handler.ride.done({ result in
-              expect(result.data).to(equal(handler.data))
+              expect(result.data).to(equal(data))
               expect(result.request).to(equal(handler.urlRequest))
-              expect(result.response).to(equal(handler.response))
+              expect(result.response).to(equal(response))
 
               expectation.fulfill()
             })
 
-            handler.handle(data: handler.data, urlResponse: handler.response, error: nil)
-
+            handler.handle(data: data, urlResponse: response, error: nil)
             self.waitForExpectations(timeout: 4.0, handler:nil)
           }
         }

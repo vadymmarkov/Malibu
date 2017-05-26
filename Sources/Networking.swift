@@ -211,15 +211,22 @@ extension Networking {
   }
 
   func createOperation(ride: Ride, urlRequest: URLRequest, mockBehavior: MockBehavior?) -> ConcurrentOperation {
-    guard let mockBehavior = mockBehavior else {
-      return DataOperation(session: session, urlRequest: urlRequest, ride: ride)
+    let operation: ConcurrentOperation
+
+    if let mockBehavior = mockBehavior {
+      operation = MockOperation(
+        mock: mockBehavior.mock,
+        urlRequest: urlRequest,
+        delay: mockBehavior.delay
+      )
+    } else {
+      operation = DataOperation(session: session, urlRequest: urlRequest)
     }
 
-    return MockOperation(
-      mock: mockBehavior.mock,
-      urlRequest: urlRequest,
-      delay: mockBehavior.delay,
-      ride: ride)
+    let responseHandler = ResponseHandler(urlRequest: urlRequest, ride: ride)
+    operation.handleResponse = responseHandler.handle(data:urlResponse:error:)
+    ride.operation = operation
+    return operation
   }
 }
 
