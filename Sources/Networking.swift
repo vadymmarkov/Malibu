@@ -27,7 +27,6 @@ struct MockBehavior {
 // MARK: - Networking
 
 public final class Networking<R: RequestConvertible>: NSObject, URLSessionDelegate {
-
   public var beforeEach: ((Request) -> Request)?
   public var preProcessRequest: ((URLRequest) -> URLRequest)?
 
@@ -135,7 +134,6 @@ public final class Networking<R: RequestConvertible>: NSObject, URLSessionDelega
 // MARK: - Request
 
 extension Networking {
-
   public func request(_ requestConvertible: R) -> NetworkPromise {
     var mockBehavior: MockBehavior?
 
@@ -166,7 +164,6 @@ extension Networking {
       })
 
     middleware(beforePromise)
-
     return networkPromise
   }
 
@@ -186,44 +183,38 @@ extension Networking {
       urlRequest = preProcessRequest(urlRequest)
     }
 
-    let operation = createOperation(
-      networkPromise: networkPromise,
-      urlRequest: urlRequest,
-      mockBehavior: mockBehavior
-    )
+    let operation = createOperation(urlRequest: urlRequest, mockBehavior: mockBehavior)
+    let responseHandler = ResponseHandler(urlRequest: urlRequest, networkPromise: networkPromise)
+    operation.handleResponse = responseHandler.handle(data:urlResponse:error:)
 
-    let etagPromise = networkPromise.then { [weak self] result -> Response in
-      self?.saveEtag(request: request, response: result.response)
-      return result
-    }
-
-    let nextNetworkPromise = NetworkPromise()
-
-    etagPromise
+    let resultPromise = networkPromise
+      .then({ [weak self] result -> Response in
+        self?.saveEtag(request: request, response: result.response)
+        return result
+      })
       .done({ value in
         if logger.enabled {
           logger.requestLogger.init(level: logger.level).log(request: request, urlRequest: value.request)
           logger.responseLogger.init(level: logger.level).log(response: value.response)
         }
-
-        nextNetworkPromise.resolve(value)
       })
       .fail({ [weak self] error in
+        if case NetworkError.cancelled = error {
+          operation.cancel()
+        }
+
         if logger.enabled {
           logger.errorLogger.init(level: logger.level).log(error: error)
         }
 
         self?.handle(error: error, on: request)
-        nextNetworkPromise.reject(error)
       })
 
     queue.addOperation(operation)
-
-    return nextNetworkPromise
+    return resultPromise
   }
 
-  func createOperation(networkPromise: NetworkPromise, urlRequest: URLRequest,
-                       mockBehavior: MockBehavior?) -> ConcurrentOperation {
+  private func createOperation(urlRequest: URLRequest, mockBehavior: MockBehavior?) -> ConcurrentOperation {
     let operation: ConcurrentOperation
 
     if let mockBehavior = mockBehavior {
@@ -236,9 +227,6 @@ extension Networking {
       operation = DataOperation(session: session, urlRequest: urlRequest)
     }
 
-    let responseHandler = ResponseHandler(urlRequest: urlRequest, networkPromise: networkPromise)
-    operation.handleResponse = responseHandler.handle(data:urlResponse:error:)
-    networkPromise.operation = operation
     return operation
   }
 }
@@ -246,12 +234,10 @@ extension Networking {
 // MARK: - Authentication
 
 extension Networking {
-
   public func authenticate(username: String, password: String) {
     guard let header = Header.authentication(username: username, password: password) else {
       return
     }
-
     customHeaders["Authorization"] = header
   }
 
@@ -267,14 +253,12 @@ extension Networking {
 // MARK: - Helpers
 
 extension Networking {
-
   func saveEtag(request: Request, response: HTTPURLResponse) {
     guard let etag = response.allHeaderFields["ETag"] as? String else {
       return
     }
 
     let prefix = R.baseUrl?.urlString ?? ""
-
     EtagStorage().add(value: etag, forKey: request.etagKey(prefix: prefix))
   }
 
@@ -282,7 +266,6 @@ extension Networking {
     guard request.storePolicy == StorePolicy.offline && (error as NSError).isOffline else {
       return
     }
-
     requestStorage.save(RequestCapsule(request: request))
   }
 }
@@ -290,13 +273,11 @@ extension Networking {
 // MARK: - Replay
 
 extension Networking {
-
   public func replay() -> NetworkPromise {
     let requests = requestStorage.requests.values
     let currentMode = mode
 
     reset(mode: .sync)
-
     let lastNetworkPromise = NetworkPromise()
 
     for (index, capsule) in requests.enumerated() {
