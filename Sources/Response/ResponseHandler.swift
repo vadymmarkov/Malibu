@@ -2,14 +2,18 @@ import Foundation
 import When
 
 struct ResponseHandler {
-  let urlRequest: URLRequest
   let networkPromise: NetworkPromise
 }
 
 extension ResponseHandler {
-  func handle(data: Data?, urlResponse: URLResponse?, error: Error?) {
+  func handle(urlRequest: URLRequest?, data: Data?, urlResponse: URLResponse?, error: Error?) {
     if let error = error {
       networkPromise.reject(error)
+      return
+    }
+
+    guard let urlRequest = urlRequest else {
+      networkPromise.reject(NetworkError.invalidRequestURL)
       return
     }
 

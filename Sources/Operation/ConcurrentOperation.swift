@@ -19,7 +19,8 @@ class ConcurrentOperation: Operation {
     }
   }
 
-  var handleResponse: ((Data?, URLResponse?, Error?) -> Void)?
+  var handleResponse: ((URLRequest?, Data?, URLResponse?, Error?) -> Void)?
+  var makeUrlRequest: (() throws -> URLRequest)?
 
   override var isAsynchronous: Bool {
     return true
@@ -48,5 +49,12 @@ class ConcurrentOperation: Operation {
 
   func execute() {
     state = .Executing
+  }
+
+  func extractUrlRequest() throws -> URLRequest {
+    guard let makeUrlRequest = makeUrlRequest else {
+      throw NetworkError.invalidRequestURL
+    }
+    return try makeUrlRequest()
   }
 }
