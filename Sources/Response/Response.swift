@@ -25,11 +25,3 @@ public func == (lhs: Response, rhs: Response) -> Bool {
     && lhs.request == rhs.request
     && lhs.response == rhs.response
 }
-
-// MARK: - Extensions
-
-public extension Promise where T: Response {
-  func cancel() {
-    reject(NetworkError.cancelled)
-  }
-}

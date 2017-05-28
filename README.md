@@ -432,10 +432,10 @@ networking.request(.deleteBoard(id: 11))
 `Response` object consists of `Data`, `URLRequest` and `HTTPURLResponse`
 properties.
 
-`NetworkPromise` is returned by every request method. It extends `Promise<Response>` by
-adding `URLSessionTask` that you might want to cancel when it's needed. You
-may use `NetworkPromise` object to add different callbacks and build chains of tasks. It
-has a range of useful helpers, such as validations and serialization.
+`NetworkPromise` is just a `typealias` to `Promise<Response>`, which is returned
+by every request method. You may use `NetworkPromise` object to add different
+callbacks and build chains of tasks. It has a range of useful helpers, such as
+validations and serialization.
 
 ```swift
 let networkPromise = networking.request(.fetchBoards)

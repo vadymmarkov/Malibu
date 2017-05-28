@@ -198,8 +198,8 @@ extension Networking {
           logger.responseLogger.init(level: logger.level).log(response: value.response)
         }
       })
-      .fail({ [weak self] error in
-        if case NetworkError.cancelled = error {
+      .fail(policy: .allErrors, { [weak self] error in
+        if case PromiseError.cancelled = error {
           operation.cancel()
         }
 
@@ -208,6 +208,9 @@ extension Networking {
         }
 
         self?.handle(error: error, on: request)
+      })
+      .then({ response in
+        return response
       })
 
     queue.addOperation(operation)

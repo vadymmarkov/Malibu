@@ -1,7 +1,6 @@
 import Foundation
 
 public enum NetworkError: Error {
-  case cancelled
   case noMockProvided
   case invalidRequestURL
   case missingContentType
@@ -19,8 +18,6 @@ public enum NetworkError: Error {
     var text: String
 
     switch self {
-    case .cancelled:
-      text = "Request was cancelled programmatically"
     case .noMockProvided:
       text = "No mock provided for the current request and method"
     case .invalidRequestURL:
