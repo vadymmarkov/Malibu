@@ -1,6 +1,7 @@
 @testable import Malibu
 import Quick
 import Nimble
+import When
 
 // MARK: - Mocks
 
@@ -40,6 +41,21 @@ class NetworkingSpec: QuickSpec {
               expectation.fulfill()
             })
 
+            self.waitForExpectations(timeout: 1.0, handler: nil)
+          }
+        }
+        context("when request is cancelled") {
+          it("cancels a promise") {
+            let mockProvider = MockProvider<TestService>.init(delay: 0.2) { _ in
+              return Mock(json: ["title": "Test"])
+            }
+            let networking = Networking<TestService>(mockProvider: mockProvider)
+            let expectation = self.expectation(description: "Request")
+
+            networking.request(.fetchPosts).fail(policy: .allErrors, { error in
+              expect((error as? PromiseError) == .cancelled).to(beTrue())
+              expectation.fulfill()
+            }).cancel()
             self.waitForExpectations(timeout: 1.0, handler: nil)
           }
         }
