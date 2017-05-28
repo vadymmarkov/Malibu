@@ -153,25 +153,13 @@ extension Networking {
     let networkPromise = NetworkPromise()
 
     middlewarePromise.done({ [weak self] in
-      guard let `self` = self else { return }
-      var urlRequest: URLRequest
-
-      do {
-        let request = self.beforeEach?(request) ?? request
-        urlRequest = try request.toUrlRequest(baseUrl: R.baseUrl, additionalHeaders: self.requestHeaders)
-      } catch {
-        networkPromise.reject(error)
-        self.handle(error: error, on: request)
+      guard let `self` = self else {
         return
       }
 
-      if let preProcessRequest = self.preProcessRequest {
-        urlRequest = preProcessRequest(urlRequest)
-      }
-
-      let operation = self.createOperation(urlRequest: urlRequest, mockBehavior: mockBehavior)
-      let responseHandler = ResponseHandler(urlRequest: urlRequest, networkPromise: networkPromise)
-      operation.handleResponse = responseHandler.handle(data:urlResponse:error:)
+      let operation = self.createOperation(request: request, mockBehavior: mockBehavior)
+      let responseHandler = ResponseHandler(networkPromise: networkPromise)
+      operation.handleResponse = responseHandler.handle(urlRequest:data:urlResponse:error:)
 
       networkPromise
         .done({ [weak self] value in
@@ -195,17 +183,28 @@ extension Networking {
     return networkPromise
   }
 
-  private func createOperation(urlRequest: URLRequest, mockBehavior: MockBehavior?) -> ConcurrentOperation {
+  private func createOperation(request: Request, mockBehavior: MockBehavior?) -> ConcurrentOperation {
     let operation: ConcurrentOperation
 
     if let mockBehavior = mockBehavior {
-      operation = MockOperation(
-        mock: mockBehavior.mock,
-        urlRequest: urlRequest,
-        delay: mockBehavior.delay
-      )
+      operation = MockOperation(mock: mockBehavior.mock, delay: mockBehavior.delay)
     } else {
-      operation = DataOperation(session: session, urlRequest: urlRequest)
+      operation = DataOperation(session: session)
+    }
+
+    operation.makeUrlRequest = { [weak self] in
+      guard let `self` = self else {
+        throw NetworkError.invalidRequestURL
+      }
+      let request = self.beforeEach?(request) ?? request
+      var urlRequest = try request.toUrlRequest(
+        baseUrl: R.baseUrl,
+        additionalHeaders: self.requestHeaders
+      )
+      if let preProcessRequest = self.preProcessRequest {
+        urlRequest = preProcessRequest(urlRequest)
+      }
+      return urlRequest
     }
 
     return operation
