@@ -1,11 +1,15 @@
 import Foundation
 import When
 
-public final class Response: Equatable {
+public typealias NetworkPromise = Promise<Response>
 
+public final class Response: Equatable {
   public let data: Data
   public let request: URLRequest
   public let response: HTTPURLResponse
+  public var statusCode: Int {
+    return response.statusCode
+  }
 
   public init(data: Data, request: URLRequest, response: HTTPURLResponse) {
     self.data = data
