@@ -33,8 +33,8 @@
 		D560A2E81C8C694100D4B640 /* ContentTypeValidatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D560A2E61C8C694100D4B640 /* ContentTypeValidatorSpec.swift */; };
 		D5779BBC1D98475B00123D98 /* ConcurrentOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5779BBB1D98475B00123D98 /* ConcurrentOperation.swift */; };
 		D5779BBD1D98475B00123D98 /* ConcurrentOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5779BBB1D98475B00123D98 /* ConcurrentOperation.swift */; };
-		D5779BBF1D98478B00123D98 /* DataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5779BBE1D98478B00123D98 /* DataOperation.swift */; };
-		D5779BC01D98478B00123D98 /* DataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5779BBE1D98478B00123D98 /* DataOperation.swift */; };
+		D5779BBF1D98478B00123D98 /* SessionOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5779BBE1D98478B00123D98 /* SessionOperation.swift */; };
+		D5779BC01D98478B00123D98 /* SessionOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5779BBE1D98478B00123D98 /* SessionOperation.swift */; };
 		D5779BC51D991C8F00123D98 /* Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5779BC41D991C8F00123D98 /* Mock.swift */; };
 		D5779BC61D991C8F00123D98 /* Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5779BC41D991C8F00123D98 /* Mock.swift */; };
 		D5779BC81D991CA400123D98 /* MockOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5779BC71D991CA400123D98 /* MockOperation.swift */; };
@@ -191,7 +191,7 @@
 		D560A2E31C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusCodeVadatorSpec.swift; sourceTree = "<group>"; };
 		D560A2E61C8C694100D4B640 /* ContentTypeValidatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentTypeValidatorSpec.swift; sourceTree = "<group>"; };
 		D5779BBB1D98475B00123D98 /* ConcurrentOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcurrentOperation.swift; sourceTree = "<group>"; };
-		D5779BBE1D98478B00123D98 /* DataOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataOperation.swift; sourceTree = "<group>"; };
+		D5779BBE1D98478B00123D98 /* SessionOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionOperation.swift; sourceTree = "<group>"; };
 		D5779BC41D991C8F00123D98 /* Mock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mock.swift; sourceTree = "<group>"; };
 		D5779BC71D991CA400123D98 /* MockOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockOperation.swift; sourceTree = "<group>"; };
 		D5779BCA1D991D4B00123D98 /* ResponseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseHandler.swift; sourceTree = "<group>"; };
@@ -357,7 +357,7 @@
 			isa = PBXGroup;
 			children = (
 				D5779BBB1D98475B00123D98 /* ConcurrentOperation.swift */,
-				D5779BBE1D98478B00123D98 /* DataOperation.swift */,
+				D5779BBE1D98478B00123D98 /* SessionOperation.swift */,
 				D5779BC71D991CA400123D98 /* MockOperation.swift */,
 			);
 			path = Operation;
@@ -877,7 +877,7 @@
 				D5F357CF1D58BDE500153C41 /* MultipartBuilder.swift in Sources */,
 				DA5B4D0A1C8E59A2004E21ED /* Networking.swift in Sources */,
 				DAC92A391C87B95100F01940 /* StatusCodeValidator.swift in Sources */,
-				D5779BBF1D98478B00123D98 /* DataOperation.swift in Sources */,
+				D5779BBF1D98478B00123D98 /* SessionOperation.swift in Sources */,
 				D5EB7C691CB039DC003A3BA9 /* QueryBuilder.swift in Sources */,
 				D5779BCB1D991D4B00123D98 /* ResponseHandler.swift in Sources */,
 				DA5B4CEF1C8E5553004E21ED /* StringSerializer.swift in Sources */,
@@ -960,7 +960,7 @@
 				D5F357D01D58BDE500153C41 /* MultipartBuilder.swift in Sources */,
 				DA5B4D0B1C8E59A2004E21ED /* Networking.swift in Sources */,
 				DAC92A3A1C87B95100F01940 /* StatusCodeValidator.swift in Sources */,
-				D5779BC01D98478B00123D98 /* DataOperation.swift in Sources */,
+				D5779BC01D98478B00123D98 /* SessionOperation.swift in Sources */,
 				D5EB7C6A1CB039DC003A3BA9 /* QueryBuilder.swift in Sources */,
 				D5779BCC1D991D4B00123D98 /* ResponseHandler.swift in Sources */,
 				DA5B4CF01C8E5553004E21ED /* StringSerializer.swift in Sources */,

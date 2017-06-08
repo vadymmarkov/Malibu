@@ -212,6 +212,46 @@ class RequestSpec: QuickSpec {
               )
             }
           }
+
+          context("upload task with data") {
+            let data = Data(bytes: [UInt8](repeating: 0, count: 10))
+
+            beforeEach {
+              request = Request.upload(data: data, to: "http:/api.loc/posts")
+            }
+
+            it("creates URL request") {
+              expect{ urlRequest = try request.toUrlRequest() }.toNot(throwError())
+              expect(urlRequest.allHTTPHeaderFields?["Content-Type"]).to(
+                equal("application/x-www-form-urlencoded")
+              )
+              expect(urlRequest.httpMethod).to(equal("POST"))
+              expect(urlRequest.httpBody).to(equal(data))
+            }
+          }
+
+          context("upload task with multipart parameters") {
+            beforeEach {
+              request = Request.upload(
+                multipartParameters: ["key": "value"],
+                to: "http:/api.loc/posts"
+              )
+            }
+
+            it("sets Content-Type header") {
+              expect{ urlRequest = try request.toUrlRequest() }.toNot(throwError())
+              expect(urlRequest.allHTTPHeaderFields?["Content-Type"]).to(
+                equal("multipart/form-data; boundary=\(boundary)")
+              )
+            }
+
+            it("sets Content-Length header") {
+              expect{ urlRequest = try request.toUrlRequest() }.toNot(throwError())
+              expect(urlRequest.allHTTPHeaderFields?["Content-Length"]).to(
+                equal("\(urlRequest.httpBody!.count)")
+              )
+            }
+          }
         }
 
         describe("#buildURL") {
