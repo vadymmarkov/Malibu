@@ -196,8 +196,9 @@ let patchRequest = Request.patch("boards/1", parameters: ["title" : title])
 let deleteRequest = Request.delete("boards/1")
 ```
 
-`URLSessionDataTask` is used by default to execute a request, but there are 2
-options for uploading as well (to use `URLSessionUploadTask` instead).
+`URLSessionDataTask` is default for executing requests. For uploading there
+are two additional options that use `URLSessionUploadTask` instead of
+`URLSessionDataTask`.
 
 ```swift
 // Upload data to url

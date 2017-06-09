@@ -32,7 +32,7 @@ public final class Mock {
     self.init(httpResponse: response, data: data, error: nil)
   }
 
-  public convenience init(json: [String: Any]) {
+  public convenience init(json: Any) {
     var jsonData: Data?
 
     do {
