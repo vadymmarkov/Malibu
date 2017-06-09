@@ -189,7 +189,7 @@ extension Networking {
     if let mockBehavior = mockBehavior {
       operation = MockOperation(mock: mockBehavior.mock, delay: mockBehavior.delay)
     } else {
-      operation = DataOperation(session: session)
+      operation = SessionOperation(request.task, session: session)
     }
 
     operation.makeUrlRequest = { [weak self] in

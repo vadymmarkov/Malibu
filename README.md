@@ -173,7 +173,7 @@ let request = Request(
   cachePolicy: .useProtocolCachePolicy)
 ```
 
-There are also 6 helper methods with default values for every HTTP method:
+There are also multiple helper methods with default values for every HTTP method:
 
 ```swift
 // GET request
@@ -194,6 +194,23 @@ let patchRequest = Request.patch("boards/1", parameters: ["title" : title])
 
 // DELETE request
 let deleteRequest = Request.delete("boards/1")
+```
+
+`URLSessionDataTask` is default for executing requests. For uploading there
+are two additional options that use `URLSessionUploadTask` instead of
+`URLSessionDataTask`.
+
+```swift
+// Upload data to url
+Request.upload(data: data, to: "boards")
+
+// Upload multipart data with parameters
+// You are responsible for constructing a proper value,
+// which is normally a string created from data.
+Request.upload(
+  multipartParameters: ["key": "value"],
+  to: "http:/api.loc/posts"
+)
 ```
 
 ### Content types

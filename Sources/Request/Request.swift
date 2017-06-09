@@ -3,6 +3,11 @@ import Foundation
 // MARK: - Request
 
 public struct Request: Equatable {
+  public enum Task {
+    case data
+    case upload(data: Data?)
+  }
+  public let task: Task
   public let method: Method
   public let resource: URLStringConvertible
   public let parameters: [String: Any]
@@ -15,11 +20,13 @@ public struct Request: Equatable {
   public init(method: Method,
               resource: URLStringConvertible,
               contentType: ContentType,
+              task: Task = .data,
               parameters: [String: Any] = [:],
               headers: [String: String] = [:],
               etagPolicy: EtagPolicy = .disabled,
               storePolicy: StorePolicy = .unspecified,
               cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) {
+    self.task = task
     self.method = method
     self.resource = resource
     self.contentType = contentType
@@ -146,6 +153,45 @@ public extension Request {
       cachePolicy: cachePolicy
     )
   }
+
+  public static func upload(data: Data,
+                            to resource: URLStringConvertible,
+                            method: Method = .post,
+                            contentType: ContentType = .formURLEncoded,
+                            headers: [String: String] = [:],
+                            storePolicy: StorePolicy = .unspecified,
+                            cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
+    return Request(
+      method: method,
+      resource: resource,
+      contentType: contentType,
+      task: .upload(data: data),
+      parameters: [:],
+      headers: headers,
+      etagPolicy: .disabled,
+      storePolicy: storePolicy,
+      cachePolicy: cachePolicy
+    )
+  }
+
+  public static func upload(multipartParameters: [String: String],
+                            to resource: URLStringConvertible,
+                            method: Method = .post,
+                            headers: [String: String] = [:],
+                            storePolicy: StorePolicy = .unspecified,
+                            cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
+    return Request(
+      method: method,
+      resource: resource,
+      contentType: .multipartFormData,
+      task: .upload(data: nil),
+      parameters: multipartParameters,
+      headers: headers,
+      etagPolicy: .disabled,
+      storePolicy: storePolicy,
+      cachePolicy: cachePolicy
+    )
+  }
 }
 
 // MARK: - Url helpers
@@ -167,17 +213,21 @@ public extension Request {
       request.setValue(contentTypeHeader, forHTTPHeaderField: "Content-Type")
     }
 
-    var data: Data?
+    var bodyData: Data?
 
-    if let encoder = parameterEncoders[contentType] {
-      data = try encoder.encode(parameters: parameters)
-    } else if let encoder = contentType.encoder {
-      data = try encoder.encode(parameters: parameters)
+    if case .upload(let data) = task, let uploadData = data {
+      bodyData = uploadData
+    } else {
+      if let encoder = parameterEncoders[contentType] {
+        bodyData = try encoder.encode(parameters: parameters)
+      } else if let encoder = contentType.encoder {
+        bodyData = try encoder.encode(parameters: parameters)
+      }
     }
 
-    request.httpBody = data
+    request.httpBody = bodyData
 
-    if let body = data, contentType == .multipartFormData {
+    if let body = bodyData, contentType == .multipartFormData {
       request.setValue("\(body.count)", forHTTPHeaderField: "Content-Length")
     }
 
