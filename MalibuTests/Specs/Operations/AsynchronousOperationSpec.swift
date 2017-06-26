@@ -5,17 +5,17 @@ import When
 
 // MARK: - Mocks
 
-private final class AsyncOperation: AsynchronousOperation {
+private final class MockAsyncOperation: AsynchronousOperation {
   override func execute() {}
 }
 
-class ConcurrentOperationSpec: QuickSpec {
+class AsynchronousOperationSpec: QuickSpec {
   override func spec() {
     describe("ConcurrentOperation") {
       var operation: AsynchronousOperation!
 
       beforeEach {
-        operation = AsyncOperation()
+        operation = MockAsyncOperation()
       }
 
       describe("#init") {
