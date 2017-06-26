@@ -172,6 +172,7 @@ extension Networking {
         .fail(policy: .allErrors, { [weak self] error in
           if case PromiseError.cancelled = error {
             operation.cancel()
+            operation.finish()
           }
           self?.handle(error: error, on: request)
         })
