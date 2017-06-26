@@ -7,7 +7,8 @@ public enum LogLevel {
 }
 
 public final class Logger {
-
+  /// Use `NSLog` instead of `print`
+  public static var showOnDevice = false
   public var level: LogLevel = .none
   public var errorLogger: ErrorLogging.Type = ErrorLogger.self
   public var requestLogger: RequestLogging.Type = RequestLogger.self
@@ -30,7 +31,6 @@ public protocol ErrorLogging: Logging {
 }
 
 public struct ErrorLogger: ErrorLogging {
-
   public let level: LogLevel
 
   public init(level: LogLevel) {
@@ -42,7 +42,7 @@ public struct ErrorLogger: ErrorLogging {
       return
     }
 
-    print("\(error)")
+    logString("\(error)")
   }
 }
 
@@ -53,7 +53,6 @@ public protocol RequestLogging: Logging {
 }
 
 public struct RequestLogger: RequestLogging {
-
   public let level: LogLevel
 
   public init(level: LogLevel) {
@@ -69,21 +68,21 @@ public struct RequestLogger: RequestLogging {
       return
     }
 
-    print("🏄 MALIBU: Catching the wave...")
-    print("\(request.method.rawValue) \(urlString)")
+    logString("🏄 MALIBU: Catching the wave...")
+    logString("\(request.method.rawValue) \(urlString)")
 
     guard level == .verbose else {
       return
     }
 
     if let headers = urlRequest.allHTTPHeaderFields, !headers.isEmpty {
-      print("Headers:")
-      print(headers)
+      logString("Headers:")
+      logString("\(headers)")
     }
 
     if !request.parameters.isEmpty && request.contentType != .query {
-      print("Parameters:")
-      print(request.parameters)
+      logString("Parameters:")
+      logString("\(request.parameters)")
     }
   }
 }
@@ -95,18 +94,25 @@ public protocol ResponseLogging: Logging {
 }
 
 public struct ResponseLogger: ResponseLogging {
-
   public let level: LogLevel
 
   public init(level: LogLevel) {
     self.level = level
   }
 
-  public  func log(response: HTTPURLResponse) {
+  public func log(response: HTTPURLResponse) {
     guard level == .info || level == .verbose else {
       return
     }
 
-    print("Response: \(response.statusCode)")
+    logString("Response: \(response.statusCode)")
+  }
+}
+
+private func logString(_ string: String) {
+  if Logger.showOnDevice {
+    NSLog(string)
+  } else {
+    print(string)
   }
 }
