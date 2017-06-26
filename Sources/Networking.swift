@@ -172,6 +172,7 @@ extension Networking {
         .fail(policy: .allErrors, { [weak self] error in
           if case PromiseError.cancelled = error {
             operation.cancel()
+            operation.finish()
           }
           self?.handle(error: error, on: request)
         })
@@ -183,8 +184,8 @@ extension Networking {
     return networkPromise
   }
 
-  private func createOperation(request: Request, mockBehavior: MockBehavior?) -> ConcurrentOperation {
-    let operation: ConcurrentOperation
+  private func createOperation(request: Request, mockBehavior: MockBehavior?) -> AsynchronousOperation {
+    let operation: AsynchronousOperation
 
     if let mockBehavior = mockBehavior {
       operation = MockOperation(mock: mockBehavior.mock, delay: mockBehavior.delay)

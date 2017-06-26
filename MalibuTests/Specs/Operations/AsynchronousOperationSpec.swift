@@ -3,40 +3,45 @@ import Quick
 import Nimble
 import When
 
-class ConcurrentOperationSpec: QuickSpec {
+// MARK: - Mocks
 
+private final class MockAsyncOperation: AsynchronousOperation {
+  override func execute() {}
+}
+
+class AsynchronousOperationSpec: QuickSpec {
   override func spec() {
     describe("ConcurrentOperation") {
-      var operation: ConcurrentOperation!
+      var operation: AsynchronousOperation!
 
       beforeEach {
-        operation = ConcurrentOperation()
+        operation = MockAsyncOperation()
       }
 
       describe("#init") {
         it("sets a state") {
-          expect(operation.state).to(equal(ConcurrentOperation.State.Ready))
+          expect(operation.state).to(equal(AsynchronousOperation.State.ready))
         }
       }
 
       describe("#state") {
         context("Ready") {
           it("changes isReady property") {
-            operation.state = .Ready
+            operation.state = .ready
             expect(operation.value(forKey: "isReady") as? Bool).to(beTrue())
           }
         }
 
         context("Executing") {
           it("changes isExecuting property") {
-            operation.state = .Executing
+            operation.state = .executing
             expect(operation.value(forKey: "isExecuting") as? Bool).to(beTrue())
           }
         }
 
         context("Finished") {
           it("changes isFinished property") {
-            operation.state = .Finished
+            operation.state = .finished
             expect(operation.value(forKey: "isFinished") as? Bool).to(beTrue())
           }
         }
@@ -50,21 +55,21 @@ class ConcurrentOperationSpec: QuickSpec {
 
       describe("#isReady") {
         it("changes to true when state is set to .Ready") {
-          operation.state = .Ready
+          operation.state = .ready
           expect(operation.isReady).to(beTrue())
         }
       }
 
       describe("#isExecuting") {
         it("changes to true when state is set to .Ready") {
-          operation.state = .Executing
+          operation.state = .executing
           expect(operation.isExecuting).to(beTrue())
         }
       }
 
       describe("#isFinished") {
         it("changes to true when state is set to .Finished") {
-          operation.state = .Finished
+          operation.state = .finished
           expect(operation.isFinished).to(beTrue())
         }
       }
@@ -84,13 +89,6 @@ class ConcurrentOperationSpec: QuickSpec {
             expect(operation.isExecuting).to(beFalse())
             expect(operation.isFinished).to(beTrue())
           }
-        }
-      }
-
-      describe("#execute") {
-        it("changes a state") {
-          operation.execute()
-          expect(operation.isExecuting).to(beTrue())
         }
       }
     }
