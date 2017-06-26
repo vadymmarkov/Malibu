@@ -7,6 +7,7 @@ open class AsynchronousOperation: Operation {
     case finished
   }
 
+  private static let stateKey = "state"
   private var rawState = State.ready
 
   @objc dynamic var state: State {
@@ -16,11 +17,11 @@ open class AsynchronousOperation: Operation {
       }
     }
     set {
-      willChangeValue(forKey: "state")
+      willChangeValue(forKey: AsynchronousOperation.stateKey)
       stateQueue.sync(flags: .barrier) {
         rawState = newValue
       }
-      didChangeValue(forKey: "state")
+      didChangeValue(forKey: AsynchronousOperation.stateKey)
     }
   }
 
@@ -63,15 +64,15 @@ open class AsynchronousOperation: Operation {
   // MARK: - KVO
 
   @objc private dynamic class func keyPathsForValuesAffectingIsReady() -> Set<String> {
-    return ["state"]
+    return [AsynchronousOperation.stateKey]
   }
 
   @objc private dynamic class func keyPathsForValuesAffectingIsExecuting() -> Set<String> {
-    return ["state"]
+    return [AsynchronousOperation.stateKey]
   }
 
   @objc private dynamic class func keyPathsForValuesAffectingIsFinished() -> Set<String> {
-    return ["state"]
+    return [AsynchronousOperation.stateKey]
   }
 
   // MARK: - Execute
