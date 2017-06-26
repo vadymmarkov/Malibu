@@ -1,6 +1,6 @@
 import Foundation
 
-final class MockOperation: ConcurrentOperation {
+final class MockOperation: AsynchronousOperation {
   private let mock: Mock
   private let delay: TimeInterval
 
@@ -19,7 +19,7 @@ final class MockOperation: ConcurrentOperation {
       let when = DispatchTime.now() + delay
       DispatchQueue.main.asyncAfter(deadline: when) { [weak self] in
         self?.handleResponse?(urlRequest, self?.mock.data, self?.mock.httpResponse, self?.mock.error)
-        self?.state = .Finished
+        self?.finish()
       }
     } catch {
       handleResponse?(nil, nil, nil, error)

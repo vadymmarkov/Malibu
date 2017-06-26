@@ -183,8 +183,8 @@ extension Networking {
     return networkPromise
   }
 
-  private func createOperation(request: Request, mockBehavior: MockBehavior?) -> ConcurrentOperation {
-    let operation: ConcurrentOperation
+  private func createOperation(request: Request, mockBehavior: MockBehavior?) -> AsynchronousOperation {
+    let operation: AsynchronousOperation
 
     if let mockBehavior = mockBehavior {
       operation = MockOperation(mock: mockBehavior.mock, delay: mockBehavior.delay)

@@ -1,6 +1,6 @@
 import Foundation
 
-final class SessionOperation: ConcurrentOperation {
+final class SessionOperation: AsynchronousOperation {
   private let taskType: Request.Task
   private let session: URLSession
   private var task: URLSessionTask?
@@ -22,14 +22,14 @@ final class SessionOperation: ConcurrentOperation {
       case .data:
         task = session.dataTask(with: urlRequest) { [weak self] (data, urlResponse, error) in
           self?.handleResponse?(urlRequest, data, urlResponse, error)
-          self?.state = .Finished
+          self?.finish()
         }
       case .upload:
         let data = urlRequest.httpBody
 
         task = session.uploadTask(with: urlRequest, from: data) { [weak self] (data, urlResponse, error) in
           self?.handleResponse?(urlRequest, data, urlResponse, error)
-          self?.state = .Finished
+          self?.finish()
         }
       }
 

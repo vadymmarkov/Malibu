@@ -1,54 +1,89 @@
 import Foundation
 
-class ConcurrentOperation: Operation {
-
-  enum State: String {
-    case Ready = "isReady"
-    case Executing = "isExecuting"
-    case Finished = "isFinished"
+open class AsynchronousOperation: Operation {
+  @objc enum State: Int {
+    case ready
+    case executing
+    case finished
   }
 
-  var state = State.Ready {
-    willSet {
-      willChangeValue(forKey: newValue.rawValue)
-      willChangeValue(forKey: state.rawValue)
+  private var rawState = State.ready
+
+  @objc dynamic var state: State {
+    get {
+      return stateQueue.sync {
+        return rawState
+      }
     }
-    didSet {
-      didChangeValue(forKey: oldValue.rawValue)
-      didChangeValue(forKey: state.rawValue)
+    set {
+      willChangeValue(forKey: "state")
+      stateQueue.sync(flags: .barrier) {
+        rawState = newValue
+      }
+      didChangeValue(forKey: "state")
     }
   }
+
+  private let stateQueue = DispatchQueue(
+    label: "com.Malibu.ConcurrentOperation",
+    attributes: .concurrent
+  )
 
   var handleResponse: ((URLRequest?, Data?, URLResponse?, Error?) -> Void)?
   var makeUrlRequest: (() throws -> URLRequest)?
 
-  override var isAsynchronous: Bool {
+  public final override var isAsynchronous: Bool {
     return true
   }
 
-  override var isReady: Bool {
-    return super.isReady && state == .Ready
+  public final override var isReady: Bool {
+    return super.isReady && state == .ready
   }
 
-  override var isExecuting: Bool {
-    return state == .Executing
+  public final override var isExecuting: Bool {
+    return state == .executing
   }
 
-  override var isFinished: Bool {
-    return state == .Finished
+  public final override var isFinished: Bool {
+    return state == .finished
   }
 
-  override func start() {
+  public final override func start() {
+    super.start()
+
     guard !isCancelled else {
-      state = .Finished
+      state = .finished
       return
     }
 
+    state = .executing
     execute()
   }
 
-  func execute() {
-    state = .Executing
+  // MARK: - KVO
+
+  @objc private dynamic class func keyPathsForValuesAffectingIsReady() -> Set<String> {
+    return ["state"]
+  }
+
+  @objc private dynamic class func keyPathsForValuesAffectingIsExecuting() -> Set<String> {
+    return ["state"]
+  }
+
+  @objc private dynamic class func keyPathsForValuesAffectingIsFinished() -> Set<String> {
+    return ["state"]
+  }
+
+  // MARK: - Execute
+
+  /// Subclasses must implement this without calling `super`.
+  open func execute() {
+    fatalError("Subclasses must implement `execute`.")
+  }
+
+  /// Moves the operation into a completed state.
+  public final func finish() {
+    state = .finished
   }
 
   func extractUrlRequest() throws -> URLRequest {
