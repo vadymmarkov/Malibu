@@ -287,12 +287,17 @@ public extension Request {
     let url: URL?
 
     if let baseUrl = baseUrl {
+      var base = baseUrl.urlString
+      if !base.hasSuffix("/") {
+        base.append("/")
+      }
+
       var path = resource.urlString
       if path.hasPrefix("/") {
         path.remove(at: path.startIndex)
       }
 
-      url = URL(string: baseUrl.urlString)?.appendingPathComponent(path)
+      url = URL(string: "\(base)\(path)")
     } else {
       url = URL(string: resource.urlString)
     }
