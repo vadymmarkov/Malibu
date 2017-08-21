@@ -98,6 +98,17 @@ class RequestSpec: QuickSpec {
             }
           }
 
+          context("with base URL without slash and query parameters") {
+            it("does not throw an error and returns created URLRequest") {
+              request = Request.post("about?q=1")
+
+              expect {
+                urlRequest = try request.toUrlRequest(baseUrl: "http://api.loc")
+                }.toNot(throwError())
+              expect(urlRequest.url?.absoluteString).to(equal("http://api.loc/about?q=1"))
+            }
+          }
+
           context("with additional headers") {
             it("returns created URLRequest with new header added") {
               let headers = ["foo": "bar", "key": "bar"]
