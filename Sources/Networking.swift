@@ -9,7 +9,7 @@ public enum NetworkingMode {
 
 // MARK: - Mocks
 
-public struct MockProvider<R: RequestConvertible> {
+public final class MockProvider<R: RequestConvertible> {
   let resolver: (R) -> Mock?
   let delay: TimeInterval
 

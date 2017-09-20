@@ -1,9 +1,6 @@
 import Foundation
 
-struct MultipartFormEncoder: ParameterEncoding {
-
-  // MARK: - ParameterEncoding
-
+final class MultipartFormEncoder: ParameterEncoding {
   func encode(parameters: [String: Any]) throws -> Data? {
     let string = MultipartBuilder().buildMultipartString(from: parameters)
 

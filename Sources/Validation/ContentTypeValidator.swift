@@ -1,8 +1,7 @@
 import Foundation
 
-public struct ContentTypeValidator<T: Sequence>: Validating where T.Iterator.Element == String {
-
-  public var contentTypes: T
+public final class ContentTypeValidator<T: Sequence>: Validating where T.Iterator.Element == String {
+  private let contentTypes: T
 
   // MARK: - Initialization
 

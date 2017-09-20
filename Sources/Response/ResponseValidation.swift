@@ -4,7 +4,6 @@ import When
 // MARK: - Validations
 
 public extension Promise where T: Response {
-
   public func validate(using validator: Validating) -> Promise<Response> {
     return then({ result -> Response in
       try validator.validate(result)

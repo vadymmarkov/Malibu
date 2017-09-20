@@ -1,7 +1,6 @@
 import Foundation
 
 public struct Header {
-
   static let acceptEncoding: String = "gzip;q=1.0, compress;q=0.5"
 
   static var acceptLanguage: String {

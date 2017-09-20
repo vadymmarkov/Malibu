@@ -1,7 +1,6 @@
 import Foundation
 
-public struct MultipartBuilder {
-
+public final class MultipartBuilder {
   public init() {}
 
   public func buildMultipartString(from parameters: [String: Any]) -> String {

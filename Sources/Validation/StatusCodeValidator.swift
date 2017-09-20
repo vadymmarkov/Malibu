@@ -1,8 +1,7 @@
 import Foundation
 
-public struct StatusCodeValidator<T: Sequence>: Validating where T.Iterator.Element == Int {
-
-  public var statusCodes: T
+public final class StatusCodeValidator<T: Sequence>: Validating where T.Iterator.Element == Int {
+  private let statusCodes: T
 
   // MARK: - Initialization
 

@@ -1,7 +1,6 @@
 import Foundation
 
 struct MimeType {
-
   static func components(from string: String) -> (type: String?, subtype: String?) {
     let trimmed = string.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
     let endIndex = trimmed.range(of: ";")?.lowerBound ?? trimmed.endIndex

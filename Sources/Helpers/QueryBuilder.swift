@@ -1,9 +1,7 @@
 import Foundation
 
-public struct QueryBuilder {
-
+public final class QueryBuilder {
   public typealias Component = (String, String)
-
   let escapingCharacters = ":#[]@!$&'()*+,;="
 
   public init() {}

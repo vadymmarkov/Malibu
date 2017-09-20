@@ -51,7 +51,6 @@ public enum NetworkError: Error {
 // MARK: - Hashable
 
 extension NetworkError: Hashable {
-
   public var hashValue: Int {
     return reason.hashValue
   }
@@ -66,7 +65,6 @@ public func == (lhs: NetworkError, rhs: NetworkError) -> Bool {
 // MARK: - NSError
 
 extension NSError {
-
   var isOffline: Bool {
     return Int32(code) == CFNetworkErrors.cfurlErrorNotConnectedToInternet.rawValue
   }

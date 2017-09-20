@@ -7,11 +7,8 @@ protocol EtagStoring {
 }
 
 final class EtagStorage: EtagStoring {
-
   static fileprivate(set) var path = Utils.filePath("ETags.dictionary")
-
   fileprivate var dictionary = [String: String]()
-
   fileprivate let fileManager: FileManager = {
     let manager = FileManager.default
     return manager

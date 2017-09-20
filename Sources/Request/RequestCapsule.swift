@@ -1,7 +1,6 @@
 import Foundation
 
-class RequestCapsule: NSObject, NSCoding {
-
+final class RequestCapsule: NSObject, NSCoding {
   enum Key: String {
     case method
     case resource
@@ -13,7 +12,7 @@ class RequestCapsule: NSObject, NSCoding {
     case cachePolicy
   }
 
-  var request: Request
+  let request: Request
 
   var id: String {
     return request.resource.urlString

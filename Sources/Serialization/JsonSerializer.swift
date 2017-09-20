@@ -1,7 +1,6 @@
 import Foundation
 
-public struct JsonSerializer: Serializing {
-
+public final class JsonSerializer: Serializing {
   let options: JSONSerialization.ReadingOptions
 
   public init(options: JSONSerialization.ReadingOptions = .allowFragments) {

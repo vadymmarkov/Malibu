@@ -7,7 +7,6 @@ public protocol URLStringConvertible {
 // MARK: - String
 
 extension String: URLStringConvertible {
-
   public var urlString: String {
     return self
   }
@@ -16,7 +15,6 @@ extension String: URLStringConvertible {
 // MARK: - NSURL
 
 extension URL: URLStringConvertible {
-
   public var urlString: String {
     return absoluteString
   }
