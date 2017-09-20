@@ -13,6 +13,78 @@
 		D503D3911C8DA95B0009BDAD /* JsonSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503D38F1C8DA95B0009BDAD /* JsonSerializer.swift */; };
 		D503D3A51C8EC7550009BDAD /* NetworkPromiseSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503D3A41C8EC7550009BDAD /* NetworkPromiseSpec.swift */; };
 		D503D3A61C8EC7550009BDAD /* NetworkPromiseSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503D3A41C8EC7550009BDAD /* NetworkPromiseSpec.swift */; };
+		D51FC84F1F72FD0600D722AD /* Malibu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D51FC8461F72FD0600D722AD /* Malibu.framework */; };
+		D51FC85D1F73016300D722AD /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A3DC871CD164750084F451 /* Logging.swift */; };
+		D51FC85E1F73016300D722AD /* Malibu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A051C7F90B400F01940 /* Malibu.swift */; };
+		D51FC85F1F73016300D722AD /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5B4CF71C8E5936004E21ED /* NetworkError.swift */; };
+		D51FC8601F73016300D722AD /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5B4D031C8E59A2004E21ED /* Networking.swift */; };
+		D51FC8611F73016300D722AD /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE2BAD1C7F8A870000FB12 /* ParameterEncoding.swift */; };
+		D51FC8621F73016300D722AD /* JsonEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE2BB01C7F8BA00000FB12 /* JsonEncoder.swift */; };
+		D51FC8631F73016300D722AD /* FormURLEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A081C7F961900F01940 /* FormURLEncoder.swift */; };
+		D51FC8641F73016300D722AD /* MultipartFormEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ABDDA91CD78BC700C78B5F /* MultipartFormEncoder.swift */; };
+		D51FC8651F73016300D722AD /* EtagStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965031C9225720099D2F9 /* EtagStorage.swift */; };
+		D51FC8661F73016300D722AD /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965061C9225B50099D2F9 /* Utils.swift */; };
+		D51FC8671F73016300D722AD /* QueryBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EB7C681CB039DC003A3BA9 /* QueryBuilder.swift */; };
+		D51FC8681F73016300D722AD /* MultipartBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F357CE1D58BDE500153C41 /* MultipartBuilder.swift */; };
+		D51FC8691F73016300D722AD /* ConcurrentOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5779BBB1D98475B00123D98 /* ConcurrentOperation.swift */; };
+		D51FC86A1F73016300D722AD /* SessionOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5779BBE1D98478B00123D98 /* SessionOperation.swift */; };
+		D51FC86B1F73016300D722AD /* MockOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5779BC71D991CA400123D98 /* MockOperation.swift */; };
+		D51FC86C1F73016300D722AD /* ContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965091C922BCF0099D2F9 /* ContentType.swift */; };
+		D51FC86D1F73016300D722AD /* Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B9650A1C922BCF0099D2F9 /* Method.swift */; };
+		D51FC86E1F73016300D722AD /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA50FF01C97738400D01F78 /* Header.swift */; };
+		D51FC86F1F73016300D722AD /* SessionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B9650B1C922BCF0099D2F9 /* SessionConfiguration.swift */; };
+		D51FC8701F73016300D722AD /* URLStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B9650C1C922BCF0099D2F9 /* URLStringConvertible.swift */; };
+		D51FC8711F73016300D722AD /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964F41C92125E0099D2F9 /* Request.swift */; };
+		D51FC8721F73016300D722AD /* RequestPolicies.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EB7C5F1CB01E73003A3BA9 /* RequestPolicies.swift */; };
+		D51FC8731F73016300D722AD /* RequestStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5339AF51D9C6C5900E8A7AD /* RequestStorage.swift */; };
+		D51FC8741F73016300D722AD /* RequestCapsule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E8EDC21D9D865B0087690A /* RequestCapsule.swift */; };
+		D51FC8751F73016300D722AD /* RequestConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5445A091E3CE16F00445406 /* RequestConvertible.swift */; };
+		D51FC8761F73016300D722AD /* MimeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965161C922BDC0099D2F9 /* MimeType.swift */; };
+		D51FC8771F73016300D722AD /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965171C922BDC0099D2F9 /* Response.swift */; };
+		D51FC8781F73016300D722AD /* ResponseSerialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965181C922BDC0099D2F9 /* ResponseSerialization.swift */; };
+		D51FC8791F73016300D722AD /* ResponseValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965191C922BDC0099D2F9 /* ResponseValidation.swift */; };
+		D51FC87A1F73016300D722AD /* Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5779BC41D991C8F00123D98 /* Mock.swift */; };
+		D51FC87B1F73016300D722AD /* ResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5779BCA1D991D4B00123D98 /* ResponseHandler.swift */; };
+		D51FC87C1F73016300D722AD /* Serializing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503D38C1C8DA7730009BDAD /* Serializing.swift */; };
+		D51FC87D1F73016300D722AD /* JsonSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503D38F1C8DA95B0009BDAD /* JsonSerializer.swift */; };
+		D51FC87E1F73016300D722AD /* DataSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5B4CEB1C8E51A0004E21ED /* DataSerializer.swift */; };
+		D51FC87F1F73016300D722AD /* StringSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5B4CEE1C8E5553004E21ED /* StringSerializer.swift */; };
+		D51FC8801F73016300D722AD /* Validating.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A351C87B92200F01940 /* Validating.swift */; };
+		D51FC8811F73016300D722AD /* StatusCodeValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A381C87B95100F01940 /* StatusCodeValidator.swift */; };
+		D51FC8821F73016300D722AD /* ContentTypeValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A3B1C87C00C00F01940 /* ContentTypeValidator.swift */; };
+		D51FC8871F73018600D722AD /* NetworkPromiseSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503D3A41C8EC7550009BDAD /* NetworkPromiseSpec.swift */; };
+		D51FC8881F73018600D722AD /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964ED1C916CBF0099D2F9 /* Mocks.swift */; };
+		D51FC8891F73018A00D722AD /* mock.json in Resources */ = {isa = PBXBuildFile; fileRef = D559C5E11CC0191700700B3C /* mock.json */; };
+		D51FC88A1F7301C300D722AD /* NetworkErrorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5B4CFA1C8E5953004E21ED /* NetworkErrorSpec.swift */; };
+		D51FC88B1F7301C300D722AD /* NetworkingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5B4D0E1C8E5A07004E21ED /* NetworkingSpec.swift */; };
+		D51FC88C1F7301C300D722AD /* JsonEncoderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE2BB41C7F8C590000FB12 /* JsonEncoderSpec.swift */; };
+		D51FC88D1F7301C300D722AD /* FormURLEncoderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A0B1C7FA5E700F01940 /* FormURLEncoderSpec.swift */; };
+		D51FC88E1F7301C300D722AD /* MultipartFormEncoderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ABDDAC1CD8132700C78B5F /* MultipartFormEncoderSpec.swift */; };
+		D51FC88F1F7301C300D722AD /* EtagStorageSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965231C922C1F0099D2F9 /* EtagStorageSpec.swift */; };
+		D51FC8901F7301C300D722AD /* UtilsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B9653B1C92340C0099D2F9 /* UtilsSpec.swift */; };
+		D51FC8911F7301C300D722AD /* QueryBuilderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EB7C6B1CB03AA0003A3BA9 /* QueryBuilderSpec.swift */; };
+		D51FC8921F7301C300D722AD /* MultipartBuilderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F357D11D58BE6B00153C41 /* MultipartBuilderSpec.swift */; };
+		D51FC8931F7301C300D722AD /* AsynchronousOperationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53FBEA91D9922BB0014AE4A /* AsynchronousOperationSpec.swift */; };
+		D51FC8941F7301C300D722AD /* ContentTypeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965321C922C500099D2F9 /* ContentTypeSpec.swift */; };
+		D51FC8951F7301C300D722AD /* HeaderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA50FF31C9786BE00D01F78 /* HeaderSpec.swift */; };
+		D51FC8961F7301C300D722AD /* SessionConfigurationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965331C922C500099D2F9 /* SessionConfigurationSpec.swift */; };
+		D51FC8971F7301C300D722AD /* URLStringConvertibleSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965341C922C500099D2F9 /* URLStringConvertibleSpec.swift */; };
+		D51FC8981F7301C300D722AD /* RequestSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B964FB1C9217140099D2F9 /* RequestSpec.swift */; };
+		D51FC8991F7301C300D722AD /* MethodRequestSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EB7C6E1CB04543003A3BA9 /* MethodRequestSpec.swift */; };
+		D51FC89A1F7301C300D722AD /* RequestCapsuleSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C000C11D9D9D3E00744A12 /* RequestCapsuleSpec.swift */; };
+		D51FC89B1F7301C300D722AD /* RequestStorageSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D598662E1D9DA42C00D4D90F /* RequestStorageSpec.swift */; };
+		D51FC89C1F7301C300D722AD /* MimeTypeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965261C922C420099D2F9 /* MimeTypeSpec.swift */; };
+		D51FC89D1F7301C300D722AD /* ResponseSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965281C922C420099D2F9 /* ResponseSpec.swift */; };
+		D51FC89E1F7301C300D722AD /* ResponseSerializationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965271C922C420099D2F9 /* ResponseSerializationSpec.swift */; };
+		D51FC89F1F7301C300D722AD /* ResponseValidationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B965291C922C420099D2F9 /* ResponseValidationSpec.swift */; };
+		D51FC8A01F7301C300D722AD /* ResponseHandlerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5779BCD1D991EBA00123D98 /* ResponseHandlerSpec.swift */; };
+		D51FC8A11F7301C300D722AD /* MockSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5779BD11D99203E00123D98 /* MockSpec.swift */; };
+		D51FC8A21F7301C300D722AD /* JsonSerializerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549C8551C8F661E00588A0C /* JsonSerializerSpec.swift */; };
+		D51FC8A31F7301C300D722AD /* DataSerializerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549C8581C8F6BB500588A0C /* DataSerializerSpec.swift */; };
+		D51FC8A41F7301C300D722AD /* StringSerializerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D549C85B1C8F6C8800588A0C /* StringSerializerSpec.swift */; };
+		D51FC8A51F7301C300D722AD /* StatusCodeVadatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D560A2E31C8C66EC00D4B640 /* StatusCodeVadatorSpec.swift */; };
+		D51FC8A61F7301C300D722AD /* ContentTypeValidatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D560A2E61C8C694100D4B640 /* ContentTypeValidatorSpec.swift */; };
+		D51FC8A91F730A1300D722AD /* When.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D51FC8A81F730A1300D722AD /* When.framework */; };
 		D5339AF61D9C6C5900E8A7AD /* RequestStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5339AF51D9C6C5900E8A7AD /* RequestStorage.swift */; };
 		D5339AF71D9C6C5900E8A7AD /* RequestStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5339AF51D9C6C5900E8A7AD /* RequestStorage.swift */; };
 		D53FBEAA1D9922BB0014AE4A /* AsynchronousOperationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53FBEA91D9922BB0014AE4A /* AsynchronousOperationSpec.swift */; };
@@ -101,12 +173,7 @@
 		D5C000C21D9D9D3E00744A12 /* RequestCapsuleSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C000C11D9D9D3E00744A12 /* RequestCapsuleSpec.swift */; };
 		D5C000C31D9D9D3E00744A12 /* RequestCapsuleSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C000C11D9D9D3E00744A12 /* RequestCapsuleSpec.swift */; };
 		D5C6294A1C3A7FAA007F7B7C /* Malibu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629401C3A7FAA007F7B7C /* Malibu.framework */; };
-		D5C629771C3A878E007F7B7C /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629751C3A878E007F7B7C /* Quick.framework */; };
-		D5C629781C3A878E007F7B7C /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629761C3A878E007F7B7C /* Nimble.framework */; };
 		D5E061D71D06E5AD009740F2 /* When.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5E061D61D06E5AD009740F2 /* When.framework */; };
-		D5E061D91D06E5EF009740F2 /* When.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5E061D61D06E5AD009740F2 /* When.framework */; };
-		D5E061DC1D06E5EF009740F2 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5E061DA1D06E5EF009740F2 /* Quick.framework */; };
-		D5E061DD1D06E5EF009740F2 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5E061DB1D06E5EF009740F2 /* Nimble.framework */; };
 		D5E8EDC31D9D865B0087690A /* RequestCapsule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E8EDC21D9D865B0087690A /* RequestCapsule.swift */; };
 		D5E8EDC41D9D865B0087690A /* RequestCapsule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E8EDC21D9D865B0087690A /* RequestCapsule.swift */; };
 		D5EB7C601CB01E73003A3BA9 /* RequestPolicies.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EB7C5F1CB01E73003A3BA9 /* RequestPolicies.swift */; };
@@ -150,7 +217,6 @@
 		DAC92A3A1C87B95100F01940 /* StatusCodeValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A381C87B95100F01940 /* StatusCodeValidator.swift */; };
 		DAC92A3C1C87C00C00F01940 /* ContentTypeValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A3B1C87C00C00F01940 /* ContentTypeValidator.swift */; };
 		DAC92A3D1C87C00C00F01940 /* ContentTypeValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC92A3B1C87C00C00F01940 /* ContentTypeValidator.swift */; };
-		DAC92A3E1C8E458A00F01940 /* When.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC92A291C83A38400F01940 /* When.framework */; };
 		DAEE2BAE1C7F8A870000FB12 /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE2BAD1C7F8A870000FB12 /* ParameterEncoding.swift */; };
 		DAEE2BAF1C7F8A870000FB12 /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE2BAD1C7F8A870000FB12 /* ParameterEncoding.swift */; };
 		DAEE2BB11C7F8BA00000FB12 /* JsonEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEE2BB01C7F8BA00000FB12 /* JsonEncoder.swift */; };
@@ -160,6 +226,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		D51FC8501F72FD0600D722AD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D5B2E8961C3A780C00C0327D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D51FC8451F72FD0600D722AD;
+			remoteInfo = "Malibu-tvOS";
+		};
 		D5B2E8AB1C3A780C00C0327D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D5B2E8961C3A780C00C0327D /* Project object */;
@@ -181,6 +254,13 @@
 		D503D38C1C8DA7730009BDAD /* Serializing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializing.swift; sourceTree = "<group>"; };
 		D503D38F1C8DA95B0009BDAD /* JsonSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonSerializer.swift; sourceTree = "<group>"; };
 		D503D3A41C8EC7550009BDAD /* NetworkPromiseSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkPromiseSpec.swift; sourceTree = "<group>"; };
+		D51FC8461F72FD0600D722AD /* Malibu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Malibu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D51FC84E1F72FD0600D722AD /* Malibu-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Malibu-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D51FC8831F73017000D722AD /* Info-tvOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-tvOS.plist"; sourceTree = "<group>"; };
+		D51FC8851F73017B00D722AD /* Info-tvOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-tvOS.plist"; sourceTree = "<group>"; };
+		D51FC8A81F730A1300D722AD /* When.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = When.framework; path = Carthage/Build/tvOS/When.framework; sourceTree = "<group>"; };
+		D51FC8AD1F730ADE00D722AD /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/tvOS/Nimble.framework; sourceTree = "<group>"; };
+		D51FC8AE1F730ADE00D722AD /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/tvOS/Quick.framework; sourceTree = "<group>"; };
 		D5339AF51D9C6C5900E8A7AD /* RequestStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestStorage.swift; sourceTree = "<group>"; };
 		D53FBEA91D9922BB0014AE4A /* AsynchronousOperationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsynchronousOperationSpec.swift; sourceTree = "<group>"; };
 		D5445A091E3CE16F00445406 /* RequestConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestConvertible.swift; sourceTree = "<group>"; };
@@ -265,6 +345,22 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		D51FC8421F72FD0600D722AD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D51FC8A91F730A1300D722AD /* When.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D51FC84B1F72FD0600D722AD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D51FC84F1F72FD0600D722AD /* Malibu.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D5B2E89B1C3A780C00C0327D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -277,9 +373,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5C629771C3A878E007F7B7C /* Quick.framework in Frameworks */,
-				D5C629781C3A878E007F7B7C /* Nimble.framework in Frameworks */,
-				DAC92A3E1C8E458A00F01940 /* When.framework in Frameworks */,
 				D5B2E8AA1C3A780C00C0327D /* Malibu.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -296,9 +389,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5E061DC1D06E5EF009740F2 /* Quick.framework in Frameworks */,
-				D5E061DD1D06E5EF009740F2 /* Nimble.framework in Frameworks */,
-				D5E061D91D06E5EF009740F2 /* When.framework in Frameworks */,
 				D5C6294A1C3A7FAA007F7B7C /* Malibu.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -390,6 +480,8 @@
 				D5B2E8A91C3A780C00C0327D /* Malibu-iOS-Tests.xctest */,
 				D5C629401C3A7FAA007F7B7C /* Malibu.framework */,
 				D5C629491C3A7FAA007F7B7C /* Malibu-macOS-Tests.xctest */,
+				D51FC8461F72FD0600D722AD /* Malibu.framework */,
+				D51FC84E1F72FD0600D722AD /* Malibu-tvOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -455,6 +547,7 @@
 		D5C6295C1C3A800E007F7B7C /* Malibu */ = {
 			isa = PBXGroup;
 			children = (
+				D51FC8851F73017B00D722AD /* Info-tvOS.plist */,
 				D5C6298B1C3A8BBD007F7B7C /* Info-iOS.plist */,
 				D5C6298C1C3A8BBD007F7B7C /* Info-Mac.plist */,
 			);
@@ -482,6 +575,7 @@
 		D5C6298F1C3A8BDA007F7B7C /* MalibuTests */ = {
 			isa = PBXGroup;
 			children = (
+				D51FC8831F73017000D722AD /* Info-tvOS.plist */,
 				D5C629901C3A8BDA007F7B7C /* Info-iOS.plist */,
 				D5C629911C3A8BDA007F7B7C /* Info-Mac.plist */,
 				D503D3A31C8EC73B0009BDAD /* Helpers */,
@@ -526,6 +620,9 @@
 		DAC92A3F1C8E459200F01940 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D51FC8AD1F730ADE00D722AD /* Nimble.framework */,
+				D51FC8AE1F730ADE00D722AD /* Quick.framework */,
+				D51FC8A81F730A1300D722AD /* When.framework */,
 				D5E061DA1D06E5EF009740F2 /* Quick.framework */,
 				D5E061DB1D06E5EF009740F2 /* Nimble.framework */,
 				D5E061D61D06E5AD009740F2 /* When.framework */,
@@ -576,6 +673,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		D51FC8431F72FD0600D722AD /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D5B2E89C1C3A780C00C0327D /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -593,6 +697,45 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		D51FC8451F72FD0600D722AD /* Malibu-tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D51FC85B1F72FD0600D722AD /* Build configuration list for PBXNativeTarget "Malibu-tvOS" */;
+			buildPhases = (
+				D51FC8411F72FD0600D722AD /* Sources */,
+				D51FC8421F72FD0600D722AD /* Frameworks */,
+				D51FC8431F72FD0600D722AD /* Headers */,
+				D51FC8441F72FD0600D722AD /* Resources */,
+				D51FC8A71F73023A00D722AD /* SwiftLint */,
+				D51FC8AB1F730A7600D722AD /* Copy frameworks with Carthage */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Malibu-tvOS";
+			productName = "Malibu-tvOS";
+			productReference = D51FC8461F72FD0600D722AD /* Malibu.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		D51FC84D1F72FD0600D722AD /* Malibu-tvOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D51FC85C1F72FD0600D722AD /* Build configuration list for PBXNativeTarget "Malibu-tvOSTests" */;
+			buildPhases = (
+				D51FC84A1F72FD0600D722AD /* Sources */,
+				D51FC84B1F72FD0600D722AD /* Frameworks */,
+				D51FC84C1F72FD0600D722AD /* Resources */,
+				D51FC8AA1F730A3D00D722AD /* Copy frameworks with Carthage */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D51FC8511F72FD0600D722AD /* PBXTargetDependency */,
+			);
+			name = "Malibu-tvOSTests";
+			productName = "Malibu-tvOSTests";
+			productReference = D51FC84E1F72FD0600D722AD /* Malibu-tvOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		D5B2E89E1C3A780C00C0327D /* Malibu-iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D5B2E8B31C3A780C00C0327D /* Build configuration list for PBXNativeTarget "Malibu-iOS" */;
@@ -677,10 +820,19 @@
 		D5B2E8961C3A780C00C0327D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 0900;
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Hyper Interaktiv AS";
 				TargetAttributes = {
+					D51FC8451F72FD0600D722AD = {
+						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Manual;
+					};
+					D51FC84D1F72FD0600D722AD = {
+						CreatedOnToolsVersion = 9.0;
+						DevelopmentTeam = LG4DBY4QF9;
+						ProvisioningStyle = Automatic;
+					};
 					D5B2E89E1C3A780C00C0327D = {
 						CreatedOnToolsVersion = 7.2;
 						LastSwiftMigration = 0900;
@@ -713,13 +865,30 @@
 			targets = (
 				D5B2E89E1C3A780C00C0327D /* Malibu-iOS */,
 				D5C6293F1C3A7FAA007F7B7C /* Malibu-macOS */,
+				D51FC8451F72FD0600D722AD /* Malibu-tvOS */,
 				D5B2E8A81C3A780C00C0327D /* Malibu-iOS-Tests */,
 				D5C629481C3A7FAA007F7B7C /* Malibu-macOS-Tests */,
+				D51FC84D1F72FD0600D722AD /* Malibu-tvOSTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		D51FC8441F72FD0600D722AD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D51FC84C1F72FD0600D722AD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D51FC8891F73018A00D722AD /* mock.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D5B2E89D1C3A780C00C0327D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -753,6 +922,52 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		D51FC8A71F73023A00D722AD /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
+		};
+		D51FC8AA1F730A3D00D722AD /* Copy frameworks with Carthage */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/tvOS/Quick.framework",
+				"$(SRCROOT)/Carthage/Build/tvOS/Nimble.framework",
+				"$(SRCROOT)/Carthage/Build/tvOS/When.framework",
+			);
+			name = "Copy frameworks with Carthage";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+		D51FC8AB1F730A7600D722AD /* Copy frameworks with Carthage */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/tvOS/When.framework",
+			);
+			name = "Copy frameworks with Carthage";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
 		D55166851DA1860300AECB6E /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -848,6 +1063,89 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		D51FC8411F72FD0600D722AD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D51FC8701F73016300D722AD /* URLStringConvertible.swift in Sources */,
+				D51FC85F1F73016300D722AD /* NetworkError.swift in Sources */,
+				D51FC85D1F73016300D722AD /* Logging.swift in Sources */,
+				D51FC8731F73016300D722AD /* RequestStorage.swift in Sources */,
+				D51FC86B1F73016300D722AD /* MockOperation.swift in Sources */,
+				D51FC87D1F73016300D722AD /* JsonSerializer.swift in Sources */,
+				D51FC8741F73016300D722AD /* RequestCapsule.swift in Sources */,
+				D51FC8711F73016300D722AD /* Request.swift in Sources */,
+				D51FC8721F73016300D722AD /* RequestPolicies.swift in Sources */,
+				D51FC8671F73016300D722AD /* QueryBuilder.swift in Sources */,
+				D51FC87B1F73016300D722AD /* ResponseHandler.swift in Sources */,
+				D51FC8691F73016300D722AD /* ConcurrentOperation.swift in Sources */,
+				D51FC8631F73016300D722AD /* FormURLEncoder.swift in Sources */,
+				D51FC87A1F73016300D722AD /* Mock.swift in Sources */,
+				D51FC8801F73016300D722AD /* Validating.swift in Sources */,
+				D51FC87C1F73016300D722AD /* Serializing.swift in Sources */,
+				D51FC8791F73016300D722AD /* ResponseValidation.swift in Sources */,
+				D51FC8641F73016300D722AD /* MultipartFormEncoder.swift in Sources */,
+				D51FC8751F73016300D722AD /* RequestConvertible.swift in Sources */,
+				D51FC8771F73016300D722AD /* Response.swift in Sources */,
+				D51FC87E1F73016300D722AD /* DataSerializer.swift in Sources */,
+				D51FC8611F73016300D722AD /* ParameterEncoding.swift in Sources */,
+				D51FC8681F73016300D722AD /* MultipartBuilder.swift in Sources */,
+				D51FC8761F73016300D722AD /* MimeType.swift in Sources */,
+				D51FC86C1F73016300D722AD /* ContentType.swift in Sources */,
+				D51FC87F1F73016300D722AD /* StringSerializer.swift in Sources */,
+				D51FC8811F73016300D722AD /* StatusCodeValidator.swift in Sources */,
+				D51FC86E1F73016300D722AD /* Header.swift in Sources */,
+				D51FC8781F73016300D722AD /* ResponseSerialization.swift in Sources */,
+				D51FC8661F73016300D722AD /* Utils.swift in Sources */,
+				D51FC8821F73016300D722AD /* ContentTypeValidator.swift in Sources */,
+				D51FC85E1F73016300D722AD /* Malibu.swift in Sources */,
+				D51FC8621F73016300D722AD /* JsonEncoder.swift in Sources */,
+				D51FC8601F73016300D722AD /* Networking.swift in Sources */,
+				D51FC86D1F73016300D722AD /* Method.swift in Sources */,
+				D51FC86F1F73016300D722AD /* SessionConfiguration.swift in Sources */,
+				D51FC86A1F73016300D722AD /* SessionOperation.swift in Sources */,
+				D51FC8651F73016300D722AD /* EtagStorage.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D51FC84A1F72FD0600D722AD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D51FC89B1F7301C300D722AD /* RequestStorageSpec.swift in Sources */,
+				D51FC8871F73018600D722AD /* NetworkPromiseSpec.swift in Sources */,
+				D51FC89E1F7301C300D722AD /* ResponseSerializationSpec.swift in Sources */,
+				D51FC8961F7301C300D722AD /* SessionConfigurationSpec.swift in Sources */,
+				D51FC8A41F7301C300D722AD /* StringSerializerSpec.swift in Sources */,
+				D51FC88F1F7301C300D722AD /* EtagStorageSpec.swift in Sources */,
+				D51FC88C1F7301C300D722AD /* JsonEncoderSpec.swift in Sources */,
+				D51FC8A31F7301C300D722AD /* DataSerializerSpec.swift in Sources */,
+				D51FC8951F7301C300D722AD /* HeaderSpec.swift in Sources */,
+				D51FC8911F7301C300D722AD /* QueryBuilderSpec.swift in Sources */,
+				D51FC88A1F7301C300D722AD /* NetworkErrorSpec.swift in Sources */,
+				D51FC8981F7301C300D722AD /* RequestSpec.swift in Sources */,
+				D51FC8901F7301C300D722AD /* UtilsSpec.swift in Sources */,
+				D51FC8931F7301C300D722AD /* AsynchronousOperationSpec.swift in Sources */,
+				D51FC89D1F7301C300D722AD /* ResponseSpec.swift in Sources */,
+				D51FC88B1F7301C300D722AD /* NetworkingSpec.swift in Sources */,
+				D51FC8A21F7301C300D722AD /* JsonSerializerSpec.swift in Sources */,
+				D51FC8A61F7301C300D722AD /* ContentTypeValidatorSpec.swift in Sources */,
+				D51FC8991F7301C300D722AD /* MethodRequestSpec.swift in Sources */,
+				D51FC8A01F7301C300D722AD /* ResponseHandlerSpec.swift in Sources */,
+				D51FC8A51F7301C300D722AD /* StatusCodeVadatorSpec.swift in Sources */,
+				D51FC8881F73018600D722AD /* Mocks.swift in Sources */,
+				D51FC8971F7301C300D722AD /* URLStringConvertibleSpec.swift in Sources */,
+				D51FC88D1F7301C300D722AD /* FormURLEncoderSpec.swift in Sources */,
+				D51FC89C1F7301C300D722AD /* MimeTypeSpec.swift in Sources */,
+				D51FC8941F7301C300D722AD /* ContentTypeSpec.swift in Sources */,
+				D51FC89F1F7301C300D722AD /* ResponseValidationSpec.swift in Sources */,
+				D51FC89A1F7301C300D722AD /* RequestCapsuleSpec.swift in Sources */,
+				D51FC88E1F7301C300D722AD /* MultipartFormEncoderSpec.swift in Sources */,
+				D51FC8A11F7301C300D722AD /* MockSpec.swift in Sources */,
+				D51FC8921F7301C300D722AD /* MultipartBuilderSpec.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D5B2E89A1C3A780C00C0327D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1017,6 +1315,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		D51FC8511F72FD0600D722AD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D51FC8451F72FD0600D722AD /* Malibu-tvOS */;
+			targetProxy = D51FC8501F72FD0600D722AD /* PBXContainerItemProxy */;
+		};
 		D5B2E8AC1C3A780C00C0327D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D5B2E89E1C3A780C00C0327D /* Malibu-iOS */;
@@ -1030,6 +1333,130 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		D51FC8571F72FD0600D722AD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "Malibu/Info-tvOS.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "no.hyper.Malibu-tvOS";
+				PRODUCT_NAME = Malibu;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+			};
+			name = Debug;
+		};
+		D51FC8581F72FD0600D722AD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "Malibu/Info-tvOS.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "no.hyper.Malibu-tvOS";
+				PRODUCT_NAME = Malibu;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+			};
+			name = Release;
+		};
+		D51FC8591F72FD0600D722AD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LG4DBY4QF9;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "MalibuTests/Info-tvOS.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "no.hyper.Malibu-tvOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
+			};
+			name = Debug;
+		};
+		D51FC85A1F72FD0600D722AD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LG4DBY4QF9;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "MalibuTests/Info-tvOS.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "no.hyper.Malibu-tvOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
+			};
+			name = Release;
+		};
 		D5B2E8B11C3A780C00C0327D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1322,6 +1749,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		D51FC85B1F72FD0600D722AD /* Build configuration list for PBXNativeTarget "Malibu-tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D51FC8571F72FD0600D722AD /* Debug */,
+				D51FC8581F72FD0600D722AD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D51FC85C1F72FD0600D722AD /* Build configuration list for PBXNativeTarget "Malibu-tvOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D51FC8591F72FD0600D722AD /* Debug */,
+				D51FC85A1F72FD0600D722AD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D5B2E8991C3A780C00C0327D /* Build configuration list for PBXProject "Malibu" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
