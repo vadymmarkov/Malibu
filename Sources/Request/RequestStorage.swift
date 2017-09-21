@@ -1,10 +1,9 @@
 import Foundation
 
 final class RequestStorage {
-
   static let domain = "no.hyper.Malibu.RequestStorage"
 
-  var key: String
+  let key: String
   var requests = [String: RequestCapsule]()
 
   fileprivate var userDefaults: UserDefaults {

@@ -30,7 +30,7 @@ public protocol ErrorLogging: Logging {
   func log(error: Error)
 }
 
-public struct ErrorLogger: ErrorLogging {
+public final class ErrorLogger: ErrorLogging {
   public let level: LogLevel
 
   public init(level: LogLevel) {
@@ -52,7 +52,7 @@ public protocol RequestLogging: Logging {
   func log(request: Request, urlRequest: URLRequest)
 }
 
-public struct RequestLogger: RequestLogging {
+public final class RequestLogger: RequestLogging {
   public let level: LogLevel
 
   public init(level: LogLevel) {
@@ -93,7 +93,7 @@ public protocol ResponseLogging: Logging {
   func log(response: HTTPURLResponse)
 }
 
-public struct ResponseLogger: ResponseLogging {
+public final class ResponseLogger: ResponseLogging {
   public let level: LogLevel
 
   public init(level: LogLevel) {

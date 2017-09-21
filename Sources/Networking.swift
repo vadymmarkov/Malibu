@@ -9,7 +9,7 @@ public enum NetworkingMode {
 
 // MARK: - Mocks
 
-public struct MockProvider<R: RequestConvertible> {
+public final class MockProvider<R: RequestConvertible> {
   let resolver: (R) -> Mock?
   let delay: TimeInterval
 
@@ -31,7 +31,7 @@ public final class Networking<R: RequestConvertible>: NSObject, URLSessionDelega
   public var preProcessRequest: ((URLRequest) -> URLRequest)?
 
   public var middleware: (Promise<Void>) -> Void = { promise in
-    promise.resolve()
+    promise.resolve(Void())
   }
 
   let sessionConfiguration: SessionConfiguration

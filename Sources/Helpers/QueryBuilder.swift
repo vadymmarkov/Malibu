@@ -1,9 +1,7 @@
 import Foundation
 
-public struct QueryBuilder {
-
+public final class QueryBuilder {
   public typealias Component = (String, String)
-
   let escapingCharacters = ":#[]@!$&'()*+,;="
 
   public init() {}
@@ -63,11 +61,10 @@ public struct QueryBuilder {
 
       while index != string.endIndex {
         let endIndex = string.index(index, offsetBy: 50, limitedBy: string.endIndex) ?? string.endIndex
-        let range = Range(index..<endIndex)
-        let substring = string.substring(with: range)
+        let substring = string[index..<endIndex]
 
         escapedString += substring.addingPercentEncoding(
-          withAllowedCharacters: allowedCharacters as CharacterSet) ?? substring
+          withAllowedCharacters: allowedCharacters as CharacterSet) ?? String(substring)
 
         index = endIndex
       }

@@ -1,8 +1,7 @@
 import Foundation
 
-public struct StringSerializer: Serializing {
-
-  var encoding: String.Encoding?
+public final class StringSerializer: Serializing {
+  let encoding: String.Encoding?
 
   public init(encoding: String.Encoding? = nil) {
     self.encoding = encoding

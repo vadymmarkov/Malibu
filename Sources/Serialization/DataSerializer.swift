@@ -1,7 +1,6 @@
 import Foundation
 
-public struct DataSerializer: Serializing {
-
+public final class DataSerializer: Serializing {
   public func serialize(data: Data, response: HTTPURLResponse) throws -> Data {
     if response.statusCode == 204 { return Data() }
 

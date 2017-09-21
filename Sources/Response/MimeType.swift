@@ -1,10 +1,10 @@
 import Foundation
 
 struct MimeType {
-
   static func components(from string: String) -> (type: String?, subtype: String?) {
     let trimmed = string.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-    let splitted = trimmed.substring(to: trimmed.range(of: ";")?.lowerBound ?? trimmed.endIndex)
+    let endIndex = trimmed.range(of: ";")?.lowerBound ?? trimmed.endIndex
+    let splitted = trimmed[..<endIndex]
     let array = splitted.components(separatedBy: "/")
 
     return (type: array.first, subtype: array.last)

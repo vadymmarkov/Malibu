@@ -1,8 +1,12 @@
 import Foundation
 import When
 
-struct ResponseHandler {
+final class ResponseHandler {
   let networkPromise: NetworkPromise
+
+  init(networkPromise: NetworkPromise) {
+    self.networkPromise = networkPromise
+  }
 }
 
 extension ResponseHandler {

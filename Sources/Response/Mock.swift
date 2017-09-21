@@ -1,10 +1,9 @@
 import Foundation
 
 public final class Mock {
-
-  public var httpResponse: HTTPURLResponse?
-  public var data: Data?
-  public var error: Error?
+  public let httpResponse: HTTPURLResponse?
+  public let data: Data?
+  public let error: Error?
 
   // MARK: - Initialization
 
