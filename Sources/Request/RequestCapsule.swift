@@ -1,5 +1,6 @@
 import Foundation
 
+/// Used to bundle request information to NSCoding conformance
 final class RequestCapsule: NSObject, NSCoding {
   enum Key: String {
     case method
