@@ -204,7 +204,7 @@ public extension Request {
     let url = try concatURL(baseUrl: baseUrl?.urlString)
 
     let requestUrl: URL = try {
-        if let resourceUrl = resource as? URL {
+        if let resourceUrl = resource as? URL, parameters.isEmpty {
             return resourceUrl
         } else {
             return try buildUrl(from: url)
