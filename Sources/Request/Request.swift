@@ -203,7 +203,13 @@ public extension Request {
     let prefix = baseUrl?.urlString ?? ""
     let url = try concatURL(baseUrl: baseUrl?.urlString)
 
-    let requestUrl = try buildUrl(from: url)
+    let requestUrl: URL = try {
+        if let resourceUrl = resource as? URL {
+            return resourceUrl
+        } else {
+            return try buildUrl(from: url)
+        }
+    }()
     var request = URLRequest(url: requestUrl)
 
     request.httpMethod = method.rawValue
