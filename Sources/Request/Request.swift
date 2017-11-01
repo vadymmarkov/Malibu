@@ -201,12 +201,12 @@ public extension Request {
   func toUrlRequest(baseUrl: URLStringConvertible? = nil,
                     additionalHeaders: [String: String] = [:]) throws -> URLRequest {
     let prefix = baseUrl?.urlString ?? ""
-    let url = try concatURL(baseUrl: baseUrl?.urlString)
 
     let requestUrl: URL = try {
         if let resourceUrl = resource as? URL, parameters.isEmpty {
             return resourceUrl
         } else {
+            let url = try concatURL(baseUrl: baseUrl?.urlString)
             return try buildUrl(from: url)
         }
     }()
