@@ -202,14 +202,15 @@ public extension Request {
                     additionalHeaders: [String: String] = [:]) throws -> URLRequest {
     let prefix = baseUrl?.urlString ?? ""
 
-    let requestUrl: URL = try {
-        if let resourceUrl = resource as? URL, parameters.isEmpty {
+    let url: URL = try {
+        if let resourceUrl = resource as? URL {
             return resourceUrl
         } else {
-            let url = try concatURL(baseUrl: baseUrl?.urlString)
-            return try buildUrl(from: url)
+            return try concatURL(baseUrl: baseUrl?.urlString)
         }
     }()
+    
+    let requestUrl = try buildUrl(from: url)
     var request = URLRequest(url: requestUrl)
 
     request.httpMethod = method.rawValue
