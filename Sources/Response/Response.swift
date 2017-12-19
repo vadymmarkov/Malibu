@@ -5,16 +5,16 @@ public typealias NetworkPromise = Promise<Response>
 
 public final class Response: Equatable {
   public let data: Data
-  public let request: URLRequest
-  public let response: HTTPURLResponse
+  public let urlRequest: URLRequest
+  public let httpUrlResponse: HTTPURLResponse
   public var statusCode: Int {
-    return response.statusCode
+    return httpUrlResponse.statusCode
   }
 
-  public init(data: Data, request: URLRequest, response: HTTPURLResponse) {
+  public init(data: Data, urlRequest: URLRequest, httpUrlResponse: HTTPURLResponse) {
     self.data = data
-    self.request = request
-    self.response = response
+    self.urlRequest = urlRequest
+    self.httpUrlResponse = httpUrlResponse
   }
 }
 
@@ -22,6 +22,6 @@ public final class Response: Equatable {
 
 public func == (lhs: Response, rhs: Response) -> Bool {
   return lhs.data == rhs.data
-    && lhs.request == rhs.request
-    && lhs.response == rhs.response
+    && lhs.urlRequest == rhs.urlRequest
+    && lhs.httpUrlResponse == rhs.httpUrlResponse
 }

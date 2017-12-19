@@ -11,9 +11,12 @@ public final class StatusCodeValidator<T: Sequence>: Validating where T.Iterator
 
   // MARK: - Validation
 
-  public func validate(_ result: Response) throws {
-    guard statusCodes.contains(result.response.statusCode) else {
-      throw NetworkError.unacceptableStatusCode(result.response.statusCode)
+  public func validate(_ response: Response) throws {
+    guard statusCodes.contains(response.httpUrlResponse.statusCode) else {
+      throw NetworkError.unacceptableStatusCode(
+        statusCode: response.statusCode,
+        response: response
+      )
     }
   }
 }

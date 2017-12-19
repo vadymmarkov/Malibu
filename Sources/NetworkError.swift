@@ -1,46 +1,40 @@
 import Foundation
 
 public enum NetworkError: Error {
-  case noMockProvided
   case invalidRequestURL
-  case missingContentType
+  case missingContentType(response: Response)
   case invalidParameter
-  case invalidUploadFilePath
   case noDataInResponse
   case noResponseReceived
-  case unacceptableStatusCode(Int)
-  case unacceptableContentType(String)
-  case jsonArraySerializationFailed
-  case jsonDictionarySerializationFailed
-  case stringSerializationFailed(UInt)
+  case unacceptableStatusCode(statusCode: Int, response: Response)
+  case unacceptableContentType(contentType: String, response: Response)
+  case jsonArraySerializationFailed(response: Response)
+  case jsonDictionarySerializationFailed(response: Response)
+  case stringSerializationFailed(encoding: UInt, response: Response)
 
   public var reason: String {
     var text: String
 
     switch self {
-    case .noMockProvided:
-      text = "No mock provided for the current request and method"
     case .invalidRequestURL:
       text = "Invalid request URL"
     case .missingContentType:
       text = "Response content type was missing"
     case .invalidParameter:
       text = "Parameter is not convertible to NSData"
-    case .invalidUploadFilePath:
-      text = "Invalid upload file path"
     case .noDataInResponse:
       text = "No data in response"
     case .noResponseReceived:
       text = "No response received"
-    case .unacceptableStatusCode(let statusCode):
+    case .unacceptableStatusCode(let statusCode, _):
       text = "Response status code \(statusCode) was unacceptable"
-    case .unacceptableContentType(let contentType):
+    case .unacceptableContentType(let contentType, _):
       text = "Response content type \(contentType) was unacceptable"
     case .jsonArraySerializationFailed:
       text = "No JSON array in response data"
     case .jsonDictionarySerializationFailed:
       text = "No JSON dictionary in response data"
-    case .stringSerializationFailed(let encoding):
+    case .stringSerializationFailed(let encoding, _):
       text = "String could not be serialized with encoding: \(encoding)"
     }
 

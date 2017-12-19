@@ -11,10 +11,10 @@ public final class ContentTypeValidator<T: Sequence>: Validating where T.Iterato
 
   // MARK: - Validation
 
-  public func validate(_ result: Response) throws {
-    let response = result.response
+  public func validate(_ response: Response) throws {
+    let httpUrlResponse = response.httpUrlResponse
 
-    if let responseContentType = response.mimeType,
+    if let responseContentType = httpUrlResponse.mimeType,
       let responseMimeType = MimeType(contentType: responseContentType) {
       for contentType in contentTypes {
         if MimeType(contentType: contentType)?.matches(to: responseMimeType) == true {
@@ -31,10 +31,13 @@ public final class ContentTypeValidator<T: Sequence>: Validating where T.Iterato
       }
     }
 
-    var error = NetworkError.missingContentType
+    var error = NetworkError.missingContentType(response: response)
 
-    if let responseContentType = response.mimeType {
-      error = NetworkError.unacceptableContentType(responseContentType)
+    if let responseContentType = httpUrlResponse.mimeType {
+      error = NetworkError.unacceptableContentType(
+        contentType: responseContentType,
+        response: response
+      )
     }
 
     throw error
