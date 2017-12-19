@@ -2,7 +2,7 @@
 import Quick
 import Nimble
 
-class StringSerializerSpec: QuickSpec {
+final class StringSerializerSpec: QuickSpec {
   override func spec() {
     describe("StringSerializer") {
       var serializer: StringSerializer!

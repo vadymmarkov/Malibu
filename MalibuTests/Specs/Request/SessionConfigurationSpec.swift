@@ -2,8 +2,7 @@
 import Quick
 import Nimble
 
-class SessionConfigurationSpec: QuickSpec {
-
+final class SessionConfigurationSpec: QuickSpec {
   override func spec() {
     describe("SessionConfiguration") {
       var sessionConfiguration: SessionConfiguration!

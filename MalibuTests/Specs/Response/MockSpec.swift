@@ -3,7 +3,7 @@ import Quick
 import Nimble
 import When
 
-class MockSpec: QuickSpec {
+final class MockSpec: QuickSpec {
   override func spec() {
     describe("Mock") {
       var mock: Mock!

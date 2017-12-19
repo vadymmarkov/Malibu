@@ -2,8 +2,7 @@
 import Quick
 import Nimble
 
-class UtilsSpec: QuickSpec {
-
+final class UtilsSpec: QuickSpec {
   override func spec() {
     describe("Utils") {
       let fileManager = FileManager.default

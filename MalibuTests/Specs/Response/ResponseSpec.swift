@@ -3,8 +3,7 @@ import When
 import Quick
 import Nimble
 
-class ResponseSpec: QuickSpec {
-
+final class ResponseSpec: QuickSpec {
   override func spec() {
     describe("Response") {
       let url = URL(string: "http://api.loc")!

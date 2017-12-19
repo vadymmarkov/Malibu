@@ -5,7 +5,7 @@ import When
 
 // MARK: - Mocks
 
-private class ChallengeSenderMock: NSObject, URLAuthenticationChallengeSender {
+final private class ChallengeSenderMock: NSObject, URLAuthenticationChallengeSender {
   func use(_ credential: URLCredential, for challenge: URLAuthenticationChallenge) {}
   func continueWithoutCredential(for challenge: URLAuthenticationChallenge) {}
   func cancel(_ challenge: URLAuthenticationChallenge) {}
@@ -13,7 +13,7 @@ private class ChallengeSenderMock: NSObject, URLAuthenticationChallengeSender {
 
 // MARK: - Specs
 
-class NetworkingSpec: QuickSpec {
+final class NetworkingSpec: QuickSpec {
   override func spec() {
     describe("Networking") {
       describe("#init") {

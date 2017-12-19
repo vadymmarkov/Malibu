@@ -3,7 +3,7 @@ import When
 import Quick
 import Nimble
 
-class ResponseSerializationSpec: QuickSpec, NetworkPromiseSpec {
+final class ResponseSerializationSpec: QuickSpec, NetworkPromiseSpec {
   var networkPromise: NetworkPromise!
   var request: URLRequest!
   var data: Data!
@@ -20,7 +20,8 @@ class ResponseSerializationSpec: QuickSpec, NetworkPromiseSpec {
         self.request = URLRequest(url: URL(string: "http://api.loc")!)
         self.data = try! JSONSerialization.data(
           withJSONObject: [["name": "Taylor"]],
-          options: JSONSerialization.WritingOptions())
+          options: JSONSerialization.WritingOptions()
+        )
       }
 
       describe("#toString") {
@@ -175,8 +176,10 @@ class ResponseSerializationSpec: QuickSpec, NetworkPromiseSpec {
         context("when response is resolved") {
           context("when serialization fails") {
             it("rejects promise with an error") {
-              self.data = try! JSONSerialization.data(withJSONObject: [["name": "Taylor"]],
-                options: JSONSerialization.WritingOptions())
+              self.data = try! JSONSerialization.data(
+                withJSONObject: [["name": "Taylor"]],
+                options: JSONSerialization.WritingOptions()
+              )
               let response = self.makeResponse(statusCode: 200, data: self.data)
 
               self.testFailedPromise(
@@ -191,17 +194,17 @@ class ResponseSerializationSpec: QuickSpec, NetworkPromiseSpec {
             it("rejects promise with an error") {
               self.data = Data()
 
-              self.testFailedPromise(promise, error: NetworkError.noDataInResponse,
-                response: response)
+              self.testFailedPromise(promise, error: NetworkError.noDataInResponse, response: response)
             }
           }
 
           context("when response status code is 204 No Content") {
             it("resolves promise with an empty dictionary") {
               self.data = Data()
-              let response = HTTPURLResponse(url: url, statusCode: 204,
-                                             httpVersion: "HTTP/2.0",
-                                             headerFields: nil)!
+              let response = HTTPURLResponse(
+                url: url, statusCode: 204,
+                httpVersion: "HTTP/2.0",
+                headerFields: nil)!
 
               self.testSucceededPromise(promise, response: response) { result in
                 if let stringDictionary = result as? [String: String] {
@@ -214,8 +217,10 @@ class ResponseSerializationSpec: QuickSpec, NetworkPromiseSpec {
           context("when serialization succeeded") {
             it("resolves promise with a result") {
               let dictionary = ["name": "Taylor"]
-              self.data = try! JSONSerialization.data(withJSONObject: dictionary,
-                options: JSONSerialization.WritingOptions())
+              self.data = try! JSONSerialization.data(
+                withJSONObject: dictionary,
+                options: JSONSerialization.WritingOptions()
+              )
 
               self.testSucceededPromise(promise, response: response) { result in
                 if let stringDictionary = result as? [String: String] {

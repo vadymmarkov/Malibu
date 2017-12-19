@@ -2,8 +2,7 @@
 import Quick
 import Nimble
 
-class MultipartBuilderSpec: QuickSpec {
-
+final class MultipartBuilderSpec: QuickSpec {
   override func spec() {
     describe("MultipartBuilder") {
       var builder: MultipartBuilder!

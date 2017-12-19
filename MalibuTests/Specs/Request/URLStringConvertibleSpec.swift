@@ -2,8 +2,7 @@
 import Quick
 import Nimble
 
-class URLStringConvertibleSpec: QuickSpec {
-
+final class URLStringConvertibleSpec: QuickSpec {
   override func spec() {
     describe("URLStringConvertible") {
       var value: URLStringConvertible!

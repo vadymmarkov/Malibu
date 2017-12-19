@@ -2,8 +2,7 @@
 import Quick
 import Nimble
 
-class FormURLEncoderSpec: QuickSpec {
-
+final class FormURLEncoderSpec: QuickSpec {
   override func spec() {
     describe("FormURLEncoder") {
       var encoder: FormURLEncoder!
@@ -19,7 +18,7 @@ class FormURLEncoderSpec: QuickSpec {
           let data = string.data(using: String.Encoding.utf8,
                                  allowLossyConversion: false)
 
-          expect{ try encoder.encode(parameters: parameters) }.to(equal(data))
+          expect { try encoder.encode(parameters: parameters) }.to(equal(data))
         }
       }
     }

@@ -2,8 +2,7 @@
 import Quick
 import Nimble
 
-class ContentTypeValidatorSpec: QuickSpec {
-
+final class ContentTypeValidatorSpec: QuickSpec {
   override func spec() {
     describe("ContentTypeValidator") {
       let url = URL(string: "http://api.loc")!

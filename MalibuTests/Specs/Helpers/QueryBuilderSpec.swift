@@ -2,8 +2,7 @@
 import Quick
 import Nimble
 
-class QueryBuilderSpec: QuickSpec {
-
+final class QueryBuilderSpec: QuickSpec {
   override func spec() {
     describe("QueryBuilder") {
       var builder: QueryBuilder!

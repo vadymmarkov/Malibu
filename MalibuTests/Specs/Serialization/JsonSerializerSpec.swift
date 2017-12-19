@@ -2,8 +2,7 @@
 import Quick
 import Nimble
 
-class JsonSerializerSpec: QuickSpec {
-
+final class JsonSerializerSpec: QuickSpec {
   override func spec() {
     describe("JsonSerializer") {
       var serializer: JsonSerializer!
@@ -56,8 +55,10 @@ class JsonSerializerSpec: QuickSpec {
         context("when serialization succeeded") {
           it("does not throw an error and returns result") {
             let dictionary = ["name": "Taylor"]
-            let data = try! JSONSerialization.data(withJSONObject: dictionary,
-              options: JSONSerialization.WritingOptions())
+            let data = try! JSONSerialization.data(
+              withJSONObject: dictionary,
+              options: JSONSerialization.WritingOptions()
+            )
             var result: Any?
 
             expect {

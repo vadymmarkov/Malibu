@@ -2,8 +2,7 @@
 import Quick
 import Nimble
 
-class StatusCodeValidatorSpec: QuickSpec {
-
+final class StatusCodeValidatorSpec: QuickSpec {
   override func spec() {
     describe("StatusCodeValidator") {
       let url = Foundation.URL(string: "http://api.loc")!

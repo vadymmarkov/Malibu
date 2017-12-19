@@ -3,7 +3,7 @@ import Quick
 import Nimble
 import When
 
-class ResponseHandlerSpec: QuickSpec {
+final class ResponseHandlerSpec: QuickSpec {
   override func spec() {
     describe("TaskRunning") {
       var handler: ResponseHandler!

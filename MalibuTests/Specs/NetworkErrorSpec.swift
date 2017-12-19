@@ -2,8 +2,7 @@
 import Quick
 import Nimble
 
-class NetworkErrorSpec: QuickSpec {
-
+final class NetworkErrorSpec: QuickSpec {
   override func spec() {
     describe("NetworkError") {
       var error: NetworkError!

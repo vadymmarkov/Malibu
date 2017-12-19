@@ -2,12 +2,16 @@
 import Quick
 import Nimble
 
-class DataSerializerSpec: QuickSpec {
+final class DataSerializerSpec: QuickSpec {
   override func spec() {
     describe("DataSerializer") {
       var serializer: DataSerializer!
       let url = URL(string: "http://api.loc")!
-      let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!
+      let httpUrlResponse = HTTPURLResponse(
+        url: url,
+        statusCode: 200,
+        httpVersion: "HTTP/2.0",
+        headerFields: nil)!
 
       beforeEach {
         serializer = DataSerializer()
@@ -21,7 +25,7 @@ class DataSerializerSpec: QuickSpec {
               try serializer.serialize(response: Response(
                 data: data,
                 urlRequest: URLRequest(url: url),
-                httpUrlResponse: response)
+                httpUrlResponse: httpUrlResponse)
               )
             }.to(throwError(NetworkError.noDataInResponse))
           }
@@ -48,15 +52,17 @@ class DataSerializerSpec: QuickSpec {
         context("when serialization succeeded") {
           it("does not throw an error and returns result") {
             let dictionary = ["name": "Taylor"]
-            let data = try! JSONSerialization.data(withJSONObject: dictionary,
-              options: JSONSerialization.WritingOptions())
+            let data = try! JSONSerialization.data(
+              withJSONObject: dictionary,
+              options: JSONSerialization.WritingOptions()
+            )
             var result: Data?
 
             expect {
               result = try serializer.serialize(response: Response(
                 data: data,
                 urlRequest: URLRequest(url: url),
-                httpUrlResponse: response)
+                httpUrlResponse: httpUrlResponse)
               )
             }.toNot(throwError())
             expect(result).to(equal(data))

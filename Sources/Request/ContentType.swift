@@ -75,7 +75,6 @@ public enum ContentType {
 // MARK: - Hashable
 
 extension ContentType: Hashable {
-
   public var hashValue: Int {
     let string = header ?? "query"
     return string.hashValue

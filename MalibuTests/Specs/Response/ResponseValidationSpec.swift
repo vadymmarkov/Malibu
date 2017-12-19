@@ -3,7 +3,7 @@ import When
 import Quick
 import Nimble
 
-class ResponseValidationSpec: QuickSpec, NetworkPromiseSpec {
+final class ResponseValidationSpec: QuickSpec, NetworkPromiseSpec {
   var networkPromise: NetworkPromise!
   var request: URLRequest!
   var data: Data!

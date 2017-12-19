@@ -2,8 +2,7 @@
 import Quick
 import Nimble
 
-class RequestSpec: QuickSpec {
-
+final class RequestSpec: QuickSpec {
   override func spec() {
     describe("Request") {
       var request: Request!

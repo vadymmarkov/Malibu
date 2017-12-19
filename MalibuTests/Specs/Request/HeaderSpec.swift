@@ -2,8 +2,7 @@
 import Quick
 import Nimble
 
-class HeaderSpec: QuickSpec {
-
+final class HeaderSpec: QuickSpec {
   override func spec() {
     describe("Header") {
 

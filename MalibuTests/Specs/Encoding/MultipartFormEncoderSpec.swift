@@ -2,8 +2,7 @@
 import Quick
 import Nimble
 
-class MultipartFormEncoderSpec: QuickSpec {
-
+final class MultipartFormEncoderSpec: QuickSpec {
   override func spec() {
     describe("MultipartFormEncoder") {
       var encoder: MultipartFormEncoder!
@@ -19,7 +18,7 @@ class MultipartFormEncoderSpec: QuickSpec {
           let data = string.data(using: String.Encoding.utf8,
                                  allowLossyConversion: true)
 
-          expect{ try encoder.encode(parameters: parameters) }.to(equal(data))
+          expect { try encoder.encode(parameters: parameters) }.to(equal(data))
         }
       }
     }

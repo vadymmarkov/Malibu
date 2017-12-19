@@ -36,7 +36,9 @@ extension NetworkPromiseSpec where Self: QuickSpec {
     self.waitForExpectations(timeout: 4.0, handler:nil)
   }
 
-  func testSucceededPromise<T>(_ promise: Promise<T>, response: HTTPURLResponse, validation: ((T) -> Void)? = nil) {
+  func testSucceededPromise<T>(_ promise: Promise<T>,
+                               response: HTTPURLResponse,
+                               validation: ((T) -> Void)? = nil) {
     let expectation = self.expectation(description: "Validation response success")
     let response = Response(data: data, urlRequest: request, httpUrlResponse: response)
 
