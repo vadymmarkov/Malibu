@@ -2,8 +2,7 @@
 import Quick
 import Nimble
 
-class NetworkErrorSpec: QuickSpec {
-
+final class NetworkErrorSpec: QuickSpec {
   override func spec() {
     describe("NetworkError") {
       var error: NetworkError!
@@ -36,7 +35,10 @@ class NetworkErrorSpec: QuickSpec {
         let statusCode = 401
 
         beforeEach {
-          error = .unacceptableStatusCode(statusCode)
+          error = .unacceptableStatusCode(
+            statusCode: statusCode,
+            response: self.makeResponse(statusCode: 200)
+          )
         }
 
         describe("#reason") {
@@ -50,7 +52,10 @@ class NetworkErrorSpec: QuickSpec {
         let contentType = "application/weirdo"
 
         beforeEach {
-          error = .unacceptableContentType(contentType)
+          error = .unacceptableContentType(
+            contentType: contentType,
+            response: self.makeResponse(statusCode: 200)
+          )
         }
 
         describe("#reason") {
@@ -62,7 +67,7 @@ class NetworkErrorSpec: QuickSpec {
 
       context("when it's noDataInResponse") {
         beforeEach {
-          error = .missingContentType
+          error = .missingContentType(response: self.makeResponse(statusCode: 200))
         }
 
         describe("#reason") {

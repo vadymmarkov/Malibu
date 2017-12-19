@@ -7,8 +7,10 @@ public final class StringSerializer: Serializing {
     self.encoding = encoding
   }
 
-  public func serialize(data: Data, response: HTTPURLResponse) throws -> String {
+  public func serialize(response: Response) throws -> String {
     if response.statusCode == 204 { return "" }
+
+    let data = response.data
 
     guard data.count > 0 else {
       throw NetworkError.noDataInResponse
@@ -18,7 +20,7 @@ public final class StringSerializer: Serializing {
 
     if let encoding = encoding {
       stringEncoding = encoding.rawValue
-    } else if let encodingName = response.textEncodingName {
+    } else if let encodingName = response.httpUrlResponse.textEncodingName {
       stringEncoding = CFStringConvertEncodingToNSStringEncoding(
         CFStringConvertIANACharSetNameToEncoding(encodingName as CFString)
       )
@@ -27,7 +29,10 @@ public final class StringSerializer: Serializing {
     }
 
     guard let string = String(data: data, encoding: String.Encoding(rawValue: stringEncoding)) else {
-      throw NetworkError.stringSerializationFailed(stringEncoding)
+      throw NetworkError.stringSerializationFailed(
+        encoding: stringEncoding,
+        response: response
+      )
     }
 
     return string

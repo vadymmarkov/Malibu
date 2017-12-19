@@ -2,8 +2,7 @@
 import Quick
 import Nimble
 
-class ContentTypeSpec: QuickSpec {
-
+final class ContentTypeSpec: QuickSpec {
   override func spec() {
     describe("ContentType") {
       var contentType: ContentType!

@@ -5,9 +5,9 @@ import When
 
 public extension Promise where T: Response {
   public func validate(using validator: Validating) -> Promise<Response> {
-    return then({ result -> Response in
-      try validator.validate(result)
-      return result
+    return then({ response -> Response in
+      try validator.validate(response)
+      return response
     })
   }
 
@@ -20,18 +20,18 @@ public extension Promise where T: Response {
   }
 
   public func validate() -> Promise<Response> {
-    return validate(statusCodes: 200..<300).then({ result -> Response in
+    return validate(statusCodes: 200..<300).then({ response -> Response in
       let contentTypes: [String]
 
-      if let accept = result.request.value(forHTTPHeaderField: "Accept") {
+      if let accept = response.urlRequest.value(forHTTPHeaderField: "Accept") {
         contentTypes = accept.components(separatedBy: ",")
       } else {
         contentTypes = ["*/*"]
       }
 
-      try ContentTypeValidator(contentTypes: contentTypes).validate(result)
+      try ContentTypeValidator(contentTypes: contentTypes).validate(response)
 
-      return result
+      return response
     })
   }
 }

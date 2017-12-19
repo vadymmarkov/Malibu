@@ -10,7 +10,6 @@ protocol NetworkPromiseSpec {
 }
 
 extension NetworkPromiseSpec where Self: QuickSpec {
-
   func testFailedResponse<T>(_ promise: Promise<T>) {
     let expectation = self.expectation(description: "Validation response failure")
 
@@ -32,17 +31,19 @@ extension NetworkPromiseSpec where Self: QuickSpec {
       expectation.fulfill()
     })
 
-    networkPromise.resolve(Response(data: data, request: request, response: response))
+    networkPromise.resolve(Response(data: data, urlRequest: request, httpUrlResponse: response))
 
     self.waitForExpectations(timeout: 4.0, handler:nil)
   }
 
-  func testSucceededPromise<T>(_ promise: Promise<T>, response: HTTPURLResponse, validation: ((T) -> Void)? = nil) {
+  func testSucceededPromise<T>(_ promise: Promise<T>,
+                               response: HTTPURLResponse,
+                               validation: ((T) -> Void)? = nil) {
     let expectation = self.expectation(description: "Validation response success")
-    let response = Response(data: data, request: request, response: response)
+    let response = Response(data: data, urlRequest: request, httpUrlResponse: response)
 
-    promise.done({ result in
-      validation?(result)
+    promise.done({ response in
+      validation?(response)
       expectation.fulfill()
     })
 

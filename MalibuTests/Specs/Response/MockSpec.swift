@@ -3,8 +3,7 @@ import Quick
 import Nimble
 import When
 
-class MockSpec: QuickSpec {
-
+final class MockSpec: QuickSpec {
   override func spec() {
     describe("Mock") {
       var mock: Mock!
@@ -36,15 +35,16 @@ class MockSpec: QuickSpec {
             httpVersion: "HTTP/2.0", headerFields: nil)!
           response = Response(
             data: mock.data!,
-            request: try! request.toUrlRequest(),
-            response: mock.httpResponse!)
+            urlRequest: try! request.toUrlRequest(),
+            httpUrlResponse: mock.httpResponse!
+          )
         }
 
         it("sets properties") {
           let contentTypeValidator = ContentTypeValidator(contentTypes: ["application/json"])
           let statusCodeValidator = StatusCodeValidator(statusCodes: [200])
           let serializer = JsonSerializer()
-          let dictionary = try! serializer.serialize(data: mock.data!, response: httpResponse) as! [String: String]
+          let dictionary = try! serializer.serialize(response: response) as! [String: String]
 
           expect(mock.httpResponse?.statusCode).to(equal(httpResponse.statusCode))
           expect(mock.error).to(beNil())
@@ -67,19 +67,24 @@ class MockSpec: QuickSpec {
 
         beforeEach {
           mock = Mock(json: json)
-          httpResponse = HTTPURLResponse(url: URL(string: "mock://JSON")!, statusCode: 200,
-            httpVersion: "HTTP/2.0", headerFields: nil)!
+          httpResponse = HTTPURLResponse(
+            url: URL(string: "mock://JSON")!,
+            statusCode: 200,
+            httpVersion: "HTTP/2.0",
+            headerFields: nil
+          )!
           response = Response(
             data: mock.data!,
-            request: try! request.toUrlRequest(),
-            response: mock.httpResponse!)
+            urlRequest: try! request.toUrlRequest(),
+            httpUrlResponse: mock.httpResponse!
+          )
         }
 
         it("sets properties") {
           let contentTypeValidator = ContentTypeValidator(contentTypes: ["application/json"])
           let statusCodeValidator = StatusCodeValidator(statusCodes: [200])
           let serializer = JsonSerializer()
-          let dictionary = try! serializer.serialize(data: mock.data!, response: httpResponse) as! [String: String]
+          let dictionary = try! serializer.serialize(response: response) as! [String: String]
 
           expect(mock.httpResponse?.statusCode).to(equal(httpResponse.statusCode))
           expect(mock.error).to(beNil())

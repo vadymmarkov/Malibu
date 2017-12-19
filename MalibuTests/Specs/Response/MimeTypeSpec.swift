@@ -2,8 +2,7 @@
 import Quick
 import Nimble
 
-class MimeTypeSpec: QuickSpec {
-
+final class MimeTypeSpec: QuickSpec {
   override func spec() {
     describe("MimeType") {
       let contentType = "application/json"

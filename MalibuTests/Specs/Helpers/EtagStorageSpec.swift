@@ -2,8 +2,7 @@
 import Quick
 import Nimble
 
-class EtagStorageSpec: QuickSpec {
-
+final class EtagStorageSpec: QuickSpec {
   override func spec() {
     describe("EtagStorage") {
       let filePath = EtagStorage.path

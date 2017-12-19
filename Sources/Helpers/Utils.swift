@@ -1,7 +1,6 @@
 import Foundation
 
 struct Utils {
-
   // MARK: - Storage
 
   static let documentDirectory = NSSearchPathForDirectoriesInDomains(

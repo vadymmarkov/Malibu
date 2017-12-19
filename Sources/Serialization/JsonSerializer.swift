@@ -7,15 +7,15 @@ public final class JsonSerializer: Serializing {
     self.options = options
   }
 
-  public func serialize(data: Data, response: HTTPURLResponse) throws -> Any {
+  public func serialize(response: Response) throws -> Any {
     if response.statusCode == 204 { return NSNull() }
 
-    guard data.count > 0 else {
+    guard response.data.count > 0 else {
       throw NetworkError.noDataInResponse
     }
 
     do {
-      return try JSONSerialization.jsonObject(with: data, options: options)
+      return try JSONSerialization.jsonObject(with: response.data, options: options)
     } catch {
       throw error
     }

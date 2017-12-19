@@ -162,11 +162,14 @@ extension Networking {
       operation.handleResponse = responseHandler.handle(urlRequest:data:urlResponse:error:)
 
       networkPromise
-        .done({ [weak self] value in
-          self?.saveEtag(request: request, response: value.response)
+        .done({ [weak self] response in
+          self?.saveEtag(request: request, response: response.httpUrlResponse)
           if logger.enabled {
-            logger.requestLogger.init(level: logger.level).log(request: request, urlRequest: value.request)
-            logger.responseLogger.init(level: logger.level).log(response: value.response)
+            logger.requestLogger.init(level: logger.level).log(
+              request: request,
+              urlRequest: response.urlRequest
+            )
+            logger.responseLogger.init(level: logger.level).log(response: response.httpUrlResponse)
           }
         })
         .fail(policy: .allErrors, { [weak self] error in

@@ -173,6 +173,9 @@
 		D5C000C21D9D9D3E00744A12 /* RequestCapsuleSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C000C11D9D9D3E00744A12 /* RequestCapsuleSpec.swift */; };
 		D5C000C31D9D9D3E00744A12 /* RequestCapsuleSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C000C11D9D9D3E00744A12 /* RequestCapsuleSpec.swift */; };
 		D5C6294A1C3A7FAA007F7B7C /* Malibu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629401C3A7FAA007F7B7C /* Malibu.framework */; };
+		D5D4DAF41FE87F9B00CDF1CE /* QuickSpec+Extenions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4DAF31FE87F9B00CDF1CE /* QuickSpec+Extenions.swift */; };
+		D5D4DAF51FE87F9B00CDF1CE /* QuickSpec+Extenions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4DAF31FE87F9B00CDF1CE /* QuickSpec+Extenions.swift */; };
+		D5D4DAF61FE87F9B00CDF1CE /* QuickSpec+Extenions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4DAF31FE87F9B00CDF1CE /* QuickSpec+Extenions.swift */; };
 		D5E061D71D06E5AD009740F2 /* When.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5E061D61D06E5AD009740F2 /* When.framework */; };
 		D5E8EDC31D9D865B0087690A /* RequestCapsule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E8EDC21D9D865B0087690A /* RequestCapsule.swift */; };
 		D5E8EDC41D9D865B0087690A /* RequestCapsule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E8EDC21D9D865B0087690A /* RequestCapsule.swift */; };
@@ -314,6 +317,7 @@
 		D5C6298C1C3A8BBD007F7B7C /* Info-Mac.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-Mac.plist"; sourceTree = "<group>"; };
 		D5C629901C3A8BDA007F7B7C /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
 		D5C629911C3A8BDA007F7B7C /* Info-Mac.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-Mac.plist"; sourceTree = "<group>"; };
+		D5D4DAF31FE87F9B00CDF1CE /* QuickSpec+Extenions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QuickSpec+Extenions.swift"; sourceTree = "<group>"; };
 		D5E061D61D06E5AD009740F2 /* When.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = When.framework; path = Carthage/Build/Mac/When.framework; sourceTree = "<group>"; };
 		D5E061DA1D06E5EF009740F2 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/Mac/Quick.framework; sourceTree = "<group>"; };
 		D5E061DB1D06E5EF009740F2 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/Mac/Nimble.framework; sourceTree = "<group>"; };
@@ -607,6 +611,14 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		D5D4DAF21FE87F8000CDF1CE /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D5D4DAF31FE87F9B00CDF1CE /* QuickSpec+Extenions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		DAC92A341C87B8F300F01940 /* Validation */ = {
 			isa = PBXGroup;
 			children = (
@@ -636,6 +648,7 @@
 		DAEE2BA01C7F8A1C0000FB12 /* Specs */ = {
 			isa = PBXGroup;
 			children = (
+				D5D4DAF21FE87F8000CDF1CE /* Extensions */,
 				DA5B4CFA1C8E5953004E21ED /* NetworkErrorSpec.swift */,
 				DA5B4D0E1C8E5A07004E21ED /* NetworkingSpec.swift */,
 				DAEE2BB31C7F8C500000FB12 /* Encoding */,
@@ -1116,6 +1129,7 @@
 				D51FC8871F73018600D722AD /* NetworkPromiseSpec.swift in Sources */,
 				D51FC89E1F7301C300D722AD /* ResponseSerializationSpec.swift in Sources */,
 				D51FC8961F7301C300D722AD /* SessionConfigurationSpec.swift in Sources */,
+				D5D4DAF61FE87F9B00CDF1CE /* QuickSpec+Extenions.swift in Sources */,
 				D51FC8A41F7301C300D722AD /* StringSerializerSpec.swift in Sources */,
 				D51FC88F1F7301C300D722AD /* EtagStorageSpec.swift in Sources */,
 				D51FC88C1F7301C300D722AD /* JsonEncoderSpec.swift in Sources */,
@@ -1199,6 +1213,7 @@
 				D549C8591C8F6BB500588A0C /* DataSerializerSpec.swift in Sources */,
 				DA5B4CFD1C8E5963004E21ED /* NetworkErrorSpec.swift in Sources */,
 				D549C8561C8F661E00588A0C /* JsonSerializerSpec.swift in Sources */,
+				D5D4DAF41FE87F9B00CDF1CE /* QuickSpec+Extenions.swift in Sources */,
 				D5779BCE1D991EBA00123D98 /* ResponseHandlerSpec.swift in Sources */,
 				D5B965371C922C500099D2F9 /* SessionConfigurationSpec.swift in Sources */,
 				D5B965391C922C500099D2F9 /* URLStringConvertibleSpec.swift in Sources */,
@@ -1282,6 +1297,7 @@
 				D549C85A1C8F6BB500588A0C /* DataSerializerSpec.swift in Sources */,
 				DA5B4CFE1C8E5963004E21ED /* NetworkErrorSpec.swift in Sources */,
 				D549C8571C8F661E00588A0C /* JsonSerializerSpec.swift in Sources */,
+				D5D4DAF51FE87F9B00CDF1CE /* QuickSpec+Extenions.swift in Sources */,
 				D5779BCF1D991EBA00123D98 /* ResponseHandlerSpec.swift in Sources */,
 				D5B965381C922C500099D2F9 /* SessionConfigurationSpec.swift in Sources */,
 				D5B9653A1C922C500099D2F9 /* URLStringConvertibleSpec.swift in Sources */,

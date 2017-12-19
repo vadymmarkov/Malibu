@@ -197,7 +197,6 @@ public extension Request {
 // MARK: - Url helpers
 
 public extension Request {
-
   func toUrlRequest(baseUrl: URLStringConvertible? = nil,
                     additionalHeaders: [String: String] = [:]) throws -> URLRequest {
     let prefix = baseUrl?.urlString ?? ""
@@ -209,7 +208,7 @@ public extension Request {
             return try concatURL(baseUrl: baseUrl?.urlString)
         }
     }()
-    
+
     let requestUrl = try buildUrl(from: url)
     var request = URLRequest(url: requestUrl)
 

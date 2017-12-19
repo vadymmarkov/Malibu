@@ -2,8 +2,7 @@
 import Quick
 import Nimble
 
-class ContentTypeValidatorSpec: QuickSpec {
-
+final class ContentTypeValidatorSpec: QuickSpec {
   override func spec() {
     describe("ContentTypeValidator") {
       let url = URL(string: "http://api.loc")!
@@ -19,9 +18,13 @@ class ContentTypeValidatorSpec: QuickSpec {
 
         context("when response has expected content type") {
           it("does not throw an error") {
-            let HTTPResponse = HTTPURLResponse(url: url, mimeType: contentType,
-              expectedContentLength: 10, textEncodingName: nil)
-            let result = Response(data: data, request: request, response: HTTPResponse)
+            let httpUrlResponse = HTTPURLResponse(
+              url: url,
+              mimeType: contentType,
+              expectedContentLength: 10,
+              textEncodingName: nil
+            )
+            let result = Response(data: data, urlRequest: request, httpUrlResponse: httpUrlResponse)
 
             expect{ try validator.validate(result) }.toNot(throwError())
           }
@@ -29,9 +32,13 @@ class ContentTypeValidatorSpec: QuickSpec {
 
         context("when response has not expected content type") {
           it("throws an error") {
-            let HTTPResponse = HTTPURLResponse(url: url, mimeType: "text/html; charset=utf-8",
-              expectedContentLength: 100, textEncodingName: nil)
-            let result = Response(data: data, request: request, response: HTTPResponse)
+            let httpUrlResponse = HTTPURLResponse(
+              url: url,
+              mimeType: "text/html; charset=utf-8",
+              expectedContentLength: 100,
+              textEncodingName: nil
+            )
+            let result = Response(data: data, urlRequest: request, httpUrlResponse: httpUrlResponse)
 
             expect{ try validator.validate(result) }.to(throwError())
           }

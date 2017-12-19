@@ -31,7 +31,7 @@ extension ResponseHandler {
       return
     }
 
-    let result = Response(data: data, request: urlRequest, response: urlResponse)
-    networkPromise.resolve(result)
+    let response = Response(data: data, urlRequest: urlRequest, httpUrlResponse: urlResponse)
+    networkPromise.resolve(response)
   }
 }

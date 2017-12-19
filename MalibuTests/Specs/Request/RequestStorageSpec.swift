@@ -2,8 +2,7 @@
 import Quick
 import Nimble
 
-class RequestStorageSpec: QuickSpec {
-
+final class RequestStorageSpec: QuickSpec {
   override func spec() {
     describe("RequestStorage") {
       let name = "Test"

@@ -9,7 +9,7 @@ private final class MockAsyncOperation: AsynchronousOperation {
   override func execute() {}
 }
 
-class AsynchronousOperationSpec: QuickSpec {
+final class AsynchronousOperationSpec: QuickSpec {
   override func spec() {
     describe("ConcurrentOperation") {
       var operation: AsynchronousOperation!

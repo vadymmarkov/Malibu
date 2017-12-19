@@ -2,8 +2,7 @@
 import Quick
 import Nimble
 
-class StatusCodeValidatorSpec: QuickSpec {
-
+final class StatusCodeValidatorSpec: QuickSpec {
   override func spec() {
     describe("StatusCodeValidator") {
       let url = Foundation.URL(string: "http://api.loc")!
@@ -18,9 +17,13 @@ class StatusCodeValidatorSpec: QuickSpec {
 
         context("when response has expected status code") {
           it("does not throw an error") {
-            let httpResponse = HTTPURLResponse(url: url, statusCode: 200,
-              httpVersion: "HTTP/2.0", headerFields: nil)!
-            let result = Response(data: data, request: request, response: httpResponse)
+            let httpUrlResponse = HTTPURLResponse(
+              url: url,
+              statusCode: 200,
+              httpVersion: "HTTP/2.0",
+              headerFields: nil
+            )!
+            let result = Response(data: data, urlRequest: request, httpUrlResponse: httpUrlResponse)
 
             expect{ try validator.validate(result) }.toNot(throwError())
           }
@@ -28,9 +31,13 @@ class StatusCodeValidatorSpec: QuickSpec {
 
         context("when response has not expected status code") {
           it("throws an error") {
-            let httpResponse = HTTPURLResponse(url: url, statusCode: 404,
-              httpVersion: "HTTP/2.0", headerFields: nil)!
-            let result = Response(data: data, request: request, response: httpResponse)
+            let httpUrlResponse = HTTPURLResponse(
+              url: url,
+              statusCode: 404,
+              httpVersion: "HTTP/2.0",
+              headerFields: nil
+            )!
+            let result = Response(data: data, urlRequest: request, httpUrlResponse: httpUrlResponse)
 
             expect{ try validator.validate(result) }.to(throwError())
           }
