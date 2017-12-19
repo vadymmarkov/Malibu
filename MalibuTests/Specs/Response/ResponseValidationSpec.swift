@@ -4,7 +4,6 @@ import Quick
 import Nimble
 
 class ResponseValidationSpec: QuickSpec, NetworkPromiseSpec {
-
   var networkPromise: NetworkPromise!
   var request: URLRequest!
   var data: Data!
@@ -12,17 +11,16 @@ class ResponseValidationSpec: QuickSpec, NetworkPromiseSpec {
   override func spec() {
     describe("ResponseValidation") {
       let url = URL(string: "http://api.loc")!
-      let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!
-      let failedResponse = HTTPURLResponse(url: url, statusCode: 404,
-                                           httpVersion: "HTTP/2.0", headerFields: nil)!
 
       // MARK: - Specs
 
       beforeEach {
-        self.networkPromise = NetworkPromise()
         self.request = URLRequest(url: URL(string: "http://api.loc")!)
-        self.data = try! JSONSerialization.data(withJSONObject: [["name": "Taylor"]],
-          options: JSONSerialization.WritingOptions())
+        self.data = try! JSONSerialization.data(
+          withJSONObject: [["name": "Taylor"]],
+          options: JSONSerialization.WritingOptions()
+        )
+        self.networkPromise = NetworkPromise()
       }
 
       describe("#validate:using") {
@@ -41,14 +39,20 @@ class ResponseValidationSpec: QuickSpec, NetworkPromiseSpec {
 
         context("when response is resolved and validation fails") {
           it("rejects promise with an error") {
-            self.testFailedPromise(promise, error: NetworkError.unacceptableStatusCode(404),
-              response: failedResponse)
+            let response = self.makeResponse(statusCode: 404, data: self.data)
+
+            self.testFailedPromise(
+              promise,
+              error: NetworkError.unacceptableStatusCode(statusCode: 404, response: response),
+              response: response.httpUrlResponse
+            )
           }
         }
 
         context("when response is resolved and validation succeeded") {
           it("resolves promise with a result") {
-            self.testSucceededPromise(promise, response: response)
+            let response = self.makeResponse(statusCode: 200, data: self.data)
+            self.testSucceededPromise(promise, response: response.httpUrlResponse)
           }
         }
       }
@@ -68,14 +72,19 @@ class ResponseValidationSpec: QuickSpec, NetworkPromiseSpec {
 
         context("when response is resolved and validation fails") {
           it("rejects promise with an error") {
-            self.testFailedPromise(promise, error: NetworkError.unacceptableStatusCode(404),
-              response: failedResponse)
+            let response = self.makeResponse(statusCode: 404, data: self.data)
+            self.testFailedPromise(
+              promise,
+              error: NetworkError.unacceptableStatusCode(statusCode: 404, response: response),
+              response: response.httpUrlResponse
+            )
           }
         }
 
         context("when response is resolved and validation succeeded") {
           it("resolves promise with a result") {
-            self.testSucceededPromise(promise, response: response)
+            let response = self.makeResponse(statusCode: 200, data: self.data)
+            self.testSucceededPromise(promise, response: response.httpUrlResponse)
           }
         }
       }
@@ -95,12 +104,25 @@ class ResponseValidationSpec: QuickSpec, NetworkPromiseSpec {
 
         context("when response is resolved and validation fails") {
           it("rejects promise with an error") {
-            let response = HTTPURLResponse(url: url, mimeType: "text/html; charset=utf-8",
-              expectedContentLength: 100, textEncodingName: nil)
+            let httpUrlResponse = HTTPURLResponse(
+              url: url,
+              mimeType: "text/html; charset=utf-8",
+              expectedContentLength: 100,
+              textEncodingName: nil
+            )
+            let response = Response(
+              data: self.data,
+              urlRequest: self.request,
+              httpUrlResponse: httpUrlResponse
+            )
 
             self.testFailedPromise(promise,
-              error: NetworkError.unacceptableContentType("text/html; charset=utf-8"),
-              response: response)
+              error: NetworkError.unacceptableContentType(
+                contentType: "text/html; charset=utf-8",
+                response: response
+              ),
+              response: httpUrlResponse
+            )
           }
         }
 
@@ -129,14 +151,22 @@ class ResponseValidationSpec: QuickSpec, NetworkPromiseSpec {
 
           context("when response is resolved and validation fails") {
             it("rejects promise with an error") {
-              self.testFailedPromise(promise, error: NetworkError.unacceptableStatusCode(404),
-                response: failedResponse)
+              let response = self.makeResponse(statusCode: 404, data: self.data)
+              self.testFailedPromise(
+                promise,
+                error: NetworkError.unacceptableStatusCode(
+                  statusCode: 404,
+                  response: response
+                ),
+                response: response.httpUrlResponse
+              )
             }
           }
 
           context("when response is resolved and validation succeeded") {
             it("resolves response with a result") {
-              self.testSucceededPromise(promise, response: response)
+              let response = self.makeResponse(statusCode: 200, data: self.data)
+              self.testSucceededPromise(promise, response: response.httpUrlResponse)
             }
           }
         }
@@ -145,8 +175,8 @@ class ResponseValidationSpec: QuickSpec, NetworkPromiseSpec {
           var promise: Promise<Response>!
 
           beforeEach {
-            var request = URLRequest(url: url)
-            request.addValue("text/html; charset=utf-8", forHTTPHeaderField: "Accept")
+            self.request = URLRequest(url: url)
+            self.request.addValue("text/html; charset=utf-8", forHTTPHeaderField: "Accept")
             promise = self.networkPromise.validate()
           }
 
@@ -156,20 +186,23 @@ class ResponseValidationSpec: QuickSpec, NetworkPromiseSpec {
             }
           }
 
-          context("when response is resolved and validation fails") {
-            it("rejects promise with an error") {
-              self.testFailedPromise(promise, error: NetworkError.unacceptableStatusCode(404),
-                response: failedResponse)
-            }
-          }
-
           context("when response is resolved and validation succeeded") {
             it("resolves promise with a result") {
-              let HTTPResponse = HTTPURLResponse(url: url, statusCode: 200,
-                httpVersion: "HTTP/2.0", headerFields: nil)!
-              HTTPResponse.setValue("text/html; charset=utf-8", forKey: "MIMEType")
+              let httpUrlResponse = HTTPURLResponse(
+                url: url,
+                statusCode: 200,
+                httpVersion: "HTTP/2.0",
+                headerFields: nil
+              )!
+              httpUrlResponse.setValue("text/html; charset=utf-8", forKey: "MIMEType")
 
-              self.testSucceededPromise(promise, response: response)
+              let response = Response(
+                data: self.data,
+                urlRequest: self.request,
+                httpUrlResponse: httpUrlResponse
+              )
+
+              self.testSucceededPromise(promise, response: response.httpUrlResponse)
             }
           }
         }

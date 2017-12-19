@@ -3,7 +3,6 @@ import Quick
 import Nimble
 
 class DataSerializerSpec: QuickSpec {
-
   override func spec() {
     describe("DataSerializer") {
       var serializer: DataSerializer!
@@ -19,7 +18,11 @@ class DataSerializerSpec: QuickSpec {
           it("throws an error") {
             let data = Data()
             expect {
-              try serializer.serialize(data: data, response: response)
+              try serializer.serialize(response: Response(
+                data: data,
+                urlRequest: URLRequest(url: url),
+                httpUrlResponse: response)
+              )
             }.to(throwError(NetworkError.noDataInResponse))
           }
         }
@@ -32,7 +35,11 @@ class DataSerializerSpec: QuickSpec {
             var result: Data?
 
             expect {
-              result = try serializer.serialize(data: data, response: response)
+              result = try serializer.serialize(response: Response(
+                data: data,
+                urlRequest: URLRequest(url: url),
+                httpUrlResponse: response)
+              )
             }.toNot(throwError())
             expect(result).to(equal(Data()))
           }
@@ -46,7 +53,11 @@ class DataSerializerSpec: QuickSpec {
             var result: Data?
 
             expect {
-              result = try serializer.serialize(data: data, response: response)
+              result = try serializer.serialize(response: Response(
+                data: data,
+                urlRequest: URLRequest(url: url),
+                httpUrlResponse: response)
+              )
             }.toNot(throwError())
             expect(result).to(equal(data))
           }

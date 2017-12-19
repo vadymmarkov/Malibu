@@ -4,7 +4,6 @@ import Nimble
 import When
 
 class ResponseHandlerSpec: QuickSpec {
-
   override func spec() {
     describe("TaskRunning") {
       var handler: ResponseHandler!
@@ -40,9 +39,12 @@ class ResponseHandlerSpec: QuickSpec {
         context("when there is an error") {
           it("rejects promise with an error") {
             let expectation = self.expectation(description: "Error failure")
+            let promiseError = NetworkError.jsonDictionarySerializationFailed(
+              response: Response(data: data, urlRequest: urlRequest, httpUrlResponse: response)
+            )
 
             handler.networkPromise.fail({ error in
-              expect(error as! NetworkError == NetworkError.jsonDictionarySerializationFailed).to(beTrue())
+              expect( error as! NetworkError == promiseError).to(beTrue())
               expectation.fulfill()
             })
 
@@ -50,7 +52,7 @@ class ResponseHandlerSpec: QuickSpec {
               urlRequest: urlRequest,
               data: data,
               urlResponse: response,
-              error: NetworkError.jsonDictionarySerializationFailed
+              error: promiseError
             )
             self.waitForExpectations(timeout: 4.0, handler:nil)
           }
@@ -76,8 +78,8 @@ class ResponseHandlerSpec: QuickSpec {
 
             handler.networkPromise.done({ result in
               expect(result.data).to(equal(data))
-              expect(result.request).to(equal(urlRequest))
-              expect(result.response).to(equal(response))
+              expect(result.urlRequest).to(equal(urlRequest))
+              expect(result.httpUrlResponse).to(equal(response))
 
               expectation.fulfill()
             })

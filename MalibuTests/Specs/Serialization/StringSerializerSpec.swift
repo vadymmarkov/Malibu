@@ -3,12 +3,11 @@ import Quick
 import Nimble
 
 class StringSerializerSpec: QuickSpec {
-
   override func spec() {
     describe("StringSerializer") {
       var serializer: StringSerializer!
       let url = URL(string: "http://api.loc")!
-      let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)!
+      let request = URLRequest(url: url)
 
       beforeEach {
         serializer = StringSerializer()
@@ -28,10 +27,10 @@ class StringSerializerSpec: QuickSpec {
       describe("#serialize:data") {
         context("when there is no data in response") {
           it("throws an error") {
-            let data = Data()
+            let response = self.makeResponse(statusCode: 200)
             expect {
-              try serializer.serialize(data: data, response: response)
-              }.to(throwError(NetworkError.noDataInResponse))
+              try serializer.serialize(response: response)
+            }.to(throwError(NetworkError.noDataInResponse))
           }
         }
 
@@ -40,33 +39,52 @@ class StringSerializerSpec: QuickSpec {
             serializer = StringSerializer(encoding: String.Encoding.utf8)
             let string = "string"
             let data = string.data(using: String.Encoding.utf32)!
+            let response = self.makeResponse(statusCode: 200, data: data)
 
             expect {
-              try serializer.serialize(data: data, response: response)
-              }.to(throwError(NetworkError.stringSerializationFailed(String.Encoding.utf8.rawValue)))
+              try serializer.serialize(response: response)
+            }.to(throwError(
+              NetworkError.stringSerializationFailed(
+                encoding: String.Encoding.utf8.rawValue,
+                response: response
+              )
+            ))
           }
         }
 
         context("when string could not be serialized with an encoding from the response") {
           it("throws an error") {
-            let response = HTTPURLResponse(url: url, mimeType: nil, expectedContentLength: 10, textEncodingName: "utf-32")
+            let httpUrlResponse = HTTPURLResponse(
+              url: url,
+              mimeType: nil,
+              expectedContentLength: 10,
+              textEncodingName: "utf-32"
+            )
             let string = "string"
             let data = string.data(using: String.Encoding.utf16BigEndian)!
+            let response = Response(
+              data: data,
+              urlRequest: request,
+              httpUrlResponse: httpUrlResponse
+            )
 
             expect {
-              try serializer.serialize(data: data, response: response)
-              }.to(throwError(NetworkError.stringSerializationFailed(String.Encoding.utf32.rawValue)))
+              try serializer.serialize(response: response)
+            }.to(throwError(
+              NetworkError.stringSerializationFailed(
+                encoding: String.Encoding.utf32.rawValue,
+                response: response
+              )
+            ))
           }
         }
 
         context("when response status code is 204 No Content") {
           it("does not throw an error and returns an empty string") {
-            let response = HTTPURLResponse(url: url, statusCode: 204,
-              httpVersion: "HTTP/2.0", headerFields: nil)!
-            let data = Data()
+            let response = self.makeResponse(statusCode: 204)
             var result: String?
 
-            expect{ result = try serializer.serialize(data: data, response: response) }.toNot(throwError())
+            expect{ result = try serializer.serialize(response: response) }.toNot(throwError())
             expect(result).to(equal(""))
           }
         }
@@ -76,8 +94,11 @@ class StringSerializerSpec: QuickSpec {
             let string = "string"
             let data = string.data(using: String.Encoding.utf8)!
             var result: String?
+            let response = self.makeResponse(statusCode: 200, data: data)
 
-            expect{ result = try serializer.serialize(data: data, response: response) }.toNot(throwError())
+            expect {
+              result = try serializer.serialize(response: response)
+            }.toNot(throwError())
             expect(result).to(equal(string))
           }
         }

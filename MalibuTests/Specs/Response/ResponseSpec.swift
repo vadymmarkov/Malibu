@@ -20,11 +20,11 @@ class ResponseSpec: QuickSpec {
 
       describe("#init") {
         it("sets data, request and response parameters to instance vars") {
-          let result = Response(data: data, request: request, response: response)
+          let result = Response(data: data, urlRequest: request, httpUrlResponse: response)
 
           expect(result.data).to(equal(data))
-          expect(result.request).to(equal(request))
-          expect(result.response).to(equal(response))
+          expect(result.urlRequest).to(equal(request))
+          expect(result.httpUrlResponse).to(equal(response))
         }
       }
     }
