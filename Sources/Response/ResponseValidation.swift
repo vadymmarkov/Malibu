@@ -21,6 +21,10 @@ public extension Promise where T: Response {
 
   public func validate() -> Promise<Response> {
     return validate(statusCodes: 200..<300).then({ response -> Response in
+      guard response.statusCode != 204 else {
+        return response
+      }
+
       let contentTypes: [String]
 
       if let accept = response.urlRequest.value(forHTTPHeaderField: "Accept") {
