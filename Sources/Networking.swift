@@ -238,12 +238,12 @@ extension Networking {
 
 extension Networking {
   func saveEtag(request: Request, response: HTTPURLResponse) {
-    guard let etag = response.allHeaderFields["ETag"] as? String else {
-      return
-    }
+    let etag = response.allHeaderFields["ETag"] ?? response.allHeaderFields["Etag"]
 
-    let prefix = R.baseUrl?.urlString ?? ""
-    EtagStorage().add(value: etag, forKey: request.etagKey(prefix: prefix))
+    if let etag = etag as? String {
+      let prefix = R.baseUrl?.urlString ?? ""
+      EtagStorage().add(value: etag, forKey: request.etagKey(prefix: prefix))
+    }
   }
 
   func handle(error: Error, on request: Request) {

@@ -54,7 +54,7 @@ final class EtagStorage: EtagStoring {
     guard fileManager.fileExists(atPath: EtagStorage.path) else { return }
 
     guard let data = NSKeyedUnarchiver.unarchiveObject(withFile: EtagStorage.path)
-      as? [String : String] else { return }
+      as? [String: String] else { return }
 
     dictionary = data
   }

@@ -26,7 +26,7 @@ public extension Promise where T: Response {
         return []
       }
 
-      guard let array = data as? [[String : Any]] else {
+      guard let array = data as? [[String: Any]] else {
         throw NetworkError.jsonArraySerializationFailed(response: response)
       }
 
@@ -44,7 +44,7 @@ public extension Promise where T: Response {
         return [:]
       }
 
-      guard let dictionary = data as? [String : Any] else {
+      guard let dictionary = data as? [String: Any] else {
         throw NetworkError.jsonDictionarySerializationFailed(response: response)
       }
 
