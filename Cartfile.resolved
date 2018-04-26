@@ -1,4 +1,4 @@
-github "Quick/Nimble" "v7.0.3"
-github "Quick/Quick" "v1.2.0"
-github "ReactiveX/RxSwift" "3.6.1"
-github "vadymmarkov/When" "3.0.0"
+github "Quick/Nimble" "v7.1.1"
+github "Quick/Quick" "v1.3.0"
+github "ReactiveX/RxSwift" "4.0.0-beta.0"
+github "vadymmarkov/When" "3.0.2"
