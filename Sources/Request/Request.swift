@@ -54,7 +54,7 @@ public extension Request {
       contentType: .query,
       parameters: parameters,
       headers: headers,
-      etagPolicy: .enabled,
+      etagPolicy: etagPolicy,
       storePolicy: storePolicy,
       cachePolicy: cachePolicy
     )
@@ -64,6 +64,7 @@ public extension Request {
                           contentType: ContentType = .json,
                           parameters: [String: Any] = [:],
                           headers: [String: String] = [:],
+                          etagPolicy: EtagPolicy = .disabled,
                           storePolicy: StorePolicy = .unspecified,
                           cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
     return Request(
@@ -72,7 +73,7 @@ public extension Request {
       contentType: contentType,
       parameters: parameters,
       headers: headers,
-      etagPolicy: .disabled,
+      etagPolicy: etagPolicy,
       storePolicy: storePolicy,
       cachePolicy: cachePolicy
     )
@@ -159,6 +160,7 @@ public extension Request {
                             method: Method = .post,
                             contentType: ContentType = .formURLEncoded,
                             headers: [String: String] = [:],
+                            etagPolicy: EtagPolicy = .disabled,
                             storePolicy: StorePolicy = .unspecified,
                             cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
     return Request(
@@ -168,7 +170,7 @@ public extension Request {
       task: .upload(data: data),
       parameters: [:],
       headers: headers,
-      etagPolicy: .disabled,
+      etagPolicy: etagPolicy,
       storePolicy: storePolicy,
       cachePolicy: cachePolicy
     )
@@ -178,6 +180,7 @@ public extension Request {
                             to resource: URLStringConvertible,
                             method: Method = .post,
                             headers: [String: String] = [:],
+                            etagPolicy: EtagPolicy = .disabled,
                             storePolicy: StorePolicy = .unspecified,
                             cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
     return Request(
@@ -187,7 +190,7 @@ public extension Request {
       task: .upload(data: nil),
       parameters: multipartParameters,
       headers: headers,
-      etagPolicy: .disabled,
+      etagPolicy: etagPolicy,
       storePolicy: storePolicy,
       cachePolicy: cachePolicy
     )
