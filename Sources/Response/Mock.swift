@@ -32,6 +32,18 @@ public final class Mock {
   }
 
   public convenience init(json: Any) {
+    self.init(httpResponse: nil, json: json)
+  }
+
+  /**
+   Create a `Mock` object using a response and json
+   - Parameters:
+     - httpResponse: the mocked http response that the call will return
+     - json: a value that can be encoded using JSONSerialization
+   - Returns: An object that can used by a MockProvider to mock network calls
+   - SeeAlso: MockProvider
+  */
+  public convenience init(httpResponse: HTTPURLResponse?, json: Any) {
     var jsonData: Data?
 
     do {
@@ -39,7 +51,7 @@ public final class Mock {
     } catch {}
 
     guard let url = URL(string: "mock://JSON"), let data = jsonData,
-      let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)
+      let response = httpResponse ?? HTTPURLResponse(url: url, statusCode: 200, httpVersion: "HTTP/2.0", headerFields: nil)
       else {
         self.init(httpResponse: nil, data: nil, error: NetworkError.noResponseReceived)
         return
