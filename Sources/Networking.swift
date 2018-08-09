@@ -162,8 +162,7 @@ extension Networking {
       operation.handleResponse = responseHandler.handle(urlRequest:data:urlResponse:error:)
 
       networkPromise
-        .done({ [weak self] response in
-          self?.saveEtag(request: request, response: response.httpUrlResponse)
+        .done({ response in
           if logger.enabled {
             logger.requestLogger.init(level: logger.level).log(
               request: request,
@@ -237,15 +236,6 @@ extension Networking {
 // MARK: - Helpers
 
 extension Networking {
-  func saveEtag(request: Request, response: HTTPURLResponse) {
-    let etag = response.allHeaderFields["ETag"] ?? response.allHeaderFields["Etag"]
-
-    if let etag = etag as? String {
-      let prefix = R.baseUrl?.urlString ?? ""
-      EtagStorage().add(value: etag, forKey: request.etagKey(prefix: prefix))
-    }
-  }
-
   func handle(error: Error, on request: Request) {
     if logger.enabled {
       logger.errorLogger.init(level: logger.level).log(error: error)

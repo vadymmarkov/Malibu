@@ -11,8 +11,7 @@ let backfootSurfer = Networking<AnyEndpoint>()
 
 // MARK: - Storages
 
-public func clearStorages() {
-  EtagStorage().clear()
+public func clearOfflineRequestStorage() {
   RequestStorage.clearAll()
 }
 

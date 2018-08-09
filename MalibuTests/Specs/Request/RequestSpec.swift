@@ -13,8 +13,6 @@ final class RequestSpec: QuickSpec {
           "http://api.loc/posts",
           parameters: ["key": "value"],
           headers: ["key": "value"])
-
-        EtagStorage().clear()
       }
 
       afterSuite {
@@ -121,64 +119,6 @@ final class RequestSpec: QuickSpec {
 
               expect(urlRequest.allHTTPHeaderFields?["foo"]).to(equal("bar"))
               expect(urlRequest.allHTTPHeaderFields?["key"]).to(equal("value"))
-            }
-          }
-
-          context("with ETagPolicy enabled") {
-            beforeEach {
-              request = Request.get(
-                "http:/api.loc/posts",
-                parameters: ["key": "value"],
-                headers: ["key": "value"])
-            }
-
-            context("when we have ETag stored") {
-              it("adds If-None-Match header") {
-                let storage = EtagStorage()
-                let etag = "W/\"123456789"
-
-                storage.add(value: etag, forKey: request.etagKey())
-
-                let urlRequest = try! request.toUrlRequest()
-
-                expect(urlRequest.allHTTPHeaderFields?["If-None-Match"]).to(equal(etag))
-              }
-            }
-
-            context("when we do not have ETag stored") {
-              it("does not add If-None-Match header") {
-                let urlRequest = try! request.toUrlRequest()
-                expect(urlRequest.allHTTPHeaderFields?["If-None-Match"]).to(beNil())
-              }
-            }
-          }
-
-          context("with ETagPolicy disabled") {
-            beforeEach {
-              request = Request.post(
-                "http:/api.loc/posts",
-                parameters: ["key": "value"],
-                headers: ["key": "value"])
-            }
-
-            context("when we have ETag stored") {
-              it("does not add If-None-Match header") {
-                let storage = EtagStorage()
-                let etag = "W/\"123456789"
-
-                storage.add(value: etag, forKey: request.etagKey())
-
-                let urlRequest = try! request.toUrlRequest()
-
-                expect(urlRequest.allHTTPHeaderFields?["If-None-Match"]).to(beNil())
-              }
-            }
-
-            context("when we do not have ETag stored") {
-              it("does not add If-None-Match header") {
-                let urlRequest = try! request.toUrlRequest()
-                expect(urlRequest.allHTTPHeaderFields?["If-None-Match"]).to(beNil())
-              }
             }
           }
 
@@ -315,13 +255,6 @@ final class RequestSpec: QuickSpec {
 
               expect(url == result1 || url == result2).to(beTrue())
             }
-          }
-        }
-
-        describe("#etagKey") {
-          it("returns ETag key built from method, prefix, resource and parameters") {
-            let result = "\(request.method.rawValue)\(request.resource.urlString)\(request.parameters.description)"
-            expect(request.etagKey()).to(equal(result))
           }
         }
 
