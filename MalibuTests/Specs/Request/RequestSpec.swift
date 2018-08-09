@@ -29,7 +29,7 @@ final class RequestSpec: QuickSpec {
 
       describe("#cachePolicy") {
         it("has default value") {
-          expect(request.cachePolicy).to(equal(NSURLRequest.CachePolicy.useProtocolCachePolicy))
+          expect(request.cachePolicy).to(equal(URLRequest.CachePolicy.useProtocolCachePolicy))
         }
       }
 

@@ -32,7 +32,7 @@ final class RequestCapsule: NSObject, NSCoding {
       let parameters = aDecoder.decodeObject(forKey: Key.parameters.rawValue) as? [String: Any],
       let headers = aDecoder.decodeObject(forKey: Key.headers.rawValue) as? [String: String],
       let storePolicy = StorePolicy(rawValue: aDecoder.decodeCInt(forKey: Key.storePolicy.rawValue)),
-      let cachePolicy = NSURLRequest.CachePolicy(rawValue: UInt(aDecoder.decodeCInt(forKey: Key.cachePolicy.rawValue)))
+      let cachePolicy = URLRequest.CachePolicy(rawValue: UInt(aDecoder.decodeCInt(forKey: Key.cachePolicy.rawValue)))
     else {
       return nil
     }

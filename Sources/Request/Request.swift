@@ -14,7 +14,7 @@ public struct Request: Equatable {
   public let headers: [String: String]
   public let contentType: ContentType
   public let storePolicy: StorePolicy
-  public let cachePolicy: NSURLRequest.CachePolicy
+  public let cachePolicy: URLRequest.CachePolicy
 
   public init(method: Method,
               resource: URLStringConvertible,
@@ -23,7 +23,7 @@ public struct Request: Equatable {
               parameters: [String: Any] = [:],
               headers: [String: String] = [:],
               storePolicy: StorePolicy = .unspecified,
-              cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) {
+              cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy) {
     self.task = task
     self.method = method
     self.resource = resource
@@ -43,7 +43,7 @@ public extension Request {
                          parameters: [String: Any] = [:],
                          headers: [String: String] = [:],
                          storePolicy: StorePolicy = .unspecified,
-                         cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
+                         cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
     return Request(
       method: .get,
       resource: resource,
@@ -60,7 +60,7 @@ public extension Request {
                           parameters: [String: Any] = [:],
                           headers: [String: String] = [:],
                           storePolicy: StorePolicy = .unspecified,
-                          cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
+                          cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
     return Request(
       method: .post,
       resource: resource,
@@ -77,7 +77,7 @@ public extension Request {
                          parameters: [String: Any] = [:],
                          headers: [String: String] = [:],
                          storePolicy: StorePolicy = .unspecified,
-                         cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
+                         cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
     return Request(
       method: .put,
       resource: resource,
@@ -94,7 +94,7 @@ public extension Request {
                            parameters: [String: Any] = [:],
                            headers: [String: String] = [:],
                            storePolicy: StorePolicy = .unspecified,
-                           cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
+                           cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
     return Request(
       method: .patch,
       resource: resource,
@@ -111,7 +111,7 @@ public extension Request {
                             parameters: [String: Any] = [:],
                             headers: [String: String] = [:],
                             storePolicy: StorePolicy = .unspecified,
-                            cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
+                            cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
     return Request(
       method: .delete,
       resource: resource,
@@ -128,7 +128,7 @@ public extension Request {
                           parameters: [String: Any] = [:],
                           headers: [String: String] = [:],
                           storePolicy: StorePolicy = .unspecified,
-                          cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
+                          cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
     return Request(
       method: .head,
       resource: resource,
@@ -146,7 +146,7 @@ public extension Request {
                             contentType: ContentType = .formURLEncoded,
                             headers: [String: String] = [:],
                             storePolicy: StorePolicy = .unspecified,
-                            cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
+                            cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
     return Request(
       method: method,
       resource: resource,
@@ -164,7 +164,7 @@ public extension Request {
                             method: Method = .post,
                             headers: [String: String] = [:],
                             storePolicy: StorePolicy = .unspecified,
-                            cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
+                            cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
     return Request(
       method: method,
       resource: resource,
