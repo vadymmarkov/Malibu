@@ -13,9 +13,8 @@ public struct Request: Equatable {
   public let parameters: [String: Any]
   public let headers: [String: String]
   public let contentType: ContentType
-  public let etagPolicy: EtagPolicy
   public let storePolicy: StorePolicy
-  public let cachePolicy: NSURLRequest.CachePolicy
+  public let cachePolicy: URLRequest.CachePolicy
 
   public init(method: Method,
               resource: URLStringConvertible,
@@ -23,16 +22,14 @@ public struct Request: Equatable {
               task: Task = .data,
               parameters: [String: Any] = [:],
               headers: [String: String] = [:],
-              etagPolicy: EtagPolicy = .disabled,
               storePolicy: StorePolicy = .unspecified,
-              cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) {
+              cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy) {
     self.task = task
     self.method = method
     self.resource = resource
     self.contentType = contentType
     self.parameters = parameters
     self.headers = headers
-    self.etagPolicy = etagPolicy
     self.storePolicy = storePolicy
     self.cachePolicy = cachePolicy
   }
@@ -45,16 +42,14 @@ public extension Request {
   public static func get(_ resource: URLStringConvertible,
                          parameters: [String: Any] = [:],
                          headers: [String: String] = [:],
-                         etagPolicy: EtagPolicy = .enabled,
                          storePolicy: StorePolicy = .unspecified,
-                         cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
+                         cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
     return Request(
       method: .get,
       resource: resource,
       contentType: .query,
       parameters: parameters,
       headers: headers,
-      etagPolicy: etagPolicy,
       storePolicy: storePolicy,
       cachePolicy: cachePolicy
     )
@@ -64,16 +59,14 @@ public extension Request {
                           contentType: ContentType = .json,
                           parameters: [String: Any] = [:],
                           headers: [String: String] = [:],
-                          etagPolicy: EtagPolicy = .disabled,
                           storePolicy: StorePolicy = .unspecified,
-                          cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
+                          cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
     return Request(
       method: .post,
       resource: resource,
       contentType: contentType,
       parameters: parameters,
       headers: headers,
-      etagPolicy: etagPolicy,
       storePolicy: storePolicy,
       cachePolicy: cachePolicy
     )
@@ -83,16 +76,14 @@ public extension Request {
                          contentType: ContentType = .json,
                          parameters: [String: Any] = [:],
                          headers: [String: String] = [:],
-                         etagPolicy: EtagPolicy = .enabled,
                          storePolicy: StorePolicy = .unspecified,
-                         cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
+                         cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
     return Request(
       method: .put,
       resource: resource,
       contentType: contentType,
       parameters: parameters,
       headers: headers,
-      etagPolicy: etagPolicy,
       storePolicy: storePolicy,
       cachePolicy: cachePolicy
     )
@@ -102,16 +93,14 @@ public extension Request {
                            contentType: ContentType = .json,
                            parameters: [String: Any] = [:],
                            headers: [String: String] = [:],
-                           etagPolicy: EtagPolicy = .enabled,
                            storePolicy: StorePolicy = .unspecified,
-                           cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
+                           cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
     return Request(
       method: .patch,
       resource: resource,
       contentType: contentType,
       parameters: parameters,
       headers: headers,
-      etagPolicy: etagPolicy,
       storePolicy: storePolicy,
       cachePolicy: cachePolicy
     )
@@ -121,16 +110,14 @@ public extension Request {
                             contentType: ContentType = .query,
                             parameters: [String: Any] = [:],
                             headers: [String: String] = [:],
-                            etagPolicy: EtagPolicy = .disabled,
                             storePolicy: StorePolicy = .unspecified,
-                            cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
+                            cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
     return Request(
       method: .delete,
       resource: resource,
       contentType: contentType,
       parameters: parameters,
       headers: headers,
-      etagPolicy: etagPolicy,
       storePolicy: storePolicy,
       cachePolicy: cachePolicy
     )
@@ -140,16 +127,14 @@ public extension Request {
                           contentType: ContentType = .query,
                           parameters: [String: Any] = [:],
                           headers: [String: String] = [:],
-                          etagPolicy: EtagPolicy = .disabled,
                           storePolicy: StorePolicy = .unspecified,
-                          cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
+                          cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
     return Request(
       method: .head,
       resource: resource,
       contentType: contentType,
       parameters: parameters,
       headers: headers,
-      etagPolicy: etagPolicy,
       storePolicy: storePolicy,
       cachePolicy: cachePolicy
     )
@@ -160,9 +145,8 @@ public extension Request {
                             method: Method = .post,
                             contentType: ContentType = .formURLEncoded,
                             headers: [String: String] = [:],
-                            etagPolicy: EtagPolicy = .disabled,
                             storePolicy: StorePolicy = .unspecified,
-                            cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
+                            cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
     return Request(
       method: method,
       resource: resource,
@@ -170,7 +154,6 @@ public extension Request {
       task: .upload(data: data),
       parameters: [:],
       headers: headers,
-      etagPolicy: etagPolicy,
       storePolicy: storePolicy,
       cachePolicy: cachePolicy
     )
@@ -180,9 +163,8 @@ public extension Request {
                             to resource: URLStringConvertible,
                             method: Method = .post,
                             headers: [String: String] = [:],
-                            etagPolicy: EtagPolicy = .disabled,
                             storePolicy: StorePolicy = .unspecified,
-                            cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
+                            cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy) -> Request {
     return Request(
       method: method,
       resource: resource,
@@ -190,7 +172,6 @@ public extension Request {
       task: .upload(data: nil),
       parameters: multipartParameters,
       headers: headers,
-      etagPolicy: etagPolicy,
       storePolicy: storePolicy,
       cachePolicy: cachePolicy
     )
@@ -202,8 +183,6 @@ public extension Request {
 public extension Request {
   func toUrlRequest(baseUrl: URLStringConvertible? = nil,
                     additionalHeaders: [String: String] = [:]) throws -> URLRequest {
-    let prefix = baseUrl?.urlString ?? ""
-
     let url: URL = try {
         if let resourceUrl = resource as? URL {
             return resourceUrl
@@ -246,12 +225,6 @@ public extension Request {
       }
     }
 
-    if etagPolicy == .enabled {
-      if let etag = EtagStorage().get(etagKey(prefix: prefix)) {
-        request.setValue(etag, forHTTPHeaderField: "If-None-Match")
-      }
-    }
-
     return request
   }
 
@@ -282,10 +255,6 @@ public extension Request {
     }
 
     return queryURL
-  }
-
-  func etagKey(prefix: String = "") -> String {
-    return "\(method.rawValue)\(prefix)\(resource.urlString)\(parameters.description)"
   }
 
   var key: String {
@@ -327,7 +296,6 @@ public func == (lhs: Request, rhs: Request) -> Bool {
     && (lhs.parameters as NSDictionary).isEqual(to: rhs.parameters)
     && lhs.headers == rhs.headers
     && lhs.contentType == rhs.contentType
-    && lhs.etagPolicy == rhs.etagPolicy
     && lhs.storePolicy == rhs.storePolicy
     && lhs.cachePolicy == rhs.cachePolicy
 }

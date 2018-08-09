@@ -53,7 +53,7 @@ enum Endpoint: RequestConvertible {
   var request: Request {
     switch self {
     case .fetchUsers:
-      return Request.get("users", etagPolicy: .disabled)
+      return Request.get("users")
     case .createUser(let id, let name, let username, let email):
       return Request.post("users", parameters: [
         "id": id,

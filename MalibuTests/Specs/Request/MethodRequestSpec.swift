@@ -22,12 +22,6 @@ final class MethodRequestSpec: QuickSpec {
           expect(request.contentType).to(equal(ContentType.query))
         }
       }
-
-      describe("#etagPolicy") {
-        it("is .enabled") {
-          expect(request.etagPolicy).to(equal(EtagPolicy.enabled))
-        }
-      }
     }
 
     describe("POST request") {
@@ -44,12 +38,6 @@ final class MethodRequestSpec: QuickSpec {
       describe("#contentType") {
         it("is .JSON") {
           expect(request.contentType).to(equal(ContentType.json))
-        }
-      }
-
-      describe("#etagPolicy") {
-        it("is .disabled") {
-          expect(request.etagPolicy).to(equal(EtagPolicy.disabled))
         }
       }
     }
@@ -70,12 +58,6 @@ final class MethodRequestSpec: QuickSpec {
           expect(request.contentType).to(equal(ContentType.json))
         }
       }
-
-      describe("#etagPolicy") {
-        it("is .Enabled") {
-          expect(request.etagPolicy).to(equal(EtagPolicy.enabled))
-        }
-      }
     }
 
     describe("PATCH request") {
@@ -92,12 +74,6 @@ final class MethodRequestSpec: QuickSpec {
       describe("#contentType") {
         it("is .JSON") {
           expect(request.contentType).to(equal(ContentType.json))
-        }
-      }
-
-      describe("#etagPolicy") {
-        it("is .Enabled") {
-          expect(request.etagPolicy).to(equal(EtagPolicy.enabled))
         }
       }
     }
@@ -118,12 +94,6 @@ final class MethodRequestSpec: QuickSpec {
           expect(request.contentType).to(equal(ContentType.query))
         }
       }
-
-      describe("#etagPolicy") {
-        it("is .Disabled") {
-          expect(request.etagPolicy).to(equal(EtagPolicy.disabled))
-        }
-      }
     }
 
     describe("HEAD request") {
@@ -140,12 +110,6 @@ final class MethodRequestSpec: QuickSpec {
       describe("#contentType") {
         it("is .Query") {
           expect(request.contentType).to(equal(ContentType.query))
-        }
-      }
-
-      describe("#etagPolicy") {
-        it("is .Disabled") {
-          expect(request.etagPolicy).to(equal(EtagPolicy.disabled))
         }
       }
     }
