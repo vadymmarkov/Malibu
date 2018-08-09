@@ -240,7 +240,7 @@ Malibu.parameterEncoders[.custom("application/xml")] = CustomXMLEncoder()
 
 ### Cache policy
 
-`NSURLSession` handles cache based on the `URLRequest.CachePolicy` property:
+`URLSession` handles cache based on the `URLRequest.CachePolicy` property:
 
 ```swift
 let getRequest = Request.get("boards". cachePolicy: .useProtocolCachePolicy)
