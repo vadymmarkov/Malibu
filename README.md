@@ -37,7 +37,6 @@ past. Enjoy the ride!
 - [x] Response data serialization
 - [x] Response mocking
 - [x] Request, response and error logging
-- [x] `ETag` support
 - [x] Synchronous and asynchronous modes
 - [x] Request pre-processing and middleware
 - [x] Request offline storage
@@ -50,7 +49,7 @@ past. Enjoy the ride!
 * [Request](#request)
   * [Content types](#content-types)
   * [Encoding](#encoding)
-  * [ETags](#etags)
+  * [Cache policy](#cache-policy)
 * [Networking](#networking)
   * [Initialization](#initialization)
   * [Mode](#mode)
@@ -165,8 +164,6 @@ let request = Request(
   parameters: ["type": 1, "text": "classic"],
   // Headers
   headers: ["custom": "header"],
-  // Enables or disables automatic ETags handling
-  etagPolicy: .disabled,
   // Offline storage configuration
   storePolicy: .unspecified,
   // Cache policy
@@ -241,18 +238,25 @@ Malibu.parameterEncoders[.json] = CustomJsonEncoder()
 Malibu.parameterEncoders[.custom("application/xml")] = CustomXMLEncoder()
 ```
 
-### ETags
+### Cache policy
 
-**Malibu** cares about [HTTP ETags](https://en.wikipedia.org/wiki/HTTP_ETag).
-When the web server returns an HTTP response header `ETag`, it will be
-cached locally and set as `If-None-Match` request header next time you perform
-the same request. Automatic ETags handling is enabled by default for `GET`,
-`PUT` and `PATCH` requests, but it could easily be changed for the each request
-specifically.
+`NSURLSession` handles cache based on the `URLRequest.CachePolicy` property:
 
 ```swift
-let getRequest = Request.get("boards". etagPolicy: .disabled)
+let getRequest = Request.get("boards". cachePolicy: .useProtocolCachePolicy)
 ```
+
+`URLRequest.CachePolicy.useProtocolCachePolicy` is the default policy for URL
+load requests. `URLSession` will automatically add the `If-None-Match` header
+in the request before sending it to the backend. When `URLSession` gets the
+`304 Not Modified` response status it will call the `URLSessionDataTask`
+completion block with the `200` status code and data loaded from the cached
+response.
+
+You can set `cachePolicy` property to `.reloadIgnoringLocalCacheData` if you
+want to prevent this automatic cache management. Then `URLSession` will not
+add the `If-None-Match` header to the client requests, and the server will
+always return a full response.
 
 ## Networking
 
