@@ -1,6 +1,6 @@
-![Malibu logo](https://raw.githubusercontent.com/hyperoslo/Malibu/master/Images/cover.png)
+![Malibu logo](https://raw.githubusercontent.com/vadymmarkov/Malibu/master/Images/cover.png)
 
-[![CI Status](http://img.shields.io/travis/hyperoslo/Malibu.svg?style=flat)](https://travis-ci.org/hyperoslo/Malibu)
+[![CI Status](http://img.shields.io/travis/vadymmarkov/Malibu.svg?style=flat)](https://travis-ci.org/vadymmarkov/Malibu)
 [![Version](https://img.shields.io/cocoapods/v/Malibu.svg?style=flat)](http://cocoadocs.org/docsets/Malibu)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![License](https://img.shields.io/cocoapods/l/Malibu.svg?style=flat)](http://cocoadocs.org/docsets/Malibu)
@@ -589,7 +589,7 @@ pod 'Malibu'
 To install just write into your Cartfile:
 
 ```ruby
-github "hyperoslo/Malibu"
+github "vadymmarkov/Malibu"
 ```
 
 **Malibu** can also be installed manually.
@@ -597,17 +597,21 @@ Just *Download* and *drop* ```/Sources``` folder in your project.
 
 ## Author
 
-Hyper Interaktiv AS, ios@hyper.no
+Vadym Markov, markov.vadym@gmail.com
 
 ## Credits
+
+This library was originally done at [Hyper](http://hyper.no), a digital
+communications agency with a passion for [good code](https://github.com/hyperoslo)
+and delightful user experiences.
 
 Credits go to [Alamofire](https://github.com/Alamofire/Alamofire) for
 inspiration and to [When](https://github.com/vadymmarkov/When) for ***promises***.
 
 ## Contributing
 
-We would love you to contribute to **Malibu**, check the [CONTRIBUTING](https://github.com/hyperoslo/Malibu/blob/master/CONTRIBUTING.md) file for more info.
+Check the [CONTRIBUTING](https://github.com/vadymmarkov/Malibu/blob/master/CONTRIBUTING.md) file for more info.
 
 ## License
 
-**Malibu** is available under the MIT license. See the [LICENSE](https://github.com/hyperoslo/Malibu/blob/master/LICENSE.md) file for more info.
+**Malibu** is available under the MIT license. See the [LICENSE](https://github.com/vadymmarkov/Malibu/blob/master/LICENSE.md) file for more info.

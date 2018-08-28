@@ -13,7 +13,7 @@ final class FormURLEncoderSpec: QuickSpec {
 
       describe("#encode:parameters") {
         it("encodes a dictionary of parameters to NSData object") {
-          let parameters = ["firstname": "John", "lastname": "Hyperseed"]
+          let parameters = ["firstname": "John", "lastname": "Doe"]
           let string = QueryBuilder().buildQuery(from: parameters)
           let data = string.data(using: String.Encoding.utf8,
                                  allowLossyConversion: false)

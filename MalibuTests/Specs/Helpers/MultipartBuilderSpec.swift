@@ -6,7 +6,7 @@ final class MultipartBuilderSpec: QuickSpec {
   override func spec() {
     describe("MultipartBuilder") {
       var builder: MultipartBuilder!
-      let parameters = ["firstname": "John", "lastname": "Hyperseed"]
+      let parameters = ["firstname": "John", "lastname": "Doe"]
 
       beforeEach {
         builder = MultipartBuilder()

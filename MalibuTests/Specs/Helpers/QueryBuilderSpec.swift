@@ -36,8 +36,8 @@ final class QueryBuilderSpec: QuickSpec {
 
         context("with multiple string parameters") {
           it("builds encoded query string") {
-            let parameters = ["firstname": "Taylor", "lastname": "Hyperseed"]
-            let string = "firstname=Taylor&lastname=Hyperseed"
+            let parameters = ["firstname": "Taylor", "lastname": "Doe"]
+            let string = "firstname=Taylor&lastname=Doe"
 
             expect(builder.buildQuery(from: parameters)).to(equal(string))
           }
