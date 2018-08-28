@@ -288,6 +288,23 @@ public extension Request {
   }
 }
 
+// MARK: - Factory helpers
+
+public extension Request {
+  func adding(parameters: [String: Any], headers: [String: String]) -> Request {
+    return Request(
+      method: method,
+      resource: resource,
+      contentType: contentType,
+      task: task,
+      parameters: self.parameters.merged(with: parameters),
+      headers: self.headers.merged(with: headers),
+      storePolicy: storePolicy,
+      cachePolicy: cachePolicy
+    )
+  }
+}
+
 // MARK: - Equatable
 
 public func == (lhs: Request, rhs: Request) -> Bool {
@@ -298,4 +315,16 @@ public func == (lhs: Request, rhs: Request) -> Bool {
     && lhs.contentType == rhs.contentType
     && lhs.storePolicy == rhs.storePolicy
     && lhs.cachePolicy == rhs.cachePolicy
+}
+
+// MARK: - Private
+
+private extension Dictionary {
+  func merged(with dictionary: Dictionary) -> Dictionary {
+    var mergedDictionary = self
+    dictionary.forEach {
+      mergedDictionary.updateValue($1, forKey: $0)
+    }
+    return mergedDictionary
+  }
 }
