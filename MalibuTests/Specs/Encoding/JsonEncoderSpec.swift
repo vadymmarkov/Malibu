@@ -13,7 +13,7 @@ final class JsonEncoderSpec: QuickSpec {
 
       describe("#encode:parameters") {
         it("encodes a dictionary of parameters to NSData object") {
-          let parameters = ["firstname": "John", "lastname": "Hyperseed"]
+          let parameters = ["firstname": "John", "lastname": "Doe"]
           let data = try! JSONSerialization.data(
             withJSONObject: parameters,
             options: JSONSerialization.WritingOptions()

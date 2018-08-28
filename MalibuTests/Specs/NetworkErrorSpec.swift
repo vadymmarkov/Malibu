@@ -82,7 +82,7 @@ final class NetworkErrorSpec: QuickSpec {
 
         beforeEach {
           offlineError = NSError(
-            domain: "no.hyper.Malibu",
+            domain: "io.github.vadymmarkov.Malibu",
             code: Int(CFNetworkErrors.cfurlErrorNotConnectedToInternet.rawValue),
             userInfo: nil
           )

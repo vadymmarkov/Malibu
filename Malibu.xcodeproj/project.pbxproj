@@ -822,7 +822,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0900;
 				LastUpgradeCheck = 0930;
-				ORGANIZATIONNAME = "Hyper Interaktiv AS";
+				ORGANIZATIONNAME = "Vadym Markov";
 				TargetAttributes = {
 					D51FC8451F72FD0600D722AD = {
 						CreatedOnToolsVersion = 9.0;
@@ -1308,7 +1308,7 @@
 				INFOPLIST_FILE = "Malibu/Info-tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "no.hyper.Malibu-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.vadymmarkov.Malibu-tvOS";
 				PRODUCT_NAME = Malibu;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = appletvos;
@@ -1342,7 +1342,7 @@
 				INFOPLIST_FILE = "Malibu/Info-tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "no.hyper.Malibu-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.vadymmarkov.Malibu-tvOS";
 				PRODUCT_NAME = Malibu;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = appletvos;
@@ -1370,7 +1370,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "MalibuTests/Info-tvOS.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "no.hyper.Malibu-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.vadymmarkov.Malibu-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -1397,7 +1397,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "MalibuTests/Info-tvOS.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "no.hyper.Malibu-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.vadymmarkov.Malibu-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -1534,7 +1534,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "no.hyper.Malibu-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.vadymmarkov.Malibu-iOS";
 				PRODUCT_NAME = Malibu;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1559,7 +1559,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "no.hyper.Malibu-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.vadymmarkov.Malibu-iOS";
 				PRODUCT_NAME = Malibu;
 				SKIP_INSTALL = YES;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
@@ -1576,7 +1576,7 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/MalibuTests/Info-iOS.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.MalibuTests;
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.vadymmarkov.MalibuTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
@@ -1593,7 +1593,7 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/MalibuTests/Info-iOS.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.MalibuTests;
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.vadymmarkov.MalibuTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 			};
@@ -1618,7 +1618,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				PRODUCT_BUNDLE_IDENTIFIER = "no.hyper.Malibu-macOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.vadymmarkov.Malibu-macOS";
 				PRODUCT_NAME = Malibu;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -1646,7 +1646,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				PRODUCT_BUNDLE_IDENTIFIER = "no.hyper.Malibu-macOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.vadymmarkov.Malibu-macOS";
 				PRODUCT_NAME = Malibu;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -1666,7 +1666,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/MalibuTests/Info-Mac.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				PRODUCT_BUNDLE_IDENTIFIER = "no.hyper.Malibu-MacTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.vadymmarkov.Malibu-MacTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
@@ -1685,7 +1685,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/MalibuTests/Info-Mac.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				PRODUCT_BUNDLE_IDENTIFIER = "no.hyper.Malibu-MacTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.vadymmarkov.Malibu-MacTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;

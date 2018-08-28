@@ -49,8 +49,8 @@ final class MockSpec: QuickSpec {
       describe("json") {
         let json = [
           "first_name" : "John",
-          "last_name" : "Hyperseed",
-          "email" : "ios@hyper.no"
+          "last_name" : "Doe",
+          "email" : "test@example.org"
         ]
         var response: Response!
 
@@ -111,7 +111,7 @@ final class MockSpec: QuickSpec {
     expect{ try statusCodeValidator.validate(response) }.toNot(throwError())
 
     expect(dictionary["first_name"]).to(equal("John"))
-    expect(dictionary["last_name"]).to(equal("Hyperseed"))
-    expect(dictionary["email"]).to(equal("ios@hyper.no"))
+    expect(dictionary["last_name"]).to(equal("Doe"))
+    expect(dictionary["email"]).to(equal("test@example.org"))
   }
 }

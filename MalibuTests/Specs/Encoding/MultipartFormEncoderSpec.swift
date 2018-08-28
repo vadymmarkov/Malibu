@@ -6,7 +6,7 @@ final class MultipartFormEncoderSpec: QuickSpec {
   override func spec() {
     describe("MultipartFormEncoder") {
       var encoder: MultipartFormEncoder!
-      let parameters = ["firstname": "John", "lastname": "Hyperseed"]
+      let parameters = ["firstname": "John", "lastname": "Doe"]
 
       beforeEach {
         encoder = MultipartFormEncoder()

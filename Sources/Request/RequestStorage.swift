@@ -1,7 +1,7 @@
 import Foundation
 
 final class RequestStorage {
-  static let domain = "no.hyper.Malibu.RequestStorage"
+  static let domain = "io.github.vadymmarkov.Malibu.RequestStorage"
 
   let key: String
   var requests = [String: RequestCapsule]()
