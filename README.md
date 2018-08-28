@@ -358,10 +358,10 @@ types, your custom `URLSessionConfiguration` goes here.
 // Use this closure to modify your `Request` value before `URLRequest`
 // is created on base of it
 networking.beforeEach = { request in
-  var request = request
-  request.message.parameters["userId"] = "12345"
-
-  return request
+  return request.adding(
+    parameters: ["userId": "12345"],
+    headers: ["token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"]
+  )
 }
 
 // Use this closure to modify generated `URLRequest` object
