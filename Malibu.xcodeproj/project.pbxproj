@@ -709,7 +709,6 @@
 				D51FC8431F72FD0600D722AD /* Headers */,
 				D51FC8441F72FD0600D722AD /* Resources */,
 				D51FC8A71F73023A00D722AD /* SwiftLint */,
-				D51FC8AB1F730A7600D722AD /* Copy frameworks with Carthage */,
 			);
 			buildRules = (
 			);
@@ -785,7 +784,6 @@
 				D5C6293C1C3A7FAA007F7B7C /* Frameworks */,
 				D5C6293D1C3A7FAA007F7B7C /* Headers */,
 				D5C6293E1C3A7FAA007F7B7C /* Resources */,
-				D5E061D81D06E5BE009740F2 /* Copy frameworks with Carthage */,
 				D55166861DA1861100AECB6E /* SwiftLint */,
 			);
 			buildRules = (
@@ -955,21 +953,6 @@
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
-		D51FC8AB1F730A7600D722AD /* Copy frameworks with Carthage */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/tvOS/When.framework",
-			);
-			name = "Copy frameworks with Carthage";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
-		};
 		D55166851DA1860300AECB6E /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1023,21 +1006,6 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/Mac/Quick.framework",
 				"$(SRCROOT)/Carthage/Build/Mac/Nimble.framework",
-				"$(SRCROOT)/Carthage/Build/Mac/When.framework",
-			);
-			name = "Copy frameworks with Carthage";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
-		};
-		D5E061D81D06E5BE009740F2 /* Copy frameworks with Carthage */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/Mac/When.framework",
 			);
 			name = "Copy frameworks with Carthage";
