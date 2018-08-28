@@ -1,0 +1,41 @@
+version: 2
+jobs:
+  build-and-test:
+    macos:
+      xcode: "9.3.0"
+    shell: /bin/bash --login -o pipefail
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dep-{{ .Branch }}-
+            - v1-dep-master-
+            - v1-dep-
+      - run:
+          name: Update Homebrew
+          command: brew update
+      - run:
+          name: Test Carthage Build before installing SwiftLint
+          command: carthage build --no-skip-current --cache-builds
+      - run:
+          name: Install Swiftlint
+          command: brew install swiftlint
+      - run:
+          name: Bootstrap Carthage
+          command: bin/bootstrap-if-needed.sh
+      - save_cache:
+          key: v1-dep-{{ .Branch }}-{{ epoch }}
+          paths:
+            - Carthage
+      - run: xcodebuild -project Malibu.xcodeproj -scheme "Malibu-macOS" -sdk macosx clean
+      - run: xcodebuild -project Malibu.xcodeproj -scheme "Malibu-macOS" -sdk macosx -enableCodeCoverage YES test
+      - run: xcodebuild -project Malibu.xcodeproj -scheme "Malibu-iOS" -sdk iphonesimulator clean
+      - run: xcodebuild -project Malibu.xcodeproj -scheme "Malibu-iOS" -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=11.3,name=iPhone X' -enableCodeCoverage YES test
+      - run: xcodebuild -project Malibu.xcodeproj -scheme "Malibu-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV,OS=11.3' clean
+      - run: xcodebuild -project Malibu.xcodeproj -scheme "Malibu-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV,OS=11.3' -enableCodeCoverage YES test
+
+workflows:
+  version: 2
+  build-and-test:
+    jobs:
+      - build-and-test
