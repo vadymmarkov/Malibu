@@ -12,7 +12,8 @@ final class RequestSpec: QuickSpec {
         request = Request.post(
           "http://api.loc/posts",
           parameters: ["key": "value"],
-          headers: ["key": "value"])
+          headers: ["key": "value"]
+        )
       }
 
       afterSuite {
@@ -261,6 +262,18 @@ final class RequestSpec: QuickSpec {
         describe("#key") {
           it("bulds a description based on rmethod and request URL") {
             expect(request.key).to(equal("POST http://api.loc/posts"))
+          }
+        }
+
+        describe("#adding:parameters:headers") {
+          it("creates a new request by adding parameters and headers") {
+            let newRequest = request.adding(parameters: ["foo": "bar"], headers: ["header": "test"])
+            let expectedRequest = Request.post(
+              "http://api.loc/posts",
+              parameters: ["key": "value", "foo": "bar"],
+              headers: ["key": "value", "header": "test"]
+            )
+            expect(newRequest).to(equal(expectedRequest))
           }
         }
       }
