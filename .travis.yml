@@ -1,0 +1,38 @@
+osx_image: xcode9.4
+language: objective-c
+
+env:
+  global:
+  - LC_CTYPE=en_US.UTF-8
+  - LANG=en_US.UTF-8
+
+cache:
+  directories:
+  - Carthage
+
+before_install:
+  - brew update
+  - brew outdated carthage || brew upgrade carthage
+  - brew install swiftlint || true
+  - travis_wait 35; bin/bootstrap-if-needed
+
+script:
+  - set -o pipefail
+
+  - echo Build the project for macOS and run the tests
+  - xcodebuild -project Malibu.xcodeproj -scheme "Malibu-macOS" -sdk macosx clean build
+  - xcodebuild -project Malibu.xcodeproj -scheme "Malibu-macOS" -sdk macosx -enableCodeCoverage YES test
+
+  - echo Build the project for iOS and run the tests
+  - xcodebuild -project Malibu.xcodeproj -scheme "Malibu-iOS" -sdk iphonesimulator -destination name="iPhone 8" clean build
+  - xcodebuild -project Malibu.xcodeproj -scheme "Malibu-iOS" -sdk iphonesimulator -destination name="iPhone 8" -enableCodeCoverage YES test
+
+  - echo Build the project for tvOS and run the tests
+  - xcodebuild -project Malibu.xcodeproj -scheme "Malibu-tvOS" -sdk appletvsimulator -destination name="Apple TV" clean build
+  - xcodebuild -project Malibu.xcodeproj -scheme "Malibu-tvOS" -sdk appletvsimulator -destination name="Apple TV" -enableCodeCoverage YES test
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+notifications:
+  email: false
