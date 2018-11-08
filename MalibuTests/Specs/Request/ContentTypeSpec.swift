@@ -29,12 +29,6 @@ final class ContentTypeSpec: QuickSpec {
           }
         }
 
-        describe("#hashValue") {
-          it("returns a hash value") {
-            expect(contentType.hashValue).to(equal("query".hashValue))
-          }
-        }
-
         describe("#equal") {
           it("compares for value equality") {
             expect(contentType).toNot(equal(ContentType.json))
@@ -63,12 +57,6 @@ final class ContentTypeSpec: QuickSpec {
         describe("#encoder") {
           it("returns a corresponding encoder") {
             expect(contentType.encoder is FormURLEncoder).to(beTrue())
-          }
-        }
-
-        describe("#hashValue") {
-          it("returns a hash value of corresponding string value") {
-            expect(contentType.hashValue).to(equal(contentType.header?.hashValue))
           }
         }
 
@@ -103,12 +91,6 @@ final class ContentTypeSpec: QuickSpec {
           }
         }
 
-        describe("#hashValue") {
-          it("returns a hash value of corresponding string value") {
-            expect(contentType.hashValue).to(equal(contentType.header?.hashValue))
-          }
-        }
-
         describe("#equal") {
           it("compares for value equality") {
             expect(contentType).to(equal(ContentType.json))
@@ -137,12 +119,6 @@ final class ContentTypeSpec: QuickSpec {
         describe("#encoder") {
           it("returns a corresponding encoder") {
             expect(contentType.encoder is MultipartFormEncoder).to(beTrue())
-          }
-        }
-
-        describe("#hashValue") {
-          it("returns a hash value of corresponding string value") {
-            expect(contentType.hashValue).to(equal(contentType.header?.hashValue))
           }
         }
 
@@ -175,12 +151,6 @@ final class ContentTypeSpec: QuickSpec {
         describe("#encoder") {
           it("returns nil") {
             expect(contentType.encoder).to(beNil())
-          }
-        }
-
-        describe("#hashValue") {
-          it("returns a hash value of corresponding string value") {
-            expect(contentType.hashValue).to(equal(contentType.header?.hashValue))
           }
         }
 

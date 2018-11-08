@@ -152,35 +152,40 @@ extension Networking {
     let middlewarePromise = Promise<Void>()
     let networkPromise = NetworkPromise()
 
-    middlewarePromise.done({ [weak self] in
-      guard let `self` = self else {
-        return
-      }
+    middlewarePromise
+      .done({ [weak self] in
+        guard let `self` = self else {
+          return
+        }
 
-      let operation = self.createOperation(request: request, mockBehavior: mockBehavior)
-      let responseHandler = ResponseHandler(networkPromise: networkPromise)
-      operation.handleResponse = responseHandler.handle(urlRequest:data:urlResponse:error:)
+        let operation = self.createOperation(request: request, mockBehavior: mockBehavior)
+        let responseHandler = ResponseHandler(networkPromise: networkPromise)
+        operation.handleResponse = responseHandler.handle(urlRequest:data:urlResponse:error:)
 
-      networkPromise
-        .done({ response in
-          if logger.enabled {
-            logger.requestLogger.init(level: logger.level).log(
-              request: request,
-              urlRequest: response.urlRequest
-            )
-            logger.responseLogger.init(level: logger.level).log(response: response.httpUrlResponse)
-          }
-        })
-        .fail(policy: .allErrors, { [weak self] error in
-          if case PromiseError.cancelled = error {
-            operation.cancel()
-            operation.finish()
-          }
-          self?.handle(error: error, on: request)
-        })
+        networkPromise
+          .done({ response in
+            if logger.enabled {
+              logger.requestLogger.init(level: logger.level).log(
+                request: request,
+                urlRequest: response.urlRequest
+              )
+              logger.responseLogger.init(level: logger.level).log(response: response.httpUrlResponse)
+            }
+          })
+          .fail(policy: .allErrors, { [weak self] error in
+            if case PromiseError.cancelled = error {
+              operation.cancel()
+              operation.finish()
+            }
+            self?.handle(error: error, on: request)
+          })
 
-      self.queue.addOperation(operation)
-    })
+        self.queue.addOperation(operation)
+      })
+      .fail(policy: .allErrors, { [weak self] error in
+        networkPromise.reject(error)
+        self?.handle(error: error, on: request)
+      })
 
     middleware(middlewarePromise)
     return networkPromise

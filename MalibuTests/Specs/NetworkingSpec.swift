@@ -16,13 +16,6 @@ final private class ChallengeSenderMock: NSObject, URLAuthenticationChallengeSen
 final class NetworkingSpec: QuickSpec {
   override func spec() {
     describe("Networking") {
-      describe("#init") {
-        it("sets default configuration to the session") {
-          let networking = Networking<TestService>()
-          expect(networking.session.configuration).to(equal(SessionConfiguration.default.value))
-        }
-      }
-
       describe("#request") {
         context("when request has a mock") {
           it("returns a mock data") {
