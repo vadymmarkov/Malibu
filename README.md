@@ -64,7 +64,8 @@ past. Enjoy the ride!
   * [Backfoot surfer](#backfoot-surfer)
 * [Response](#response)
   * [Serialization](#serialization)
-  * [Validation](#validation)  
+  * [Validation](#validation)
+  * [Decoding](#decoding)
 * [Logging](#logging)
 * [Installation](#installation)
 * [Author](#author)
@@ -545,6 +546,26 @@ networking.request(.fetchBoards).validate(statusCodes: [200])
 
 // Validates with custom validator conforming to `Validating` protocol
 networking.request(.fetchBoards).validate(using: CustomValidator())
+```
+
+### Decoding
+
+**Malibu** is able to convert the response body into models that conform to `Decodable`:
+
+```swift
+// Declare your model conforming to `Decodable` protocol
+struct User: Decodable {
+  let name: String
+  let dob: Date
+}
+
+// Set up a `JSONDecoder`
+let decoder = JSONDecoder()
+decoder.keyDecodingStrategy = .convertFromSnakeCase
+decoder.dateDecodingStrategy = .iso8601
+
+// Decode your response body
+networkPromise.decode(using: User.self, decoder: decoder)
 ```
 
 ## Logging
