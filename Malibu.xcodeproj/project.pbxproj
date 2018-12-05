@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		792501B421B7F9DB000FC5DB /* ResponseDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792501B321B7F9DB000FC5DB /* ResponseDecoding.swift */; };
+		792501BA21B8068B000FC5DB /* ResponseDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792501B321B7F9DB000FC5DB /* ResponseDecoding.swift */; };
+		792501BB21B8068C000FC5DB /* ResponseDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792501B321B7F9DB000FC5DB /* ResponseDecoding.swift */; };
+		792501BC21B806A3000FC5DB /* ResponseDecodingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792501B521B7FB9E000FC5DB /* ResponseDecodingSpec.swift */; };
+		792501BD21B806A3000FC5DB /* ResponseDecodingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792501B521B7FB9E000FC5DB /* ResponseDecodingSpec.swift */; };
+		792501BE21B806A4000FC5DB /* ResponseDecodingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792501B521B7FB9E000FC5DB /* ResponseDecodingSpec.swift */; };
 		D503D38D1C8DA7730009BDAD /* Serializing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503D38C1C8DA7730009BDAD /* Serializing.swift */; };
 		D503D38E1C8DA7730009BDAD /* Serializing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503D38C1C8DA7730009BDAD /* Serializing.swift */; };
 		D503D3901C8DA95B0009BDAD /* JsonSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503D38F1C8DA95B0009BDAD /* JsonSerializer.swift */; };
@@ -247,6 +253,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		792501B321B7F9DB000FC5DB /* ResponseDecoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseDecoding.swift; sourceTree = "<group>"; };
+		792501B521B7FB9E000FC5DB /* ResponseDecodingSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseDecodingSpec.swift; sourceTree = "<group>"; };
 		D500FD111C3AABED00782D78 /* Playground-iOS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-iOS.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		D503D38C1C8DA7730009BDAD /* Serializing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializing.swift; sourceTree = "<group>"; };
 		D503D38F1C8DA95B0009BDAD /* JsonSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonSerializer.swift; sourceTree = "<group>"; };
@@ -520,6 +528,7 @@
 				D5B965161C922BDC0099D2F9 /* MimeType.swift */,
 				D5B965171C922BDC0099D2F9 /* Response.swift */,
 				D5B965181C922BDC0099D2F9 /* ResponseSerialization.swift */,
+				792501B321B7F9DB000FC5DB /* ResponseDecoding.swift */,
 				D5B965191C922BDC0099D2F9 /* ResponseValidation.swift */,
 				D5779BC41D991C8F00123D98 /* Mock.swift */,
 				D5779BCA1D991D4B00123D98 /* ResponseHandler.swift */,
@@ -533,6 +542,7 @@
 				D5B965261C922C420099D2F9 /* MimeTypeSpec.swift */,
 				D5B965281C922C420099D2F9 /* ResponseSpec.swift */,
 				D5B965271C922C420099D2F9 /* ResponseSerializationSpec.swift */,
+				792501B521B7FB9E000FC5DB /* ResponseDecodingSpec.swift */,
 				D5B965291C922C420099D2F9 /* ResponseValidationSpec.swift */,
 				D5779BCD1D991EBA00123D98 /* ResponseHandlerSpec.swift */,
 				D5779BD11D99203E00123D98 /* MockSpec.swift */,
@@ -1054,6 +1064,7 @@
 				D51FC8821F73016300D722AD /* ContentTypeValidator.swift in Sources */,
 				D51FC85E1F73016300D722AD /* Malibu.swift in Sources */,
 				D51FC8621F73016300D722AD /* JsonEncoder.swift in Sources */,
+				792501BB21B8068C000FC5DB /* ResponseDecoding.swift in Sources */,
 				D51FC8601F73016300D722AD /* Networking.swift in Sources */,
 				D51FC86D1F73016300D722AD /* Method.swift in Sources */,
 				D51FC86F1F73016300D722AD /* SessionConfiguration.swift in Sources */,
@@ -1077,6 +1088,7 @@
 				D51FC8911F7301C300D722AD /* QueryBuilderSpec.swift in Sources */,
 				D51FC88A1F7301C300D722AD /* NetworkErrorSpec.swift in Sources */,
 				D51FC8981F7301C300D722AD /* RequestSpec.swift in Sources */,
+				792501BE21B806A4000FC5DB /* ResponseDecodingSpec.swift in Sources */,
 				D51FC8901F7301C300D722AD /* UtilsSpec.swift in Sources */,
 				D51FC8931F7301C300D722AD /* AsynchronousOperationSpec.swift in Sources */,
 				D51FC89D1F7301C300D722AD /* ResponseSpec.swift in Sources */,
@@ -1120,6 +1132,7 @@
 				D503D38D1C8DA7730009BDAD /* Serializing.swift in Sources */,
 				D5B964F51C92125E0099D2F9 /* Request.swift in Sources */,
 				D5B965111C922BCF0099D2F9 /* SessionConfiguration.swift in Sources */,
+				792501B421B7F9DB000FC5DB /* ResponseDecoding.swift in Sources */,
 				D5B9650F1C922BCF0099D2F9 /* Method.swift in Sources */,
 				D5ABDDAA1CD78BC700C78B5F /* MultipartFormEncoder.swift in Sources */,
 				DAA50FF11C97738400D01F78 /* Header.swift in Sources */,
@@ -1159,6 +1172,7 @@
 				D598662F1D9DA42C00D4D90F /* RequestStorageSpec.swift in Sources */,
 				D5B9653C1C92340C0099D2F9 /* UtilsSpec.swift in Sources */,
 				DAEE2BB71C7F8C5D0000FB12 /* JsonEncoderSpec.swift in Sources */,
+				792501BC21B806A3000FC5DB /* ResponseDecodingSpec.swift in Sources */,
 				D5779BD21D99203E00123D98 /* MockSpec.swift in Sources */,
 				D5B9652C1C922C420099D2F9 /* ResponseSerializationSpec.swift in Sources */,
 				D5B964EE1C916CBF0099D2F9 /* Mocks.swift in Sources */,
@@ -1218,6 +1232,7 @@
 				D5B9651F1C922BDC0099D2F9 /* ResponseSerialization.swift in Sources */,
 				D5EB7C611CB01E73003A3BA9 /* RequestPolicies.swift in Sources */,
 				DA5B4CF91C8E5936004E21ED /* NetworkError.swift in Sources */,
+				792501BA21B8068B000FC5DB /* ResponseDecoding.swift in Sources */,
 				D5A3DC891CD164750084F451 /* Logging.swift in Sources */,
 				D5445A0B1E3CE16F00445406 /* RequestConvertible.swift in Sources */,
 				D5B9650E1C922BCF0099D2F9 /* ContentType.swift in Sources */,
@@ -1241,6 +1256,7 @@
 				D59866301D9DA42C00D4D90F /* RequestStorageSpec.swift in Sources */,
 				D5B9653D1C92340C0099D2F9 /* UtilsSpec.swift in Sources */,
 				DAEE2BB81C7F8C5E0000FB12 /* JsonEncoderSpec.swift in Sources */,
+				792501BD21B806A3000FC5DB /* ResponseDecodingSpec.swift in Sources */,
 				D5779BD31D99203E00123D98 /* MockSpec.swift in Sources */,
 				D5B9652D1C922C420099D2F9 /* ResponseSerializationSpec.swift in Sources */,
 				D5B964EF1C916CBF0099D2F9 /* Mocks.swift in Sources */,
